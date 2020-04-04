@@ -1,0 +1,17 @@
+# Kick players who decline server resource pack
+force-resource-pack: true
+
+# Register your discs here
+disc:
+  "Cat": 
+    namespace: "music_disc.cat"
+    author: "C148"
+    model-id: 0
+    lore:
+      - "Minecraft originals"
+  "Stal":
+    namespace: "music_disc.stal"
+    author: "C148"
+    model-id: 0
+    lore:
+      - "Minecraft originals"

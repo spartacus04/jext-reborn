@@ -1,0 +1,7 @@
+{
+  "files.autoGuessEncoding": true,
+  "files.encoding": "utf8",
+  "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8",
+  "javac-linter.javac": "javac -Dfile.encoding=UTF-8",
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

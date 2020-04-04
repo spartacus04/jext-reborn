@@ -1,0 +1,15 @@
+main: com.tajam.jext.Jext
+name: JukeboxExtended
+version: 0.1
+api-version: 1.15
+depend: [ProtocolLib]
+commands:
+  disc:
+    description: Get the specified custom music disc.
+    usage: /disc [name]
+  play:
+    description: Play specified custom music at executor location.
+    usage: /play [name] <volume> <pitch>
+  stop:
+    description: Stop specified custom music or all music
+    usage: /stop <name>
