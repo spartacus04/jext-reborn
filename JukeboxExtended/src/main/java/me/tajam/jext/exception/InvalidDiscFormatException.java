@@ -1,4 +1,4 @@
-package com.tajam.jext.exception;
+package me.tajam.jext.exception;
 
 public class InvalidDiscFormatException extends Exception {
 

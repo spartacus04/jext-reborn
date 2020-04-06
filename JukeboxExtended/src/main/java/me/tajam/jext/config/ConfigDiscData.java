@@ -1,10 +1,10 @@
-package com.tajam.jext.config;
+package me.tajam.jext.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.tajam.jext.config.field.ConfigField;
-import com.tajam.jext.config.field.ConfigFieldListString;
+import me.tajam.jext.config.field.ConfigField;
+import me.tajam.jext.config.field.ConfigFieldListString;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -39,25 +39,17 @@ public class ConfigDiscData {
     
   }
 
-  public boolean load(ConfigurationSection section) {
-    
-    Boolean repaired = false;
+  public void load(ConfigurationSection section) {
     ConfigurationSection subsection = section.getConfigurationSection(name);
-
     for (Path key : stringMap.keySet()) {
       ConfigField<String> field = stringMap.get(key);
-      repaired = field.updateData(subsection, String.class);
+      field.updateData(subsection, String.class);
     }
-
     for (Path key : integerMap.keySet()) {
       ConfigField<Integer> field = integerMap.get(key);
-      repaired = field.updateData(subsection, Integer.class);
+      field.updateData(subsection, Integer.class);
     }
-
-    repaired = lores.updateData(subsection);
-
-    return repaired;
-
+    lores.updateData(subsection);
   }
 
   public String getName() {

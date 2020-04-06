@@ -1,4 +1,4 @@
-package com.tajam.jext.config.field;
+package me.tajam.jext.config.field;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,6 @@ public interface ConfigFieldList<T> {
 
   public String getPath();
   public ArrayList<T> getData();
-  public boolean updateData(ConfigurationSection section);
+  public void updateData(ConfigurationSection section);
 
 }

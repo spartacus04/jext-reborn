@@ -1,4 +1,4 @@
-package com.tajam.jext.listener;
+package me.tajam.jext.listener;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
@@ -7,8 +7,9 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.BlockPosition;
-import com.tajam.jext.disc.DiscContainer;
-import com.tajam.jext.exception.InvalidDiscFormatException;
+
+import me.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.exception.InvalidDiscFormatException;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -39,8 +40,9 @@ public class RecordPacketListener extends PacketAdapter {
       try {
         new DiscContainer(disc);
       } catch (InvalidDiscFormatException e) {
-        event.setCancelled(true);
+        return;
       }
+      event.setCancelled(true);
     }
 
   }

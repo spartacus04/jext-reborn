@@ -1,7 +1,7 @@
-package com.tajam.jext.listener;
+package me.tajam.jext.listener;
 
-import com.tajam.jext.config.ConfigData;
-import com.tajam.jext.config.ConfigManager;
+import me.tajam.jext.config.ConfigData;
+import me.tajam.jext.config.ConfigManager;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

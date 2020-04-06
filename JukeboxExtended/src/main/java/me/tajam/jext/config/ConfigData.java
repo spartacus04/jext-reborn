@@ -1,8 +1,8 @@
-package com.tajam.jext.config;
+package me.tajam.jext.config;
 
 import java.util.HashMap;
 
-import com.tajam.jext.config.field.ConfigField;
+import me.tajam.jext.config.field.ConfigField;
 
 public final class ConfigData {
 

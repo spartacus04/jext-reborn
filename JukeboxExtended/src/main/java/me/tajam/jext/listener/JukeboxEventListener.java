@@ -1,8 +1,8 @@
-package com.tajam.jext.listener;
+package me.tajam.jext.listener;
 
-import com.tajam.jext.disc.DiscContainer;
-import com.tajam.jext.disc.DiscPlayer;
-import com.tajam.jext.exception.InvalidDiscFormatException;
+import me.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.disc.DiscPlayer;
+import me.tajam.jext.exception.InvalidDiscFormatException;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +30,7 @@ public class JukeboxEventListener implements Listener {
     final Jukebox jukebox = (Jukebox)state;
     final Location location = block.getLocation();
 
-    // Eject the disc if a custom disc is inside
+    // Eject the disc and stop the music if a custom disc is inside
     try {
       final ItemStack disc = jukebox.getRecord();
       final DiscContainer discContainer = new DiscContainer(disc);

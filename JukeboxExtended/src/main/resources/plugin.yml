@@ -1,4 +1,4 @@
-main: com.tajam.jext.Jext
+main: me.tajam.jext.Jext
 name: JukeboxExtended
 version: 0.1
 api-version: 1.15

@@ -1,10 +1,10 @@
-package com.tajam.jext.disc;
+package me.tajam.jext.disc;
 
 import java.util.ArrayList;
 
-import com.tajam.jext.config.ConfigDiscData;
-import com.tajam.jext.config.ConfigDiscData.Path;
-import com.tajam.jext.exception.InvalidDiscFormatException;
+import me.tajam.jext.config.ConfigDiscData;
+import me.tajam.jext.config.ConfigDiscData.Path;
+import me.tajam.jext.exception.InvalidDiscFormatException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

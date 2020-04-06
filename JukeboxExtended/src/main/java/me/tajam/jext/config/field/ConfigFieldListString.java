@@ -1,6 +1,8 @@
-package com.tajam.jext.config.field;
+package me.tajam.jext.config.field;
 
 import java.util.ArrayList;
+
+import me.tajam.jext.Logger;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -25,13 +27,11 @@ public class ConfigFieldListString implements ConfigFieldList<String> {
   }
 
   @Override
-  public boolean updateData(ConfigurationSection section) {
-    if (!section.contains(path)) {
-      section.set(path, data);
-      return true;
+  public void updateData(ConfigurationSection section) {
+    if (!section.isSet(path)) {
+      Logger.warning("\"" + path + "\" missing in configuration file, will set to default value.");
     }
     this.data = new ArrayList<String>(section.getStringList(path));
-    return false;
   }
 
 }

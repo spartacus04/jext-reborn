@@ -1,20 +1,17 @@
-package com.tajam.jext.config;
+package me.tajam.jext.config;
 
 import java.io.File;
 
-import com.tajam.jext.config.field.ConfigField;
+import me.tajam.jext.Logger;
+import me.tajam.jext.config.field.ConfigField;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 public class ConfigManager {
 
-  private static final String CONFIG_RESET = ChatColor.YELLOW + "Legacy configuration file unsupported, reset to default.";
-  private static final String CONFIG_REPAIR = ChatColor.YELLOW + "Configuration file contains missing field(s), repaired.";
+  private static final String CONFIG_RESET = "Legacy configuration file unsupported, reset to default.";
   private static ConfigManager instance = null;
   public static ConfigManager getInstance() {
     if (instance == null) {
@@ -24,7 +21,6 @@ public class ConfigManager {
   }
 
   private Plugin plugin;
-  private ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
 
   private ConfigManager() {}
 
@@ -36,33 +32,23 @@ public class ConfigManager {
   public void load() {
     plugin.saveDefaultConfig();
     final FileConfiguration file = plugin.getConfig();
-    final ConfigurationSection section = file.getConfigurationSection(ConfigData.PATH);
-    System.out.println(section);
-    if (section == null) {
+    if (!file.isSet(ConfigData.PATH)) {
       reset();
       return;
     }
-    boolean repaired = false;
+    final ConfigurationSection section = file.getConfigurationSection(ConfigData.PATH);
 
     for (ConfigData.BooleanData.Path key : ConfigData.BooleanData.DataMap.keySet()) {
       ConfigField<Boolean> field = ConfigData.BooleanData.DataMap.get(key);
-      boolean r = field.updateData(section, Boolean.class);
-      if (!repaired) repaired = r; 
+      field.updateData(section, Boolean.class);
     }
     
     for (ConfigData.StringData.Path key : ConfigData.StringData.DataMap.keySet()) {
       ConfigField<String> field = ConfigData.StringData.DataMap.get(key);
-      boolean r = field.updateData(section, String.class);
-      if (!repaired) repaired = r; 
+      field.updateData(section, String.class);
     }
 
-    boolean r = ConfigDiscManager.getInstance().load(section);
-    if (!repaired) repaired = r;
-
-    if (repaired) {
-      plugin.saveConfig();
-      consoleSender.sendMessage(CONFIG_REPAIR);
-    }
+    ConfigDiscManager.getInstance().load(section);
   }
 
   public String getStringData(ConfigData.StringData.Path path) {
@@ -78,7 +64,7 @@ public class ConfigManager {
     file.delete();
     plugin.saveDefaultConfig();
     plugin.reloadConfig();
-    consoleSender.sendMessage(CONFIG_RESET);
+    Logger.warning(CONFIG_RESET);
     load();
   }
 

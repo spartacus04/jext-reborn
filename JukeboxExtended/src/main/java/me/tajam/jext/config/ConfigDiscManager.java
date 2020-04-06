@@ -1,9 +1,10 @@
-package com.tajam.jext.config;
+package me.tajam.jext.config;
 
 import java.util.HashMap;
 import java.util.Set;
 
-import com.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.Logger;
+import me.tajam.jext.disc.DiscContainer;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -24,17 +25,15 @@ public class ConfigDiscManager {
     discMap = new HashMap<String, ConfigDiscData>();
   }
 
-  public boolean load(ConfigurationSection section) {
-    boolean repaired = false;
+  public void load(ConfigurationSection section) {
     ConfigurationSection subsection = section.getConfigurationSection(PATH);
     final Set<String> keys = subsection.getKeys(false);
     for (String key : keys) {
       ConfigDiscData discData = new ConfigDiscData(key);
-      boolean r = discData.load(subsection);
-      if (!repaired) repaired = r; 
+      discData.load(subsection);
       discMap.put(discData.getStringData(ConfigDiscData.Path.NAMESPACE), discData);
     }
-    return repaired;
+    Logger.success("Loaded " + discMap.size() + " disc(s).");
   }
 
   public DiscContainer getDisc(String namespace) {
