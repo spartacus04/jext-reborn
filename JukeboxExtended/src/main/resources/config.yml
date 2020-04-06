@@ -1,17 +1,30 @@
-# Kick players who decline server resource pack
-force-resource-pack: true
+jext:
+  # Kick players who decline server resource pack
+  force-resource-pack: true
 
-# Register your discs here
-disc:
-  "Cat": 
-    namespace: "music_disc.cat"
-    author: "C148"
-    model-id: 0
-    lore:
-      - "Minecraft originals"
-  "Stal":
-    namespace: "music_disc.stal"
-    author: "C148"
-    model-id: 0
-    lore:
-      - "Minecraft originals"
+  # Kick message for rejecting server resource pack
+  resource-pack-decline-kick-message: "Please enable resource pack for the music!"
+
+  # Ignore if player somehow failed downloading the resource pack
+  ignore-failed-download: false
+
+  # Kick message for player who failed downloading the resource pack
+  failed-download-kick-message: "Resource pack download failed, please re-join to try again."
+
+  # Allow/Disallow overlapping music (two jukebox playing same music together)
+  allow-music-overlapping: false
+
+  # Register your discs here
+  disc:
+    "Cat": 
+      namespace: "music_disc.cat"
+      author: "C148"
+      model-data: 0
+      lore:
+        - "Minecraft originals"
+    "Stal":
+      namespace: "music_disc.stal"
+      author: "C148"
+      model-data: 0
+      lore:
+        - "Minecraft originals"

@@ -5,52 +5,59 @@ import java.util.logging.Logger;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
-import com.tajam.jext.command.ExecutorDisk;
-import com.tajam.jext.packets.RecordPacketListener;
+import com.tajam.jext.command.ExecutorDisc;
+import com.tajam.jext.config.ConfigDiscManager;
+import com.tajam.jext.config.ConfigManager;
+import com.tajam.jext.listener.*;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Jext extends JavaPlugin {
 
-  Logger logger = getLogger();
-  DiscBuffer buffer;
+  private static final String ENABLED_MESSAGE = ChatColor.GREEN + "Enabled Jukebox Extender, Do Re Mi!";
+  private static final String DISABLED_MESSAGE = ChatColor.YELLOW + "Disabled Jukebox Extender, Mi Re Do!";
+  
+  private Logger logger = getLogger();
 
   @Override
   public void onEnable() {
-    logger.info("Enabling Jukebox Extender, Do Re Mi!");
-
     try {
       load();
     } catch (Exception e) {
       e.printStackTrace();
       this.getServer().getPluginManager().disablePlugin(this);
     }
+
+    logger.info(ENABLED_MESSAGE);
   }
 
   @Override
   public void onDisable() {
-    logger.info("Disabling Jukebox Extender, Mi Re Do!");
+    logger.info(DISABLED_MESSAGE);
   }
 
   public void load() {
-    buffer = new DiscBuffer();
+    ConfigManager configManager = ConfigManager.getInstance();
 
     // Load configurations
-    saveDefaultConfig();
-    FileConfiguration file = getConfig();
-    buffer.loadDiscs(file);
+    this.saveDefaultConfig();
+    configManager.setPlugin(this);
+    configManager.load();
 
     // Packet manager
     ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
     protocolManager.addPacketListener(new RecordPacketListener(this, ListenerPriority.NORMAL));
-    JextAPI.getInstance().setProtocolManager(protocolManager);
 
     // Setup commands
-    getCommand("disc").setExecutor(new ExecutorDisk(logger, buffer, "jext.disc", new int[]{1}));
+    getCommand("disc").setExecutor(new ExecutorDisc(logger, "jext.disc", new int[]{1}));
 
     // Register event
-    getServer().getPluginManager().registerEvents(new JextListener(), this);
+    PluginManager pluginManager = getServer().getPluginManager();
+    pluginManager.registerEvents(new JukeboxEventListener(), this);
+    pluginManager.registerEvents(new ResourceStatusListener(), this);
   }
 
 }

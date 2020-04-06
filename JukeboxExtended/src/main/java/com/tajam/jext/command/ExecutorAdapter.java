@@ -6,12 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-abstract class Executor implements CommandExecutor {
+class ExecutorAdapter implements CommandExecutor {
 
   private String permissionString;
   private int[] argsLength;
 
-  public Executor(String permissionString, int[] argsLength) {
+  public ExecutorAdapter(String permissionString, int[] argsLength) {
     this.permissionString = permissionString;
     this.argsLength = argsLength;
   }
@@ -34,10 +34,15 @@ abstract class Executor implements CommandExecutor {
     }
     if (!occur) return false;
 
-    if (sender instanceof Player) return execute((Player)sender, argv, args);
-    return execute(sender, argv, args);
+    if (sender instanceof Player) return executePlayer((Player)sender, argv, args);
+    return executeCommand(sender, argv, args);
   }
 
-  protected abstract boolean execute(CommandSender sender, int argv, String[] args);
-  protected abstract boolean execute(Player sender, int argv, String[] args);
+  protected boolean executeCommand(CommandSender sender, int argv, String[] args) {
+    return false;
+  }
+
+  protected boolean executePlayer(Player sender, int argv, String[] args) {
+    return false;
+  }
 }
