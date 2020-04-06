@@ -6,12 +6,10 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.tajam.jext.command.ExecutorDisc;
-import com.tajam.jext.config.ConfigDiscManager;
 import com.tajam.jext.config.ConfigManager;
 import com.tajam.jext.listener.*;
 
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,7 +1,6 @@
 package com.tajam.jext.config;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.tajam.jext.config.field.ConfigField;
@@ -36,7 +35,6 @@ public class ConfigManager {
   }
 
   public void load() {
-
     final FileConfiguration file = plugin.getConfig();
     final ConfigurationSection section = file.getConfigurationSection(ConfigData.PATH);
     if (section == null) {
@@ -62,7 +60,14 @@ public class ConfigManager {
       plugin.saveConfig();
       logger.warning(CONFIG_REPAIR);
     }
+  }
 
+  public String getStringData(ConfigData.StringData.Path path) {
+    return ConfigData.StringData.DataMap.get(path).getData();
+  }
+
+  public Boolean getBooleanData(ConfigData.BooleanData.Path path) {
+    return ConfigData.BooleanData.DataMap.get(path).getData();
   }
 
   private void reset() {

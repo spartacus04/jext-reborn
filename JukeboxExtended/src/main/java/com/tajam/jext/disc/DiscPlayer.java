@@ -1,5 +1,8 @@
 package com.tajam.jext.disc;
 
+import com.tajam.jext.config.ConfigData;
+import com.tajam.jext.config.ConfigManager;
+
 import org.bukkit.Location;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
@@ -32,6 +35,10 @@ public class DiscPlayer {
 
   public void play() {
     World world = location.getWorld();
+    ConfigManager manager = ConfigManager.getInstance();
+    if (!manager.getBooleanData(ConfigData.BooleanData.Path.ALLOW_OVERLAP)) {
+      stop();
+    }
     world.playSound(location, namespace, JUKEBOX_VOLUME, 1.0f);
   }
 

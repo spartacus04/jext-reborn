@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.tajam.jext.config.field.ConfigField;
 
-final class ConfigData {
+public final class ConfigData {
 
   public static final String PATH = "jext";
 
