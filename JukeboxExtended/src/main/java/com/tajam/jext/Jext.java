@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
-import com.tajam.jext.command.ExecutorDisc;
+import com.tajam.jext.command.*;
 import com.tajam.jext.config.ConfigManager;
 import com.tajam.jext.listener.*;
 
@@ -51,6 +51,8 @@ public class Jext extends JavaPlugin {
 
     // Setup commands
     getCommand("disc").setExecutor(new ExecutorDisc(logger, "jext.disc", new int[]{1}));
+    getCommand("play").setExecutor(new ExecutorPlay(logger, "jext.play", new int[]{1, 2, 3}));
+    getCommand("stop").setExecutor(new ExecutorStop(logger, "jext.stop", new int[]{0, 1}));
 
     // Register event
     PluginManager pluginManager = getServer().getPluginManager();

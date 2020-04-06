@@ -42,4 +42,8 @@ public class ConfigDiscManager {
     return new DiscContainer(discData);
   }
 
+  public Set<String> getNamespaces() {
+    return discMap.keySet();
+  }
+
 }

@@ -28,6 +28,27 @@ public class ExecutorPlay extends ExecutorAdapter {
       return true;
     }
     DiscPlayer player = new DiscPlayer(disc, sender.getLocation());
+
+    if (argv > 1) {
+      try {
+        Float value = Float.parseFloat(args[1]);
+        player.setVolume(value);
+      } catch (NumberFormatException e) {
+        sender.sendMessage(ChatColor.DARK_RED + "Wrong number format for volume parameter.");
+        return true;
+      }
+    }
+
+    if (argv > 2) {
+      try {
+        Float value = Float.parseFloat(args[2]);
+        player.setPitch(value);
+      } catch (NumberFormatException e) {
+        sender.sendMessage(ChatColor.DARK_RED + "Wrong number format for pitch parameter.");
+        return true;
+      }
+    }
+
     player.play();
     return true;
   }

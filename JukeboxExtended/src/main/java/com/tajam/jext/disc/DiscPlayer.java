@@ -15,6 +15,8 @@ public class DiscPlayer {
 
   private Location location;
   private String namespace;
+  private float volume;
+  private float pitch;
 
   public DiscPlayer(DiscContainer disc, Location location) {
     this(disc.getNamespace(), location);
@@ -23,14 +25,28 @@ public class DiscPlayer {
   public DiscPlayer(String namespace, Location location) {
     this.namespace = namespace;
     this.location = location;
+    this.volume = JUKEBOX_VOLUME;
+    this.pitch = 1.0f;
   }
   
-  public void setMusic(String namespace) {
+  public DiscPlayer setMusic(String namespace) {
     this.namespace = namespace;
+    return this;
   }
 
-  public void setMusic(DiscContainer disc) {
+  public DiscPlayer setMusic(DiscContainer disc) {
     this.namespace = disc.getNamespace();
+    return this;
+  }
+
+  public DiscPlayer setVolume(float value) {
+    this.volume = value;
+    return this;
+  }
+
+  public DiscPlayer setPitch(float value) {
+    this.pitch = value;
+    return this;
   }
 
   public void play() {
@@ -39,7 +55,7 @@ public class DiscPlayer {
     if (!manager.getBooleanData(ConfigData.BooleanData.Path.ALLOW_OVERLAP)) {
       stop();
     }
-    world.playSound(location, namespace, JUKEBOX_VOLUME, 1.0f);
+    world.playSound(location, namespace, volume, pitch);
   }
 
   public void stop() {
