@@ -7,9 +7,9 @@ commands:
   disc:
     description: Get the specified custom music disc.
     usage: /disc [name]
-  play:
+  playmusic:
     description: Play specified custom music at executor location.
-    usage: /play [name] <volume> <pitch>
-  stop:
+    usage: /playmusic [name] <volume> <pitch>
+  stopmusic:
     description: Stop specified custom music or all music
-    usage: /stop <name>
+    usage: /stopmusic <name>

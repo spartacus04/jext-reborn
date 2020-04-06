@@ -1,21 +1,17 @@
 package com.tajam.jext.command;
 
-import java.util.logging.Logger;
-
 import com.tajam.jext.config.ConfigDiscManager;
 import com.tajam.jext.disc.DiscContainer;
 import com.tajam.jext.disc.DiscPlayer;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class ExecutorStop extends ExecutorAdapter {
 
-  Logger logger;
-
-  public ExecutorStop(Logger logger, String permissionString, int[] argsLength) {
-    super(logger, permissionString, argsLength);
-    this.logger = logger;
+  public ExecutorStop(ConsoleCommandSender consoleSender, String permissionString, int[] argsLength) {
+    super(consoleSender, permissionString, argsLength);
   }
 
   @Override

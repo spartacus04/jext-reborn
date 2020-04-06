@@ -30,7 +30,8 @@ public class ConfigDiscManager {
     final Set<String> keys = subsection.getKeys(false);
     for (String key : keys) {
       ConfigDiscData discData = new ConfigDiscData(key);
-      repaired = discData.load(subsection);
+      boolean r = discData.load(subsection);
+      if (!repaired) repaired = r; 
       discMap.put(discData.getStringData(ConfigDiscData.Path.NAMESPACE), discData);
     }
     return repaired;

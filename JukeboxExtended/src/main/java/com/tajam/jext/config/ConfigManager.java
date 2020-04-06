@@ -1,15 +1,15 @@
 package com.tajam.jext.config;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import com.tajam.jext.config.field.ConfigField;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class ConfigManager {
 
@@ -24,41 +24,44 @@ public class ConfigManager {
   }
 
   private Plugin plugin;
-  private Logger logger;
+  private ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
 
   private ConfigManager() {}
 
   public ConfigManager setPlugin(Plugin plugin) {
     this.plugin = plugin;
-    this.logger = plugin.getLogger();
     return this;
   }
 
   public void load() {
+    plugin.saveDefaultConfig();
     final FileConfiguration file = plugin.getConfig();
     final ConfigurationSection section = file.getConfigurationSection(ConfigData.PATH);
+    System.out.println(section);
     if (section == null) {
       reset();
-      load();
       return;
     }
     boolean repaired = false;
 
     for (ConfigData.BooleanData.Path key : ConfigData.BooleanData.DataMap.keySet()) {
       ConfigField<Boolean> field = ConfigData.BooleanData.DataMap.get(key);
-      repaired = field.updateData(section, Boolean.class);
+      boolean r = field.updateData(section, Boolean.class);
+      if (!repaired) repaired = r; 
     }
     
     for (ConfigData.StringData.Path key : ConfigData.StringData.DataMap.keySet()) {
       ConfigField<String> field = ConfigData.StringData.DataMap.get(key);
-      repaired = field.updateData(section, String.class);
+      boolean r = field.updateData(section, String.class);
+      if (!repaired) repaired = r; 
     }
 
-    repaired = ConfigDiscManager.getInstance().load(section);
+    boolean r = ConfigDiscManager.getInstance().load(section);
+    if (!repaired) repaired = r;
 
     if (repaired) {
       plugin.saveConfig();
-      logger.warning(CONFIG_REPAIR);
+      consoleSender.sendMessage(CONFIG_REPAIR);
     }
   }
 
@@ -75,7 +78,8 @@ public class ConfigManager {
     file.delete();
     plugin.saveDefaultConfig();
     plugin.reloadConfig();
-    logger.warning(CONFIG_RESET);
+    consoleSender.sendMessage(CONFIG_RESET);
+    load();
   }
 
 }
