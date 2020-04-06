@@ -1,5 +1,7 @@
 package com.tajam.jext.command;
 
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,12 +10,14 @@ import org.bukkit.entity.Player;
 
 class ExecutorAdapter implements CommandExecutor {
 
+  private Logger logger;
   private String permissionString;
   private int[] argsLength;
 
-  public ExecutorAdapter(String permissionString, int[] argsLength) {
+  public ExecutorAdapter(Logger logger, String permissionString, int[] argsLength) {
     this.permissionString = permissionString;
     this.argsLength = argsLength;
+    this.logger = logger;
   }
 
   @Override
@@ -38,11 +42,13 @@ class ExecutorAdapter implements CommandExecutor {
     return executeCommand(sender, argv, args);
   }
 
-  protected boolean executeCommand(CommandSender sender, int argv, String[] args) {
+  protected boolean executePlayer(Player sender, int argv, String[] args) {
+    logger.info("This command is only for console.");
     return false;
   }
 
-  protected boolean executePlayer(Player sender, int argv, String[] args) {
+  protected boolean executeCommand(CommandSender sender, int argv, String[] args) {
+    logger.info("This command is only for players.");
     return false;
   }
 }

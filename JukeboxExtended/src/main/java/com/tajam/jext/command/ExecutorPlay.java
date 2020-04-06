@@ -7,7 +7,6 @@ import com.tajam.jext.disc.DiscContainer;
 import com.tajam.jext.disc.DiscPlayer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ExecutorPlay extends ExecutorAdapter {
@@ -15,7 +14,7 @@ public class ExecutorPlay extends ExecutorAdapter {
   Logger logger;
 
   public ExecutorPlay(Logger logger, String permissionString, int[] argsLength) {
-    super(permissionString, argsLength);
+    super(logger, permissionString, argsLength);
     this.logger = logger;
   }
 
@@ -52,11 +51,4 @@ public class ExecutorPlay extends ExecutorAdapter {
     player.play();
     return true;
   }
-
-  @Override
-  protected boolean executeCommand(CommandSender sender, int argv, String[] args) {
-    logger.info("This command is only for players.");
-    return true;
-  }
-
 }

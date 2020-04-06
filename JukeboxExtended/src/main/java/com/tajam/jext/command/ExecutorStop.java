@@ -7,7 +7,6 @@ import com.tajam.jext.disc.DiscContainer;
 import com.tajam.jext.disc.DiscPlayer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ExecutorStop extends ExecutorAdapter {
@@ -15,7 +14,7 @@ public class ExecutorStop extends ExecutorAdapter {
   Logger logger;
 
   public ExecutorStop(Logger logger, String permissionString, int[] argsLength) {
-    super(permissionString, argsLength);
+    super(logger, permissionString, argsLength);
     this.logger = logger;
   }
 
@@ -30,12 +29,6 @@ public class ExecutorStop extends ExecutorAdapter {
     }
 
     sender.sendMessage(ChatColor.DARK_RED + "Invalid parameters!");
-    return true;
-  }
-
-  @Override
-  protected boolean executeCommand(CommandSender sender, int argv, String[] args) {
-    logger.info("This command is only for players.");
     return true;
   }
 
