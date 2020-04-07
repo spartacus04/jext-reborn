@@ -55,7 +55,7 @@ public class Jext extends JavaPlugin {
 
     setCommand(
       getCommand("playmusic"), 
-      new ExecutorPlay("jext.play", new int[]{1, 2, 3}), 
+      new ExecutorPlay("jext.playmusic", new int[]{1, 2, 3}), 
       new TabCompletorAdaptor()
         .addCompletor(new CompletorDisc())
         .addCompletor(new CompletorFloat(new Float[]{ 3.0f, 1.0f, 0.5f }))
@@ -64,7 +64,7 @@ public class Jext extends JavaPlugin {
 
     setCommand(
       getCommand("stopmusic"), 
-      new ExecutorStop("jext.stop", new int[]{0, 1}), 
+      new ExecutorStop("jext.stopmusic", new int[]{0, 1}), 
       new TabCompletorAdaptor()
         .addCompletor(new CompletorDisc())
     );
