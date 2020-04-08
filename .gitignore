@@ -1,4 +1,4 @@
-.vscode
+.vscode/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
