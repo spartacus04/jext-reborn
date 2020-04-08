@@ -1,0 +1,29 @@
+# Jext Project - JukeboxExtended
+
+A [Spigot](https://www.spigotmc.org/) plugin that allows server to add cutom music disc without removing the originals throught the power of resource pack and Spigot API! Get the plugin artifact at the resource page over [here](https://www.spigotmc.org/resources/jukebox-extended.76963/).
+
+Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) for more details and guides.
+
+## Dependencies
+
+### Required
+
+[ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) for stopping original music disc from playing.
+
+### Optional
+
+In future, Jext will support regional music loops with [WorldGuard API](https://dev.bukkit.org/projects/worldguard).
+
+## Core features
+
+- Adding and playing custom music disc without replacing the original music disc.
+- Customizable disc title, author and lore texts. 
+- Supports custom model data, allow customized disc texture.
+- Auto kick players who rejected the server resource pack.
+
+## Upcoming version 1.01 - Maintainance
+
+- Change the way of `stopmusic` command work.
+- Preserve parrot dancing behaviour
+- Test and support Spigot 1.12 to 1.14 version.
+- Some internal updates.
