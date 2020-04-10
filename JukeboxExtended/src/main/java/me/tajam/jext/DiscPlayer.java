@@ -1,4 +1,4 @@
-package me.tajam.jext.disc;
+package me.tajam.jext;
 
 import me.tajam.jext.config.ConfigData;
 import me.tajam.jext.config.ConfigManager;

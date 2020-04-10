@@ -1,8 +1,7 @@
 package me.tajam.jext.listener;
 
-import me.tajam.jext.disc.DiscContainer;
-import me.tajam.jext.disc.DiscPlayer;
-import me.tajam.jext.exception.InvalidDiscFormatException;
+import me.tajam.jext.DiscContainer;
+import me.tajam.jext.DiscPlayer;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,7 +36,7 @@ public class JukeboxEventListener implements Listener {
       final DiscPlayer discPlayer = new DiscPlayer(discContainer, location);
       discPlayer.stop();
       return;
-    } catch (InvalidDiscFormatException e) { }
+    } catch (IllegalStateException e) { }
 
     // Allow the disc to get out normally
     if (jukebox.getRecord().getType() != Material.AIR) return;
@@ -48,7 +47,7 @@ public class JukeboxEventListener implements Listener {
       final DiscContainer discContainer = new DiscContainer(disc);
       final DiscPlayer discPlayer = new DiscPlayer(discContainer, location);
       discPlayer.play();
-    } catch (InvalidDiscFormatException e) { }
+    } catch (IllegalStateException e) { }
   }
 
   @EventHandler(ignoreCancelled = true)
@@ -64,7 +63,7 @@ public class JukeboxEventListener implements Listener {
       final DiscPlayer discPlayer = new DiscPlayer(discContainer, block.getLocation());
       discPlayer.stop();
       return;
-    } catch (InvalidDiscFormatException e) { }
+    } catch (IllegalStateException e) { }
   }
 
 }

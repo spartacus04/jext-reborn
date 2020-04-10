@@ -1,10 +1,9 @@
-package me.tajam.jext.disc;
+package me.tajam.jext;
 
 import java.util.ArrayList;
 
 import me.tajam.jext.config.ConfigDiscData;
 import me.tajam.jext.config.ConfigDiscData.Path;
-import me.tajam.jext.exception.InvalidDiscFormatException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -56,7 +55,7 @@ public class DiscContainer {
     this.lores = discData.getLores();
   }
 
-  public DiscContainer(final ItemStack disc) throws InvalidDiscFormatException {
+  public DiscContainer(final ItemStack disc) throws IllegalStateException {
     if (isCustomDisc(disc)) {
       final ItemMeta meta = disc.getItemMeta();
       this.title = meta.getDisplayName();
@@ -68,7 +67,7 @@ public class DiscContainer {
       final ArrayList<String> lores = new ArrayList<>(itemLores.subList(3, itemLores.size()));
       this.lores = lores;
     } else {
-      throw new InvalidDiscFormatException();
+      throw new IllegalStateException("Custom disc identifier missing!");
     }
   }
 
@@ -95,6 +94,11 @@ public class DiscContainer {
 
   public String getNamespace() {
     return namespaceID;
+  }
+
+  @Override
+  public String toString() {
+    return title;
   }
 
   private String namespaceIDEncode(final String namespaceID) {

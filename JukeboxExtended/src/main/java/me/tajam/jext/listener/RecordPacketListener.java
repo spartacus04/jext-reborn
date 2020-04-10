@@ -8,8 +8,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.BlockPosition;
 
-import me.tajam.jext.disc.DiscContainer;
-import me.tajam.jext.exception.InvalidDiscFormatException;
+import me.tajam.jext.DiscContainer;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -39,7 +38,7 @@ public class RecordPacketListener extends PacketAdapter {
       final ItemStack disc = jukebox.getRecord();
       try {
         new DiscContainer(disc);
-      } catch (InvalidDiscFormatException e) {
+      } catch (IllegalStateException e) {
         return;
       }
       event.setCancelled(true);

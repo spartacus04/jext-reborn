@@ -1,6 +1,6 @@
 package me.tajam.jext.config.field;
 
-import me.tajam.jext.Logger;
+import me.tajam.jext.SMS;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -24,7 +24,7 @@ public class ConfigField<T> {
 
   public void updateData(ConfigurationSection section, Class<T> clazz) {
     if (!section.isSet(path)) {
-      Logger.warning("\"" + path + "\" missing in configuration file, will set to default value.");
+      new SMS().warn().t("\"").o(path).t("\" missing in configuration file, will set to default value.").send();
     }
     this.data = section.getObject(path, clazz);
   }

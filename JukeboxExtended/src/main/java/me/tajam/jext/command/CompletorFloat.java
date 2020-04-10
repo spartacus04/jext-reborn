@@ -1,13 +1,13 @@
-package me.tajam.jext.command.tab;
+package me.tajam.jext.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompletorFloat implements Completor {
+class CompletorFloat implements Completor {
 
-  private Float[] suggestedValues;
+  private final Float[] suggestedValues;
 
-  public CompletorFloat(Float[] suggestedValues) {
+  public CompletorFloat(Float... suggestedValues) {
     this.suggestedValues = suggestedValues;
   }
 

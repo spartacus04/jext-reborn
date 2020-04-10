@@ -2,9 +2,9 @@ package me.tajam.jext.config.field;
 
 import java.util.ArrayList;
 
-import me.tajam.jext.Logger;
-
 import org.bukkit.configuration.ConfigurationSection;
+
+import me.tajam.jext.SMS;
 
 public class ConfigFieldListString implements ConfigFieldList<String> {
 
@@ -29,7 +29,7 @@ public class ConfigFieldListString implements ConfigFieldList<String> {
   @Override
   public void updateData(ConfigurationSection section) {
     if (!section.isSet(path)) {
-      Logger.warning("\"" + path + "\" missing in configuration file, will set to default value.");
+      new SMS().warn().t("\"").o(path).t("\" missing in configuration file, will set to default value.").send();
     }
     this.data = new ArrayList<String>(section.getStringList(path));
   }

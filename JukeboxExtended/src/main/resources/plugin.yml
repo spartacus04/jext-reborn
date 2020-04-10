@@ -1,7 +1,7 @@
 main: me.tajam.jext.Jext
 name: JukeboxExtended
 author: Tajam
-version: 1.0
+version: 1.1.0
 api-version: 1.15
 depend: [ProtocolLib]
 
@@ -10,24 +10,35 @@ commands:
     description: Get the specified custom music disc.
     permission: jext.disc
     usage: /disc [name]
+  discgive:
+    description: Give the specified custom music disc to player(s).
+    permission: jext.disc.give
+    usage: /discgive [selector] [name]
   playmusic:
-    description: Play specified custom music at executor location.
+    description: Play specified custom music to selected player(s).
     permission: jext.playmusic
-    usage: /playmusic [name] <volume> <pitch>
+    usage: /playmusic [selector] [name] <pitch>
   stopmusic:
-    description: Stop specified custom music or all music.
+    description: Stop specified custom music or all music selected player(s). 
     permission: jext.stopmusic
-    usage: /stopmusic <name>
+    usage: /stopmusic [selector] <name>
 
 permissions:
   jext.*:
     description: Gives access to all Jukebox Extended commands.
-      children:
-        jext.disc: true
-        jext.playmusic: true
-        jext.stopmusic: true
+    children:
+      jext.disc: true
+      jext.playmusic: true
+      jext.stopmusic: true
   jext.disc:
     description: Allow player to access all custom disc.
+    default: op
+  jext.disc.*:
+    description: Gives access to all child disc commands.
+    children:
+      jext.disc.give: true
+  jext.disc.give:
+    description: Allow player to give others custom disc.
     default: op
   jext.playmusic:
     description: Allow player to play custom music.
