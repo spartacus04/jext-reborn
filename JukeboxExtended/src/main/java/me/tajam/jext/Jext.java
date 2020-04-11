@@ -1,12 +1,12 @@
 package me.tajam.jext;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-
 import me.tajam.jext.command.CommandsRegistrant;
 import me.tajam.jext.config.ConfigManager;
 import me.tajam.jext.listener.*;
+
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,7 +47,7 @@ public class Jext extends JavaPlugin {
     // Register listeners
     PluginManager pluginManager = getServer().getPluginManager();
     pluginManager.registerEvents(new JukeboxEventListener(), this);
-    pluginManager.registerEvents(new ResourceStatusListener(), this);
+    pluginManager.registerEvents(new ResourceStatusListener(this), this);
   }
 
 }

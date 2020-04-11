@@ -21,7 +21,7 @@ commands:
   playat:
     description: Play specified custom music to selected player(s).
     permission: jext.playat
-    usage: /playmusic [X] [Y] [Z] <pitch> <volume>
+    usage: /playat [X] [Y] [Z] <pitch> <volume>
   stopmusic:
     description: Stop specified custom music or all music selected player(s). 
     permission: jext.stopmusic

@@ -172,6 +172,17 @@ public class SMS {
     return this;
   }
 
+  // Add magic-coloured text
+  public SMS mag(String magicMessage) {
+    this.tokens.add(new Token(magicMessage, ChatColor.MAGIC));
+    return this;
+  }
+
+  public SMS mag() {
+    this.tokens.add(new Token(ChatColor.MAGIC));
+    return this;
+  }
+
   // Reset colour and add text
   public SMS rst(String plainColoredMessage) {
     this.tokens.add(new Token(plainColoredMessage, ChatColor.RESET));

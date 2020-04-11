@@ -23,7 +23,7 @@ class CompletorPlayer implements Completor {
     }
     for (Player player : players) {
       if (matches.size() >= 12) break;
-      final String name = player.getDisplayName();
+      final String name = player.getName();
       if (name.toLowerCase().startsWith(parameter.toLowerCase())) {
         matches.add(name);
       }

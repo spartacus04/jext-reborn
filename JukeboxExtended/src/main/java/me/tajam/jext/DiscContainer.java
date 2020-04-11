@@ -7,6 +7,7 @@ import me.tajam.jext.config.ConfigDiscData.Path;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,21 +32,14 @@ public class DiscContainer {
     ChatColor.COLOR_CHAR + "X" + 
     ChatColor.COLOR_CHAR + "T";
   private static final String AUTHOR_CAPTION = "Author: ";
-  private static final Material BASEDISC_MATERIAL = Material.MUSIC_DISC_CAT;
+  public static final Material BASEDISC_MATERIAL = Material.MUSIC_DISC_11;
+  public static final Sound BASEDISC_SOUND = Sound.MUSIC_DISC_11;
 
   private String title;
   private String author;
   private String namespaceID;
   private int customModelData;
   private ArrayList<String> lores;
-
-  public DiscContainer(String title, String author, String namespaceID, int customModelData, ArrayList<String> lores) {
-    this.title = title;
-    this.author = author;
-    this.namespaceID = namespaceID;
-    this.customModelData = customModelData;
-    this.lores = lores;
-  }
 
   public DiscContainer(ConfigDiscData discData) {
     this.title = discData.getName();
@@ -55,14 +49,14 @@ public class DiscContainer {
     this.lores = discData.getLores();
   }
 
-  public DiscContainer(final ItemStack disc) throws IllegalStateException {
+  public DiscContainer(ItemStack disc) throws IllegalStateException {
     if (isCustomDisc(disc)) {
       final ItemMeta meta = disc.getItemMeta();
       this.title = meta.getDisplayName();
       this.customModelData = meta.getCustomModelData();
 
       final ArrayList<String> itemLores = new ArrayList<>(meta.getLore());
-      this.author = itemLores.get(1).substring(AUTHOR_CAPTION.length(), itemLores.get(1).length());
+      this.author = itemLores.get(1).substring(AUTHOR_CAPTION.length() + 1, itemLores.get(1).length());
       this.namespaceID = namespaceIDDecode(itemLores.get(2));
       final ArrayList<String> lores = new ArrayList<>(itemLores.subList(3, itemLores.size()));
       this.lores = lores;
@@ -96,6 +90,10 @@ public class DiscContainer {
     return namespaceID;
   }
 
+  public String getAuthor() {
+    return author;
+  }
+
   @Override
   public String toString() {
     return title;
@@ -119,7 +117,7 @@ public class DiscContainer {
   }
 
   private boolean isCustomDisc(final ItemStack disc) {
-    if (disc == null || disc.getType() != Material.MUSIC_DISC_CAT || !disc.hasItemMeta()) {
+    if (disc == null || disc.getType() != BASEDISC_MATERIAL || !disc.hasItemMeta()) {
       return false;
     }
     final ItemMeta meta = disc.getItemMeta();

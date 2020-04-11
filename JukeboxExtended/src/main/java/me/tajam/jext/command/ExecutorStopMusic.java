@@ -63,7 +63,7 @@ class ExecutorStopMusic extends ExecutorAdapter {
     if (playerCount >= 2) {
       new SMS().warn().t("Stopped music for ").o().t(" players!").send(sender, playerCount);
     } else if (playerCount == 1) {
-      new SMS().okay().t("Stopped music for ").o(players.get(0).getDisplayName()).t(".").send(sender);
+      new SMS().okay().t("Stopped music for ").o(players.get(0).getName()).t(".").send(sender);
     } else {
       new SMS().eror().t("Stopped music to no player, something might when wrong!").send(sender);
     }

@@ -55,7 +55,7 @@ public class JukeboxEventListener implements Listener {
     final Block block = event.getBlock();
     final BlockState state = block.getState();
     if (!(state instanceof Jukebox)) return;
-
+    
     try {
       final Jukebox jukebox = (Jukebox)state;
       final ItemStack disc = jukebox.getRecord();

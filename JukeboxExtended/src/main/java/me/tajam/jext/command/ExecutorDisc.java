@@ -21,6 +21,7 @@ class ExecutorDisc extends ExecutorAdapter {
       return true;
     }
     sender.getInventory().addItem(disc.getDiscItem());
+    new SMS().info().t("Obtained ").p().t(" disc.").send(sender, disc);
     return true;
   }
 }

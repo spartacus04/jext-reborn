@@ -1,7 +1,6 @@
 package me.tajam.jext.command;
 
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class LocationParser {
@@ -9,38 +8,37 @@ public class LocationParser {
   private String stringX;
   private String stringY;
   private String stringZ;
-  private Player player;
+  private Player sender;
 
-  public LocationParser(String stringX, String stringY, String stringZ, CommandSender sender) throws IllegalStateException {
+  public LocationParser(String stringX, String stringY, String stringZ, Player sender) throws IllegalStateException {
     this.stringX = stringX;
     this.stringY = stringY;
     this.stringZ = stringZ;
-    if (!(sender instanceof Player)) throw new IllegalStateException();
-    this.player = (Player)sender;
+    this.sender = sender;
   }
 
   public Location parse() {
     final int intX;
     if (stringX.equals("~")) {
-      intX = player.getLocation().getBlockX();
+      intX = sender.getLocation().getBlockX();
     } else {
       intX = (int)Float.parseFloat(stringX);
     }
 
     final int intY;
     if (stringY.equals("~")) {
-      intY = player.getLocation().getBlockX();
+      intY = sender.getLocation().getBlockY();
     } else {
       intY = (int)Float.parseFloat(stringY);
     }
 
     final int intZ;
     if (stringZ.equals("~")) {
-      intZ = player.getLocation().getBlockX();
+      intZ = sender.getLocation().getBlockZ();
     } else {
       intZ = (int)Float.parseFloat(stringZ);
     }
 
-    return new Location(player.getWorld(), intX, intY, intZ);
+    return new Location(sender.getWorld(), intX, intY, intZ);
   }
 }

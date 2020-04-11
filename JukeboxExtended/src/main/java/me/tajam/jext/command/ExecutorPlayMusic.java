@@ -17,8 +17,8 @@ class ExecutorPlayMusic extends ExecutorAdapter {
     super("playmusic");
     addParameter(new Parameter("player", new CompletorPlayer()));
     addParameter(new Parameter("namespace", new CompletorDisc()));
-    addParameter(new Parameter("pitch", new CompletorFloat(1.0f, 1.5f, 0.5f), false));
-    addParameter(new Parameter("volume", new CompletorFloat(4.0f, 1.0f, 0.5f), false));
+    addParameter(new Parameter("pitch", new CompletorNumber(1.0f, 1.5f, 0.5f), false));
+    addParameter(new Parameter("volume", new CompletorNumber(4.0f, 1.0f, 0.5f), false));
   }
 
   @Override
@@ -47,7 +47,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
       try {
         pitch = Float.parseFloat(args[2]);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for pitch parameter.");
+        new SMS().eror().t("Wrong number format for pitch parameter.").send(sender);
         return true;
       }
     }
@@ -60,7 +60,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
         discPlayer.setPitch(pitch);
         discPlayer.setVolume(volume);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for volume parameter.");
+        new SMS().eror().t("Wrong number format for volume parameter.").send(sender);
         return true;
       }
     }

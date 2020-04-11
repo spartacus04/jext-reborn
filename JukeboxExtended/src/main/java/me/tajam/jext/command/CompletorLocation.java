@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,9 @@ class CompletorLocation implements Completor {
     suggestions.add("~");
     final Player player = (sender instanceof Player)? (Player)sender : null;
     if (player == null) return suggestions;
-    final Location location = player.getTargetBlockExact(4).getLocation();
+    final Block block = player.getTargetBlockExact(4);
+    if (block == null) return suggestions;
+    final Location location = block.getLocation();
     switch(axis) {
       case X: {
         Integer a = location.getBlockX();
