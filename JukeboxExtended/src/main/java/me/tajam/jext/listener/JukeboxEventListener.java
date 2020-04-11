@@ -33,8 +33,8 @@ public class JukeboxEventListener implements Listener {
     try {
       final ItemStack disc = jukebox.getRecord();
       final DiscContainer discContainer = new DiscContainer(disc);
-      final DiscPlayer discPlayer = new DiscPlayer(discContainer, location);
-      discPlayer.stop();
+      final DiscPlayer discPlayer = new DiscPlayer(discContainer);
+      discPlayer.stop(location);
       return;
     } catch (IllegalStateException e) { }
 
@@ -45,8 +45,8 @@ public class JukeboxEventListener implements Listener {
     try {
       final ItemStack disc = event.getItem();
       final DiscContainer discContainer = new DiscContainer(disc);
-      final DiscPlayer discPlayer = new DiscPlayer(discContainer, location);
-      discPlayer.play();
+      final DiscPlayer discPlayer = new DiscPlayer(discContainer);
+      discPlayer.play(location);
     } catch (IllegalStateException e) { }
   }
 
@@ -60,8 +60,8 @@ public class JukeboxEventListener implements Listener {
       final Jukebox jukebox = (Jukebox)state;
       final ItemStack disc = jukebox.getRecord();
       final DiscContainer discContainer = new DiscContainer(disc);
-      final DiscPlayer discPlayer = new DiscPlayer(discContainer, block.getLocation());
-      discPlayer.stop();
+      final DiscPlayer discPlayer = new DiscPlayer(discContainer);
+      discPlayer.stop(block.getLocation());
       return;
     } catch (IllegalStateException e) { }
   }

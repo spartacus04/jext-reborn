@@ -17,7 +17,11 @@ commands:
   playmusic:
     description: Play specified custom music to selected player(s).
     permission: jext.playmusic
-    usage: /playmusic [selector] [name] <pitch>
+    usage: /playmusic [selector] [name] <pitch> <volume>
+  playat:
+    description: Play specified custom music to selected player(s).
+    permission: jext.playat
+    usage: /playmusic [X] [Y] [Z] <pitch> <volume>
   stopmusic:
     description: Stop specified custom music or all music selected player(s). 
     permission: jext.stopmusic
@@ -28,20 +32,21 @@ permissions:
     description: Gives access to all Jukebox Extended commands.
     children:
       jext.disc: true
+      jext.disc.give: true
       jext.playmusic: true
+      jext.playat: true
       jext.stopmusic: true
   jext.disc:
     description: Allow player to access all custom disc.
     default: op
-  jext.disc.*:
-    description: Gives access to all child disc commands.
-    children:
-      jext.disc.give: true
   jext.disc.give:
     description: Allow player to give others custom disc.
     default: op
   jext.playmusic:
-    description: Allow player to play custom music.
+    description: Allow player to play custom music to players.
+    default: op
+  jext.playat:
+    description: Allow player to play custom music to a location.
     default: op
   jext.stopmusic:
     description: Allow player to stop custom music.

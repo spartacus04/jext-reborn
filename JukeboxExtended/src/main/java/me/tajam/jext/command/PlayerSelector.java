@@ -29,7 +29,6 @@ class PlayerSelector {
     SELECTOR_SYMBOL_MAP = new HashMap<>();
     SELECTOR_SYMBOL_MAP.put("@a", Selector.ALL);
     SELECTOR_SYMBOL_MAP.put("@w", Selector.WORLD);
-    SELECTOR_SYMBOL_MAP.put("@n", Selector.NEARBY);
     SELECTOR_SYMBOL_MAP.put("@wr", Selector.WORLD_RANDOM);
     SELECTOR_SYMBOL_MAP.put("@r", Selector.RANDOM);
     SELECTOR_SYMBOL_MAP.put("@s", Selector.SELF);

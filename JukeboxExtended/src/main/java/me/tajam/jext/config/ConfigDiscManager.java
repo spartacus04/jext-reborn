@@ -42,6 +42,10 @@ public class ConfigDiscManager {
     return new DiscContainer(discData);
   }
 
+  public boolean haveDisc(String namespace) {
+    return discMap.containsKey(namespace);
+  }
+
   public Set<String> getNamespaces() {
     return discMap.keySet();
   }

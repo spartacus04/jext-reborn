@@ -19,21 +19,19 @@ class ExecutorDiscGive extends ExecutorAdapter {
 
   @Override
   boolean executePlayer(Player sender, String[] args) {
-    return mergedCommand(sender, args);
+    return mergedExecute(sender, args);
   }
 
   @Override
   boolean executeCommand(CommandSender sender, String[] args) {
-    return mergedCommand(sender, args);
+    return mergedExecute(sender, args);
   }
 
-  private boolean mergedCommand(CommandSender sender, String[] args) {
-    final PlayerSelector selector = new PlayerSelector(sender, args[0]);
-    final List<Player> players = selector.getPlayers();
+  private boolean mergedExecute(CommandSender sender, String[] args) {
+    final List<Player> players = new PlayerSelector(sender, args[0]).getPlayers();
     if (players == null) return true;
 
-    final ConfigDiscManager manager = ConfigDiscManager.getInstance();
-    final DiscContainer disc = manager.getDisc(args[1]);
+    final DiscContainer disc = ConfigDiscManager.getInstance().getDisc(args[1]);
     if (disc == null) {
       new SMS().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
       return true;
@@ -45,7 +43,7 @@ class ExecutorDiscGive extends ExecutorAdapter {
     }
 
     final Integer playerCount = players.size();
-    if (playerCount > 2) {
+    if (playerCount >= 2) {
       new SMS().warn().t("Given ").o().t(" disc to ").o().t(" players!").send(sender, disc, playerCount);
     } else if (playerCount == 1) {
       new SMS().okay().t("Given ").o().t(" disc to ").o(players.get(0).getDisplayName()).t(".").send(sender, disc);

@@ -42,9 +42,9 @@ class ExecutorAdapter implements CommandExecutor {
     final PluginCommand command = plugin.getCommand(commandString);
     command.setExecutor(this);
     command.setTabCompleter(tabCompletor);
-    SMS usageSMS = new SMS("Usage").info().t(" /").a(commandString);
+    SMS usageSMS = new SMS("Usage").info().t("/").a(commandString);
     for (Parameter parameter : parameters) {
-      usageSMS.rst(parameter.toString());
+      usageSMS.rst(" ").rst(parameter.toString());
     }
     command.setUsage(usageSMS.text());
   }
@@ -59,7 +59,7 @@ class ExecutorAdapter implements CommandExecutor {
 
     if (args.length > parameters.size()) return false;
     if (args.length < parameters.size()) {
-      if (parameters.get(args.length - 1).isRequired()) {
+      if (args.length <= 0 || parameters.get(args.length - 1).isRequired()) {
         if (parameters.get(args.length).isRequired()) return false;
       }
     }

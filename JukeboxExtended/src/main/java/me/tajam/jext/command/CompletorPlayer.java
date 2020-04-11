@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 class CompletorPlayer implements Completor {
 
   @Override
-  public List<String> onComplete(String parameter) {
+  public List<String> onComplete(String parameter, CommandSender sender) {
     final List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
     final Set<String> selectors = PlayerSelector.getSelectorStrings();
     final List<String> matches = new ArrayList<>();

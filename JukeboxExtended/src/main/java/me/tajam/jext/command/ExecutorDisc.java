@@ -15,8 +15,7 @@ class ExecutorDisc extends ExecutorAdapter {
 
   @Override
   boolean executePlayer(Player sender, String[] args) {
-    final ConfigDiscManager manager = ConfigDiscManager.getInstance();
-    final DiscContainer disc = manager.getDisc(args[0]);
+    final DiscContainer disc = ConfigDiscManager.getInstance().getDisc(args[0]);
     if (disc == null) {
       new SMS().eror().t("Disc with the namespace ").o(args[0]).t(" doesn't exists.").send(sender);
       return true;

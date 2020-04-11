@@ -35,25 +35,25 @@ public class SMS {
 
   // Set message theme to success and add a header (Green)
   public SMS okay() {
-    this.themeColor = ChatColor.RESET;
+    this.themeColor = ChatColor.GREEN;
     return head();
   }
 
   // Set message theme to warning and add a header (Yellow)
   public SMS warn() {
-    this.themeColor = ChatColor.RESET;
+    this.themeColor = ChatColor.YELLOW;
     return head();
   }
 
   // Set message theme to error and add a header (Red)
   public SMS eror() {
-    this.themeColor = ChatColor.RESET;
+    this.themeColor = ChatColor.RED;
     return head();
   }
 
   // Set message theme to infomative and add a header (Blue)
   public SMS info() {
-    this.themeColor = ChatColor.RESET;
+    this.themeColor = ChatColor.BLUE;
     return head();
   }
 

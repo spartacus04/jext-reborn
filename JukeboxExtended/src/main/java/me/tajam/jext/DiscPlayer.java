@@ -10,33 +10,21 @@ import org.bukkit.entity.Player;
 
 public class DiscPlayer {
 
-  private static final double JUKEBOX_RANGE = 66.0;
-  private static final float JUKEBOX_VOLUME = 3.0f;
+  private static final double JUKEBOX_RANGE_MULTIPLY = 16.0;
+  private static final float JUKEBOX_VOLUME = 4.0f;
 
-  private Location location;
   private String namespace;
   private float volume;
   private float pitch;
 
-  public DiscPlayer(DiscContainer disc, Location location) {
-    this(disc.getNamespace(), location);
+  public DiscPlayer(DiscContainer disc) {
+    this(disc.getNamespace());
   }
 
-  public DiscPlayer(String namespace, Location location) {
+  public DiscPlayer(String namespace) {
     this.namespace = namespace;
-    this.location = location;
     this.volume = JUKEBOX_VOLUME;
     this.pitch = 1.0f;
-  }
-  
-  public DiscPlayer setMusic(String namespace) {
-    this.namespace = namespace;
-    return this;
-  }
-
-  public DiscPlayer setMusic(DiscContainer disc) {
-    this.namespace = disc.getNamespace();
-    return this;
   }
 
   public DiscPlayer setVolume(float value) {
@@ -49,18 +37,18 @@ public class DiscPlayer {
     return this;
   }
 
-  public void play() {
+  public void play(Location location) {
     World world = location.getWorld();
     ConfigManager manager = ConfigManager.getInstance();
     if (!manager.getBooleanData(ConfigData.BooleanData.Path.ALLOW_OVERLAP)) {
-      stop();
+      stop(location);
     }
     world.playSound(location, namespace, SoundCategory.RECORDS, volume, pitch);
   }
 
-  public void stop() {
+  public void stop(Location location) {
     for (Player player : location.getWorld().getPlayers()) {
-      if (player.getLocation().distance(location) <= JUKEBOX_RANGE) {
+      if (player.getLocation().distance(location) <= JUKEBOX_VOLUME * JUKEBOX_RANGE_MULTIPLY) {
         player.stopSound(namespace, SoundCategory.RECORDS);
       }
     }

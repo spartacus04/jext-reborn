@@ -24,7 +24,7 @@ class TabCompletorAdaptor implements TabCompleter {
     try {
       final int index = args.length - 1;
       final Completor completor = completors.get(index);
-      return completor.onComplete(args[index]);
+      return completor.onComplete(args[index], sender);
     } catch (IndexOutOfBoundsException e) {
       return null;
     }
