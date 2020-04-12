@@ -1,6 +1,7 @@
 package me.tajam.jext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import me.tajam.jext.config.ConfigDiscData;
 import me.tajam.jext.config.ConfigDiscData.Path;
@@ -32,14 +33,31 @@ public class DiscContainer {
     ChatColor.COLOR_CHAR + "X" + 
     ChatColor.COLOR_CHAR + "T";
   private static final String AUTHOR_CAPTION = "Author: ";
+
+  public static final HashMap<Material, Sound> SOUND_MAP;
+  static {
+    SOUND_MAP = new HashMap<>();
+    SOUND_MAP.put(Material.MUSIC_DISC_11, Sound.MUSIC_DISC_11);
+    SOUND_MAP.put(Material.MUSIC_DISC_13, Sound.MUSIC_DISC_13);
+    SOUND_MAP.put(Material.MUSIC_DISC_BLOCKS, Sound.MUSIC_DISC_BLOCKS);
+    SOUND_MAP.put(Material.MUSIC_DISC_CAT, Sound.MUSIC_DISC_CAT);
+    SOUND_MAP.put(Material.MUSIC_DISC_CHIRP, Sound.MUSIC_DISC_CHIRP);
+    SOUND_MAP.put(Material.MUSIC_DISC_FAR, Sound.MUSIC_DISC_FAR);
+    SOUND_MAP.put(Material.MUSIC_DISC_MALL, Sound.MUSIC_DISC_MALL);
+    SOUND_MAP.put(Material.MUSIC_DISC_MELLOHI, Sound.MUSIC_DISC_MELLOHI);
+    SOUND_MAP.put(Material.MUSIC_DISC_STAL, Sound.MUSIC_DISC_STAL);
+    SOUND_MAP.put(Material.MUSIC_DISC_STRAD, Sound.MUSIC_DISC_STRAD);
+    SOUND_MAP.put(Material.MUSIC_DISC_WAIT, Sound.MUSIC_DISC_WAIT);
+    SOUND_MAP.put(Material.MUSIC_DISC_WARD, Sound.MUSIC_DISC_WARD);
+  }
   public static final Material BASEDISC_MATERIAL = Material.MUSIC_DISC_11;
-  public static final Sound BASEDISC_SOUND = Sound.MUSIC_DISC_11;
 
   private String title;
   private String author;
   private String namespaceID;
   private int customModelData;
   private ArrayList<String> lores;
+  private Material material;
 
   public DiscContainer(ConfigDiscData discData) {
     this.title = discData.getName();
@@ -47,10 +65,12 @@ public class DiscContainer {
     this.namespaceID = discData.getStringData(Path.NAMESPACE);
     this.customModelData = discData.getIntegerData(Path.MODEL_DATA);
     this.lores = discData.getLores();
+    this.material = BASEDISC_MATERIAL;
   }
 
   public DiscContainer(ItemStack disc) throws IllegalStateException {
     if (isCustomDisc(disc)) {
+      this.material = disc.getType();
       final ItemMeta meta = disc.getItemMeta();
       this.title = meta.getDisplayName();
       this.customModelData = meta.getCustomModelData();
@@ -66,7 +86,7 @@ public class DiscContainer {
   }
 
   public ItemStack getDiscItem() {
-    final ItemStack disc = new ItemStack(BASEDISC_MATERIAL);
+    final ItemStack disc = new ItemStack(material);
     final ArrayList<String> lores = new ArrayList<>();
 
     // Custom disc use a special specifier for recognition
@@ -94,6 +114,10 @@ public class DiscContainer {
     return author;
   }
 
+  public Material getMaterial() {
+    return material;
+  }
+
   @Override
   public String toString() {
     return title;
@@ -117,7 +141,7 @@ public class DiscContainer {
   }
 
   private boolean isCustomDisc(final ItemStack disc) {
-    if (disc == null || disc.getType() != BASEDISC_MATERIAL || !disc.hasItemMeta()) {
+    if (disc == null || !disc.hasItemMeta()) {
       return false;
     }
     final ItemMeta meta = disc.getItemMeta();

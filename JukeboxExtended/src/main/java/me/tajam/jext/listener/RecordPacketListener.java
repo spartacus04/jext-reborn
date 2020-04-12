@@ -42,8 +42,9 @@ public class RecordPacketListener extends PacketAdapter {
     final Location location = new Location(world, blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
     final Block block = world.getBlockAt(location);
     final BlockState blockState = block.getState();
+    final Integer data = packet.getIntegers().read(1);
     
-    if (blockState instanceof Jukebox) {
+    if (blockState instanceof Jukebox && !data.equals(0)) {
       final Jukebox jukebox = (Jukebox) blockState;
       final ItemStack disc = jukebox.getRecord();
       final DiscContainer container;
@@ -52,10 +53,10 @@ public class RecordPacketListener extends PacketAdapter {
       } catch (IllegalStateException e) {
         return;
       }
-      new BukkitRunnable(){
+      new BukkitRunnable() {
         @Override
         public void run() {
-          player.stopSound(DiscContainer.BASEDISC_SOUND, SoundCategory.RECORDS);
+          player.stopSound(DiscContainer.SOUND_MAP.get(container.getMaterial()), SoundCategory.RECORDS);
           BaseComponent[] baseComponents = new ComponentBuilder()
             .append("Now playing: ")
             .color(ChatColor.GOLD)
@@ -66,8 +67,7 @@ public class RecordPacketListener extends PacketAdapter {
             .create();
           player.spigot().sendMessage(ChatMessageType.ACTION_BAR, baseComponents);
         }
-      }.runTaskLater(plugin, 1);
+      }.runTaskLater(plugin, 5);
     }
-
   }
 }
