@@ -20,3 +20,4 @@ In future, Jext will support regional music loops with [WorldGuard API](https://
 - Customizable disc title, author and lore texts. 
 - Supports custom model data, allow customized disc texture.
 - Auto kick players who rejected the server resource pack.
+- Parrot will still dance to the music!
