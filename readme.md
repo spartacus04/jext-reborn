@@ -8,7 +8,7 @@ Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) for more 
 
 ### Required
 
-[ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) for stopping original music disc from playing.
+[ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) to make jukebox play custom music disc like vanilla.
 
 ### Optional
 
