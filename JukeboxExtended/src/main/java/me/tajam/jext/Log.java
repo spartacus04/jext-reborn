@@ -11,185 +11,196 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SMS {
+public class Log {
 
   private String title;
   private ChatColor themeColor;
   private List<Token> tokens;
 
-  public SMS(String title) {
+  public Log(String title) {
     this.tokens = new ArrayList<>();
     this.themeColor = ChatColor.WHITE;
     this.title = title;
   }
 
-  public SMS() {
+  public Log() {
     this("Jext");
   }
 
   // Set message theme to normal and add a header(White)
-  public SMS norm() {
+  public Log norm() {
     this.themeColor = ChatColor.RESET;
     return head();
   }
 
   // Set message theme to success and add a header (Green)
-  public SMS okay() {
+  public Log okay() {
     this.themeColor = ChatColor.GREEN;
     return head();
   }
 
   // Set message theme to warning and add a header (Yellow)
-  public SMS warn() {
+  public Log warn() {
     this.themeColor = ChatColor.YELLOW;
     return head();
   }
 
   // Set message theme to error and add a header (Red)
-  public SMS eror() {
+  public Log eror() {
     this.themeColor = ChatColor.RED;
     return head();
   }
 
   // Set message theme to infomative and add a header (Blue)
-  public SMS info() {
+  public Log info() {
     this.themeColor = ChatColor.BLUE;
     return head();
   }
 
   // Add header pattern
-  private SMS head() {
+  private Log head() {
     return rst("[").t(title).rst("] ");
   }
 
   // Add theme-coloured text
-  public SMS t(String themeColoredMessage) {
+  public Log t(String themeColoredMessage) {
     this.tokens.add(new Token(themeColoredMessage, themeColor));
     return this;
   }
 
-  public SMS t() {
+  public Log t() {
     this.tokens.add(new Token(themeColor));
     return this;
   }
 
   // Add green-coloured text
-  public SMS g(String greenMessage) {
+  public Log g(String greenMessage) {
     this.tokens.add(new Token(greenMessage, ChatColor.GREEN));
     return this;
   }
 
-  public SMS g() {
+  public Log g() {
     this.tokens.add(new Token(ChatColor.GREEN));
     return this;
   }
 
   // Add yellow-coloured text
-  public SMS y(String yellowMessage) {
+  public Log y(String yellowMessage) {
     this.tokens.add(new Token(yellowMessage, ChatColor.YELLOW));
     return this;
   }
 
-  public SMS y() {
+  public Log y() {
     this.tokens.add(new Token(ChatColor.YELLOW));
     return this;
   }
 
   // Add gold-coloured text
-  public SMS o(String goldenMessage) {
+  public Log o(String goldenMessage) {
     this.tokens.add(new Token(goldenMessage, ChatColor.GOLD));
     return this;
   }
 
-  public SMS o() {
+  public Log o() {
     this.tokens.add(new Token(ChatColor.GOLD));
     return this;
   }
 
   // Add red-coloured text
-  public SMS r(String redMessage) {
+  public Log r(String redMessage) {
     this.tokens.add(new Token(redMessage, ChatColor.RED));
     return this;
   }
 
-  public SMS r() {
+  public Log r() {
     this.tokens.add(new Token(ChatColor.RED));
     return this;
   }
 
   // Add blue-coloured text
-  public SMS b(String blueMessage) {
+  public Log b(String blueMessage) {
     this.tokens.add(new Token(blueMessage, ChatColor.BLUE));
     return this;
   }
 
-  public SMS b() {
+  public Log b() {
     this.tokens.add(new Token(ChatColor.BLUE));
     return this;
   }
 
   // Add teal-coloured text
-  public SMS a(String aquaMessage) {
+  public Log a(String aquaMessage) {
     this.tokens.add(new Token(aquaMessage, ChatColor.AQUA));
     return this;
   }
 
-  public SMS a() {
+  public Log a() {
     this.tokens.add(new Token(ChatColor.AQUA));
     return this;
   }
 
   // Add dark teal-coloured text
-  public SMS da(String darkAquaMessage) {
+  public Log da(String darkAquaMessage) {
     this.tokens.add(new Token(darkAquaMessage, ChatColor.DARK_AQUA));
     return this;
   }
 
-  public SMS da() {
+  public Log da() {
     this.tokens.add(new Token(ChatColor.DARK_AQUA));
     return this;
   }
 
   // Add purple-coloured text
-  public SMS p(String purpleMessage) {
+  public Log p(String purpleMessage) {
     this.tokens.add(new Token(purpleMessage, ChatColor.LIGHT_PURPLE));
     return this;
   }
 
-  public SMS p() {
+  public Log p() {
     this.tokens.add(new Token(ChatColor.LIGHT_PURPLE));
     return this;
   }
 
   // Add dark purple-coloured text
-  public SMS dp(String darkPurpleMessage) {
+  public Log dp(String darkPurpleMessage) {
     this.tokens.add(new Token(darkPurpleMessage, ChatColor.DARK_PURPLE));
     return this;
   }
 
-  public SMS dp() {
+  public Log dp() {
     this.tokens.add(new Token(ChatColor.DARK_PURPLE));
     return this;
   }
 
+  // Add gray-coloured text
+  public Log gr(String grayMessage) {
+    this.tokens.add(new Token(grayMessage, ChatColor.GRAY));
+    return this;
+  }
+
+  public Log gr() {
+    this.tokens.add(new Token(ChatColor.GRAY));
+    return this;
+  }
+
   // Add magic-coloured text
-  public SMS mag(String magicMessage) {
+  public Log mag(String magicMessage) {
     this.tokens.add(new Token(magicMessage, ChatColor.MAGIC));
     return this;
   }
 
-  public SMS mag() {
+  public Log mag() {
     this.tokens.add(new Token(ChatColor.MAGIC));
     return this;
   }
 
   // Reset colour and add text
-  public SMS rst(String plainColoredMessage) {
+  public Log rst(String plainColoredMessage) {
     this.tokens.add(new Token(plainColoredMessage, ChatColor.RESET));
     return this;
   }
 
-  public SMS rst() {
+  public Log rst() {
     this.tokens.add(new Token(ChatColor.RESET));
     return this;
   }

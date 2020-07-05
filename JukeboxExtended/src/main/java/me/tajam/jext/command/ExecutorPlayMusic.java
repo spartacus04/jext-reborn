@@ -3,7 +3,7 @@ package me.tajam.jext.command;
 import me.tajam.jext.config.ConfigDiscManager;
 import me.tajam.jext.DiscContainer;
 import me.tajam.jext.DiscPlayer;
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
 
     final DiscContainer disc = ConfigDiscManager.getInstance().getDisc(args[1]);
     if (disc == null) {
-      new SMS().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
+      new Log().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
       return true;
     }
     final DiscPlayer discPlayer = new DiscPlayer(disc);
@@ -47,7 +47,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
       try {
         pitch = Float.parseFloat(args[2]);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for pitch parameter.").send(sender);
+        new Log().eror().t("Wrong number format for pitch parameter.").send(sender);
         return true;
       }
     }
@@ -60,7 +60,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
         discPlayer.setPitch(pitch);
         discPlayer.setVolume(volume);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for volume parameter.").send(sender);
+        new Log().eror().t("Wrong number format for volume parameter.").send(sender);
         return true;
       }
     }
@@ -68,7 +68,7 @@ class ExecutorPlayMusic extends ExecutorAdapter {
     for (Player player : players) {
       if (isMusic) {
         player.playSound(player.getLocation(), disc.getNamespace(), SoundCategory.RECORDS, Float.MAX_VALUE, pitch);
-        new SMS().info().t("Music ").p().t(" is playing now.").send(player, disc);
+        new Log().info().t("Music ").p().t(" is playing now.").send(player, disc);
       } else {
         discPlayer.play(player.getLocation());
       }
@@ -76,11 +76,11 @@ class ExecutorPlayMusic extends ExecutorAdapter {
     
     final Integer playerCount = players.size();
     if (playerCount >= 2) {
-      new SMS().warn().t("Played music ").o().t(" to ").o().t(" players!").send(sender, disc, playerCount);
+      new Log().warn().t("Played music ").o().t(" to ").o().t(" players!").send(sender, disc, playerCount);
     } else if (playerCount == 1) {
-      new SMS().okay().t("Played music ").o().t(" to ").o(players.get(0).getDisplayName()).t(".").send(sender, disc);
+      new Log().okay().t("Played music ").o().t(" to ").o(players.get(0).getDisplayName()).t(".").send(sender, disc);
     } else {
-      new SMS().eror().t("Played music to no player, something might when wrong!").send(sender);
+      new Log().eror().t("Played music to no player, something might when wrong!").send(sender);
     }
     return true;
   }

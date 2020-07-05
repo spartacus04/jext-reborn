@@ -2,7 +2,7 @@ package me.tajam.jext.command;
 
 import me.tajam.jext.config.ConfigDiscManager;
 import me.tajam.jext.DiscContainer;
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +42,7 @@ class ExecutorStopMusic extends ExecutorAdapter {
     } else {
       final DiscContainer disc = manager.getDisc(args[1]);
       if (disc == null) {
-        new SMS().eror().t("Music with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
+        new Log().eror().t("Music with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
         return true;
       }
       namespaces = new HashSet<String>();
@@ -53,19 +53,19 @@ class ExecutorStopMusic extends ExecutorAdapter {
       for (String namespace : namespaces) {
         player.stopSound(namespace, SoundCategory.RECORDS);
         if (namespaces.size() == 1)
-          new SMS().info().t("Stopped music ").p().t(".").send(player, manager.getDisc(namespace));
+          new Log().info().t("Stopped music ").p().t(".").send(player, manager.getDisc(namespace));
       }
       if (namespaces.size() > 1)
-        new SMS().info().t("Stopped all music.").send(player);
+        new Log().info().t("Stopped all music.").send(player);
     }
     
     final Integer playerCount = players.size();
     if (playerCount >= 2) {
-      new SMS().warn().t("Stopped music for ").o().t(" players!").send(sender, playerCount);
+      new Log().warn().t("Stopped music for ").o().t(" players!").send(sender, playerCount);
     } else if (playerCount == 1) {
-      new SMS().okay().t("Stopped music for ").o(players.get(0).getName()).t(".").send(sender);
+      new Log().okay().t("Stopped music for ").o(players.get(0).getName()).t(".").send(sender);
     } else {
-      new SMS().eror().t("Stopped music to no player, something might when wrong!").send(sender);
+      new Log().eror().t("Stopped music to no player, something might when wrong!").send(sender);
     }
     return true;
   }

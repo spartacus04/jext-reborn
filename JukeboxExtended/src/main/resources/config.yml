@@ -20,11 +20,13 @@ jext:
       namespace: "music_disc.cat"
       author: "C148"
       model-data: 0
+      creeper-drop: true
       lore:
         - "Minecraft originals"
     "Stal":
       namespace: "music_disc.stal"
       author: "C148"
       model-data: 0
+      creeper-drop: true
       lore:
         - "Minecraft originals"

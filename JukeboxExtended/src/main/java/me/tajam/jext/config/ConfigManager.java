@@ -2,7 +2,7 @@ package me.tajam.jext.config;
 
 import java.io.File;
 
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 import me.tajam.jext.config.field.ConfigField;
 
 import org.bukkit.configuration.ConfigurationSection;
@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 public class ConfigManager {
 
-  private static final SMS CONFIG_RESET = new SMS().warn().t("Legacy configuration file unsupported, reset to default.");
+  private static final Log CONFIG_RESET = new Log().warn().t("Legacy configuration file unsupported, reset to default.");
   private static ConfigManager instance = null;
   public static ConfigManager getInstance() {
     if (instance == null) {

@@ -2,7 +2,7 @@ package me.tajam.jext.command;
 
 import org.bukkit.ChatColor;
 
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 class Parameter {
 
@@ -30,7 +30,7 @@ class Parameter {
   
   @Override
   public String toString() {
-    SMS sms = new SMS().rst(((required)? "[" : "<")).rst().rst(((required)? "]" : ">"));
+    Log sms = new Log().rst(((required)? "[" : "<")).rst().rst(((required)? "]" : ">"));
     return sms.text((required)? ChatColor.LIGHT_PURPLE + name : ChatColor.DARK_PURPLE + name);
   }
 

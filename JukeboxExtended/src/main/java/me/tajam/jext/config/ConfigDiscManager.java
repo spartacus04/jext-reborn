@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import me.tajam.jext.DiscContainer;
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -33,7 +33,7 @@ public class ConfigDiscManager {
       discData.load(subsection);
       discMap.put(discData.getStringData(ConfigDiscData.Path.NAMESPACE), discData);
     }
-    new SMS().okay().t("Loaded ").b().t(" disc(s).").send(discMap.size());
+    new Log().okay().t("Loaded ").b().t(" disc(s).").send(discMap.size());
   }
 
   public DiscContainer getDisc(String namespace) {

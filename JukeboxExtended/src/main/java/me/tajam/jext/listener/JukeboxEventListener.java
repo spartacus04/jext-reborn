@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class JukeboxEventListener implements Listener {
+class JukeboxEventListener implements Listener {
 
   @EventHandler(ignoreCancelled = true)
   public void onJukeboxInteract(final PlayerInteractEvent event) {

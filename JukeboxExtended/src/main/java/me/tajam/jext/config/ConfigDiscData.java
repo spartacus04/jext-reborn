@@ -15,13 +15,15 @@ public class ConfigDiscData {
     NAMESPACE,
     AUTHOR,
     MODEL_DATA,
-    LORES
+    LORES,
+    CREEPER_DROP
 
   }
 
   private String name;
   private HashMap<Path, ConfigField<String>> stringMap;
   private HashMap<Path, ConfigField<Integer>> integerMap;
+  private HashMap<Path, ConfigField<Boolean>> booleanMap;
   private ConfigFieldListString lores;
 
   public ConfigDiscData(String name) {
@@ -34,6 +36,9 @@ public class ConfigDiscData {
 
     integerMap = new HashMap<>();
     integerMap.put(Path.MODEL_DATA, new ConfigField<Integer>("model-data", 0));
+
+    booleanMap = new HashMap<>();
+    booleanMap.put(Path.CREEPER_DROP, new ConfigField<Boolean>("creeper-drop", true));
 
     lores = new ConfigFieldListString("lore", new ArrayList<String>());
     
@@ -49,6 +54,10 @@ public class ConfigDiscData {
       ConfigField<Integer> field = integerMap.get(key);
       field.updateData(subsection, Integer.class);
     }
+    for (Path key : booleanMap.keySet()) {
+      ConfigField<Boolean> field = booleanMap.get(key);
+      field.updateData(subsection, Boolean.class);
+    }
     lores.updateData(subsection);
   }
 
@@ -62,6 +71,10 @@ public class ConfigDiscData {
 
   public Integer getIntegerData(Path key) {
     return integerMap.get(key).getData();
+  }
+
+  public Boolean getBooleanData(Path key) {
+    return booleanMap.get(key).getData();
   }
 
   public ArrayList<String> getLores() {

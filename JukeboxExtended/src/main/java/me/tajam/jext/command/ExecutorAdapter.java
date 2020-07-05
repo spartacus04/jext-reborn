@@ -1,6 +1,6 @@
 package me.tajam.jext.command;
 
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 class ExecutorAdapter implements CommandExecutor {
 
-  private static final SMS DEFAULT_MESSAGE = new SMS().info().t("This command is only for ").t().t(".");
-  private static final SMS PERMISSION_MESSAGE = new SMS().eror().t("You do not have permission to use this command.");
+  private static final Log DEFAULT_MESSAGE = new Log().info().t("This command is only for ").t().t(".");
+  private static final Log PERMISSION_MESSAGE = new Log().eror().t("You do not have permission to use this command.");
 
   private final TabCompletorAdaptor tabCompletor;
   private final String commandString;
@@ -42,7 +42,7 @@ class ExecutorAdapter implements CommandExecutor {
     final PluginCommand command = plugin.getCommand(commandString);
     command.setExecutor(this);
     command.setTabCompleter(tabCompletor);
-    SMS usageSMS = new SMS("Usage").info().t("/").a(commandString);
+    Log usageSMS = new Log("Usage").info().t("/").a(commandString);
     for (Parameter parameter : parameters) {
       usageSMS.rst(" ").rst(parameter.toString());
     }

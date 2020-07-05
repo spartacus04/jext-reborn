@@ -2,7 +2,7 @@ package me.tajam.jext.command;
 
 import me.tajam.jext.config.ConfigDiscManager;
 import me.tajam.jext.DiscContainer;
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 import java.util.List;
 
@@ -33,22 +33,22 @@ class ExecutorDiscGive extends ExecutorAdapter {
 
     final DiscContainer disc = ConfigDiscManager.getInstance().getDisc(args[1]);
     if (disc == null) {
-      new SMS().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
+      new Log().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender);
       return true;
     }
 
     for (Player player : players) {
       player.getInventory().addItem(disc.getDiscItem());
-      new SMS().info().t("Received ").p().t(" disc.").send(player, disc);
+      new Log().info().t("Received ").p().t(" disc.").send(player, disc);
     }
 
     final Integer playerCount = players.size();
     if (playerCount >= 2) {
-      new SMS().warn().t("Given ").o().t(" disc to ").o().t(" players!").send(sender, disc, playerCount);
+      new Log().warn().t("Given ").o().t(" disc to ").o().t(" players!").send(sender, disc, playerCount);
     } else if (playerCount == 1) {
-      new SMS().okay().t("Given ").o().t(" disc to ").o(players.get(0).getDisplayName()).t(".").send(sender, disc);
+      new Log().okay().t("Given ").o().t(" disc to ").o(players.get(0).getDisplayName()).t(".").send(sender, disc);
     } else {
-      new SMS().eror().t("Given disc to no player, something might when wrong!").send(sender);
+      new Log().eror().t("Given disc to no player, something might when wrong!").send(sender);
     }
     return true;
   }

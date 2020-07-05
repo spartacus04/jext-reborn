@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import me.tajam.jext.DiscContainer;
 import me.tajam.jext.DiscPlayer;
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 import me.tajam.jext.command.CompletorLocation.Axis;
 import me.tajam.jext.config.ConfigDiscManager;
 
@@ -27,13 +27,13 @@ class ExecutorPlayAt extends ExecutorAdapter {
     try {
       location = new LocationParser(args[0], args[1], args[2], sender).parse();
     } catch (NumberFormatException e) {
-      new SMS().eror().t("Invalid location value!").send(sender);
+      new Log().eror().t("Invalid location value!").send(sender);
       return true;
     }
 
     final DiscContainer disc = ConfigDiscManager.getInstance().getDisc(args[3]);
     if (disc == null) {
-      new SMS().eror().t("Disc with the namespace ").o(args[3]).t(" doesn't exists.").send(sender);
+      new Log().eror().t("Disc with the namespace ").o(args[3]).t(" doesn't exists.").send(sender);
       return true;
     }
     final DiscPlayer discPlayer = new DiscPlayer(disc);
@@ -43,7 +43,7 @@ class ExecutorPlayAt extends ExecutorAdapter {
         final float pitch = Float.parseFloat(args[4]);
         discPlayer.setPitch(pitch);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for pitch parameter.").send(sender);
+        new Log().eror().t("Wrong number format for pitch parameter.").send(sender);
         return true;
       }
     }
@@ -53,7 +53,7 @@ class ExecutorPlayAt extends ExecutorAdapter {
         final float volume = Float.parseFloat(args[5]);
         discPlayer.setVolume(volume);
       } catch (NumberFormatException e) {
-        new SMS().eror().t("Wrong number format for volume parameter.").send(sender);
+        new Log().eror().t("Wrong number format for volume parameter.").send(sender);
         return true;
       }
     }

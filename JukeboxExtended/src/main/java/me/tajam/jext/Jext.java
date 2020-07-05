@@ -2,23 +2,20 @@ package me.tajam.jext;
 
 import me.tajam.jext.command.CommandsRegistrant;
 import me.tajam.jext.config.ConfigManager;
-import me.tajam.jext.listener.*;
+import me.tajam.jext.listener.ListenersRegistrant;
+import me.tajam.jext.namespace.JextNamespace;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Jext extends JavaPlugin {
 
-  private static final SMS ENABLED_MESSAGE = new SMS().okay().t("Enabled Jukebox Extender, Do Re Mi!");
-  private static final SMS DISABLED_MESSAGE = new SMS().okay().t("Disabled Jukebox Extender, Mi Re Do!");
+  private static final Log ENABLED_MESSAGE = new Log().okay().t("Enabled Jukebox Extender, Do Re Mi!");
+  private static final Log DISABLED_MESSAGE = new Log().warn().t("Disabled Jukebox Extender, Mi Re Do!");
 
   @Override
   public void onEnable() {
     try {
+      new SpigotVersion(this);
       load();
     } catch (Exception e) {
       e.printStackTrace();
@@ -34,20 +31,17 @@ public class Jext extends JavaPlugin {
 
   private void load() {
 
+    // Register namespaces
+    JextNamespace.getInstance().registerNamespace(this);
+
     // Load configurations
     ConfigManager.getInstance().setPlugin(this).load();
-
-    // Packet manager
-    ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-    protocolManager.addPacketListener(new RecordPacketListener(this, ListenerPriority.NORMAL));
 
     // Setup commands
     CommandsRegistrant.getInstance().registerCommands(this);
 
     // Register listeners
-    PluginManager pluginManager = getServer().getPluginManager();
-    pluginManager.registerEvents(new JukeboxEventListener(), this);
-    pluginManager.registerEvents(new ResourceStatusListener(this), this);
+    ListenersRegistrant.getInstance().registerListeners(this);
   }
 
 }

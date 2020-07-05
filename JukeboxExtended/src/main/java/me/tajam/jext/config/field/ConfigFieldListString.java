@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 public class ConfigFieldListString implements ConfigFieldList<String> {
 
@@ -29,7 +29,8 @@ public class ConfigFieldListString implements ConfigFieldList<String> {
   @Override
   public void updateData(ConfigurationSection section) {
     if (!section.isSet(path)) {
-      new SMS().warn().t("\"").o(path).t("\" missing in configuration file, will set to default value.").send();
+      new Log().warn().t("\"").o(path).t("\" missing in configuration file, will set to default value.").send();
+      return;
     }
     this.data = new ArrayList<String>(section.getStringList(path));
   }

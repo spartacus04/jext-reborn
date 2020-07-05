@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.tajam.jext.SMS;
+import me.tajam.jext.Log;
 
 class PlayerSelector {
 
@@ -63,7 +63,7 @@ class PlayerSelector {
           final List<Player> players = new ArrayList<>();
           final Player player = Bukkit.getPlayer(selector);
           if (player == null) {
-            new SMS().eror().t("Cannot find player: ").o(selector).send(sender);
+            new Log().eror().t("Cannot find player: ").o(selector).send(sender);
             return null;
           }
           players.add(player);
@@ -72,7 +72,7 @@ class PlayerSelector {
         default: return null;
       }
     } catch (IllegalStateException e) {
-      new SMS().eror().t("Invalid selector for console!").send(sender);
+      new Log().eror().t("Invalid selector for console!").send(sender);
       return null;
     }
     
