@@ -17,7 +17,8 @@ In future, Jext will support regional music loops with [WorldGuard API](https://
 ## Core features
 
 - Adding and playing custom music disc without replacing the original music disc.
-- Customizable disc title, author and lore texts. 
+- Customizable disc title, author and lore texts.
+- Allow/Disallow custom discs drop from Creepers.
 - Supports custom model data, allow customized disc texture.
 - Auto kick players who rejected the server resource pack.
 - Parrot will still dance to the music!
