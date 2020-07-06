@@ -46,7 +46,7 @@ public class CreeperDeathListener implements Listener {
     if (disc != null) {
       int discCount = DiscContainer.SOUND_MAP.size();
       if (SpigotVersion.isVersion1_16()) discCount--;
-      final int index = generator.nextInt(this.droppableDiscs.size() - discCount);
+      final int index = generator.nextInt(this.droppableDiscs.size() + discCount);
       if (index < this.droppableDiscs.size()) {
         drops.remove(disc);
         drops.add(this.droppableDiscs.get(index).getDiscItem());
