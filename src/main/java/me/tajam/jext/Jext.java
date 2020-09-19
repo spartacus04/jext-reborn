@@ -3,7 +3,6 @@ package me.tajam.jext;
 import me.tajam.jext.command.CommandsRegistrant;
 import me.tajam.jext.config.ConfigManager;
 import me.tajam.jext.listener.ListenersRegistrant;
-import me.tajam.jext.namespace.JextNamespace;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,7 +31,7 @@ public class Jext extends JavaPlugin {
   private void load() {
 
     // Register namespaces
-    JextNamespace.getInstance().registerNamespace(this);
+    JextNamespace.registerNamespace(this);
 
     // Load configurations
     ConfigManager.getInstance().setPlugin(this).load();

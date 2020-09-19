@@ -59,7 +59,7 @@ public class DiscContainer {
       this.customModelData = meta.getCustomModelData();
       final ArrayList<String> itemLores = new ArrayList<>(meta.getLore());
       this.lores = itemLores;
-      final DiscPersistentDataHelper helper = new DiscPersistentDataHelper(meta);
+      final DiscPersistentDataContainer helper = new DiscPersistentDataContainer(meta);
       this.author = helper.getAuthor();
       this.namespaceID = helper.getNamespaceID();
       this.title = helper.getTitle();
@@ -75,7 +75,7 @@ public class DiscContainer {
     meta.setCustomModelData(customModelData);
 
     // Store custom disc data
-    final DiscPersistentDataHelper helper = new DiscPersistentDataHelper(meta);
+    final DiscPersistentDataContainer helper = new DiscPersistentDataContainer(meta);
     helper.setAuthor(this.author);
     helper.setNamespaceID(this.namespaceID);
     helper.setTitle(this.title);
@@ -117,7 +117,7 @@ public class DiscContainer {
       return false;
     }
     final ItemMeta meta = disc.getItemMeta();
-    final DiscPersistentDataHelper helper = new DiscPersistentDataHelper(meta);
+    final DiscPersistentDataContainer helper = new DiscPersistentDataContainer(meta);
     try {
       if (!helper.checkIdentifier()) {
         return false;

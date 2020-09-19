@@ -4,24 +4,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import me.tajam.jext.namespace.JextNamespace;
-import me.tajam.jext.namespace.JextNamespace.DefinedNamespace;
-
-public class DiscPersistentDataHelper {
+public class DiscPersistentDataContainer {
 
   private final String IDENTIFIER = "JEXT";
 
   private PersistentDataContainer container;
-  private JextNamespace namespace;
 
-  public DiscPersistentDataHelper(ItemMeta meta) {
+  public DiscPersistentDataContainer(ItemMeta meta) {
     this.container = meta.getPersistentDataContainer();
-    this.namespace = JextNamespace.getInstance();
   }
 
   public void setTitle(String value) {
     container.set(
-      namespace.get(DefinedNamespace.TITLE),
+      JextNamespace.TITLE.get(),
       PersistentDataType.STRING,
       value
     );
@@ -29,14 +24,14 @@ public class DiscPersistentDataHelper {
 
   public String getTitle() {
     return container.get(
-      namespace.get(DefinedNamespace.TITLE),
+      JextNamespace.TITLE.get(),
       PersistentDataType.STRING
     );
   }
 
   public void setAuthor(String value) {
     container.set(
-      namespace.get(DefinedNamespace.AUTHOR),
+      JextNamespace.AUTHOR.get(),
       PersistentDataType.STRING,
       value
     );
@@ -44,14 +39,14 @@ public class DiscPersistentDataHelper {
 
   public String getAuthor() {
     return container.get(
-      namespace.get(DefinedNamespace.AUTHOR),
+      JextNamespace.AUTHOR.get(),
       PersistentDataType.STRING
     );
   }
 
   public void setNamespaceID(String value) {
     container.set(
-      namespace.get(DefinedNamespace.NAMESPACE_ID),
+      JextNamespace.NAMESPACE_ID.get(),
       PersistentDataType.STRING,
       value
     );
@@ -59,14 +54,14 @@ public class DiscPersistentDataHelper {
 
   public String getNamespaceID() {
     return container.get(
-      namespace.get(DefinedNamespace.NAMESPACE_ID),
+      JextNamespace.NAMESPACE_ID.get(),
       PersistentDataType.STRING
     );
   }
 
   public void setIdentifier() {
     container.set(
-      namespace.get(DefinedNamespace.IDENTIFIER),
+      JextNamespace.IDENTIFIER.get(),
       PersistentDataType.STRING,
       IDENTIFIER
     );
@@ -74,7 +69,7 @@ public class DiscPersistentDataHelper {
 
   public boolean checkIdentifier() {
     final String value = container.get(
-      namespace.get(DefinedNamespace.IDENTIFIER),
+      JextNamespace.IDENTIFIER.get(),
       PersistentDataType.STRING
     );
     return value.equals(IDENTIFIER);
