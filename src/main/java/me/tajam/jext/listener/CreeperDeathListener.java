@@ -11,9 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.tajam.jext.DiscContainer;
 import me.tajam.jext.SpigotVersion;
 import me.tajam.jext.config.ConfigDiscManager;
+import me.tajam.jext.disc.DiscContainer;
 
 public class CreeperDeathListener implements Listener {
 

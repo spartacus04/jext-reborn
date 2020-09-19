@@ -1,8 +1,8 @@
 package me.tajam.jext.command;
 
 import me.tajam.jext.config.ConfigDiscManager;
-import me.tajam.jext.DiscContainer;
-import me.tajam.jext.DiscPlayer;
+import me.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.disc.DiscPlayer;
 import me.tajam.jext.Log;
 
 import java.util.List;

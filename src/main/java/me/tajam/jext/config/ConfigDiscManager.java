@@ -3,8 +3,8 @@ package me.tajam.jext.config;
 import java.util.HashMap;
 import java.util.Set;
 
-import me.tajam.jext.DiscContainer;
 import me.tajam.jext.Log;
+import me.tajam.jext.disc.DiscContainer;
 
 import org.bukkit.configuration.ConfigurationSection;
 

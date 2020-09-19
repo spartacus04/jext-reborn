@@ -1,8 +1,10 @@
-package me.tajam.jext;
+package me.tajam.jext.disc;
 
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import me.tajam.jext.JextNamespace;
 
 public class DiscPersistentDataContainer {
 

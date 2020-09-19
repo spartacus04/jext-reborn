@@ -1,7 +1,7 @@
 package me.tajam.jext.command;
 
 import me.tajam.jext.config.ConfigDiscManager;
-import me.tajam.jext.DiscContainer;
+import me.tajam.jext.disc.DiscContainer;
 import me.tajam.jext.Log;
 
 import org.bukkit.entity.Player;

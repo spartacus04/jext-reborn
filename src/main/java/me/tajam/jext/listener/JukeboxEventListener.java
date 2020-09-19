@@ -1,7 +1,7 @@
 package me.tajam.jext.listener;
 
-import me.tajam.jext.DiscContainer;
-import me.tajam.jext.DiscPlayer;
+import me.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.disc.DiscPlayer;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

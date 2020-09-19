@@ -8,9 +8,10 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.BlockPosition;
 
-import me.tajam.jext.DiscContainer;
+import me.tajam.jext.disc.DiscContainer;
 import me.tajam.jext.Log;
 import me.tajam.jext.SpigotVersion;
+
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;

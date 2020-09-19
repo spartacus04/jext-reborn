@@ -3,8 +3,8 @@ package me.tajam.jext.command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import me.tajam.jext.DiscContainer;
-import me.tajam.jext.DiscPlayer;
+import me.tajam.jext.disc.DiscContainer;
+import me.tajam.jext.disc.DiscPlayer;
 import me.tajam.jext.Log;
 import me.tajam.jext.command.ParameterLocation.Axis;
 import me.tajam.jext.config.ConfigDiscManager;

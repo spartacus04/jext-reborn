@@ -1,8 +1,10 @@
-package me.tajam.jext;
+package me.tajam.jext.disc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import me.tajam.jext.Log;
+import me.tajam.jext.SpigotVersion;
 import me.tajam.jext.config.ConfigDiscData;
 import me.tajam.jext.config.ConfigDiscData.Path;
 
