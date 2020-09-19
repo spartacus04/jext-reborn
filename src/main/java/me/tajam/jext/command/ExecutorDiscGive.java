@@ -13,8 +13,8 @@ class ExecutorDiscGive extends ExecutorAdapter {
 
   ExecutorDiscGive() {
     super("discgive");
-    addParameter(new Parameter("player", new CompletorPlayer()));
-    addParameter(new Parameter("namespace", new CompletorDisc()));
+    addParameter(new ParameterPlayer(true));
+    addParameter(new ParameterDisc(true));
   }
 
   @Override

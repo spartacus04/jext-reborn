@@ -10,7 +10,7 @@ class ExecutorDisc extends ExecutorAdapter {
 
   ExecutorDisc() {
     super("disc");
-    addParameter(new Parameter("namespace", new CompletorDisc()));
+    addParameter(new ParameterDisc(true));
   }
 
   @Override

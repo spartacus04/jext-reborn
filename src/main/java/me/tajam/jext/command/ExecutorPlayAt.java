@@ -6,19 +6,19 @@ import org.bukkit.entity.Player;
 import me.tajam.jext.DiscContainer;
 import me.tajam.jext.DiscPlayer;
 import me.tajam.jext.Log;
-import me.tajam.jext.command.CompletorLocation.Axis;
+import me.tajam.jext.command.ParameterLocation.Axis;
 import me.tajam.jext.config.ConfigDiscManager;
 
 class ExecutorPlayAt extends ExecutorAdapter {
 
   ExecutorPlayAt() {
     super("playat");
-    addParameter(new Parameter("x", new CompletorLocation(Axis.X)));
-    addParameter(new Parameter("y", new CompletorLocation(Axis.Y)));
-    addParameter(new Parameter("z", new CompletorLocation(Axis.Z)));
-    addParameter(new Parameter("namespace", new CompletorDisc()));
-    addParameter(new Parameter("pitch", new CompletorNumber(1.0f, 1.5f, 0.5f), false));
-    addParameter(new Parameter("volume", new CompletorNumber(4.0f, 1.0f, 0.5f), false));
+    addParameter(new ParameterLocation(true, Axis.X));
+    addParameter(new ParameterLocation(true, Axis.Y));
+    addParameter(new ParameterLocation(true, Axis.Z));
+    addParameter(new ParameterDisc(true));
+    addParameter(new ParameterNumber(false, 0.5f, 1.0f, 1.5f).setName("pitch"));
+    addParameter(new ParameterNumber(false, 4.0f, 1.0f, 0.5f).setName("volume"));
   }
 
   @Override

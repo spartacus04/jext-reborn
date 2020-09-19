@@ -59,16 +59,7 @@ class PlayerSelector {
         case WORLD_RANDOM: return getRandomPlayers(getWorldPlayers());
         case RANDOM: return getRandomPlayers(getAllPlayers());
         case SELF: return getSelf();
-        case PLAYER: {
-          final List<Player> players = new ArrayList<>();
-          final Player player = Bukkit.getPlayer(selector);
-          if (player == null) {
-            new Log().eror().t("Cannot find player: ").o(selector).send(sender);
-            return null;
-          }
-          players.add(player);
-          return players;
-        }
+        case PLAYER: return getSpecificPlayer();
         default: return null;
       }
     } catch (IllegalStateException e) {
@@ -88,6 +79,17 @@ class PlayerSelector {
       return player.getWorld().getPlayers(); 
     }
     throw new IllegalStateException();
+  }
+
+  private List<Player> getSpecificPlayer() {
+    final List<Player> players = new ArrayList<>();
+    final Player player = Bukkit.getPlayer(selector);
+    if (player == null) {
+      new Log().eror().t("Cannot find player: ").o(selector).send(sender);
+      return null;
+    }
+    players.add(player);
+    return players;
   }
 
   private List<Player> getRandomPlayers(List<Player> players) {

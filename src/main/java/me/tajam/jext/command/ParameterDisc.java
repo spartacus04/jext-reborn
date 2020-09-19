@@ -8,10 +8,19 @@ import org.bukkit.command.CommandSender;
 
 import me.tajam.jext.config.ConfigDiscManager;
 
-class CompletorDisc implements Completor {
+class ParameterDisc extends Parameter {
+
+  ParameterDisc(boolean required) {
+    super(required);
+  }
 
   @Override
-  public List<String> onComplete(String parameter, CommandSender sender) {
+  String getName() {
+    return "namespace";
+  }
+
+  @Override
+  List<String> onComplete(String parameter, CommandSender sender) {
     final Set<String> namespaces = ConfigDiscManager.getInstance().getNamespaces();
     final List<String> matches = new ArrayList<>();
     for (final String namespace : namespaces) {
@@ -23,4 +32,5 @@ class CompletorDisc implements Completor {
     if (matches.size() > 0) return matches;
     return null;
   }
+  
 }

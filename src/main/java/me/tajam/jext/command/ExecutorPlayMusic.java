@@ -15,10 +15,10 @@ class ExecutorPlayMusic extends ExecutorAdapter {
 
   ExecutorPlayMusic() {
     super("playmusic");
-    addParameter(new Parameter("player", new CompletorPlayer()));
-    addParameter(new Parameter("namespace", new CompletorDisc()));
-    addParameter(new Parameter("pitch", new CompletorNumber(1.0f, 1.5f, 0.5f), false));
-    addParameter(new Parameter("volume", new CompletorNumber(4.0f, 1.0f, 0.5f), false));
+    addParameter(new ParameterPlayer(true));
+    addParameter(new ParameterDisc(true));
+    addParameter(new ParameterNumber(false, 0.5f, 1.0f, 1.5f).setName("pitch"));
+    addParameter(new ParameterNumber(false, 4.0f, 1.0f, 0.5f).setName("volume"));
   }
 
   @Override

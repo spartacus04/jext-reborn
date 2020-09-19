@@ -8,10 +8,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-class CompletorPlayer implements Completor {
+public class ParameterPlayer extends Parameter {
+
+  ParameterPlayer(boolean required) {
+    super(required);
+  }
 
   @Override
-  public List<String> onComplete(String parameter, CommandSender sender) {
+  String getName() {
+    return "player";
+  }
+
+  @Override
+  List<String> onComplete(String parameter, CommandSender sender) {
     final List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
     final Set<String> selectors = PlayerSelector.getSelectorStrings();
     final List<String> matches = new ArrayList<>();
@@ -31,5 +40,5 @@ class CompletorPlayer implements Completor {
     if (matches.size() > 0) return matches;
     return null;
   }
-
+  
 }

@@ -16,8 +16,8 @@ class ExecutorStopMusic extends ExecutorAdapter {
 
   ExecutorStopMusic() {
     super("stopmusic");
-    addParameter(new Parameter("player", new CompletorPlayer()));
-    addParameter(new Parameter("namespace", new CompletorDisc(), false));
+    addParameter(new ParameterPlayer(true));
+    addParameter(new ParameterDisc(true));
   }
 
   @Override

@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-class CompletorLocation implements Completor {
+public class ParameterLocation extends Parameter {
 
   enum Axis {
     X, Y, Z
@@ -16,15 +16,21 @@ class CompletorLocation implements Completor {
 
   private Axis axis;
 
-  CompletorLocation(Axis axis) {
+  ParameterLocation(boolean required, Axis axis) {
+    super(required);
     this.axis = axis;
   }
 
   @Override
-  public List<String> onComplete(String parameter, CommandSender sender) {
+  String getName() {
+    return this.axis.toString().toLowerCase();
+  }
+
+  @Override
+  List<String> onComplete(String parameter, CommandSender sender) {
     final List<String> suggestions = new ArrayList<>();
     suggestions.add("~");
-    final Player player = (sender instanceof Player)? (Player)sender : null;
+    final Player player = (sender instanceof Player) ? (Player)sender : null;
     if (player == null) return suggestions;
     final Block block = player.getTargetBlockExact(4);
     if (block == null) return suggestions;
@@ -50,5 +56,5 @@ class CompletorLocation implements Completor {
     }
     return suggestions;
   }
-
+  
 }
