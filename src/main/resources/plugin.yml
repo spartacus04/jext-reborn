@@ -4,6 +4,7 @@ author: Tajam
 version: 1.2.0
 api-version: 1.14
 depend: [ProtocolLib]
+softdepend: [WorldGuard]
 
 commands:
   disc:
