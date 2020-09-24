@@ -2,7 +2,11 @@ package me.tajam.jext;
 
 import me.tajam.jext.command.CommandsRegistrant;
 import me.tajam.jext.config.ConfigManager;
+import me.tajam.jext.configuration.DiscData;
+import me.tajam.jext.configuration.JextConfiguration;
 import me.tajam.jext.listener.ListenersRegistrant;
+
+import java.util.Map.Entry;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,6 +45,24 @@ public class Jext extends JavaPlugin {
 
     // Register listeners
     ListenersRegistrant.getInstance().registerListeners(this);
+
+    //test
+    new JextConfiguration().load(this);
+    System.out.println(JextConfiguration.Jext.FORCE_RESOURCE_PACK);
+    System.out.println(JextConfiguration.Jext.RESOURCE_PACK_DECLINE_KICK_MESSAGE);
+    System.out.println(JextConfiguration.Jext.IGNORE_FAILED_DOWNLOAD);
+    System.out.println(JextConfiguration.Jext.FAILED_DOWNLOAD_KICK_MESSAGE);
+    System.out.println(JextConfiguration.Jext.ALLOW_MUSIC_OVERLAPPING);
+    for (Entry<String, DiscData> entry : JextConfiguration.Jext.DISC.entrySet()) {
+      System.out.println(entry.getKey());
+      System.out.println(entry.getValue().NAMESPACE);
+      System.out.println(entry.getValue().AUTHOR);
+      System.out.println(entry.getValue().MODEL_DATA);
+      System.out.println(entry.getValue().CREEPER_DROP);
+      for (String lore: entry.getValue().LORE) {
+        System.out.println(lore);
+      }
+    }
   }
 
 }
