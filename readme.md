@@ -13,6 +13,7 @@ Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) for more 
 ### Optional
 
 In future, Jext will support regional music loops with [WorldGuard API](https://dev.bukkit.org/projects/worldguard).
+> I am working on this now!
 
 ## Core features
 

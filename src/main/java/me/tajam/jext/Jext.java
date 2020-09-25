@@ -2,8 +2,8 @@ package me.tajam.jext;
 
 import me.tajam.jext.command.CommandsRegistrant;
 import me.tajam.jext.config.ConfigManager;
-import me.tajam.jext.configuration.DiscData;
-import me.tajam.jext.configuration.JextConfiguration;
+import me.tajam.jext.configuration.ConfigFile;
+import me.tajam.jext.configuration.ConfigYmlvLegacy;
 import me.tajam.jext.listener.ListenersRegistrant;
 
 import java.util.Map.Entry;
@@ -47,13 +47,13 @@ public class Jext extends JavaPlugin {
     ListenersRegistrant.getInstance().registerListeners(this);
 
     //test
-    new JextConfiguration().load(this);
-    System.out.println(JextConfiguration.Jext.FORCE_RESOURCE_PACK);
-    System.out.println(JextConfiguration.Jext.RESOURCE_PACK_DECLINE_KICK_MESSAGE);
-    System.out.println(JextConfiguration.Jext.IGNORE_FAILED_DOWNLOAD);
-    System.out.println(JextConfiguration.Jext.FAILED_DOWNLOAD_KICK_MESSAGE);
-    System.out.println(JextConfiguration.Jext.ALLOW_MUSIC_OVERLAPPING);
-    for (Entry<String, DiscData> entry : JextConfiguration.Jext.DISC.entrySet()) {
+    new ConfigFile(ConfigYmlvLegacy.class).load(this);
+    System.out.println(ConfigYmlvLegacy.Jext.FORCE_RESOURCE_PACK);
+    System.out.println(ConfigYmlvLegacy.Jext.RESOURCE_PACK_DECLINE_KICK_MESSAGE);
+    System.out.println(ConfigYmlvLegacy.Jext.IGNORE_FAILED_DOWNLOAD);
+    System.out.println(ConfigYmlvLegacy.Jext.FAILED_DOWNLOAD_KICK_MESSAGE);
+    System.out.println(ConfigYmlvLegacy.Jext.ALLOW_MUSIC_OVERLAPPING);
+    for (Entry<String, ConfigYmlvLegacy.DiscData> entry : ConfigYmlvLegacy.Jext.DISC.entrySet()) {
       System.out.println(entry.getKey());
       System.out.println(entry.getValue().NAMESPACE);
       System.out.println(entry.getValue().AUTHOR);
