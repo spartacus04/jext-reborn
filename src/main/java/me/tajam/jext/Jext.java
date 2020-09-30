@@ -6,6 +6,7 @@ import me.tajam.jext.configuration.ConfigFile;
 import me.tajam.jext.configuration.ConfigYmlvLegacy;
 import me.tajam.jext.listener.ListenersRegistrant;
 
+import java.io.InvalidClassException;
 import java.util.Map.Entry;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,8 +47,12 @@ public class Jext extends JavaPlugin {
     // Register listeners
     ListenersRegistrant.getInstance().registerListeners(this);
 
-    //test
-    new ConfigFile(ConfigYmlvLegacy.class).load(this);
+    // test
+    try {
+      new ConfigFile(ConfigYmlvLegacy.class, this).load();
+    } catch (InvalidClassException e) {
+      e.printStackTrace();
+    }
     System.out.println(ConfigYmlvLegacy.Jext.FORCE_RESOURCE_PACK);
     System.out.println(ConfigYmlvLegacy.Jext.RESOURCE_PACK_DECLINE_KICK_MESSAGE);
     System.out.println(ConfigYmlvLegacy.Jext.IGNORE_FAILED_DOWNLOAD);

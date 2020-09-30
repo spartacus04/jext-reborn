@@ -1,11 +1,12 @@
 package me.tajam.jext.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.tajam.jext.configuration.ConfigAnnotation.*;
+import me.tajam.jext.configuration.ConfigUtil.*;
 
 @MarkAsConfigFile(versionString = "legacy")
 public final class ConfigYmlvLegacy {
@@ -19,6 +20,25 @@ public final class ConfigYmlvLegacy {
     @MarkAsConfigField public static String FAILED_DOWNLOAD_KICK_MESSAGE = "Resource pack download failed, please re-join to try again.";
     @MarkAsConfigField public static boolean ALLOW_MUSIC_OVERLAPPING = false;
     @MarkAsConfigField public static Map<String, DiscData> DISC = new HashMap<>();
+
+    static {
+      DiscData disc_0 = new DiscData();
+      disc_0.AUTHOR = "C148";
+      disc_0.CREEPER_DROP = true;
+      disc_0.LORE = Arrays.asList("Minecraft originals");
+      disc_0.MODEL_DATA = 0;
+      disc_0.NAMESPACE= "music_disc.cat";
+  
+      DiscData disc_1 = new DiscData();
+      disc_1.AUTHOR = "C148";
+      disc_1.CREEPER_DROP = true;
+      disc_1.LORE = Arrays.asList("Minecraft originals");
+      disc_1.MODEL_DATA = 0;
+      disc_1.NAMESPACE = "music_disc.stal";
+  
+      DISC.put("Cat", disc_0);
+      DISC.put("Stal", disc_1);
+    }
 
   }
 

@@ -1,43 +1,56 @@
 package me.tajam.jext.configuration;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.bukkit.configuration.ConfigurationSection;
 
 import me.tajam.jext.Log;
-import me.tajam.jext.configuration.ConfigAnnotation.MarkAsConfigFile;
-import me.tajam.jext.configuration.ConfigAnnotation.MarkAsConfigSection;
+import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigField;
+import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigSection;
 
-public class ConfigSection {
-  
-  private Class<?> sectionClass;
-  private ConfigurationSection section;
+public class ConfigSection implements SaveLoadable {
 
-  public ConfigSection(Class<?> sectionClass, ConfigurationSection section) {
-    this.sectionClass = sectionClass;
-    this.section = section;
-  }
+  private List<SaveLoadable> childs;
 
-  public void load() {
-    if (!(sectionClass.isAnnotationPresent(MarkAsConfigFile.class) || sectionClass.isAnnotationPresent(MarkAsConfigSection.class))) return;
-    for (final Class<?> clazz : this.sectionClass.getDeclaredClasses()) {
-      if (clazz.isAnnotationPresent(MarkAsConfigSection.class)) {
-        final String name = clazz.getSimpleName().toLowerCase().replace('_', '-');
-        final ConfigurationSection innerSection = this.section.getConfigurationSection(name);
+  public ConfigSection(Class<?> clazz, ConfigurationSection section) {
+    this.childs = new ArrayList<>();
+    for (final Class<?> clz : clazz.getDeclaredClasses()) {
+      if (clz.isAnnotationPresent(MarkAsConfigSection.class)) {
+        final String name = ConfigUtil.javaNametoYml(clz.getSimpleName());
+        final ConfigurationSection innerSection = section.getConfigurationSection(name);
         if (innerSection == null) {
           new Log().warn().t("Configuration section ").t(name).t(" missing, using default values.").send();
+          continue;
+        }
+        childs.add(new ConfigSection(clz, innerSection));
+      }
+    }
+    for (final Field field : clazz.getDeclaredFields()) {
+      if (field.isAnnotationPresent(MarkAsConfigField.class)) {
+        if (Map.class.isAssignableFrom(field.getType())) {
+          childs.add(new ConfigFieldObject(field, section));
         } else {
-          new ConfigSection(clazz, innerSection).load();
+          childs.add(new ConfigField(field, section));
         }
       }
     }
-    for (final Field field : this.sectionClass.getDeclaredFields()) {
-      new ConfigField(field, this.section).load();;
+  }
+
+  @Override
+  public void load() {
+    for (final SaveLoadable saveLoadable : childs) {
+      saveLoadable.load();
     }
   }
 
+  @Override
   public void save() {
-
+    for (final SaveLoadable saveLoadable : childs) {
+      saveLoadable.save();
+    }
   }
 
 }

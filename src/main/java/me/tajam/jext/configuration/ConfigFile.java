@@ -1,44 +1,39 @@
 package me.tajam.jext.configuration;
 
 import java.io.File;
+import java.io.InvalidClassException;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.tajam.jext.Log;
-import me.tajam.jext.configuration.ConfigAnnotation.MarkAsConfigFile;
+import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigFile;
 
-public class ConfigFile {
+public class ConfigFile implements SaveLoadable {
 
-  private Class<?> configClass;
-  private String filename;
-  private boolean isValid;
+  private File file;
+  private ConfigSection mainSection;
 
-  public ConfigFile(Class<?> configClass) {
-    this.configClass = configClass;
-    if (!configClass.isAnnotationPresent(MarkAsConfigFile.class)) {
-      this.isValid = false;
-    } else {
-      final MarkAsConfigFile annotation = configClass.getAnnotation(MarkAsConfigFile.class);
-      this.filename = annotation.value();
-      this.isValid = true;
+  public ConfigFile(Class<?> clazz, JavaPlugin plugin) throws InvalidClassException {
+    if (!clazz.isAnnotationPresent(MarkAsConfigFile.class)) {
+      throw new InvalidClassException("Class not marked as Configuration class.");
     }
+    final String fileName = clazz.getAnnotation(MarkAsConfigFile.class).value();
+    final File file = new File(plugin.getDataFolder(), fileName);
+    this.file = file;
+    this.mainSection = new ConfigSection(clazz, YamlConfiguration.loadConfiguration(file));
   }
 
-  public void load(JavaPlugin plugin) {
-    if (!isValid) return;
-    final File yml = new File(plugin.getDataFolder(), this.filename);
-    if (!yml.exists()) {
-      new Log().info().t(this.filename).t(" file not exists, proceed to generate a new copy.").send();
-      save(plugin);
-      return;
-    }
-    final YamlConfiguration ymlconf = YamlConfiguration.loadConfiguration(yml);
-    new ConfigSection(this.configClass, ymlconf).load();
+  @Override
+  public void load() {
+    this.mainSection.load();
   }
 
-  public void save(JavaPlugin plugin) {
+  @Override
+  public void save() {
+  }
 
+  public boolean exists() {
+    return this.file.exists();
   }
 
 }

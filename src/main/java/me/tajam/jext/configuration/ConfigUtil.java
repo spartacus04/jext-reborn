@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-public class ConfigAnnotation {
+public class ConfigUtil {
   
   @Retention(RetentionPolicy.RUNTIME)
   @Target({ ElementType.TYPE, ElementType.FIELD })
@@ -33,6 +33,14 @@ public class ConfigAnnotation {
   @Retention(RetentionPolicy.RUNTIME)
   @Target({ ElementType.FIELD })
   public @interface MarkAsConfigField {
+  }
+
+  public static String javaNametoYml(String name) {
+    return name.toLowerCase().replace('_', '-');
+  }
+
+  public static String ymlNametoJava(String name) {
+    return name.toUpperCase().replace('-', '_');
   }
 
 }

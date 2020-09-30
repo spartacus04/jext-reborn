@@ -5,9 +5,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.tajam.jext.Log;
-import me.tajam.jext.configuration.ConfigAnnotation.MarkAsConfigObject;
+import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigField;
+import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigObject;
 
 public class ReflectionConfigMap {
 
@@ -38,22 +41,66 @@ public class ReflectionConfigMap {
     return this.valueClass;
   }
 
+  public List<Field> getValueFields() {
+    final List<Field> fields = new ArrayList<>();
+    for (Field field : this.valueClass.getDeclaredFields()) {
+      if (field.isAnnotationPresent(MarkAsConfigField.class)) {
+        fields.add(field);
+      }
+    }
+    return fields;
+  }
+
+  public Object instantiateValueObject() {
+    try {
+      return this.valueClass.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public boolean isValid() {
-    return this.keyClass.isAssignableFrom(String.class) && 
-      this.valueClass.isAnnotationPresent(MarkAsConfigObject.class);
+    return this.keyClass.isAssignableFrom(String.class)
+        && this.valueClass.isAnnotationPresent(MarkAsConfigObject.class);
   }
 
   public void put(Object key, Object value) {
     if (!(this.keyClass.isAssignableFrom(key.getClass()) && this.valueClass.isAssignableFrom(value.getClass()))) {
-      new Log().eror().t("Error when loading an object in map: ").t(mapField.getName()).t(", ignoring this object.").send();
+      new Log().eror().t("Error when loading an object in map: ").t(mapField.getName()).t(", ignoring this object.")
+          .send();
       return;
     }
     try {
-      final Object map = mapField.get(this.instance);
+      final Object map = getMapInstance();
       final Method method = map.getClass().getDeclaredMethod("put", Object.class, Object.class);
       method.invoke(map, key, value);
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
+    }
+  }
+
+  public void clear() {
+    try {
+      final Object map = getMapInstance();
+      final Method method = map.getClass().getDeclaredMethod("clear");
+      method.invoke(map);
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private Object getMapInstance() {
+    try {
+      Object map = mapField.get(this.instance);
+      if (map == null) {
+        map = mapField.getType().newInstance();
+        mapField.set(this.instance, map);
+      }
+      return map;
+    } catch (IllegalArgumentException | IllegalAccessException | InstantiationException e) {
+      e.printStackTrace();
+      return null;
     }
   }
   
