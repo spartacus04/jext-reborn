@@ -4,6 +4,8 @@ import java.io.InvalidClassException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.tajam.jext.Log;
+
 public class ConfigManager {
 
   private static ConfigManager instance = null;
@@ -28,18 +30,19 @@ public class ConfigManager {
 
   public void load() {
     try {
-      configFile = new ConfigFile(ConfigYmlv1_2_2.class, this.plugin);
-      if (configFile.exists()) {
+      configFile = new ConfigFile(ConfigYmlvLatest.class, this.plugin);
+      if (configFile.fileExists()) {
         configFile.load();
         return;
       }
-      configFile.save();
+      new Log().info().t("Initializing new configuration file...");
+      configFile.save(configFile.getWriter());
     } catch (InvalidClassException e) {
       e.printStackTrace();
     }
   }
 
-  public SaveLoadable getConfigFile() throws IllegalStateException {
+  public Configurable getConfigFile() throws IllegalStateException {
     if (this.configFile == null) throw new IllegalStateException("Load method never been called!");
     return this.configFile;
   }

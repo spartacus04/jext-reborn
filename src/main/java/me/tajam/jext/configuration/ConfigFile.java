@@ -8,14 +8,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigFile;
 
-public class ConfigFile implements SaveLoadable {
+public class ConfigFile extends Configuration {
 
   private File file;
   private ConfigSection mainSection;
 
   public ConfigFile(Class<?> clazz, JavaPlugin plugin) throws InvalidClassException {
     if (!clazz.isAnnotationPresent(MarkAsConfigFile.class)) {
-      throw new InvalidClassException("Class not marked as Configuration class.");
+      throw new InvalidClassException("Class not marked configuration file.");
     }
     final String fileName = clazz.getAnnotation(MarkAsConfigFile.class).value();
     final File file = new File(plugin.getDataFolder(), fileName);
@@ -29,11 +29,17 @@ public class ConfigFile implements SaveLoadable {
   }
 
   @Override
-  public void save() {
+  public void save(ConfigWriter writer) {
+    writer.writeHeader(this.getClass());
+    this.mainSection.save(writer);
   }
 
-  public boolean exists() {
+  public boolean fileExists() {
     return this.file.exists();
+  }
+
+  public ConfigWriter getWriter() {
+    return new ConfigWriter(this.file);
   }
 
 }

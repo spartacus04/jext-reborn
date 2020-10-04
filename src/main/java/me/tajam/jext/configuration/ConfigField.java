@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import me.tajam.jext.Log;
 
-public class ConfigField implements SaveLoadable {
+public class ConfigField extends Configuration {
   
   protected Field field;
   protected ConfigurationSection section;
@@ -38,8 +38,9 @@ public class ConfigField implements SaveLoadable {
   }
 
   @Override
-  public void save() {
-
+  public void save(ConfigWriter writer) {
+    writer.writeComment(this.field, getLevel());
+    writer.writeField(this.field, getLevel(), this.instance);
   }
 
 }

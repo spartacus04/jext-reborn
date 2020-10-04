@@ -9,7 +9,7 @@ import java.util.Map;
 import me.tajam.jext.configuration.ConfigUtil.*;
 
 @MarkAsConfigFile(versionString = "1.2.2")
-public final class ConfigYmlv1_2_2 {
+public final class ConfigYmlvLatest {
 
   @MarkAsConfigSection
   public static class RESOURCE_PACK {
@@ -26,13 +26,16 @@ public final class ConfigYmlv1_2_2 {
   public static class SETTINGS {
     @PlaceComment("Allow/Disallow overlapping music (two jukebox playing same music together)")
     @MarkAsConfigField public static Boolean ALLOW_MUSIC_OVERLAPPING = false;
+    /*
     @PlaceComment("Disallow parrot dancing to the custom music")
     @MarkAsConfigField public static Boolean ALLOW_PARROT_DANCE = true;
     @PlaceComment({
+      "Don't touch this if you don't know what's going on!",
       "The delay in ticks to override original music (Hard minimum value is 1)",
       "Ignore this if parrot is not allowed to dance"
     })
     @MarkAsConfigField public static Integer PACKET_DELAY_TICKS = 4;
+    */
   }
   
   @PlaceComment("Register your discs here")

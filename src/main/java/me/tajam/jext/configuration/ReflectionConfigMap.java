@@ -6,7 +6,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import me.tajam.jext.Log;
 import me.tajam.jext.configuration.ConfigUtil.MarkAsConfigField;
@@ -87,6 +91,18 @@ public class ReflectionConfigMap {
       method.invoke(map);
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
+    }
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  public Set<Entry<String, Object>> entries() {
+    try {
+      final Object map = getMapInstance();
+      final Map<String, Object> m = new HashMap<>((Map)map);
+      return m.entrySet();
+    } catch (SecurityException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 
