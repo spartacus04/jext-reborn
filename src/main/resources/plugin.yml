@@ -1,10 +1,9 @@
-main: me.tajam.jext.Jext
-name: JukeboxExtended
-author: Tajam
-version: 1.2.2
-api-version: 1.14
+main: Jext
+name: JukeboxExtendedReborn
+author: Tajam - Spartacus04
+version: 1.0
+api-version: 1.19
 depend: [ProtocolLib]
-softdepend: [WorldGuard]
 
 commands:
   disc:
