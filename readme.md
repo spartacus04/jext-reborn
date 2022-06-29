@@ -1,3 +1,7 @@
+# WARNING
+
+## The fork is still under construction, it will take a while before it's going to work
+
 # Jext Project - JukeboxExtended
 
 A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals throught the power of resource pack and Spigot API! Get the plugin artifact at the resource page over [here](https://www.spigotmc.org/resources/jukebox-extended.76963/).
