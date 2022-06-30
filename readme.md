@@ -1,23 +1,12 @@
-# WARNING
+# Jext Reborn Project - JukeboxExtendedReborn
 
-## The fork is still under construction, it will take a while before it's going to work
+A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals through the power of a resource pack and the Spigot API!
 
-# Jext Project - JukeboxExtended
-
-A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals throught the power of resource pack and Spigot API! Get the plugin artifact at the resource page over [here](https://www.spigotmc.org/resources/jukebox-extended.76963/).
-
-Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) for more details and guides.
+Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) (Yet to be updated) for more details and guides.
 
 ## Dependencies
 
-### Required
-
 [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) to make jukebox play custom music disc like vanilla.
-
-### Optional
-
-In future, Jext will support regional music loops with [WorldGuard API](https://dev.bukkit.org/projects/worldguard).
-> I am working on this now!
 
 ## Core features
 
