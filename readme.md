@@ -2,7 +2,7 @@
 
 A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals through the power of a resource pack and the Spigot API!
 
-Read the [Wiki page](https://github.com/Tajam/jext-spigot-plugin/wiki) (Yet to be updated) for more details and guides.
+Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) (Yet to be created) for more details and guides.
 
 ## Dependencies
 
