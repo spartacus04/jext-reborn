@@ -27,10 +27,6 @@ buildNumber.properties
 ##############################
 ## Gradle
 ##############################
-gradle/*
-gradle/wrapper/*
-gradle/
-gradle/wrapper
 bin/
 build/
 .gradle
