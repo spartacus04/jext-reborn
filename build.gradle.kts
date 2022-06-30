@@ -28,7 +28,7 @@ dependencies {
 
 group = "me.spartacus04.jext"
 version = "1.3"
-description = "jukebox-extended"
+description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 tasks.jar { enabled = false }
