@@ -39,8 +39,9 @@ tasks.shadowJar {
     archiveFileName.set(rootProject.name + ".jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
     relocate("kotlin", "${dependencyPackage}.kotlin")
-    relocate("kotlinx", "${dependencyPackage}.kotlinx")
-    relocate("com.cryptomorin.xseries", "${dependencyPackage}.xseries")
+    relocate("com/google/gson", "${dependencyPackage}.gson")
+    relocate("org/intellij/lang", "${dependencyPackage}.lang")
+    relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
     exclude("ScopeJVMKt.class")
     exclude("DebugProbesKt.bin")
     exclude("META-INF/**")
