@@ -20,10 +20,10 @@ data class Config (
 )
 
 data class Disc(
-    @SerializedName("Title")
+    @SerializedName("title")
     var TITLE: String,
 
-    @SerializedName("Author")
+    @SerializedName("author")
     var AUTHOR: String,
 
     @SerializedName("disc-namespace")

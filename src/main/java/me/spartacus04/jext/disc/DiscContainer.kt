@@ -18,7 +18,7 @@ class DiscContainer {
         private set
 
     private var customModelData = 0
-    var creeperDrop = false
+    private var creeperDrop = false
     private var lores: ArrayList<String>
 
 
@@ -80,8 +80,8 @@ class DiscContainer {
         return title
     }
 
-    private fun isCustomDisc(disc: ItemStack?): Boolean {
-        if (disc == null || !disc.hasItemMeta()) {
+    private fun isCustomDisc(disc: ItemStack): Boolean {
+        if (!disc.hasItemMeta()) {
             return false
         }
 
@@ -93,7 +93,7 @@ class DiscContainer {
                 return false
             }
         } catch (e: Exception) {
-            return true
+            return false
         }
 
         return true

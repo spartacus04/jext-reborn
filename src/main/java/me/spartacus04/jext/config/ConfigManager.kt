@@ -1,8 +1,10 @@
 package me.spartacus04.jext.config
 
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
+import java.lang.reflect.Type
 
 class ConfigManager {
     companion object {
@@ -26,7 +28,7 @@ class ConfigManager {
             }
         }
 
-        private fun <T> deserialize(file: File, type: Class<T>) : T {
+        private fun <T> deserialize(file: File, type: Type) : T {
             val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
             return gson.fromJson(
@@ -42,8 +44,11 @@ class ConfigManager {
 
             defaultConfig(plugin)
 
-            ConfigData.CONFIG = deserialize(configFile, Config::class.java)
-            ConfigData.DISCS = deserialize(discsFile, List::class.java as Class<List<Disc>>)
+            val configType = object : TypeToken<Config>() {}.type
+            val discsType = object : TypeToken<List<Disc>>() {}.type
+
+            ConfigData.CONFIG = deserialize(configFile, configType)
+            ConfigData.DISCS = deserialize(discsFile, discsType)
         }
     }
 }

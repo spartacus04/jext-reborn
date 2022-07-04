@@ -32,8 +32,7 @@ internal class JukeboxEventListener : Listener {
             discPlayer.stop(location)
 
             return
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
+        } catch (_: IllegalStateException) {
         }
 
         // Allow the disc to get out normally
@@ -48,8 +47,7 @@ internal class JukeboxEventListener : Listener {
             val discPlayer = DiscPlayer(discContainer)
 
             discPlayer.play(location)
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
+        } catch (a: IllegalStateException) {
         }
     }
 
@@ -68,8 +66,7 @@ internal class JukeboxEventListener : Listener {
 
             discPlayer.stop(block.location)
             return
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
+        } catch (_: IllegalStateException) {
         }
     }
 }

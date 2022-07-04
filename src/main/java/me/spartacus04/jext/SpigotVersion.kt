@@ -12,7 +12,7 @@ class SpigotVersion private constructor() {
                 .dropLastWhile { it.isEmpty() }
                 .toTypedArray()[3]
 
-            VERSION = vers.replace("1_", "").replace("_R\\d", "").toInt()
+            VERSION = vers.replace("1_", "").replace(Regex("_R\\d"), "").replace("v", "").toInt()
         }
 
     }
