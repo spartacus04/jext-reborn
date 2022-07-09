@@ -27,7 +27,7 @@ dependencies {
 }
 
 group = "me.spartacus04.jext"
-version = "1.3"
+version = "1.0"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
