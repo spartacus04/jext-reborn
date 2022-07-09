@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/png" href="favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>JEXT Resource pack generator</title>
+</head>
+
+<body>
+	<!-- header -->
+	<div id="header">
+		<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
+		<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
+		<input type="text" name="pack_name" id="pack_name_input" value="your_pack_name">
+	</div>
+
+	<!-- content -->
+
+	<div id="main">
+		<div id="songscontainer">
+		</div>
+		<hr class="hidden">
+		<div id="addsongsbtn">
+			<h1 class="noselect">+</h1>
+		</div>
+	</div>
+
+	<!-- footer -->
+	<div id="footer">
+		<div id="generate_button">
+			<div id="content">
+				<p id="generate_text" class="noselect">GENERATE</p>
+			</div>
+		</div>
+	</div>
+
+	<script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
