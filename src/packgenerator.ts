@@ -6,7 +6,7 @@ export const generatePack = async () => {
 	const rp = new JSZip();
 
 	const packmcmeta = `
-        {"pack": {"pack_format": 8,"description": "Adds custom musics discs"}}
+        {"pack": {"pack_format": 9,"description": "Adds custom musics discs"}}
     `;
 
 	rp.file('pack.mcmeta', packmcmeta);
