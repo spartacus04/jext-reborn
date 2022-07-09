@@ -57,7 +57,7 @@ export const ui = () => {
 		const input = document.createElement('input');
 		input.type = 'file';
 		input.multiple = true;
-		input.accept = '.ogg,audio/mp3,audio/wav';
+		input.accept = '.ogg';
 		input.click();
 
 		input.addEventListener('change', async () => {
