@@ -1,7 +1,7 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.Log
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.*
 import org.bukkit.command.CommandSender
@@ -21,7 +21,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
         return mergedExecute(sender, args)
     }
 
-    fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+    private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
         val selector = PlayerSelector(sender, args[0])
         val players = selector.players ?: return true
         val namespaces: MutableSet<String>
@@ -32,7 +32,10 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
             val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
 
             if (disc == null) {
-                Log().eror().t("Music with the namespace ").o(args[1]).t(" doesn't exists.").send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                        .replace("%namespace%", args[0])
+                )
                 return true
             }
 
@@ -46,21 +49,37 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
             for (namespace in namespaces) {
 
                 player!!.stopSound(namespace, SoundCategory.RECORDS)
-                if (namespaces.size == 1) Log().info().t("Stopped music ").p().t(".")
-                    .send(player, DISCS.find { it.DISC_NAMESPACE == namespace })
+                if (namespaces.size == 1) {
+                    player.sendMessage(
+                        "[§aJEXT§f]  ${LANG.STOPPED_MUSIC}"
+                            .replace("%name%", DISCS.find { it.DISC_NAMESPACE == namespace }!!.TITLE)
+                    )
+                }
             }
 
-            if (namespaces.size > 1) Log().info().t("Stopped all music.").send(player)
+            if (namespaces.size > 1) {
+                player!!.sendMessage(
+                    "[§aJEXT§f]  ${LANG.STOPPED_ALL_MUSIC}"
+                )
+            }
         }
 
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            Log().warn().t("Stopped music for ").o().t(" players!").send(sender, playerCount)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR_MULTIPLE}"
+                    .replace("%playercount%", playerCount.toString())
+            )
         } else if (playerCount == 1) {
-            Log().okay().t("Stopped music for ").o(players[0]!!.name).t(".").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR}"
+                    .replace("%playername%", players[0]!!.name)
+            )
         } else {
-            Log().eror().t("Stopped music to no player, something might when wrong!").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR_NO_ONE}"
+            )
         }
 
         return true

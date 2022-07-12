@@ -1,15 +1,12 @@
 {
+  // Name of the language file
+  "lang": "EN_US",
+
   // Kick players who decline server resource pack
   "force-resource-pack": true,
 
-  // Kick message for those who rejected the server resource pack
-  "resource-pack-decline-kick-message": "Please enable rescource pack for the music!",
-
   // Ignore if player somehow failed to download the resource pack
   "ignore-failed-download": false,
-
-  // Kick message for players who failed to download the resource pack
-  "failed-download-kick-message": "Resource pack download failed, please re-join to try again.",
 
   // Allow/Disallow overlapping music (two jukeboxes playing at the same time)
   "allow-music-overlapping": false

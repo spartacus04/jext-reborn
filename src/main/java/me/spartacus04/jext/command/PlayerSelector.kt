@@ -1,6 +1,7 @@
 package me.spartacus04.jext.command
 
 import me.spartacus04.jext.Log
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -56,7 +57,10 @@ internal class PlayerSelector(private val sender: CommandSender, private val sel
             val player = Bukkit.getPlayer(selector)
 
             if (player == null) {
-                Log().eror().t("Cannot find player: ").o(selector).send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f] ${LANG.CANNOT_FIND_PLAYER}"
+                        .replace("%player%", selector)
+                )
                 return null
             }
 

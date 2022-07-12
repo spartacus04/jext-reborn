@@ -10,6 +10,7 @@ class ConfigManager {
     companion object {
         private lateinit var configFile: File
         private lateinit var discsFile: File
+        private lateinit var langFile: File
 
         private fun defaultConfig(plugin: JavaPlugin) {
             if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
@@ -46,9 +47,24 @@ class ConfigManager {
 
             val configType = object : TypeToken<Config>() {}.type
             val discsType = object : TypeToken<List<Disc>>() {}.type
+            val langType = object : TypeToken<Messages>() {}.type
+
+            ConfigVersionManager.updateConfig(configFile, plugin)
 
             ConfigData.CONFIG = deserialize(configFile, configType)
             ConfigData.DISCS = deserialize(discsFile, discsType)
+
+            langFile = plugin.dataFolder.resolve("${ConfigData.CONFIG.LANGUAGE_FILE}.json")
+
+            if(!langFile.exists()) {
+                langFile.createNewFile()
+
+                plugin.getResource("EN_US.json")!!.bufferedReader().use {
+                    langFile.writeText(it.readText())
+                }
+            }
+
+            ConfigData.LANG = deserialize(langFile, langType)
         }
     }
 }

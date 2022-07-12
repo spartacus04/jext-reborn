@@ -1,7 +1,7 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.Log
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.*
@@ -29,7 +29,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
         if (disc == null) {
-            Log().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                    .replace("%namespace%", args[0])
+            )
             return true
         }
 
@@ -40,7 +43,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             pitch = try {
                 args[2].toFloat()
             } catch (e: NumberFormatException) {
-                Log().eror().t("Wrong number format for pitch parameter.").send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                        .replace("%param%", "pitch")
+                )
                 return true
             }
         }
@@ -55,7 +61,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 discPlayer.setPitch(pitch)
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                Log().eror().t("Wrong number format for volume parameter.").send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                        .replace("%param%", "volume")
+                )
                 return true
             }
         }
@@ -63,7 +72,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         for (player in players) {
             if (isMusic) {
                 player!!.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
-                Log().info().t("Music ").p().t(" is playing now.").send(player, disc)
+                player.sendMessage(
+                    "[§aJEXT§f]  ${LANG.MUSIC_NOW_PLAYING}"
+                        .replace("%name%", disc.TITLE)
+                )
             } else {
                 discPlayer.play(player!!.location)
             }
@@ -72,11 +84,21 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            Log().warn().t("Played music ").o().t(" to ").o().t(" players!").send(sender, disc, playerCount)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO_MULTIPLE}"
+                    .replace("%name%", disc.TITLE)
+                    .replace("%playercount%", playerCount.toString())
+            )
         } else if (playerCount == 1) {
-            Log().okay().t("Played music ").o().t(" to ").o(players[0]!!.displayName).t(".").send(sender, disc)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO}"
+                    .replace("%name%", disc.TITLE)
+                    .replace("%player%", players[0]!!.name)
+            )
         } else {
-            Log().eror().t("Played music to no player, something went wrong!").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO_NO_ONE}"
+            )
         }
 
         return true

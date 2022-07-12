@@ -1,7 +1,7 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.Log
-import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.DISCS
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.entity.Player
@@ -20,14 +20,19 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
         val location = try {
             LocationParser(args[0], args[1], args[2], sender).parse()
         } catch (e: NumberFormatException) {
-            Log().eror().t("Invalid location value!").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.INVALID_LOCATION}"
+            )
             return true
         }
 
-        val disc = ConfigData.DISCS.find { it.DISC_NAMESPACE == args[0] }
+        val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
 
         if (disc == null) {
-            Log().eror().t("Disc with the namespace ").o(args[3]).t(" doesn't exists.").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                    .replace("%namespace%", args[0])
+            )
             return true
         }
 
@@ -38,7 +43,10 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val pitch = args[4].toFloat()
                 discPlayer.setPitch(pitch)
             } catch (e: NumberFormatException) {
-                Log().eror().t("Wrong number format for pitch parameter.").send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                        .replace("%param%", "pitch")
+                )
                 return true
             }
         }
@@ -48,7 +56,10 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val volume = args[5].toFloat()
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                Log().eror().t("Wrong number format for volume parameter.").send(sender)
+                sender.sendMessage(
+                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                        .replace("%param%", "volume")
+                )
                 return true
             }
         }

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.Log
+import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
@@ -26,23 +26,40 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
 
         if (disc == null) {
-            Log().eror().t("Disc with the namespace ").o(args[1]).t(" doesn't exists.").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${ConfigData.LANG.DISC_NAMESPACE_NOT_FOUND}"
+                    .replace("%namespace%", args[0])
+            )
             return true
         }
 
         for (player in players) {
             player!!.inventory.addItem(DiscContainer(disc).discItem)
-            Log().info().t("Received ").p().t(" disc.").send(player, disc)
+
+            player.sendMessage(
+                "[§aJEXT§f]  ${ConfigData.LANG.DISC_RECEIVED}"
+                    .replace("%disc%", disc.TITLE)
+            )
         }
 
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            Log().warn().t("Given ").o().t(" disc to ").o().t(" players!").send(sender, disc, playerCount)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${ConfigData.LANG.DISC_GIVEN_MULTIPLE}"
+                    .replace("%disc%", disc.TITLE)
+                    .replace("%playercount%", playerCount.toString())
+            )
         } else if (playerCount == 1) {
-            Log().okay().t("Given ").o().t(" disc to ").o(players[0]!!.displayName).t(".").send(sender, disc)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${ConfigData.LANG.DISC_GIVEN}"
+                    .replace("%disc%", disc.TITLE)
+                    .replace("%playername%", players[0]!!.name)
+            )
         } else {
-            Log().eror().t("Given disc to no player, something went wrong!").send(sender)
+            sender.sendMessage(
+                "[§aJEXT§f]  ${ConfigData.LANG.NO_DISC_GIVEN}"
+            )
         }
         return true
     }

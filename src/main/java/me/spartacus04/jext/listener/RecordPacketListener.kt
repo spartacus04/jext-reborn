@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
 import me.spartacus04.jext.Log
 import me.spartacus04.jext.SpigotVersion.Companion.VERSION
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
@@ -47,30 +48,27 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
                         DiscContainer.SOUND_MAP[container.material]!!,
                         SoundCategory.RECORDS
                     )
-                    if (VERSION >= 15) {
-                        actionBarDisplay(player, container)
-                    } else {
-                        actionBarDisplayLegacy(player, container)
-                    }
+
+                    actionBarDisplay(player, container)
+
                 }
             }.runTaskLater(plugin, 4)
         }
     }
 
     fun actionBarDisplay(player: Player, container: DiscContainer) {
-        val baseComponents = ComponentBuilder()
-            .append("Now playing: ").color(ChatColor.GOLD)
-            .append(container.author).color(ChatColor.GREEN)
-            .append(" - ").color(ChatColor.GRAY)
-            .append(container.toString()).color(ChatColor.GOLD)
-            .create()
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *baseComponents)
-    }
-
-    fun actionBarDisplayLegacy(player: Player, container: DiscContainer) {
         player.spigot().sendMessage(
-            ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(
-                Log().y("Now playing: ").g(container.author).gr(" - ").y(container.toString()).text()
+            ChatMessageType.ACTION_BAR,
+            *TextComponent.fromLegacyText(
+                if(container.author.trim() != "") {
+                    LANG.NOW_PLAYING
+                        .replace("%author%", container.author)
+                        .replace("%title%", container.toString())
+                }
+                else {
+                    LANG.NOW_PLAYING_NO_AUTHOR
+                        .replace("%title%", container.toString())
+                }
             )
         )
     }
