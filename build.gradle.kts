@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
     implementation("com.google.code.gson:gson:2.9.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
