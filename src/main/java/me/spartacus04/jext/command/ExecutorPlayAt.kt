@@ -1,6 +1,5 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
@@ -8,17 +7,17 @@ import org.bukkit.entity.Player
 
 internal class ExecutorPlayAt : ExecutorAdapter("playat") {
     init {
+        addParameter(ParameterDisc(true))
         addParameter(ParameterLocation(true, ParameterLocation.Axis.X))
         addParameter(ParameterLocation(true, ParameterLocation.Axis.Y))
         addParameter(ParameterLocation(true, ParameterLocation.Axis.Z))
-        addParameter(ParameterDisc(true))
         addParameter(ParameterNumber(false, 0.5f, 1.0f, 1.5f).setName("pitch"))
         addParameter(ParameterNumber(false, 4.0f, 1.0f, 0.5f).setName("volume"))
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         val location = try {
-            LocationParser(args[0], args[1], args[2], sender).parse()
+            ParameterLocation.parseLocation(args[1], args[2], args[3], sender)
         } catch (e: NumberFormatException) {
             sender.sendMessage(
                 "[§aJEXT§f]  ${LANG.INVALID_LOCATION}"
@@ -26,7 +25,7 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
             return true
         }
 
-        val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
+        val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
             sender.sendMessage(

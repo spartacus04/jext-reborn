@@ -1,7 +1,6 @@
 package me.spartacus04.jext.command
 
 import me.spartacus04.jext.config.ConfigData
-import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -21,20 +20,20 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
     }
 
     private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
-        val players = PlayerSelector(sender, args[0]).players ?: return true
+        val players = ParameterPlayer.getPlayers(args[0], sender)
 
-        val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
+        val disc = ParameterDisc.getDisc(args[1])
 
         if (disc == null) {
             sender.sendMessage(
                 "[§aJEXT§f]  ${ConfigData.LANG.DISC_NAMESPACE_NOT_FOUND}"
-                    .replace("%namespace%", args[0])
+                    .replace("%namespace%", args[1])
             )
             return true
         }
 
         for (player in players) {
-            player!!.inventory.addItem(DiscContainer(disc).discItem)
+            player.inventory.addItem(DiscContainer(disc).discItem)
 
             player.sendMessage(
                 "[§aJEXT§f]  ${ConfigData.LANG.DISC_RECEIVED}"
@@ -54,7 +53,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
             sender.sendMessage(
                 "[§aJEXT§f]  ${ConfigData.LANG.DISC_GIVEN}"
                     .replace("%disc%", disc.TITLE)
-                    .replace("%playername%", players[0]!!.name)
+                    .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(

@@ -1,6 +1,5 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.entity.Player
@@ -11,7 +10,7 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
+        val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
             sender.sendMessage(

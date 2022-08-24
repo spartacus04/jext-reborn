@@ -8,7 +8,7 @@ import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
-internal open class ExecutorAdapter(commandString: String) : CommandExecutor, TabCompleter {
+open class ExecutorAdapter(commandString: String) : CommandExecutor, TabCompleter {
     private val commandString: String
     private val parameters: MutableList<Parameter>
 

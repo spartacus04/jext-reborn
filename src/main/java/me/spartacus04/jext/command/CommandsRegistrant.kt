@@ -10,6 +10,7 @@ class CommandsRegistrant private constructor() {
             ExecutorPlayMusic().registerTo(plugin)
             ExecutorPlayAt().registerTo(plugin)
             ExecutorStopMusic().registerTo(plugin)
+            ExecutorReload(plugin).registerTo(plugin)
         }
     }
 }

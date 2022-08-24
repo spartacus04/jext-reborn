@@ -1,5 +1,6 @@
 package me.spartacus04.jext.command
 
+import org.bukkit.Location
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
@@ -12,7 +13,7 @@ class ParameterLocation internal constructor(required: Boolean, private val axis
     override val name: String
         get() = axis.toString().lowercase(Locale.getDefault())
 
-    override fun onComplete(parameter: String, sender: CommandSender?): List<String> {
+    override fun onComplete(parameter: String, sender: CommandSender): List<String> {
         val suggestions: MutableList<String> = ArrayList()
 
         suggestions.add("~")
@@ -37,5 +38,29 @@ class ParameterLocation internal constructor(required: Boolean, private val axis
             }
         }
         return suggestions.toList()
+    }
+
+    companion object {
+        fun parseLocation(x: String, y: String, z: String, sender: Player) : Location {
+            val intX: Int = if (x == "~") {
+                sender.location.blockX
+            } else {
+                x.toFloat().toInt()
+            }
+
+            val intY: Int = if (y == "~") {
+                sender.location.blockY
+            } else {
+                y.toFloat().toInt()
+            }
+
+            val intZ: Int = if (z == "~") {
+                sender.location.blockZ
+            } else {
+                z.toFloat().toInt()
+            }
+
+            return Location(sender.world, intX.toDouble(), intY.toDouble(), intZ.toDouble())
+        }
     }
 }

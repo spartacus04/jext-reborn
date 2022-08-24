@@ -21,7 +21,7 @@ class ParameterNumber internal constructor(required: Boolean, vararg suggestedVa
         return this
     }
 
-    override fun onComplete(parameter: String, sender: CommandSender?): List<String>? {
+    override fun onComplete(parameter: String, sender: CommandSender): List<String>? {
         return if (parameter.isEmpty()) {
             stringValues
         } else null

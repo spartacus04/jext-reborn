@@ -8,7 +8,7 @@ abstract class Parameter(val isRequired: Boolean) {
 
     abstract val name: String?
 
-    abstract fun onComplete(parameter: String, sender: CommandSender?): List<String>?
+    abstract fun onComplete(parameter: String, sender: CommandSender): List<String>?
 
     override fun toString(): String {
         val sms = Log().rst(if (isRequired) "[" else "<").rst().rst(if (isRequired) "]" else ">")

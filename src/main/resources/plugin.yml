@@ -26,6 +26,10 @@ commands:
     description: Stop specified custom music or all custom music for selected player(s). 
     permission: jext.stopmusic
     usage: /stopmusic [selector] <name>
+  jext:
+    description: Reloads the plugin
+    permission: jext.reload
+    usage: /jext
 
 permissions:
   jext.*:
@@ -36,18 +40,22 @@ permissions:
       jext.playmusic: true
       jext.playat: true
       jext.stopmusic: true
+      jext.reload: true
   jext.disc:
-    description: Allow player to access all custom disc.
+    description: Allows player to access all custom disc.
     default: op
   jext.disc.give:
-    description: Allow player to give others custom disc.
+    description: Allows player to give others custom disc.
     default: op
   jext.playmusic:
-    description: Allow player to play custom music to players.
+    description: Allows player to play custom music to players.
     default: op
   jext.playat:
-    description: Allow player to play custom music to a location.
+    description: Allows player to play custom music to a location.
     default: op
   jext.stopmusic:
-    description: Allow player to stop custom music.
+    description: Allows player to stop custom music.
+    default: op
+  jext.reload:
+    description: Allows player to reload the plugin
     default: op

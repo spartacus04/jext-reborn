@@ -64,6 +64,7 @@ class ConfigManager {
                 }
             }
 
+            ConfigVersionManager.updateLang(langFile, plugin)
             ConfigData.LANG = deserialize(langFile, langType)
         }
     }

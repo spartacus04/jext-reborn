@@ -1,6 +1,5 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
@@ -25,13 +24,13 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
     }
 
     private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
-        val players = PlayerSelector(sender, args[0]).players ?: return true
+        val players = ParameterPlayer.getPlayers(args[0], sender)
 
-        val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
+        val disc = ParameterDisc.getDisc(args[1])
         if (disc == null) {
             sender.sendMessage(
                 "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
-                    .replace("%namespace%", args[0])
+                    .replace("%namespace%", args[1])
             )
             return true
         }
@@ -71,13 +70,13 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         for (player in players) {
             if (isMusic) {
-                player!!.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
+                player.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
                 player.sendMessage(
                     "[§aJEXT§f]  ${LANG.MUSIC_NOW_PLAYING}"
                         .replace("%name%", disc.TITLE)
                 )
             } else {
-                discPlayer.play(player!!.location)
+                discPlayer.play(player.location)
             }
         }
 
@@ -93,7 +92,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             sender.sendMessage(
                 "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO}"
                     .replace("%name%", disc.TITLE)
-                    .replace("%player%", players[0]!!.name)
+                    .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(

@@ -102,4 +102,7 @@ data class Messages(
 
     @SerializedName("stopped-music-for-no-one")
     var STOPPED_MUSIC_FOR_NO_ONE : String,
+
+    @SerializedName("reloaded")
+    var RELOADED: String,
 )

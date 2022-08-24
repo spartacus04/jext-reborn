@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
     init {
         addParameter(ParameterPlayer(true))
-        addParameter(ParameterDisc(true))
+        addParameter(ParameterDisc(false))
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
@@ -22,19 +22,19 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
     }
 
     private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
-        val selector = PlayerSelector(sender, args[0])
-        val players = selector.players ?: return true
+        val players = ParameterPlayer.getPlayers(args[0], sender)
+
         val namespaces: MutableSet<String>
 
         if (args.size <= 1) {
             namespaces = DISCS.map { it.DISC_NAMESPACE }.toMutableSet()
         } else {
-            val disc = DISCS.find { it.DISC_NAMESPACE == args[0] }
+            val disc = ParameterDisc.getDisc(args[1])
 
             if (disc == null) {
                 sender.sendMessage(
                     "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
-                        .replace("%namespace%", args[0])
+                        .replace("%namespace%", args[1])
                 )
                 return true
             }
@@ -48,7 +48,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
 
             for (namespace in namespaces) {
 
-                player!!.stopSound(namespace, SoundCategory.RECORDS)
+                player.stopSound(namespace, SoundCategory.RECORDS)
                 if (namespaces.size == 1) {
                     player.sendMessage(
                         "[§aJEXT§f]  ${LANG.STOPPED_MUSIC}"
@@ -58,7 +58,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
             }
 
             if (namespaces.size > 1) {
-                player!!.sendMessage(
+                player.sendMessage(
                     "[§aJEXT§f]  ${LANG.STOPPED_ALL_MUSIC}"
                 )
             }
@@ -74,7 +74,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
         } else if (playerCount == 1) {
             sender.sendMessage(
                 "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR}"
-                    .replace("%playername%", players[0]!!.name)
+                    .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(
