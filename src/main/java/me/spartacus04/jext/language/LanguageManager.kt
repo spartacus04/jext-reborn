@@ -67,7 +67,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     }
 
     fun getString(commandSender: CommandSender, key : String) : String {
-        if(autoMode) {
+        if(!autoMode) {
             return loadedLanguageMap["custom"]!![key]!!
         }
 
