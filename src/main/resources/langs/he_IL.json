@@ -1,10 +1,8 @@
 {
   "now-playing": "§6Now playing: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Now playing: §a%title%",
-
   "resource-pack-decline-kick-message": "Please enable resource pack for the music!",
   "failed-download-kick-message": "Resource pack download failed, please re-join to try again.",
-
   "disc-command-success": "§fObtained §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc with namespace §6%namespace% §ccouldn't be found!",
   "disc-received": "§fReceived §d%disc% §fdisc!",
