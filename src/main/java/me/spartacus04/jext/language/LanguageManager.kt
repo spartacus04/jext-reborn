@@ -88,4 +88,8 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     fun format(commandSender: CommandSender, key: String) : String {
         return "[§aJEXT§f] ${getString(commandSender, key)}"
     }
+
+    fun hasLanguage(locale: String) : Boolean {
+        return  loadedLanguageMap.containsKey(locale.lowercase())
+    }
 }
