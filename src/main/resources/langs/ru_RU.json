@@ -12,7 +12,7 @@
   "invalid-location": "§cНеправильное место!",
   "wrong-number-format": "§cНеправильный формат числа для параметра %param%!",
   "cannot-find-player": "§cНевозможно найти игрока: §6%player%§c.",
-  "music-now-playing": "§fМузыка $d%name% §fсейчас играет!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fИграла музыку §6%name% §fto §6%playercount% §fигроков!",
   "played-music-to": "§fИграла музыку §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fИграли музыку без проигрывателя, что-то пошло не так!",
