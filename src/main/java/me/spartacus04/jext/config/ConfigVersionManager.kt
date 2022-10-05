@@ -48,6 +48,45 @@ data class V1Config (
     }
 }
 
+data class V2Config (
+    @SerializedName("lang")
+    var LANGUAGE_FILE: String,
+
+    @SerializedName("force-resource-pack")
+    var FORCE_RESOURCE_PACK : Boolean,
+
+    @SerializedName("ignore-failed-download")
+    var IGNORE_FAILED_DOWNLOAD : Boolean,
+
+    @SerializedName("allow-music-overlapping")
+    var ALLOW_MUSIC_OVERLAPPING : Boolean,
+) {
+    companion object {
+        private fun fromJson(json: String): V1Config {
+            val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
+
+            return gson.fromJson(json, V1Config::class.java)
+        }
+
+        fun isOldConfig(jsonConfig: String) : Boolean {
+            return !jsonConfig.contains("\"allow-metrics\"")
+        }
+
+        fun migrateToNewConfig(jsonConfig: String, plugin: JavaPlugin) : String {
+            val oldconfig = fromJson(jsonConfig)
+
+            return plugin.getResource("config.json")!!.bufferedReader().use {
+                val text = it.readText()
+
+                return@use text
+                    .replace("\"force-resource-pack\": true", "\"force-resource-pack\": ${oldconfig.FORCE_RESOURCE_PACK}")
+                    .replace("\"ignore-failed-download\": false", "\"ignore-failed-download\": ${oldconfig.IGNORE_FAILED_DOWNLOAD}")
+                    .replace("\"allow-music-overlapping\": false", "\"allow-music-overlapping\": ${oldconfig.ALLOW_MUSIC_OVERLAPPING}")
+            }
+        }
+    }
+}
+
 data class V1Lang (
     @SerializedName("now-playing")
     var NOW_PLAYING: String,
@@ -133,11 +172,15 @@ class ConfigVersionManager {
             val jsonConfig = file.readText()
 
             if(V1Config.isOldConfig(jsonConfig)) {
-                file.writeText(V1Config.migrateToNewConfig(jsonConfig, plugin))
+                return file.writeText(V1Config.migrateToNewConfig(jsonConfig, plugin))
+            }
+
+            if(V2Config.isOldConfig(jsonConfig)) {
+                return file.writeText(V2Config.migrateToNewConfig(jsonConfig, plugin))
             }
         }
 
-        fun updateLang(file: File, plugin: JavaPlugin) {
+        fun updateLang(file: File) {
             val jsonConfig = file.readText()
 
             if(V1Lang.isOldConfig(jsonConfig)) {

@@ -20,7 +20,7 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
             ParameterLocation.parseLocation(args[1], args[2], args[3], sender)
         } catch (e: NumberFormatException) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.INVALID_LOCATION}"
+                LANG.format(sender, "invalid-location")
             )
             return true
         }
@@ -29,7 +29,7 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
 
         if (disc == null) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[0])
             )
             return true
@@ -43,7 +43,7 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 discPlayer.setPitch(pitch)
             } catch (e: NumberFormatException) {
                 sender.sendMessage(
-                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                    LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "pitch")
                 )
                 return true
@@ -56,7 +56,7 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
                 sender.sendMessage(
-                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                    LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "volume")
                 )
                 return true

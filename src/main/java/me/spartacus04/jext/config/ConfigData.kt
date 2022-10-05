@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Config (
     @SerializedName("lang")
-    var LANGUAGE_FILE: String,
+    var LANGUAGE_MODE: String,
 
     @SerializedName("force-resource-pack")
     var FORCE_RESOURCE_PACK : Boolean,
@@ -14,6 +14,9 @@ data class Config (
 
     @SerializedName("allow-music-overlapping")
     var ALLOW_MUSIC_OVERLAPPING : Boolean,
+
+    @SerializedName("allow-metrics")
+    var ALLOW_METRICS : Boolean
 )
 
 data class Disc(

@@ -29,7 +29,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         val disc = ParameterDisc.getDisc(args[1])
         if (disc == null) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[1])
             )
             return true
@@ -43,7 +43,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 args[2].toFloat()
             } catch (e: NumberFormatException) {
                 sender.sendMessage(
-                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                    LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "pitch")
                 )
                 return true
@@ -61,7 +61,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
                 sender.sendMessage(
-                    "[§aJEXT§f]  ${LANG.WRONG_NUMBER_FORMAT}"
+                    LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "volume")
                 )
                 return true
@@ -72,7 +72,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             if (isMusic) {
                 player.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
                 player.sendMessage(
-                    "[§aJEXT§f]  ${LANG.MUSIC_NOW_PLAYING}"
+                    LANG.format(sender, "music-now-playing")
                         .replace("%name%", disc.TITLE)
                 )
             } else {
@@ -84,19 +84,19 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         if (playerCount >= 2) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO_MULTIPLE}"
+                LANG.format(sender, "played-music-to-multiple")
                     .replace("%name%", disc.TITLE)
                     .replace("%playercount%", playerCount.toString())
             )
         } else if (playerCount == 1) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO}"
+                LANG.format(sender, "played-music-to")
                     .replace("%name%", disc.TITLE)
                     .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.PLAYED_MUSIC_TO_NO_ONE}"
+                LANG.format(sender, "played-music-to-no-one")
             )
         }
 

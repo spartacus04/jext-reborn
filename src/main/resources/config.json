@@ -1,6 +1,6 @@
 {
-  // Name of the language file
-  "lang": "EN_US",
+  // Language mode [ auto or custom ]
+  "lang": "auto",
 
   // Kick players who decline server resource pack
   "force-resource-pack": true,
@@ -9,5 +9,8 @@
   "ignore-failed-download": false,
 
   // Allow/Disallow overlapping music (two jukeboxes playing at the same time)
-  "allow-music-overlapping": false
+  "allow-music-overlapping": false,
+
+  // Allow/Disallow plugin metrics (no personal data is going to be collected)
+  "allow-metrics": true
 }

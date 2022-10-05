@@ -1,6 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -26,7 +26,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
 
         if (disc == null) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${ConfigData.LANG.DISC_NAMESPACE_NOT_FOUND}"
+                LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[1])
             )
             return true
@@ -36,7 +36,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
             player.inventory.addItem(DiscContainer(disc).discItem)
 
             player.sendMessage(
-                "[§aJEXT§f]  ${ConfigData.LANG.DISC_RECEIVED}"
+                LANG.format(sender, "disc-retrieved")
                     .replace("%disc%", disc.TITLE)
             )
         }
@@ -45,19 +45,19 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
 
         if (playerCount >= 2) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${ConfigData.LANG.DISC_GIVEN_MULTIPLE}"
+                LANG.format(sender, "disc-given-multiple")
                     .replace("%disc%", disc.TITLE)
                     .replace("%playercount%", playerCount.toString())
             )
         } else if (playerCount == 1) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${ConfigData.LANG.DISC_GIVEN}"
+                LANG.format(sender, "disc-given")
                     .replace("%disc%", disc.TITLE)
                     .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(
-                "[§aJEXT§f]  ${ConfigData.LANG.NO_DISC_GIVEN}"
+                LANG.format(sender, "no-disc-given")
             )
         }
         return true

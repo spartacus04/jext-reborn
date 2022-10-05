@@ -14,7 +14,7 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
 
         if (disc == null) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[0])
             )
             return true
@@ -23,7 +23,7 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
         sender.inventory.addItem(DiscContainer(disc).discItem)
 
         sender.sendMessage(
-            "[§aJEXT§f]  ${LANG.DISC_COMMAND_SUCCESS}"
+            LANG.format(sender, "disc-command-success")
                 .replace("%disc%", disc.TITLE)
         )
         return true

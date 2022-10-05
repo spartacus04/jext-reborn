@@ -1,7 +1,7 @@
 main: me.spartacus04.jext.Jext
 name: JukeboxExtendedReborn
 author: Tajam - Spartacus04
-version: 1.0
+version: 0.5b
 api-version: 1.14
 depend: [ProtocolLib]
 
@@ -58,4 +58,7 @@ permissions:
     default: op
   jext.reload:
     description: Allows player to reload the plugin
+    default: op
+  jext.notifyupdate:
+    description: Notifies player of new update
     default: op

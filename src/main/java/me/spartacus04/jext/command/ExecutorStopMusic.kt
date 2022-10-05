@@ -33,7 +33,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
 
             if (disc == null) {
                 sender.sendMessage(
-                    "[§aJEXT§f]  ${LANG.DISC_NAMESPACE_NOT_FOUND}"
+                    LANG.format(sender, "disc-namespace-not-found")
                         .replace("%namespace%", args[1])
                 )
                 return true
@@ -51,7 +51,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
                 player.stopSound(namespace, SoundCategory.RECORDS)
                 if (namespaces.size == 1) {
                     player.sendMessage(
-                        "[§aJEXT§f]  ${LANG.STOPPED_MUSIC}"
+                        LANG.format(sender, "stopped-music")
                             .replace("%name%", DISCS.find { it.DISC_NAMESPACE == namespace }!!.TITLE)
                     )
                 }
@@ -59,7 +59,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
 
             if (namespaces.size > 1) {
                 player.sendMessage(
-                    "[§aJEXT§f]  ${LANG.STOPPED_ALL_MUSIC}"
+                    LANG.format(sender, "stopped-all-music")
                 )
             }
         }
@@ -68,17 +68,17 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
 
         if (playerCount >= 2) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR_MULTIPLE}"
+                LANG.format(sender, "stopped-music-for-multiple")
                     .replace("%playercount%", playerCount.toString())
             )
         } else if (playerCount == 1) {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR}"
+                LANG.format(sender, "stopped-music-for")
                     .replace("%player%", players[0].name)
             )
         } else {
             sender.sendMessage(
-                "[§aJEXT§f]  ${LANG.STOPPED_MUSIC_FOR_NO_ONE}"
+                LANG.format(sender, "stopped-music-for-no-one")
             )
         }
 
