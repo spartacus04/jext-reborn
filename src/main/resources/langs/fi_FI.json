@@ -12,7 +12,7 @@
   "invalid-location": "§cVirheellinen sijainti!",
   "wrong-number-format": "§cVäärä numeron muoto %param% parametrille!",
   "cannot-find-player": "§cPelaajaa ei löydy: §6%player%§c.",
-  "music-now-playing": "§fMusiikki $d%name% pelataan nyt!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPelattu musiikki §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPelattu musiikki §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fToitu musiikki yhdellekään pelaajalle, jokin meni pieleen!",
