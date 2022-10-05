@@ -12,7 +12,7 @@
   "invalid-location": "§cΆκυρη τοποθεσία!",
   "wrong-number-format": "§cΛάθος μορφή αριθμού για %param% παράμετρος!",
   "cannot-find-player": "§cCannot find player: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis παίζει!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPlayed music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlayed music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fPlayed μουσική σε κανένα παίκτη, κάτι πήγε στραβά!",

@@ -12,7 +12,7 @@
   "invalid-location": "§cLocalização inválida!",
   "wrong-number-format": "§cFormato de número errado para parâmetro %param%!",
   "cannot-find-player": "§cNão foi possível encontrar o jogador: §6%player%§c.",
-  "music-now-playing": "§fMúsica $d%name% §fis agora tocando!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fTocado música§6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fTocado música§6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fTocou música para nenhum reprodutor, algo deu errado!",

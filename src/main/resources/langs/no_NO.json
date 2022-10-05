@@ -12,7 +12,7 @@
   "invalid-location": "§cUgyldig plassering!",
   "wrong-number-format": "§cFeil tallformat for %param% parameter!",
   "cannot-find-player": "§cKan ikke finne spiller: §6%player%§c.",
-  "music-now-playing": "§fMusikk $d%name% §fis nå spiller!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPlayed music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlayed music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fSpilt musikk til ingen spiller, noe gikk galt!",

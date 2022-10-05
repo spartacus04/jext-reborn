@@ -12,7 +12,7 @@
   "invalid-location": "§cOngeldige locatie!",
   "wrong-number-format": "§cVerkeerd getalformaat voor %param% parameter!",
   "cannot-find-player": "§cKan speler niet vinden: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis nu aan het spelen!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fGespeelde muziek §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fGespeelde muziek §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fGesloten muziek zonder speler, er is iets misgegaan!",

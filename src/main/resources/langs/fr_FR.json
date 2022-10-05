@@ -12,7 +12,7 @@
   "invalid-location": "§cEmplacement non valide !",
   "wrong-number-format": "§cFormat de nombre incorrect pour le paramètre %param%!",
   "cannot-find-player": "§cImpossible de trouver le joueur : §6%player%§c.",
-  "music-now-playing": "§fMusique $d%name% §fest en train de jouer !",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fLa musique §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fLa musique §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fJoue de la musique à aucun joueur, quelque chose s'est mal passé !",

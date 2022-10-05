@@ -12,7 +12,7 @@
   "invalid-location": "§c無効な場所です！",
   "wrong-number-format": "§c %param% パラメータの数値形式が間違っています！",
   "cannot-find-player": "§cプレイヤーが見つかりません: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fがプレイ中です！",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§f Played music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§f Played music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§f音楽を再生しないようにしました。何か問題が発生しました！",

@@ -12,7 +12,7 @@
   "invalid-location": "§ca موقع غير صالح!",
   "wrong-number-format": "§cWnumber تنسيق رقم خاطئ للمعلمة %param%!",
   "cannot-find-player": "لا يمكن العثور على اللاعب: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis يلعب الآن!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPlay Music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlay Music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fPPlay موسيقى بدون لاعب، حدث خطأ ما!",
