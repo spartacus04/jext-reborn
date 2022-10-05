@@ -75,7 +75,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
             commandSender.locale
         }
         else {
-            "en_us
+            "en_us"
         }
 
         return if(loadedLanguageMap.containsKey(locale)) {
