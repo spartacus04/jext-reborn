@@ -75,14 +75,14 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
             commandSender.locale
         }
         else {
-            "en_us.json"
+            "en_us
         }
 
         return if(loadedLanguageMap.containsKey(locale)) {
             loadedLanguageMap[locale]!![key]!!
         }
         else {
-            loadedLanguageMap["en_us.json"]!![key]!!
+            loadedLanguageMap["en_us"]!![key]!!
         }
     }
 
