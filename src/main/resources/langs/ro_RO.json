@@ -12,7 +12,7 @@
   "invalid-location": "§cLocatie invalida!",
   "wrong-number-format": "§cFormat de numar gresit pentru parametrul %param%!",
   "cannot-find-player": "§cNu se poate gasi jucatorul: §6%player%§c.",
-  "music-now-playing": "§fMuzica $d%name% §fis reda acum!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPlayed muzică §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlayed muzică §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fPlayed muzica fara player, ceva nu a mers bine!",
