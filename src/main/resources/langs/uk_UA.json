@@ -12,7 +12,7 @@
   "invalid-location": "§cНеправильне місце розташування!",
   "wrong-number-format": "§cправильний формат номера для параметрів %param%!",
   "cannot-find-player": "§cНе вдалося знайти гравця: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis зараз грає!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fPlayed музику §6%name% §fto §6%playercount% §fplayer!",
   "played-music-to": "§fPlayed музика§6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fPlayed, щоб не грати гравців, щось пішло не так!",
