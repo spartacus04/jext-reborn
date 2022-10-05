@@ -9,7 +9,6 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.util.*
-import java.util.function.Consumer
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import kotlin.collections.HashMap
@@ -27,11 +26,11 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
 
             val path = "langs"
 
-            JarFile(File(javaClass.protectionDomain.codeSource.location.path)).use {
+            JarFile(File(javaClass.protectionDomain.codeSource.location.path).absolutePath.replace("%20", " ")).use {
                 val entries: Enumeration<JarEntry> = it.entries() //gives ALL entries in jar
                 while (entries.hasMoreElements()) {
                     val element = entries.nextElement()
-                    if (element.name.startsWith("$path/")) {
+                    if (element.name.startsWith("$path/") && element.name.endsWith(".json")) {
                         val langName = element.name.replaceFirst("$path/", "")
 
                         plugin.getResource("langs/$langName")!!.bufferedReader().use {file ->

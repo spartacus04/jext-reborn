@@ -1,2 +1,2 @@
 
-rootProject.name = "jukebox-extended-reborn"
+rootProject.name = "JEXT-Reborn"

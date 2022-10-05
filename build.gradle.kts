@@ -29,7 +29,7 @@ tasks.jar { enabled = false }
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
-    archiveFileName.set(rootProject.name + ".jar")
+    archiveFileName.set("${rootProject.name}_${version}.jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
     relocate("kotlin", "${dependencyPackage}.kotlin")
     relocate("com/google/gson", "${dependencyPackage}.gson")
