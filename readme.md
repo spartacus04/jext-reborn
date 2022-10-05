@@ -14,6 +14,7 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 - Adding and playing custom music disc without replacing the original music disc.
 - Customizable disc title, author and lore texts.
+- The plugin supports most common languages
 - Allow/Disallow custom discs drop from Creepers.
 - Supports custom model data, allow customized disc texture.
 - Auto kick players who rejected the server resource pack.
