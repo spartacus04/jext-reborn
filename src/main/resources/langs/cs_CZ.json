@@ -12,7 +12,7 @@
   "invalid-location": "§cNeplatná poloha!",
   "wrong-number-format": "§cNesprávný formát čísla pro parametr %param%!",
   "cannot-find-player": "§cHrac nenalezen: §6%player%§c.",
-  "music-now-playing": "§fHudba $d%name% §fis hraje!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing!",
   "played-music-to-multiple": "§fHrana hudba §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fHrana hudba §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fHrál hudbu bez hráče, něco se pokazilo!",
