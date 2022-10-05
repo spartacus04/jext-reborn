@@ -36,7 +36,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
             player.inventory.addItem(DiscContainer(disc).discItem)
 
             player.sendMessage(
-                LANG.format(sender, "disc-retrieved")
+                LANG.format(sender, "disc-received")
                     .replace("%disc%", disc.TITLE)
             )
         }

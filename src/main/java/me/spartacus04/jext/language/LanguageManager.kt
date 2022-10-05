@@ -37,7 +37,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
                             val mapType = object : TypeToken<Map<String, String>>() {}.type
                             val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
 
-                            loadedLanguageMap.put(langName.replace(".json", ""), languageMap)
+                            loadedLanguageMap.put(langName.replace(".json", "").lowercase(), languageMap)
                         }
                     }
                 }
@@ -50,7 +50,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
             if(!customFile.exists()) {
                 customFile.createNewFile()
 
-                plugin.getResource("langs/en_us.json")!!.bufferedReader().use {
+                plugin.getResource("langs/en_US.json")!!.bufferedReader().use {
                     customFile.writeText(it.readText())
                 }
             }
@@ -78,7 +78,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
         }
 
         return if(loadedLanguageMap.containsKey(locale)) {
-            loadedLanguageMap[locale]!![key]!!
+            loadedLanguageMap[locale.lowercase()]!![key]!!
         }
         else {
             loadedLanguageMap["en_us"]!![key]!!
