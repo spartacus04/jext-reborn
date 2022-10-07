@@ -134,6 +134,9 @@ export class Disc {
 	public delete = () => {
 		data.splice(this.id, 1);
 		this.reference!.remove();
-		if(data.length == 0) disableGenButton();
+		if(data.length == 1) {
+			disableGenButton();
+			data.splice(0);
+		}
 	};
 }

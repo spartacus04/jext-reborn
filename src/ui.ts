@@ -74,14 +74,13 @@ export const ui = () => {
 };
 
 export const activateGenButton = () => {
-	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(0)';
-	document.querySelector('#generate_button')?.addEventListener('click', generatePack);
+	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(0%)';
+	document.querySelector('#generate_button')?.addEventListener('click', () => generatePack());
 	document.querySelector('#generate_button')?.removeEventListener('click', () => alert('Add at least a disc'));
 };
 
 export const disableGenButton = () => {
-	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(1)';
-	document.querySelector('#generate_button')?.removeEventListener('click', generatePack);
+	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(100%)';
+	document.querySelector('#generate_button')?.removeEventListener('click', () => generatePack());
 	document.querySelector('#generate_button')?.addEventListener('click', () => alert('Add at least a disc'));
-
 };
