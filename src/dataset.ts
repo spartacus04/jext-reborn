@@ -1,3 +1,4 @@
+import { activateGenButton, disableGenButton } from './ui';
 import { convertToOgg } from './utils';
 
 export const data : Disc[] = [];
@@ -11,7 +12,7 @@ export class Disc {
 	public id = 0;
 	public namespace: string;
 
-	reference: HTMLDivElement|null = null;
+	reference: HTMLDivElement = document.createElement('div');
 
 	constructor(musicFile: File) {
 		this.name = musicFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '');
@@ -27,21 +28,28 @@ export class Disc {
 		this.namespace = this.createNamespace();
 
 		(async () => {
+			this.createLoadingScreen();
 			this.convertedFile = await convertToOgg(musicFile);
 			this.texture = await (await fetch('./default_disk.png')).blob();
 			this.generateUI();
 
 			data.push(this);
 			this.id = data.length;
+			if(data.length == 1) activateGenButton();
 		})();
 	}
 
-	public generateUI = () => {
+	public createLoadingScreen = () => {
 		const element = document.createElement('div');
 		element.classList.add('song');
-		element.innerHTML = this.regenHtml();
+
+		element.innerHTML = '<div style="flex: 1; display: flex; justify-content: center;"><img style="max-width: none;" src="loading.webp"></div>';
 
 		this.reference = document.querySelector('#songscontainer')!.appendChild(element)!;
+	};
+
+	public generateUI = () => {
+		this.reference.innerHTML = this.regenHtml();
 
 		this.reference.querySelector('img')!.addEventListener('click', () => {
 			// input image
@@ -126,5 +134,6 @@ export class Disc {
 	public delete = () => {
 		data.splice(this.id, 1);
 		this.reference!.remove();
+		if(data.length == 0) disableGenButton();
 	};
 }

@@ -95,11 +95,11 @@ export const generatePack = async () => {
 		});
 
 
-		zip.file('resource-pack.zip', await content.arrayBuffer());
+		zip.file((<HTMLInputElement>document.querySelector('#pack_name_input')).value, await content.arrayBuffer());
 		zip.file('discs.json', JSON.stringify(discjson, null, 2));
 
 		zip.generateAsync({ type: 'blob' }).then(async resources => {
-			saveAs(resources, 'discs.zip');
+			saveAs(resources, 'open me.zip');
 		});
 	});
 };

@@ -1,3 +1,10 @@
+import { createFFmpeg } from '@ffmpeg/ffmpeg';
+
+const ffmpeg = createFFmpeg({
+	corePath: '../ffmpeg-core/ffmpeg-core.js',
+	mainName: 'main',
+});
+
 export const hashStr = (str: string) => {
 	let hash = 0;
 
@@ -10,39 +17,28 @@ export const hashStr = (str: string) => {
 };
 
 export const convertToOgg = async (file: File) : Promise<Blob> => {
-	// TODO: this doesn't convert to ogg, should use ffmpeg.js and MEMFS
-	switch(file.type) {
-	case 'audio/ogg':
-		return new Blob([file], { type: 'audio/ogg' });
-	case 'audio/mp3':
-	{
-		return await new Promise((resolve) => {
-			const reader = new FileReader();
-			const blob = new Blob([file], { type: 'audio/mp3' });
-			reader.readAsArrayBuffer(blob);
-
-			reader.onload = () => {
-				const arrayBuffer = reader.result as ArrayBuffer;
-				resolve(new Blob([arrayBuffer], { type: 'audio/ogg' }));
-			};
-		});
-	}
-	case 'audio/wav':
-	{
-		return await new Promise((resolve) => {
-			const reader = new FileReader();
-			const blob = new Blob([file], { type: 'audio/wav' });
-			reader.readAsArrayBuffer(blob);
-
-			reader.onload = () => {
-				const arrayBuffer = reader.result as ArrayBuffer;
-				resolve(new Blob([arrayBuffer], { type: 'audio/ogg' }));
-			};
-		});
-	}
-	default:
+	if(file.type == 'audio/ogg') {
 		return new Blob([file], { type: 'audio/ogg' });
 	}
+
+	return await new Promise((resolve) => {
+		const reader = new FileReader();
+		const blob = new Blob([file], { type: 'audio/mp3' });
+
+		reader.readAsArrayBuffer(blob);
+
+		reader.onload = async () => {
+			const arrayBuffer = <ArrayBuffer>reader.result;
+			await ffmpeg.load();
+			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
+			await ffmpeg.run('-i', 'audio', '-acodec', 'libvorbis', '/output.ogg');
+
+			const output = ffmpeg.FS('readFile', '/output.ogg');
+			ffmpeg.exit();
+
+			resolve(new Blob([output], { type: 'audio/ogg' }));
+		};
+	});
 };
 
 export const resizeImageBlob = async (blob: Blob, width: number, height: number) : Promise<Blob> => {

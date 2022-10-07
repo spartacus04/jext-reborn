@@ -57,7 +57,7 @@ export const ui = () => {
 		const input = document.createElement('input');
 		input.type = 'file';
 		input.multiple = true;
-		input.accept = '.ogg';
+		input.accept = 'audio/*';
 		input.click();
 
 		input.addEventListener('change', async () => {
@@ -70,8 +70,18 @@ export const ui = () => {
 		});
 	});
 
-	document.querySelector('#generate_button')?.addEventListener('click', () => {
-		generatePack();
-	});
+	disableGenButton();
 };
 
+export const activateGenButton = () => {
+	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(0)';
+	document.querySelector('#generate_button')?.addEventListener('click', generatePack);
+	document.querySelector('#generate_button')?.removeEventListener('click', () => alert('Add at least a disc'));
+};
+
+export const disableGenButton = () => {
+	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(1)';
+	document.querySelector('#generate_button')?.removeEventListener('click', generatePack);
+	document.querySelector('#generate_button')?.addEventListener('click', () => alert('Add at least a disc'));
+
+};
