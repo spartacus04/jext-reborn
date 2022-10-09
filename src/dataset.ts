@@ -11,6 +11,9 @@ export class Disc {
 	public texture: Blob|null = null;
 	public id = 0;
 	public namespace: string;
+	public creeperdrop = true;
+	public lootTables : string[] = [];
+	public fragmented = false;
 
 	reference: HTMLDivElement = document.createElement('div');
 
@@ -44,6 +47,14 @@ export class Disc {
 		element.classList.add('song');
 
 		element.innerHTML = '<div style="flex: 1; display: flex; justify-content: center;"><img style="max-width: none;" src="loading.webp"></div>';
+
+		// Resets animated image
+		const img = <HTMLImageElement>element.querySelector('img');
+		const tempsrc = img.src;
+		img.src = '';
+		setTimeout(() => {
+			img.src = tempsrc;
+		}, 1);
 
 		this.reference = document.querySelector('#songscontainer')!.appendChild(element)!;
 	};
@@ -87,7 +98,23 @@ export class Disc {
 			this.lores = (<HTMLInputElement>this.reference!.querySelector('#song_lore_input')!).value.split('\n');
 		});
 
-		this.reference.querySelector('#song_delete')!.addEventListener('click', () => {
+		const deletebtn = <HTMLImageElement>this.reference.querySelector('#song_delete')!;
+		const creeperbtn = <HTMLImageElement>this.reference.querySelector('#toggle_creeper')!;
+
+		creeperbtn.addEventListener('click', () => {
+			creeperbtn.style.filter = `grayscale(${this.creeperdrop ? '100%' : '0%'})`;
+			this.creeperdrop = !this.creeperdrop;
+		});
+
+		deletebtn.addEventListener('mouseover', () => {
+			deletebtn.src = 'delete_btn_hover.png';
+		});
+
+		deletebtn.addEventListener('mouseout', () => {
+			deletebtn.src = 'delete_btn.png';
+		});
+
+		deletebtn.addEventListener('click', () => {
 			this.delete();
 		});
 	};
@@ -95,8 +122,12 @@ export class Disc {
 	public regenHtml = () : string => {
 		return `
 			<div style="display: flex; align-items: center;">
-				<img src="${URL.createObjectURL(this.texture as Blob)}" height="64" width="64">
-				<button id="song_delete"></button>
+				<img src="${URL.createObjectURL(this.texture as Blob)}" height="64" width="64" style="margin-right: 1em;">
+				<div class="flex" id="buttons" style="justify-content: space-around;">
+					<img id="toggle_creeper" src="creeper.png" class="tooltip" data-tooltip="Toggles creeper drops">
+					<!-- <img id="loot_selector" src="chest.png"> -->
+					<img id="song_delete" src="delete_btn.png">
+				</div>
 			</div>
 			<div class="flex" id="name">
 				<input type="text" name="song_name" id="song_name_input" value="${this.name}">

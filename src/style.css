@@ -3,7 +3,8 @@
 	src: url('/minecraft_ten.ttf') format('truetype');
 }
 
-html, body {
+html,
+body {
 	border: 0;
 	padding: 0;
 	margin: 0;
@@ -35,7 +36,8 @@ body {
 	cursor: pointer;
 }
 
-#pack_name_input {
+#pack_name_input,
+select {
 	margin-left: 1em;
 	border-radius: 0;
 	border: 1px solid white;
@@ -84,12 +86,12 @@ body {
 	background-size: cover;
 
 	image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: pixelated;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
 }
 
 .noselect {
@@ -128,12 +130,12 @@ body {
 
 .song img {
 	image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: pixelated;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
 	background-color: #202020;
 
 	padding: 10px;
@@ -168,22 +170,20 @@ body {
 	color: white;
 }
 
-.song button {
-	background-color: #303030;
-	color: white;
-	border: 0;
-	padding: 0.5em;
-	font-size: 0.7em;
-	cursor: pointer;
-	height: 48px;
-	width: 48px;
-	margin-left: 1em;
-	background-image: url('/delete_btn.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+#buttons img {
+	width: 24px;
+	height: 24px;
+	padding: 2px;
 }
 
-.song button:hover {
-	background-image: url('/delete_btn_hover.png');
+#buttons {
+	height: 84px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#buttons img:hover {
+	border: 1px solid white;
 }

@@ -6,7 +6,7 @@ export const generatePack = async () => {
 	const rp = new JSZip();
 
 	const packmcmeta = `
-        {"pack": {"pack_format": 9,"description": "Adds custom musics discs"}}
+        {"pack": {"pack_format": ${(<HTMLSelectElement>document.querySelector('#version_input')).value},"description": "Adds custom musics discs"}}
     `;
 
 	rp.file('pack.mcmeta', packmcmeta);
@@ -89,7 +89,7 @@ export const generatePack = async () => {
 				author: disc.author,
 				'disc-namespace': `music_disc.${disc.namespace}`,
 				'model-data': disc.id,
-				'creeper-drop': true,
+				'creeper-drop': disc.creeperdrop,
 				lores: disc.lores,
 			};
 		});
