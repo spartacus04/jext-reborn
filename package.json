@@ -6,13 +6,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "clear && vite preview",
-    "lint": "eslint src --ext .ts,css",
-    "lint:fix": "eslint serc --ext ts,css -- --fix"
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint serc --ext ts -- --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
-    "eslint": "^8.24.0",
+    "eslint": "^8.25.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.6"
   },
