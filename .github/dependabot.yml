@@ -10,3 +10,9 @@ updates:
     target-branch: "master"
     schedule:
       interval: 'daily'
+
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    target-branch: "gh-pages"
+    schedule:
+      interval: 'daily'
