@@ -122,11 +122,23 @@ export class Disc {
 	public regenHtml = () : string => {
 		return `
 			<div style="display: flex; align-items: center;">
-				<img src="${URL.createObjectURL(this.texture as Blob)}" height="64" width="64" style="margin-right: 1em;">
+				<div class="tooltip" style="height:84px;">
+					<span class="tooltiptext">Changes the disc icon</span>
+					<img src="${URL.createObjectURL(this.texture as Blob)}" height="64" width="64">
+				</div>
 				<div class="flex" id="buttons" style="justify-content: space-around;">
-					<img id="toggle_creeper" src="creeper.png" class="tooltip" data-tooltip="Toggles creeper drops">
-					<!-- <img id="loot_selector" src="chest.png"> -->
-					<img id="song_delete" src="delete_btn.png">
+					<div class="tooltip">
+						<span class="tooltiptext">Toggles Creeper drops</span>
+						<img id="toggle_creeper" src="creeper.png">
+					</div>
+					<!-- <div class="tooltip">
+						<span class="tooltiptext">Selects structures in which the disc can be found</span>
+						<img id="loot_selector" src="chest.png">
+					</div> -->
+					<div class="tooltip">
+						<span class="tooltiptext">Removes the disc</span>
+						<img id="song_delete" src="delete_btn.png">
+					</div>
 				</div>
 			</div>
 			<div class="flex" id="name">

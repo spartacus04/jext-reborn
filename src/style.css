@@ -182,8 +182,47 @@ select {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	margin-left: 1em;
 }
 
-#buttons img:hover {
+#buttons div:hover {
 	border: 1px solid white;
+	margin-right: -2px;
+	margin-top: -1px;
+	margin-bottom: -1px;
+	z-index: 10;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	height: 28px;
+} 	
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+	font-size: 1.3vw;
+
+    position: absolute;
+    z-index: 1;
+
+	top: -5px;
+    left: 105%;
+}
+
+.tooltip:hover .tooltiptext{
+    visibility: visible;
+}
+
+.tooltiptext:hover {
+	display: none;
 }
