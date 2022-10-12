@@ -6,15 +6,18 @@
 	<link rel="icon" type="image/png" href="/jext-reborn/assets/favicon.57c0be34.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>JEXT Resource pack generator</title>
-  <script type="module" crossorigin src="/jext-reborn/assets/index.9a98a438.js"></script>
+  <script type="module" crossorigin src="/jext-reborn/assets/index.0e4a9d99.js"></script>
   <link rel="stylesheet" href="/jext-reborn/assets/index.777e9dd7.css">
 </head>
 
 <body>
 	<!-- header -->
 	<div id="header">
+		<div class="tooltip" style="height: 64px;">
+			<span class="tooltiptext">Sets the resourcepack icon</span>
+			<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
+		</div>
 		<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
-		<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
 		<input type="text" name="pack_name" id="pack_name_input" value="your_pack_name">
 		<select name="version" id="version_input">
 			<option value="4">1.14-1.14.4</option>

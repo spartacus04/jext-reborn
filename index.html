@@ -11,8 +11,11 @@
 <body>
 	<!-- header -->
 	<div id="header">
+		<div class="tooltip" style="height: 64px;">
+			<span class="tooltiptext">Sets the resourcepack icon</span>
+			<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
+		</div>
 		<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
-		<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
 		<input type="text" name="pack_name" id="pack_name_input" value="your_pack_name">
 		<select name="version" id="version_input">
 			<option value="4">1.14-1.14.4</option>
