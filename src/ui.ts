@@ -1,6 +1,14 @@
 import { Disc } from './dataset';
 import { generatePack } from './packgenerator';
 
+const hidepopup = () => {
+	(<HTMLElement>document.querySelector('#messagepopup')).style.display = 'none';
+	(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '0%';
+	setTimeout(() => {
+		(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'none';
+	}, 200);
+};
+
 export const ui = () => {
 	// pack icon
 	document.querySelector('#pack_icon')?.addEventListener('click', () => {
@@ -70,17 +78,31 @@ export const ui = () => {
 		});
 	});
 
+	document.querySelector('#messagepopupconfirm')!.addEventListener('click', hidepopup);
+	document.querySelector('.popupbackground')!.addEventListener('click', hidepopup);
+
 	disableGenButton();
 };
 
+const alert = (message: string) => {
+	document.querySelector('#messagepopupcontainer')!.innerHTML = message;
+	(<HTMLElement>document.querySelector('#messagepopup')).style.display = 'flex';
+	(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'block';
+	setTimeout(() => {
+		(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '100%';
+	}, 1);
+};
+
+const generatediscalert = () => alert('Add at least a disc');
+
 export const activateGenButton = () => {
 	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(0%)';
-	document.querySelector('#generate_button')?.addEventListener('click', () => generatePack());
-	document.querySelector('#generate_button')?.removeEventListener('click', () => alert('Add at least a disc'));
+	document.querySelector('#generate_button')!.addEventListener('click', generatePack);
+	document.querySelector('#generate_button')!.removeEventListener('click', generatediscalert);
 };
 
 export const disableGenButton = () => {
 	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(100%)';
-	document.querySelector('#generate_button')?.removeEventListener('click', () => generatePack());
-	document.querySelector('#generate_button')?.addEventListener('click', () => alert('Add at least a disc'));
+	document.querySelector('#generate_button')!.removeEventListener('click', generatePack);
+	document.querySelector('#generate_button')!.addEventListener('click', generatediscalert);
 };
