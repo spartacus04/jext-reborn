@@ -273,7 +273,7 @@ select {
 }
 
 .popupbackground {
-	background-image: url('./dirt.png');
+	background-image: url('/dirt.png');
 	background-repeat: repeat;
 	background-size: 10% auto;
 	position: absolute;
