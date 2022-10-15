@@ -1,6 +1,7 @@
 # Jext Reborn Project - JukeboxExtendedReborn
 
 [![Crowdin](https://badges.crowdin.net/jext-reborn/localized.svg)](https://crowdin.com/project/jext-reborn)
+[![Build](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml/badge.svg?branch=master&event=push)](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml)
 
 A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals through the power of a resource pack and the Spigot API!
 
