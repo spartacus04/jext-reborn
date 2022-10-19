@@ -4,13 +4,9 @@ import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
-import me.spartacus04.jext.Log
-import me.spartacus04.jext.SpigotVersion.Companion.VERSION
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
-import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
-import net.md_5.bungee.api.chat.ComponentBuilder
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
 import org.bukkit.block.Jukebox
