@@ -2,6 +2,7 @@ package me.spartacus04.jext.config
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -83,6 +84,32 @@ data class V2Config (
                     .replace("\"ignore-failed-download\": false", "\"ignore-failed-download\": ${oldconfig.IGNORE_FAILED_DOWNLOAD}")
                     .replace("\"allow-music-overlapping\": false", "\"allow-music-overlapping\": ${oldconfig.ALLOW_MUSIC_OVERLAPPING}")
             }
+        }
+    }
+}
+
+data class V1Disc(
+    @SerializedName("title")
+    var TITLE: String,
+
+    @SerializedName("author")
+    var AUTHOR: String,
+
+    @SerializedName("disc-namespace")
+    var DISC_NAMESPACE: String,
+
+    @SerializedName("model-data")
+    var MODEL_DATA: Int,
+
+    @SerializedName("creeper-drop")
+    var CREEPER_DROP: Boolean,
+
+    @SerializedName("lores")
+    var LORE: List<String>
+) {
+    companion object {
+        fun isOldConfig(jsonConfig: String) : Boolean {
+            return !jsonConfig.contains("loot-tables")
         }
     }
 }
@@ -177,6 +204,16 @@ class ConfigVersionManager {
 
             if(V2Config.isOldConfig(jsonConfig)) {
                 return file.writeText(V2Config.migrateToNewConfig(jsonConfig, plugin))
+            }
+        }
+
+        fun updateDiscs(file: File) {
+            val jsonConfig = file.readText()
+
+            if(V1Disc.isOldConfig(jsonConfig)) {
+                Bukkit.getConsoleSender().sendMessage(
+                    "[§aJEXT§f] music disc format is old, you can update it by using the wiki\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/Configuring-manually#creating-discsjson§6]"
+                )
             }
         }
 

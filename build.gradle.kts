@@ -20,7 +20,6 @@ dependencies {
 }
 
 group = "me.spartacus04.jext"
-version = "0.5b"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -29,6 +28,8 @@ tasks.jar { enabled = false }
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
+    val version = "0.6b"
+
     archiveFileName.set("${rootProject.name}_${version}.jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
     relocate("kotlin", "${dependencyPackage}.kotlin")

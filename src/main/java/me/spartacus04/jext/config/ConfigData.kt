@@ -36,7 +36,10 @@ data class Disc(
     var CREEPER_DROP: Boolean,
 
     @SerializedName("lores")
-    var LORE: List<String>
+    var LORE: List<String>,
+
+    @SerializedName("loot-tables")
+    val LOOT_TABLES: List<String>?
 )
 
 data class Messages(

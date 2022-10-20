@@ -1,9 +1,8 @@
-package me.spartacus04.jext.language
+package me.spartacus04.jext.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.config.ConfigVersionManager
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin

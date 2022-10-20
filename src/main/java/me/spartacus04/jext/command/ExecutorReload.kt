@@ -3,7 +3,7 @@ package me.spartacus04.jext.command
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.config.ConfigManager
-import me.spartacus04.jext.language.LanguageManager
+import me.spartacus04.jext.config.LanguageManager
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin

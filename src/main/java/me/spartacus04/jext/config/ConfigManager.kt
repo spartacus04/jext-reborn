@@ -47,6 +47,7 @@ class ConfigManager {
             val discsType = object : TypeToken<List<Disc>>() {}.type
 
             ConfigVersionManager.updateConfig(configFile, plugin)
+            ConfigVersionManager.updateDiscs(discsFile)
 
             ConfigData.CONFIG = deserialize(configFile, configType)
             ConfigData.DISCS = deserialize(discsFile, discsType)
