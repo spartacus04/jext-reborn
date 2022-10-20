@@ -91,6 +91,7 @@ export const generatePack = async () => {
 				'model-data': disc.id,
 				'creeper-drop': disc.creeperdrop,
 				lores: disc.lores,
+				'loot-tables': disc.lootTables,
 			};
 		});
 

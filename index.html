@@ -53,7 +53,83 @@
 	<div class="popup" id="messagepopup" style="display: none;">
 		<div class="popupcontainer" id="messagepopupcontainer">
 		</div>
-		<div id="messagepopupconfirm" >
+		<div id="messagepopupconfirm" class="popupconfirm">
+			<div id="content">
+				<p id="generate_text" class="noselect">OK</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- dungeon selector popup -->
+
+	<div class="popup" id="dungeonpopup" style="display: none;">
+		<div id="dungeonpopupcontainer">
+			<div class="dungeonelement"  id="ancientelement" value="false" source="chests/ancient_city,chests/ancient_city_ice_box">
+				<img src="loottable_icons/Ancient_City.webp">
+				<p>Ancient City</p>
+			</div>
+			<div class="dungeonelement" id="bastionelement" value="false" source="chests/bastion_bridge,chests/bastion_hoglin_treasure,chests/bastion_other,chests/bastion_treasure">
+				<img src="loottable_icons/Bastion_Remnant.webp">
+				<p>Bastion Remnant</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/desert_pyramid">
+				<img src="loottable_icons/Desert_pyramid.webp">
+				<p>Desert Pyramid</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/simple_dungeon">
+				<img src="loottable_icons/Dungeon.webp">
+				<p>Dungeon</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/end_city_treasure">
+				<img src="loottable_icons/End_City.webp">
+				<p>End City</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/igloo_chest">
+				<img src="loottable_icons/Igloo.webp">
+				<p>Igloo</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/jungle_temple">
+				<img src="loottable_icons/Jungle_pyramid.webp">
+				<p>Jungle Temple</p>
+			</div>
+			<!-- <div class="dungeonelement" value="false" source="chests/">
+				<img src="loottable_icons/Mineshaft.webp">
+				<p>Mineshaft</p>
+			</div> -->
+			<div class="dungeonelement" value="false" source="chests/nether_bridge">
+				<img src="loottable_icons/Nether_Fortress.webp">
+				<p>Nether Fortress</p>
+			</div>
+			<div class="dungeonelement" id="ruinedelement" value="false" source="chests/ruined_portal">
+				<img src="loottable_icons/Nether_portal.webp">
+				<p>Ruined Portal</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/pillager_outpost">
+				<img src="loottable_icons/Pillager_outpost.webp">
+				<p>Pillager Outpost</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/shipwreck_map,chests/shipwreck_supply,chests/shipwreck_treasure">
+				<img src="loottable_icons/Shipwreck.webp">
+				<p>Shipwreck</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/stronghold_corridor,chests/stronghold_crossing">
+				<img src="loottable_icons/Stronghold.webp">
+				<p>Stronghold</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/underwater_ruin_big,chests/underwater_ruin_small">
+				<img src="loottable_icons/Underwater_ruin.webp">
+				<p>Underwater Ruins</p>
+			</div>
+			<div class="dungeonelement" value="false" source="TODO">
+				<img src="loottable_icons/Village.webp">
+				<p>Village</p>
+			</div>
+			<div class="dungeonelement" value="false" source="chests/woodland_mansion">
+				<img src="loottable_icons/Woodland_Mansion.webp">
+				<p>Woodland Mansion</p>
+			</div>
+		</div>
+		<div id="dungeonpopupconfirm" class="popupconfirm">
 			<div id="content">
 				<p id="generate_text" class="noselect">OK</p>
 			</div>

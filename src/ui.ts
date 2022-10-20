@@ -1,14 +1,6 @@
 import { Disc } from './dataset';
 import { generatePack } from './packgenerator';
 
-const hidepopup = () => {
-	(<HTMLElement>document.querySelector('#messagepopup')).style.display = 'none';
-	(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '0%';
-	setTimeout(() => {
-		(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'none';
-	}, 200);
-};
-
 export const ui = () => {
 	// pack icon
 	document.querySelector('#pack_icon')?.addEventListener('click', () => {
@@ -79,9 +71,44 @@ export const ui = () => {
 	});
 
 	document.querySelector('#messagepopupconfirm')!.addEventListener('click', hidepopup);
-	document.querySelector('.popupbackground')!.addEventListener('click', hidepopup);
+
+	(<HTMLSelectElement>document.querySelector('#version_input'))!.addEventListener('change', () => {
+		const value = parseInt((<HTMLSelectElement>document.querySelector('#version_input'))!.value);
+
+		const ancientElement = document.querySelector('#ancientelement')!;
+		const ruinedElement = document.querySelector('#ruinedelement')!;
+		const bastionElement = document.querySelector('#bastionelement')!;
+
+
+		if(value >= 5 && value <= 8) {
+			ruinedElement.classList.remove('none');
+			bastionElement.classList.remove('none');
+			ancientElement.classList.add('none');
+		}
+		else if(value >= 9) {
+			ruinedElement.classList.remove('none');
+			bastionElement.classList.remove('none');
+			ancientElement.classList.remove('none');
+		}
+		else {
+			ruinedElement.classList.add('none');
+			bastionElement.classList.add('none');
+			ancientElement.classList.add('none');
+		}
+	});
 
 	disableGenButton();
+};
+
+// Popup message
+const hidepopup = () => {
+	(<HTMLElement>document.querySelector('#messagepopup')).style.display = 'none';
+	(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '0%';
+	setTimeout(() => {
+		(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'none';
+	}, 200);
+
+	document.querySelector('.popupbackground')!.removeEventListener('click', hidepopup);
 };
 
 const alert = (message: string) => {
@@ -91,9 +118,13 @@ const alert = (message: string) => {
 	setTimeout(() => {
 		(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '100%';
 	}, 1);
+
+	document.querySelector('.popupbackground')!.addEventListener('click', hidepopup);
 };
 
 const generatediscalert = () => alert('Add at least a disc');
+
+// Generate button
 
 export const activateGenButton = () => {
 	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(0%)';
@@ -105,4 +136,63 @@ export const disableGenButton = () => {
 	(<HTMLElement>document.querySelector('#generate_button')).style.filter = 'grayscale(100%)';
 	document.querySelector('#generate_button')!.removeEventListener('click', generatePack);
 	document.querySelector('#generate_button')!.addEventListener('click', generatediscalert);
+};
+
+// Dungeon popups
+const togglevalue = (e: Element) => {
+	const attrib = e.attributes.getNamedItem('value')!;
+	attrib.value = `${!JSON.parse(attrib.value.toLowerCase())}`;
+
+	e.attributes.setNamedItem(attrib);
+};
+
+const dungeonelements = document.querySelectorAll('.dungeonelement');
+
+dungeonelements.forEach(e => e.addEventListener('click', () => togglevalue(e)));
+
+export const openDungeonSelector = async (selected: string[]) : Promise<string[]> => {
+	dungeonelements.forEach(e => {
+		if(selected.includes(e.attributes.getNamedItem('source')!.value!.split(',')[0])) {
+			const attrib = e.attributes.getNamedItem('value')!;
+			attrib.value = 'true';
+
+			e.attributes.setNamedItem(attrib);
+		}
+	});
+
+	(<HTMLElement>document.querySelector('#dungeonpopup')).style.display = 'flex';
+	(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'block';
+	setTimeout(() => {
+		(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '100%';
+	}, 1);
+
+	return await new Promise<string[]>(resolve => {
+		const handleclosedungeon = () => {
+			(<HTMLElement>document.querySelector('#dungeonpopup')).style.display = 'none';
+			(<HTMLElement>document.querySelector('.popupbackground')).style.opacity = '0%';
+
+			setTimeout(() => {
+				(<HTMLElement>document.querySelector('.popupbackground')).style.display = 'none';
+			}, 200);
+
+			document.querySelector('#dungeonpopupconfirm')!.removeEventListener('click', handleclosedungeon);
+			document.querySelector('.popupbackground')!.removeEventListener('click', handleclosedungeon);
+
+			const values : string[] = [];
+
+			dungeonelements.forEach(e => {
+				const attrib = e.attributes.getNamedItem('value')!;
+
+				if((<boolean>JSON.parse(attrib.value.toLowerCase()))) {
+					e.attributes.getNamedItem('source')!.value.split(',').forEach(el => values.push(el));
+				}
+			});
+
+			resolve(values);
+
+		};
+
+		document.querySelector('#dungeonpopupconfirm')!.addEventListener('click', handleclosedungeon);
+		document.querySelector('.popupbackground')!.addEventListener('click', handleclosedungeon);
+	});
 };

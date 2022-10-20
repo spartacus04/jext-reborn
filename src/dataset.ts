@@ -1,4 +1,4 @@
-import { activateGenButton, disableGenButton } from './ui';
+import { activateGenButton, disableGenButton, openDungeonSelector } from './ui';
 import { convertToOgg } from './utils';
 
 export const data : Disc[] = [];
@@ -117,6 +117,11 @@ export class Disc {
 		deletebtn.addEventListener('click', () => {
 			this.delete();
 		});
+
+		this.reference.querySelector('#loot_selector')!.addEventListener('click', async () => {
+			this.lootTables = await openDungeonSelector(this.lootTables);
+			console.log(this.lootTables);
+		});
 	};
 
 	public regenHtml = () : string => {
@@ -131,10 +136,10 @@ export class Disc {
 						<span class="tooltiptext">Toggles Creeper drops</span>
 						<img id="toggle_creeper" src="creeper.png">
 					</div>
-					<!-- <div class="tooltip">
+					<div class="tooltip">
 						<span class="tooltiptext">Selects structures in which the disc can be found</span>
 						<img id="loot_selector" src="chest.png">
-					</div> -->
+					</div>
 					<div class="tooltip">
 						<span class="tooltiptext">Removes the disc</span>
 						<img id="song_delete" src="delete_btn.png">
