@@ -96,6 +96,7 @@ export const generatePack = async () => {
 		});
 
 
+		zip.file('README.md', await (await fetch('/README.md')).arrayBuffer());
 		zip.file((<HTMLInputElement>document.querySelector('#pack_name_input')).value, await content.arrayBuffer());
 		zip.file('discs.json', JSON.stringify(discjson, null, 2));
 
