@@ -37,9 +37,11 @@ class ConfigManager {
             )
         }
 
-        fun load(plugin: JavaPlugin) {
+        fun load(plugin: JavaPlugin) : Boolean {
             configFile = plugin.dataFolder.resolve("config.json")
             discsFile = plugin.dataFolder.resolve("discs.json")
+
+            if(!discsFile.exists()) return false
 
             defaultConfig(plugin)
 
@@ -51,6 +53,8 @@ class ConfigManager {
 
             ConfigData.CONFIG = deserialize(configFile, configType)
             ConfigData.DISCS = deserialize(discsFile, discsType)
+
+            return true
         }
     }
 }

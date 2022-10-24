@@ -33,7 +33,11 @@ class Jext : JavaPlugin() {
         JextNamespace.registerNamespace(this)
 
         // Loads configuration
-        ConfigManager.load(this)
+        if(!ConfigManager.load(this)) {
+            Bukkit.getConsoleSender().sendMessage(
+                "[§aJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
+            )
+        }
 
         // Loads languages
         LANG = LanguageManager(CONFIG.LANGUAGE_MODE.lowercase() == "auto", this)
@@ -47,7 +51,7 @@ class Jext : JavaPlugin() {
         Updater(this, 103219).getVersion {
             if(it != description.version) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] A new update is available!"
+                    "[§aJEXT§f] A new update is available!\n§6[§2https://www.spigotmc.org/resources/jukebox-extended-reborn.103219/§6]"
                 )
             }
         }
