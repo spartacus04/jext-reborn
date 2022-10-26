@@ -12,10 +12,14 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
+    "autoprefixer": "^10.4.12",
     "eslint": "^8.25.0",
+    "postcss": "^8.4.18",
+    "sass": "^1.55.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.6",
-    "vite-plugin-ejs": "^1.5.0"
+    "vite-plugin-ejs": "^1.5.0",
+    "vite-plugin-minify": "^1.5.2"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",

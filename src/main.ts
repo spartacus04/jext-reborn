@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import { ui } from './ui';
 
 ui();

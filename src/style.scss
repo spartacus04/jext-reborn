@@ -1,8 +1,10 @@
+// Font
 @font-face {
 	font-family: 'Minecraft';
 	src: url('/minecraft_ten.ttf') format('truetype');
 }
 
+// Scrollbar
 * {
 	scrollbar-width: auto;
 	scrollbar-color: #ffffff #303030;
@@ -22,8 +24,8 @@
 	border: 0px dotted #ffffff;
 }
 
-html,
-body {
+// Basics
+html {
 	border: 0;
 	padding: 0;
 	margin: 0;
@@ -31,6 +33,7 @@ body {
 }
 
 body {
+	@extend html;
 	background-color: #303030;
 	padding: 0;
 	display: flex;
@@ -38,6 +41,7 @@ body {
 	justify-content: center;
 }
 
+// Page setup
 .hidden {
 	visibility: hidden;
 	height: 0;
@@ -55,8 +59,7 @@ body {
 	cursor: pointer;
 }
 
-#pack_name_input,
-select {
+#pack_name_input, select {
 	margin-left: 1em;
 	border-radius: 0;
 	border: 1px solid white;
@@ -93,6 +96,17 @@ select {
 	transition: ease-in-out all 0.4s;
 }
 
+// Image setup
+%image_crisp {
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: pixelated;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
+}
+
 #generate_button {
 	background-image: url('/generate_btn.png');
 	width: 256px;
@@ -106,21 +120,10 @@ select {
 	background-position: center;
 	background-size: cover;
 
-	image-rendering: optimizeSpeed;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -o-crisp-edges;
-	image-rendering: -webkit-optimize-contrast;
-	image-rendering: pixelated;
-	image-rendering: optimize-contrast;
-	-ms-interpolation-mode: nearest-neighbor;
+	@extend %image_crisp;
 }
 
 .noselect {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -150,13 +153,8 @@ select {
 }
 
 .song img {
-	image-rendering: optimizeSpeed;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -o-crisp-edges;
-	image-rendering: -webkit-optimize-contrast;
-	image-rendering: pixelated;
-	image-rendering: optimize-contrast;
-	-ms-interpolation-mode: nearest-neighbor;
+	@extend %image_crisp;
+
 	background-color: #202020;
 
 	padding: 10px;
@@ -306,13 +304,7 @@ select {
 
 	transition: ease-in-out all 0.2s;
 
-	image-rendering: optimizeSpeed;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -o-crisp-edges;
-	image-rendering: -webkit-optimize-contrast;
-	image-rendering: pixelated;
-	image-rendering: optimize-contrast;
-	-ms-interpolation-mode: nearest-neighbor;
+	@extend %image_crisp
 }
 
 #dungeonpopupcontainer {
@@ -354,13 +346,7 @@ select {
 	flex: 1;
 	object-fit: contain;
 
-	image-rendering: optimizeSpeed;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -o-crisp-edges;
-	image-rendering: -webkit-optimize-contrast;
-	image-rendering: pixelated;
-	image-rendering: optimize-contrast;
-	-ms-interpolation-mode: nearest-neighbor;
+	@extend %image_crisp
 }
 
 .dungeonelement:hover {
