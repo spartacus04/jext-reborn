@@ -73,5 +73,10 @@
         "source": "chests/woodland_mansion",
         "img": "loottable_icons/Woodland_Mansion.webp",
         "name": "Woodland Mansion"
-    }
+    },
+	{
+		"source": "chests/abandoned_mineshaft",
+		"img": "loottable_icons/Mineshaft.webp",
+		"name": "Mineshaft"
+	}
 ]

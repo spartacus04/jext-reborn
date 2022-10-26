@@ -363,7 +363,10 @@ select {
 	-ms-interpolation-mode: nearest-neighbor;
 }
 
-.dungeonelement:hover,
+.dungeonelement:hover {
+	background-color: #252525;
+}
+
 .dungeonelement[value=true] {
 	background-color: white;
 	color: black;
