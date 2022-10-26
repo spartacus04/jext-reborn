@@ -75,9 +75,9 @@ export const ui = () => {
 	(<HTMLSelectElement>document.querySelector('#version_input'))!.addEventListener('change', () => {
 		const value = parseInt((<HTMLSelectElement>document.querySelector('#version_input'))!.value);
 
-		const ancientElement = document.querySelector('#ancientelement')!;
-		const ruinedElement = document.querySelector('#ruinedelement')!;
-		const bastionElement = document.querySelector('#bastionelement')!;
+		const ancientElement = document.querySelector('.dungeonelement[source="chests/ancient_city,chests/ancient_city_ice_box"]')!;
+		const ruinedElement = document.querySelector('.dungeonelement[source="chests/ruined_portal"]')!;
+		const bastionElement = document.querySelector('.dungeonelement[source="chests/bastion_bridge,chests/bastion_hoglin_treasure,chests/bastion_other,chests/bastion_treasure"]')!;
 
 
 		if(value >= 5 && value <= 8) {
