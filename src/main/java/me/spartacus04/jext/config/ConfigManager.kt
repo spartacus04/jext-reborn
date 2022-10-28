@@ -41,17 +41,17 @@ class ConfigManager {
             configFile = plugin.dataFolder.resolve("config.json")
             discsFile = plugin.dataFolder.resolve("discs.json")
 
-            if(!discsFile.exists()) return false
-
             defaultConfig(plugin)
 
             val configType = object : TypeToken<Config>() {}.type
             val discsType = object : TypeToken<List<Disc>>() {}.type
 
             ConfigVersionManager.updateConfig(configFile, plugin)
-            ConfigVersionManager.updateDiscs(discsFile)
-
             ConfigData.CONFIG = deserialize(configFile, configType)
+
+            if(!discsFile.exists()) return false
+
+            ConfigVersionManager.updateDiscs(discsFile)
             ConfigData.DISCS = deserialize(discsFile, discsType)
 
             return true
