@@ -57,12 +57,12 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
             ChatMessageType.ACTION_BAR,
             *TextComponent.fromLegacyText(
                 if(container.author.trim() != "") {
-                    LANG.format(player, "now-playing")
+                    LANG.format(player, "now-playing", true)
                         .replace("%author%", container.author)
                         .replace("%title%", container.toString())
                 }
                 else {
-                    LANG.format(player, "now-playing-no-author")
+                    LANG.format(player, "now-playing-no-author", true)
                         .replace("%title%", container.toString())
                 }
             )

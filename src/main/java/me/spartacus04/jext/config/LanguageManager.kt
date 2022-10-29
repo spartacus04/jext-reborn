@@ -84,8 +84,8 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
         }
     }
 
-    fun format(commandSender: CommandSender, key: String) : String {
-        return "[§aJEXT§f] ${getString(commandSender, key)}"
+    fun format(commandSender: CommandSender, key: String, noPrefix: Boolean = false) : String {
+        return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
     }
 
     fun hasLanguage(locale: String) : Boolean {
