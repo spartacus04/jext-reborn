@@ -28,7 +28,7 @@ tasks.jar { enabled = false }
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
-    val version = "0.6.3b"
+    val version = "0.6.4b"
 
     archiveFileName.set("${rootProject.name}_${version}.jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
