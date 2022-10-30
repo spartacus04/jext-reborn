@@ -23,7 +23,7 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 
 	return await new Promise((resolve) => {
 		const reader = new FileReader();
-		const blob = new Blob([file], { type: 'audio/mp3' });
+		const blob = new Blob([file]);
 
 		reader.readAsArrayBuffer(blob);
 
@@ -32,6 +32,28 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 			await ffmpeg.load();
 			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
 			await ffmpeg.run('-i', 'audio', '-acodec', 'libvorbis', '/output.ogg');
+
+			const output = ffmpeg.FS('readFile', '/output.ogg');
+			ffmpeg.exit();
+
+			resolve(new Blob([output], { type: 'audio/ogg' }));
+		};
+	});
+};
+
+export const stereoToMono = async (blob: Blob) : Promise<Blob> => {
+	if(import.meta.env.DEV) return blob;
+
+	return await new Promise((resolve) => {
+		const reader = new FileReader();
+
+		reader.readAsArrayBuffer(blob);
+
+		reader.onload = async () => {
+			const arrayBuffer = <ArrayBuffer>reader.result;
+			await ffmpeg.load();
+			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
+			await ffmpeg.run('-i', 'audio', '-ac', '1', '/output.ogg');
 
 			const output = ffmpeg.FS('readFile', '/output.ogg');
 			ffmpeg.exit();
@@ -86,3 +108,17 @@ export const saveAs = (blob: Blob, filename: string) => {
 	link.download = filename;
 	link.click();
 };
+
+export interface songData {
+	uploadedFile: File,
+	oggFile : Blob,
+	monoFile : Blob,
+	name: string,
+	author: string,
+	lores: string,
+	texture: Blob,
+	id: number,
+	namespace: string,
+	creeperDrop: boolean,
+	lootTables: string[],
+}

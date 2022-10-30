@@ -1,14 +1,25 @@
 {
-    "root": true,
+    "parserOptions": {
+		"ecmaVersion": 2019,
+		"sourceType": "module"
+	},
+	"root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+	  "svelte3"
     ],
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended"
     ],
+	"overrides": [
+		{
+			"files": ["**/*.svelte"],
+			"processor": "svelte3/svelte3"
+		}
+	],
     "rules": {
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
 		"comma-dangle": ["error", "always-multiline"],

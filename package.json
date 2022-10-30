@@ -1,30 +1,35 @@
 {
-  "name": "jext-generator",
+  "name": "jext-tool-rework",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "clear && vite preview",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint serc --ext ts -- --fix"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "autoprefixer": "^10.4.12",
-    "eslint": "^8.25.0",
-    "postcss": "^8.4.18",
-    "sass": "^1.55.0",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.6",
-    "vite-plugin-ejs": "^1.5.0",
-    "vite-plugin-minify": "^1.5.2"
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
     "@ffmpeg/ffmpeg": "^0.11.5",
     "@types/node": "^18.8.3",
     "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "@tsconfig/svelte": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.25.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "postcss": "^8.4.18",
+    "sass": "^1.55.0",
+    "svelte": "^3.52.0",
+    "svelte-check": "^2.9.2",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.1"
   }
 }

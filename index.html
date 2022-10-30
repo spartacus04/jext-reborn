@@ -1,83 +1,14 @@
+<!DOCTYPE html>
+
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8" />
-	<link rel="icon" type="image/png" href="favicon.png" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>JEXT Resource pack generator</title>
-</head>
-
-<body>
-	<!-- header -->
-	<div id="header">
-		<div class="tooltip" style="height: 64px;">
-			<span class="tooltiptext">Sets the resourcepack icon</span>
-			<img src="pack_icon.png" alt="pack icon" id="pack_icon" class="noselect">
-		</div>
-		<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
-		<input type="text" name="pack_name" id="pack_name_input" value="your_pack_name">
-		<select name="version" id="version_input">
-			<option value="4">1.14-1.14.4</option>
-			<option value="5">1.15-1.16.1</option>
-			<option value="6">1.16.2-1.16.5</option>
-			<option value="7">1.17-1.17.1</option>
-			<option value="8">1.18-1.18.2</option>
-			<option value="9" selected>1.19-1.19.2</option>
-		</select>
-	</div>
-
-	<!-- content -->
-
-	<div id="main">
-		<div id="songscontainer">
-		</div>
-		<hr class="hidden">
-		<div id="addsongsbtn">
-			<h1 class="noselect">+</h1>
-		</div>
-	</div>
-
-	<!-- footer -->
-	<div id="footer">
-		<div id="generate_button">
-			<div id="content">
-				<p id="generate_text" class="noselect">GENERATE</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="popupbackground"></div>
-	<!-- text popup -->
-
-	<div class="popup" id="messagepopup" style="display: none;">
-		<div class="popupcontainer" id="messagepopupcontainer">
-		</div>
-		<div id="messagepopupconfirm" class="popupconfirm">
-			<div id="content">
-				<p id="generate_text" class="noselect">OK</p>
-			</div>
-		</div>
-	</div>
-
-	<!-- dungeon selector popup -->
-
-	<div class="popup" id="dungeonpopup" style="display: none;">
-		<div id="dungeonpopupcontainer">
-			<% for( let i = 0; i < dungeons.length; i++ ) { %>
-				<div class="dungeonelement" value="false" source="<%= dungeons[i].source %>">
-					<img src="<%= dungeons[i].img %>">
-					<p><%= dungeons[i].name %></p>
-				</div>
-			<% } %>
-		</div>
-		<div id="dungeonpopupconfirm" class="popupconfirm">
-			<div id="content">
-				<p id="generate_text" class="noselect">OK</p>
-			</div>
-		</div>
-	</div>
-
-	<script type="module" src="/src/main.ts"></script>
-</body>
-
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>JEXT Resource pack generator</title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
 </html>

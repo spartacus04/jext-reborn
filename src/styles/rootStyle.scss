@@ -1,0 +1,42 @@
+@import './crisp.scss';
+
+html, body, #app {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+
+.hidden {
+	visibility: hidden;
+	height: 0;
+	width: 0;
+}
+
+img {
+	@extend %crisp;
+}
+
+@font-face {
+	font-family: 'Minecraft';
+	src: url('/minecraft_ten.ttf') format('truetype');
+}
+
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #ffffff #303030;
+}
+
+*::-webkit-scrollbar {
+	width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+	background: #303030;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: #ffffff;
+	border-radius: 10px;
+	border: 0px dotted #ffffff;
+}
