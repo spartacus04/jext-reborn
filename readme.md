@@ -1,48 +1,29 @@
-# Svelte + TS + Vite
+# Jext Reborn Project - JukeboxExtendedReborn
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+[![Crowdin](https://badges.crowdin.net/jext-reborn/localized.svg)](https://crowdin.com/project/jext-reborn)
+[![Build](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml/badge.svg?branch=master&event=push)](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml)
 
-## Recommended IDE Setup
+## gh-pages branch
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+In this branch I develop the website to automatically create a resource pack and configure the plugin
 
-## Need an official Svelte framework?
+## What's this?
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals through the power of a resource pack and the Spigot API!
 
-## Technical considerations
+Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more details and guides.
 
-**Why use this over SvelteKit?**
+## Dependencies
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-  `vite dev` and `vite build` wouldn't work in a SvelteKit environment, for example.
+[ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) to make jukebox play custom music disc like vanilla.
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+## Core features
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+- Adding and playing custom music disc without replacing the original music disc.
+- Customizable disc title, author and lore texts.
+- The plugin supports most common languages
+- Allow/Disallow custom discs drop from Creepers.
+- Supports custom model data, allow customized disc texture.
+- Auto kick players who rejected the server resource pack.
+- Allay duplication works with custom music.
+- Parrot will still dance to the music!
