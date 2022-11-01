@@ -1,7 +1,9 @@
 import JSZip from 'jszip';
-import { resizeImageBlob, saveAs, songData } from './utils';
+import { resizeImageBlob, saveAs } from './utils';
+import type { songData } from './config';
+import README from './assets/readme.txt';
 
-export const generatePack = async (data: songData[], version : number, icon : string, name : string) => {
+export const generatePack = async (data: songData[], version : number, icon : string, name : string, mono : boolean) => {
 	const rp = new JSZip();
 
 	const packmcmeta = `
@@ -63,11 +65,10 @@ export const generatePack = async (data: songData[], version : number, icon : st
 	for(let i = 0; i < data.length; i++) {
 		const disc = data[i];
 
-		const resizedTexture = await (await resizeImageBlob(disc.texture!, 16, 16)).arrayBuffer();
+		const resizedTexture = await (await resizeImageBlob(disc.texture, 16, 16)).arrayBuffer();
 		textures.file(`music_disc_${disc.namespace}.png`, resizedTexture);
 
-		console.log(disc);
-		const soundbuffer = await disc.oggFile!.arrayBuffer();
+		const soundbuffer = mono ? await disc.monoFile.arrayBuffer() : await disc.oggFile.arrayBuffer();
 		sounds.file(`${disc.namespace}.ogg`, soundbuffer);
 
 		console.log(disc);
@@ -95,7 +96,7 @@ export const generatePack = async (data: songData[], version : number, icon : st
 		});
 
 
-		zip.file('README.md', await (await fetch('/README.md')).arrayBuffer());
+		zip.file('README.md', await (await fetch(README)).arrayBuffer());
 		zip.file(`${name}.zip`, await content.arrayBuffer());
 		zip.file('discs.json', JSON.stringify(discjson, null, 2));
 

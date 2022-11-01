@@ -6,6 +6,7 @@
     export let packname = "your_pack_name";
     export let version = 9;
     export let imagesrc = pack_icon;
+    export let useMono = true;
 
     const updateImage = () => {
         document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
@@ -63,9 +64,20 @@
             <option value={key}>{value}</option>
         {/each}
     </select>
+
+    <input type="checkbox" name="useMono" id="useMono" bind:checked={useMono}>
+    <label for="useMono">Use mono audio</label>
 </div>
 
 <style lang="scss">
+    %textSettings {
+        border-radius: 0;
+        color: white;
+        font-size: 1.2em;
+        padding: 0.5em;
+        width: fit-content;
+    }
+
     #header {
         display: flex;
         align-items: center;
@@ -77,14 +89,46 @@
         }
 
         #pack_name_input, select {
+            @extend %textSettings;
             margin-left: 1em;
-            border-radius: 0;
-            border: 1px solid white;
             background-color: #303030;
-            color: white;
-            font-size: 1.2em;
-            padding: 0.5em;
-            width: fit-content;
+        }
+
+        label {
+            @extend %textSettings
+        }
+
+        #useMono {
+            margin-left: 1.5em;
+            margin-right: -0.5em;
+
+            appearance: none;
+            background-color: #fff;
+            width: 2em;
+            height: 2em;
+            border-radius: 0.15em;
+            transform: translateY(-0.075em);
+
+            display: grid;
+            place-content: center;
+        }
+
+        #useMono::before {
+            content: "";
+
+            background-color: black;
+            width: 1.65em;
+            height: 1.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em black;
+
+            transform-origin: center center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        #useMono:checked::before {
+            transform: scale(1);
         }
     }
 </style>
