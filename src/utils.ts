@@ -5,17 +5,6 @@ const ffmpeg = createFFmpeg({
 	mainName: 'main',
 });
 
-export const hashStr = (str: string) => {
-	let hash = 0;
-
-	for (let i = 0; i < str.length; i++) {
-		hash = ((hash << 5) - hash) + str.charCodeAt(i);
-		hash |= 0;
-	}
-
-	return hash;
-};
-
 export const convertToOgg = async (file: File) : Promise<Blob> => {
 	if(file.type == 'audio/ogg' || import.meta.env.DEV) {
 		return new Blob([file], { type: 'audio/ogg' });
@@ -23,7 +12,7 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 
 	return await new Promise((resolve) => {
 		const reader = new FileReader();
-		const blob = new Blob([file], { type: 'audio/mp3' });
+		const blob = new Blob([file]);
 
 		reader.readAsArrayBuffer(blob);
 
@@ -32,6 +21,28 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 			await ffmpeg.load();
 			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
 			await ffmpeg.run('-i', 'audio', '-acodec', 'libvorbis', '/output.ogg');
+
+			const output = ffmpeg.FS('readFile', '/output.ogg');
+			ffmpeg.exit();
+
+			resolve(new Blob([output], { type: 'audio/ogg' }));
+		};
+	});
+};
+
+export const stereoToMono = async (blob: Blob) : Promise<Blob> => {
+	if(import.meta.env.DEV) return blob;
+
+	return await new Promise((resolve) => {
+		const reader = new FileReader();
+
+		reader.readAsArrayBuffer(blob);
+
+		reader.onload = async () => {
+			const arrayBuffer = <ArrayBuffer>reader.result;
+			await ffmpeg.load();
+			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
+			await ffmpeg.run('-i', 'audio', '-ac', '1', '/output.ogg');
 
 			const output = ffmpeg.FS('readFile', '/output.ogg');
 			ffmpeg.exit();
@@ -62,23 +73,25 @@ export const resizeImageBlob = async (blob: Blob, width: number, height: number)
 	});
 };
 
-function dataURLToBlob(dataURL: string): Blob | PromiseLike<Blob> {
+const dataURLToBlob = (dataURL: string): Blob | PromiseLike<Blob> => {
 	return new Promise((resolve) => {
 		const arrayBuffer = dataURLToArrayBuffer(dataURL);
 		resolve(new Blob([arrayBuffer], { type: 'image/png' }));
 	});
-}
+};
 
-function dataURLToArrayBuffer(dataURL: string) {
+const dataURLToArrayBuffer = (dataURL: string) : ArrayBuffer => {
 	const base64 = dataURL.split(',')[1];
-	const binary = atob(base64);
+	const binary = window.atob(base64);
 	const arrayBuffer = new ArrayBuffer(binary.length);
 	const uint8Array = new Uint8Array(arrayBuffer);
+
 	for (let i = 0; i < binary.length; i++) {
 		uint8Array[i] = binary.charCodeAt(i);
 	}
+
 	return arrayBuffer;
-}
+};
 
 export const saveAs = (blob: Blob, filename: string) => {
 	const link = document.createElement('a');
