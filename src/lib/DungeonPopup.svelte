@@ -1,13 +1,24 @@
 <script lang="ts">
-    import dirt from '../assets/dirt.png';
-
+    import DungeonElement from './DungeonElement.svelte';
     import { fade } from 'svelte/transition';
 
-    export let text : string;
+    import dirt from '../assets/dirt.png';
+
+    import { dungeons } from '../config';
+
+    export let selectedDungeons : string[] = []
+    export let version : number;
     export let closePopup : boolean;
+    
+
+    const selectItem = (value : string) => {
+        if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
+        else selectedDungeons = [...selectedDungeons, value];
+    };
 
     const close = () => {
     	closePopup = false;
+        (<HTMLElement>document.querySelector('.popup')).style.display = 'none';
     };
 </script>
 
@@ -15,8 +26,13 @@
 
 {#if closePopup}
     <div class="popup">
-        <div class="popupcontainer" id="messagepopupcontainer">{text}</div>
-
+        <div class="popupcontainer">
+            {#each dungeons as dungeon}
+                {#if dungeon.minVersion && dungeon.minVersion <= version}
+                    <DungeonElement image={dungeon.img} name={dungeon.name} value={selectedDungeons.includes(dungeon.source)} onClick={() => selectItem(dungeon.source)}/>
+                {/if}
+            {/each}
+        </div>
         <div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
             <div id="content">
                 <p id="generate_text" class="noselect">OK</p>
@@ -42,11 +58,20 @@
         align-items: center;
 
         .popupcontainer {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            align-items: flex-start;
+            padding: 0;
+            width: 816px;
+            max-width: 816px;
+            max-height: 420px;
+            overflow-y: scroll;
+
             padding: 0.5em;
             background-color: #303030;
             border: 1px solid black;
             color: white;
-            font-size: 1.5vw;
         }
 
         .popupconfirm {

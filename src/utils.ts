@@ -5,17 +5,6 @@ const ffmpeg = createFFmpeg({
 	mainName: 'main',
 });
 
-export const hashStr = (str: string) => {
-	let hash = 0;
-
-	for (let i = 0; i < str.length; i++) {
-		hash = ((hash << 5) - hash) + str.charCodeAt(i);
-		hash |= 0;
-	}
-
-	return hash;
-};
-
 export const convertToOgg = async (file: File) : Promise<Blob> => {
 	if(file.type == 'audio/ogg' || import.meta.env.DEV) {
 		return new Blob([file], { type: 'audio/ogg' });
@@ -84,23 +73,25 @@ export const resizeImageBlob = async (blob: Blob, width: number, height: number)
 	});
 };
 
-function dataURLToBlob(dataURL: string): Blob | PromiseLike<Blob> {
+const dataURLToBlob = (dataURL: string): Blob | PromiseLike<Blob> => {
 	return new Promise((resolve) => {
 		const arrayBuffer = dataURLToArrayBuffer(dataURL);
 		resolve(new Blob([arrayBuffer], { type: 'image/png' }));
 	});
-}
+};
 
-function dataURLToArrayBuffer(dataURL: string) {
+const dataURLToArrayBuffer = (dataURL: string) : ArrayBuffer => {
 	const base64 = dataURL.split(',')[1];
-	const binary = atob(base64);
+	const binary = window.atob(base64);
 	const arrayBuffer = new ArrayBuffer(binary.length);
 	const uint8Array = new Uint8Array(arrayBuffer);
+
 	for (let i = 0; i < binary.length; i++) {
 		uint8Array[i] = binary.charCodeAt(i);
 	}
+
 	return arrayBuffer;
-}
+};
 
 export const saveAs = (blob: Blob, filename: string) => {
 	const link = document.createElement('a');
@@ -108,16 +99,3 @@ export const saveAs = (blob: Blob, filename: string) => {
 	link.download = filename;
 	link.click();
 };
-
-export interface songData {
-	uploadedFile: File,
-	oggFile : Blob,
-	monoFile : Blob,
-	name: string,
-	author: string,
-	lores: string,
-	texture: Blob,
-	namespace: string,
-	creeperDrop: boolean,
-	lootTables: string[],
-}

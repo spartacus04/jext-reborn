@@ -1,28 +1,29 @@
 <script lang="ts">
     import Content from './lib/Content.svelte';
     import Header from './lib/Header.svelte';
-
-import generate_btn from './assets/generate_btn.png';
-
-    import type { songData } from './utils';
     import Popup from './lib/Popup.svelte';
+
+	import generate_btn from './assets/generate_btn.png';
+
+    import type { songData } from './config';
     import { generatePack } from './generator';
 
-let packIcon : string;
-let packName : string;
-let packVersion : number;
 
-let discDataList : songData[] = [];
+	let packIcon : string;
+	let packName : string;
+	let packVersion : number;
 
-let popup = false;
+	let discDataList : songData[] = [];
 
-const showPopup = () => {
-	popup = true;
-};
+	let popup = false;
 
-const generate = () => {
-	generatePack(discDataList, packVersion, packIcon, packName);
-};
+	const showPopup = () => {
+		popup = true;
+	};
+
+	const generate = () => {
+		generatePack(discDataList, packVersion, packIcon, packName);
+	};
 </script>
 
 <main>
@@ -32,7 +33,7 @@ const generate = () => {
 
 	<Header bind:packname={packName} bind:version={packVersion} bind:imagesrc={packIcon}/>
 
-	<Content bind:discData={discDataList}/>
+	<Content bind:discData={discDataList} bind:version={packVersion}/>
 
 	<div id="footer">
 		{#if discDataList.length > 0}

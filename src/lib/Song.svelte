@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { convertToOgg, songData, stereoToMono } from '../utils';
+    import { convertToOgg, stereoToMono } from '../utils';
+    import type { songData } from '../config';
+
     import Tooltip from './Tooltip.svelte';
 
     import default_disk from '../assets/default_disk.png';
@@ -8,21 +10,12 @@
     import chest from '../assets/chest.png';
     import delete_btn from '../assets/delete_btn.png';
     import delete_btn_hover from '../assets/delete_btn_hover.png';
+    import DungeonPopup from './DungeonPopup.svelte';
 
     export let song : songData;
     export let id : number;
-
-    $: uploadedFile = song.uploadedFile;
-    $: oggFile = song.oggFile;
-    $: monoFile = song.monoFile;
-
-    $: texture = song.texture;
-    $: name = song.name;
-    $: author = song.author;
-    $: lores = song.lores;
-    $: namespace = song.namespace;
-    $: creeperDrop = song.creeperDrop;
-    $: lootTables = song.lootTables;
+    export let version : number;
+    export let onRemove = () => {}
 
     const regenNamespace = () => {
     	song.namespace = `${song.name}${song.author}${id}`
@@ -66,7 +59,7 @@
     const loadingImagePromise = loadingImage();
 
     const toggle_creeper = () => {
-    	creeperDrop = !creeperDrop;
+    	song.creeperDrop = !song.creeperDrop;
     };
 
     let trash_hovered = false;
@@ -74,7 +67,32 @@
     const trash_toggle = () => {
     	trash_hovered = !trash_hovered;
     };
+
+    const newImage = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+
+        input.addEventListener('change', () => {
+            const file = input.files![0];
+            if (file) {
+                song.texture = <Blob>file
+            }
+        });
+
+        input.click();
+    }
+
+    let popup = false;
+
+	const showPopup = () => {
+		popup = true;
+	};
 </script>
+
+{#if popup}
+    <DungeonPopup bind:selectedDungeons={song.lootTables} bind:version={version} bind:closePopup={popup}/>
+{/if}
 
 <div id="song">
     {#await prepareDiscPromise}
@@ -90,12 +108,12 @@
     {:then _} 
         <div id="icons">
             <Tooltip text="Changes the disc icon">
-                <img id="disc_texture" src={URL.createObjectURL(texture)} height="64" width="64" alt="disc icon">
+                <img id="disc_texture" src={URL.createObjectURL(song.texture)} height="64" width="64" alt="disc icon" on:click={newImage} on:keydown={null}>
             </Tooltip>
             <div id="buttons">
                 <div id="wrapper">
                     <Tooltip text="Toggles Creeper drops">
-                        {#if !creeperDrop}
+                        {#if !song.creeperDrop}
                             <img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null} class="grayscale">
                         {:else}
                             <img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null}>
@@ -104,32 +122,32 @@
                 </div>
                 <div id="wrapper">
                     <Tooltip text="Selects structures in which the disc can be found">
-                        <img id="loot_selector" src={chest} alt="chest icon">
+                        <img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
                     </Tooltip>
                 </div>
                 <div id="wrapper">
                     <Tooltip text="Removes the disc">
                         {#if !trash_hovered}
-                            <img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle}>
+                            <img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
                         {:else}
-                            <img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle}>
+                            <img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
                         {/if}
                     </Tooltip>
                 </div>
             </div>
         </div>
         <div id="names">
-            <input type="text" name="song_name" id="song_name_input" bind:value={name} on:input={regenNamespace}>
-            <input type="text" name="song_author" id="song_author_input" bind:value={author} on:input={regenNamespace}>
+            <input type="text" name="song_name" id="song_name_input" bind:value={song.name} on:input={regenNamespace}>
+            <input type="text" name="song_author" id="song_author_input" bind:value={song.author} on:input={regenNamespace}>
             <p id="disknamespace">
-                {#if namespace.length > 90}
-                    {namespace.substring(0, 90)}...
+                {#if song.namespace.length > 90}
+                    {song.namespace.substring(0, 90)}...
                 {:else}
-                    {namespace}
+                    {song.namespace}
                 {/if}
             </p>
         </div>
-        <textarea name="song_lore" id="song_lore_input" cols="30" rows="6" bind:value={lores}></textarea>
+        <textarea name="song_lore" id="song_lore_input" cols="30" rows="6" bind:value={song.lores}></textarea>
     {/await}
 </div>
 

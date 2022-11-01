@@ -90,7 +90,7 @@ export const generatePack = async (data: songData[], version : number, icon : st
 				'model-data': i,
 				'creeper-drop': disc.creeperDrop,
 				lores: disc.lores.split('\n'),
-				'loot-tables': disc.lootTables,
+				'loot-tables': disc.lootTables.join(',').split(','),
 			};
 		});
 
