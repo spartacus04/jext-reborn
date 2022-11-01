@@ -14,7 +14,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10")
     implementation("org.bstats:bstats-bukkit:3.0.0")
 }
@@ -28,7 +28,7 @@ tasks.jar { enabled = false }
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
-    val version = "0.6.5b"
+    val version = "0.6.6b"
 
     archiveFileName.set("${rootProject.name}_${version}.jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
