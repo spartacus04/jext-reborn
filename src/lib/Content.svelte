@@ -1,7 +1,8 @@
 <script lang="ts">
+    import type { songData } from "src/utils";
     import Song from "./Song.svelte";
 
-    export let discs : File[] = [];
+    export let discData : songData[] = [];
 
     const addSong = () => {
         const input = document.createElement('input');
@@ -13,15 +14,32 @@
 		input.addEventListener('change', async () => {
 			if(!input.files || input.files.length === 0) return;
             
-            discs = [...discs, ...input.files]
+            const tempDiscData : songData[] = [];
+
+            for(let i = 0; i < input.files.length; i++) {
+                tempDiscData.push({
+                    uploadedFile: input.files[i],
+                    name: 'Disc Name',
+                    author: 'Disc Author',
+                    lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
+                    texture: null,
+                    creeperDrop: true,
+                    lootTables: [],
+                    monoFile: null,
+                    namespace: '',
+                    oggFile: null
+                })
+            }
+            
+            discData = [...discData, ...tempDiscData];
 		});
     };
 </script>
 
 <div id="content">
     <div id="songscontainer">
-        {#each discs as disc, i}
-            <Song uploadedFile={disc} id={i}></Song>
+        {#each discData as song, i}
+            <Song id={i} bind:song={song}></Song>
         {/each}
     </div>
     <hr class="hidden">

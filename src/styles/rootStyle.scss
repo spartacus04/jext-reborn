@@ -17,6 +17,10 @@ img {
 	@extend %crisp;
 }
 
+.grayscale {
+	filter: grayscale(100%);
+}
+
 @font-face {
 	font-family: 'Minecraft';
 	src: url('/minecraft_ten.ttf') format('truetype');

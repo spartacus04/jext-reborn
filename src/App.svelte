@@ -1,20 +1,49 @@
 <script lang="ts">
     import Content from "./lib/Content.svelte";
     import Header from "./lib/Header.svelte";
-
+	
 	import generate_btn from './assets/generate_btn.png'
+
+    import type { songData } from "./utils";
+    import Popup from "./lib/Popup.svelte";
+    import { generatePack } from "./generator";
+
+	let packIcon : string;
+	let packName : string;
+	let packVersion : number
+
+	let discDataList : songData[] = [];
+
+	let popup = false;
+
+	const showPopup = () => {
+		popup = true;
+	}
+
+	const generate = () => {
+		generatePack(discDataList, packVersion, packIcon, packName);
+	}
 </script>
 
 <main>
-  	
-	<Header />
+	{#if popup}
+		<Popup text="Add at least a disc" bind:closePopup={popup}></Popup>
+	{/if}
 
-	<Content />
+	<Header bind:packname={packName} bind:version={packVersion} bind:imagesrc={packIcon}/>
+
+	<Content bind:discData={discDataList}/>
 
 	<div id="footer">
-		<div id="generate_button" style="background-image: url({generate_btn});">
-			<p id="generate_text" class="noselect">GENERATE</p>
-		</div>
+		{#if discDataList.length > 0}
+			<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null}>
+				<p id="generate_text" class="noselect">GENERATE</p>
+			</div>
+		{:else}
+			<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null}>
+				<p id="generate_text" class="noselect">GENERATE</p>
+			</div>
+		{/if}
 	</div>
 </main>
 

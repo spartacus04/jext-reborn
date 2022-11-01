@@ -117,7 +117,6 @@ export interface songData {
 	author: string,
 	lores: string,
 	texture: Blob,
-	id: number,
 	namespace: string,
 	creeperDrop: boolean,
 	lootTables: string[],

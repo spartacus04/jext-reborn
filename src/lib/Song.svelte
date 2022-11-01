@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { convertToOgg, stereoToMono } from "../utils";
+    import { convertToOgg, songData, stereoToMono } from "../utils";
     import Tooltip from "./Tooltip.svelte";
 
     import default_disk from '../assets/default_disk.png';
@@ -9,22 +9,23 @@
     import delete_btn from '../assets/delete_btn.png';
     import delete_btn_hover from '../assets/delete_btn_hover.png';
 
-
-    export let uploadedFile : File;
-    export let oggFile : Blob = null;
-    export let monoFile : Blob = null;
-
-    export let name = 'Disc Name';
-    export let author = 'Disc Author';
-    export let lores = 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty';
-    export let texture : Blob = null;
+    export let song : songData;
     export let id : number;
-    export let namespace = "";
-    export let creeperDrop = true;
-    export let lootTables : string[] = [];
+
+    $: uploadedFile = song.uploadedFile;
+    $: oggFile = song.oggFile;
+    $: monoFile = song.monoFile;
+
+    $: texture = song.texture;
+    $: name = song.name;
+    $: author = song.author;
+    $: lores = song.lores;
+    $: namespace = song.namespace;
+    $: creeperDrop = song.creeperDrop;
+    $: lootTables = song.lootTables;
 
     const regenNamespace = () => {
-        namespace = `${name}${author}${id}`
+        song.namespace = `${song.name}${song.author}${id}`
 			.replace(/[^a-zA-Z0-9]/g, '')
 			.replaceAll('1', 'one')
 			.replaceAll('2', 'two')
@@ -39,20 +40,18 @@
 			.toLowerCase();
     }
 
-    const prepareDisc = async () : Promise<string> => {
-        const splitName = uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/\ ?-\ ?/g);
-
-        if(splitName.length >= 1) name = splitName.shift();
-        if(splitName.length >= 1) author = splitName.join();
+    const prepareDisc = async () : Promise<void> => {
+        const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/\ ?-\ ?/g);
+        
+        if(splitName.length >= 1) song.name = splitName.shift();
+        if(splitName.length >= 1) song.author = splitName.join();
 
         regenNamespace();
 
-        oggFile = await convertToOgg(uploadedFile);
-        monoFile = await stereoToMono(oggFile);
+        song.oggFile = await convertToOgg(song.uploadedFile);
+        song.monoFile = await stereoToMono(song.oggFile);
 
-        texture = await (await fetch(default_disk)).blob();
-
-        return URL.createObjectURL(texture)
+        song.texture = await (await fetch(default_disk)).blob();
     }
 
     const loadingImage = async () => {
@@ -88,10 +87,10 @@
                 <img src={loading} alt="loading">
             </div>
         {/await}
-    {:then textureUrl} 
-        <div id="icons" style="">
+    {:then _} 
+        <div id="icons">
             <Tooltip text="Changes the disc icon">
-                <img src={textureUrl} height="64" width="64" alt="disc icon">
+                <img id="disc_texture" src={URL.createObjectURL(texture)} height="64" width="64" alt="disc icon">
             </Tooltip>
             <div id="buttons">
                 <div id="wrapper">
@@ -158,6 +157,14 @@
         #icons {
             display: flex;
 
+            #disc_texture:hover {
+                border: 1px solid white;
+                margin-right: -2px;
+                margin-top: -1px;
+                margin-bottom: -1px;
+                z-index: 10;
+            }
+
             img {
                 background-color: #202020;
 
@@ -219,9 +226,5 @@
 	        background-color: #202020;
 	        color: white;
         }
-    }
-
-    .grayscale {
-        filter: grayscale(100%);
     }
 </style>
