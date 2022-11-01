@@ -12,7 +12,8 @@ import org.bukkit.loot.LootContext
 class CreeperDeathListener : Listener {
     @EventHandler(ignoreCancelled = true)
     fun onCreeperDeath(event: EntityDeathEvent) {
-        val killer = event.entity.lastDamageCause!!.entity
+        val lastDamageCause = event.entity.lastDamageCause ?: return
+        val killer = lastDamageCause.entity
         if (event.entity !is Creeper || killer !is Skeleton) return
 
         val disc = event.drops.find {
