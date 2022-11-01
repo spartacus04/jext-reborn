@@ -32,6 +32,7 @@ tasks.shadowJar {
 
     archiveFileName.set("${rootProject.name}_${version}.jar")
     val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
+    relocate("kotlin", "${dependencyPackage}.kotlin")
     relocate("com/google/gson", "${dependencyPackage}.gson")
     relocate("org/intellij/lang", "${dependencyPackage}.lang")
     relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
