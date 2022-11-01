@@ -1,52 +1,53 @@
 <script lang="ts">
-    import Tooltip from "./Tooltip.svelte";
-    import pack_icon from '../assets/pack_icon.png'
+    import Tooltip from './Tooltip.svelte';
+    import pack_icon from '../assets/pack_icon.png';
     import { versions } from '../config';
 
-    export let packname = "your_pack_name";
+    export let packname = 'your_pack_name';
     export let version = 9;
     export let imagesrc = pack_icon;
 
     const updateImage = () => {
-        document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
-			const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
-			if(!files || files.length === 0) return;
+    	document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
+		const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
+		if(!files || files.length === 0) return;
 
-			const file = files[0];
-			const reader = new FileReader();
+		const file = files[0];
+		const reader = new FileReader();
 
-			reader.onload = () => {
-				const image = new Image();
+		reader.onload = () => {
+			const image = new Image();
 
-				image.onload = () => {
-					const canvas = document.createElement('canvas');
+			image.onload = () => {
+				const canvas = document.createElement('canvas');
 
-					canvas.width = 64;
-					canvas.height = 64;
+				canvas.width = 64;
+				canvas.height = 64;
 
-					const ctx = canvas.getContext('2d');
+				const ctx = canvas.getContext('2d');
 
                     ctx!.drawImage(image, 0, 0, 64, 64);
 
                     const dataURL = canvas.toDataURL('image/png');
 
                     (<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
-				};
-
-				imagesrc = image.src = <string>reader.result;
 			};
 
-			reader.readAsDataURL(file);
-		});
-		(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
-    }
+			imagesrc = image.src = <string>reader.result;
+		};
+
+		reader.readAsDataURL(file);
+	});
+    
+	(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
+    };
 
     const replaceText = () => {
-        packname = packname
-			.replace(' ', '_')
-			.replace(/[^a-zA-Z0-9_]/g, '')
-			.toLowerCase();
-    }
+    	packname = packname
+		.replace(' ', '_')
+		.replace(/[^a-zA-Z0-9_]/g, '')
+		.toLowerCase();
+    };
 </script>
 
 <div id="header">

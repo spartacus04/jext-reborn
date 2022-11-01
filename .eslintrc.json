@@ -1,27 +1,34 @@
 {
-    "parserOptions": {
-		"ecmaVersion": 2019,
-		"sourceType": "module"
-	},
-	"root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint",
-	  "svelte3"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-	"overrides": [
-		{
-			"files": ["**/*.svelte"],
-			"processor": "svelte3/svelte3"
-		}
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"svelte3",
+		"@typescript-eslint"
 	],
-    "rules": {
-        "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+	"env": {
+		"es6": true,
+		"browser": true
+	},
+	"overrides": [{
+		"files": ["*.svelte"],
+		"processor": "svelte3/svelte3"
+	}],
+	"settings": {
+		"svelte3/typescript": true
+	},
+	"parserOptions": {
+		"tsconfigRootDir": ".",
+		"project": ["./tsconfig.json"],
+		"extraFileExtensions": [".svelte"]
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"rules": {
+		"brace-style": ["error", "stroustrup", {
+			"allowSingleLine": true
+		}],
 		"comma-dangle": ["error", "always-multiline"],
 		"comma-spacing": "error",
 		"comma-style": "error",
@@ -29,8 +36,12 @@
 		"dot-location": ["error", "property"],
 		"handle-callback-err": "off",
 		"indent": ["error", "tab"],
-		"max-nested-callbacks": ["error", { "max": 4 }],
-		"max-statements-per-line": ["error", { "max": 2 }],
+		"max-nested-callbacks": ["error", {
+			"max": 4
+		}],
+		"max-statements-per-line": ["error", {
+			"max": 2
+		}],
 		"no-console": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"no-empty-function": "error",
@@ -39,9 +50,15 @@
 		"no-inline-comments": "error",
 		"no-lonely-if": "error",
 		"no-multi-spaces": "error",
-		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
+		"no-multiple-empty-lines": ["error", {
+			"max": 2,
+			"maxEOF": 1,
+			"maxBOF": 0
+		}],
 		"no-async-promise-executor": "off",
-		"no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
+		"no-shadow": ["error", {
+			"allow": ["err", "resolve", "reject"]
+		}],
 		"no-trailing-spaces": ["error"],
 		"no-var": "error",
 		"object-curly-spacing": ["error", "always"],
@@ -59,5 +76,5 @@
 		"space-unary-ops": "error",
 		"spaced-comment": "error",
 		"yoda": "error"
-    }
-  }
+	}
+}

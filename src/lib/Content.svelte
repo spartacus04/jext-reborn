@@ -1,38 +1,38 @@
 <script lang="ts">
-    import type { songData } from "src/utils";
-    import Song from "./Song.svelte";
+    import type { songData } from 'src/utils';
+    import Song from './Song.svelte';
 
     export let discData : songData[] = [];
 
     const addSong = () => {
-        const input = document.createElement('input');
-		input.type = 'file';
-		input.multiple = true;
-		input.accept = import.meta.env.PROD ? 'audio/*' : '.ogg';
-		input.click();
+    	const input = document.createElement('input');
+    	input.type = 'file';
+    	input.multiple = true;
+    	input.accept = import.meta.env.PROD ? 'audio/*' : '.ogg';
+    	input.click();
 
-		input.addEventListener('change', async () => {
-			if(!input.files || input.files.length === 0) return;
-            
-            const tempDiscData : songData[] = [];
+    	input.addEventListener('change', async () => {
+    		if(!input.files || input.files.length === 0) return;
+    
+    		const tempDiscData : songData[] = [];
 
-            for(let i = 0; i < input.files.length; i++) {
-                tempDiscData.push({
-                    uploadedFile: input.files[i],
-                    name: 'Disc Name',
-                    author: 'Disc Author',
-                    lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
-                    texture: null,
-                    creeperDrop: true,
-                    lootTables: [],
-                    monoFile: null,
-                    namespace: '',
-                    oggFile: null
-                })
-            }
-            
-            discData = [...discData, ...tempDiscData];
-		});
+    		for(let i = 0; i < input.files.length; i++) {
+    			tempDiscData.push({
+    				uploadedFile: input.files[i],
+    				name: 'Disc Name',
+    				author: 'Disc Author',
+    				lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
+    				texture: null,
+    				creeperDrop: true,
+    				lootTables: [],
+    				monoFile: null,
+    				namespace: '',
+    				oggFile: null,
+    			});
+    		}
+    
+    		discData = [...discData, ...tempDiscData];
+    	});
     };
 </script>
 

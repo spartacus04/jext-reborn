@@ -8,7 +8,7 @@
     export let closePopup : boolean;
 
     const close = () => {
-        closePopup = false;
+    	closePopup = false;
     };
 </script>
 

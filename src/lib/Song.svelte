@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { convertToOgg, songData, stereoToMono } from "../utils";
-    import Tooltip from "./Tooltip.svelte";
+    import { convertToOgg, songData, stereoToMono } from '../utils';
+    import Tooltip from './Tooltip.svelte';
 
     import default_disk from '../assets/default_disk.png';
     import loading from '../assets/loading.webp';
@@ -25,55 +25,55 @@
     $: lootTables = song.lootTables;
 
     const regenNamespace = () => {
-        song.namespace = `${song.name}${song.author}${id}`
-			.replace(/[^a-zA-Z0-9]/g, '')
-			.replaceAll('1', 'one')
-			.replaceAll('2', 'two')
-			.replaceAll('3', 'three')
-			.replaceAll('4', 'four')
-			.replaceAll('5', 'five')
-			.replaceAll('6', 'six')
-			.replaceAll('7', 'seven')
-			.replaceAll('8', 'eight')
-			.replaceAll('9', 'nine')
-			.replaceAll('0', 'zero')
-			.toLowerCase();
-    }
+    	song.namespace = `${song.name}${song.author}${id}`
+		.replace(/[^a-zA-Z0-9]/g, '')
+		.replaceAll('1', 'one')
+		.replaceAll('2', 'two')
+		.replaceAll('3', 'three')
+		.replaceAll('4', 'four')
+		.replaceAll('5', 'five')
+		.replaceAll('6', 'six')
+		.replaceAll('7', 'seven')
+		.replaceAll('8', 'eight')
+		.replaceAll('9', 'nine')
+		.replaceAll('0', 'zero')
+		.toLowerCase();
+    };
 
     const prepareDisc = async () : Promise<void> => {
-        const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/\ ?-\ ?/g);
-        
-        if(splitName.length >= 1) song.name = splitName.shift();
-        if(splitName.length >= 1) song.author = splitName.join();
+    	const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
+    
+    	if(splitName.length >= 1) song.name = splitName.shift();
+    	if(splitName.length >= 1) song.author = splitName.join();
 
-        regenNamespace();
+    	regenNamespace();
 
-        song.oggFile = await convertToOgg(song.uploadedFile);
-        song.monoFile = await stereoToMono(song.oggFile);
+    	song.oggFile = await convertToOgg(song.uploadedFile);
+    	song.monoFile = await stereoToMono(song.oggFile);
 
-        song.texture = await (await fetch(default_disk)).blob();
-    }
+    	song.texture = await (await fetch(default_disk)).blob();
+    };
 
     const loadingImage = async () => {
-        return await new Promise<void>(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, 1);
-        })
-    }
+    	return await new Promise<void>(resolve => {
+    		setTimeout(() => {
+    			resolve();
+    		}, 1);
+    	});
+    };
     
-    let prepareDiscPromise = prepareDisc()
-    let loadingImagePromise = loadingImage()
+    const prepareDiscPromise = prepareDisc();
+    const loadingImagePromise = loadingImage();
 
     const toggle_creeper = () => {
-        creeperDrop = !creeperDrop;
-    }
+    	creeperDrop = !creeperDrop;
+    };
 
     let trash_hovered = false;
 
     const trash_toggle = () => {
-        trash_hovered = !trash_hovered;
-    }
+    	trash_hovered = !trash_hovered;
+    };
 </script>
 
 <div id="song">
