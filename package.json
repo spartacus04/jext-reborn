@@ -1,0 +1,40 @@
+{
+  "name": "jext-tool",
+  "private": true,
+  "version": "2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint src --ext .ts,.svelte",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "^0.11.0",
+    "@ffmpeg/ffmpeg": "^0.11.5",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "@tsconfig/svelte": "^3.0.0",
+    "@types/node": "^18.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.26.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "postcss": "^8.4.18",
+    "sass": "^1.55.0",
+    "svelte": "^3.52.0",
+    "svelte-check": "^2.9.2",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.1"
+  }
+}
