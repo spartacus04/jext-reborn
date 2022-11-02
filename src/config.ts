@@ -123,5 +123,5 @@ export interface songData {
 	texture: Blob,
 	namespace: string,
 	creeperDrop: boolean,
-	lootTables: string[],
+	lootTables: string[]
 }

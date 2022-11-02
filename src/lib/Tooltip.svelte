@@ -1,9 +1,10 @@
 <script lang="ts">
     export let text;
+    export let width = '120px'
 </script>
 
 <div id="container">
-    <span id="tooltiptext">{text}</span>
+    <span id="tooltiptext" style="width: {width};">{@html text}</span>
     <slot />
 </div>
 
@@ -21,7 +22,6 @@
 
         #tooltiptext {
             visibility: hidden;
-            width: 120px;
             height: 0;
             background-color: black;
             color: #fff;

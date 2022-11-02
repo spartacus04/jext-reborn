@@ -13,16 +13,16 @@
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
-    "@ffmpeg/ffmpeg": "^0.11.5",
+    "@ffmpeg/ffmpeg": "^0.11.6",
     "jszip": "^3.10.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.1.0",
     "@tsconfig/svelte": "^3.0.0",
-    "@types/node": "^18.8.3",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "autoprefixer": "^10.4.12",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "autoprefixer": "^10.4.13",
     "eslint": "^8.26.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
@@ -33,8 +33,8 @@
     "svelte": "^3.52.0",
     "svelte-check": "^2.9.2",
     "svelte-preprocess": "^4.10.7",
-    "tslib": "^2.4.0",
+    "tslib": "^2.4.1",
     "typescript": "^4.8.4",
-    "vite": "^3.2.1"
+    "vite": "^3.2.2"
   }
 }

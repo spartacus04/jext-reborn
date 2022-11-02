@@ -93,6 +93,10 @@
 
 					transition: ease-in-out all 0.4s;
 				}
+
+				&:hover:not(.grayscale) {
+					filter: drop-shadow(1px 1px 5px green) contrast(130%);
+				}
 			}
 		}
 	}
