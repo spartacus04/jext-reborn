@@ -2,8 +2,13 @@ import JSZip from 'jszip';
 import { resizeImageBlob, saveAs } from './utils';
 import type { songData } from './config';
 import README from './assets/readme.txt';
+import { versionStore } from './store';
 
-export const generatePack = async (data: songData[], version : number, icon : string, name : string, mono : boolean) => {
+let version : number;
+
+versionStore.subscribe(v => version = v);
+
+export const generatePack = async (data: songData[], icon : string, name : string, mono : boolean) => {
 	const rp = new JSZip();
 
 	const packmcmeta = `

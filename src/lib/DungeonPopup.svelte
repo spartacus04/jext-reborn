@@ -5,9 +5,9 @@
     import dirt from '../assets/dirt.png';
 
     import { dungeons } from '../config';
+    import { versionStore } from '../store';
 
     export let selectedDungeons : string[] = []
-    export let version : number;
     export let closePopup : boolean;
     
 
@@ -28,7 +28,7 @@
     <div class="popup">
         <div class="popupcontainer">
             {#each dungeons as dungeon}
-                {#if dungeon.minVersion && dungeon.minVersion <= version}
+                {#if dungeon.minVersion && dungeon.minVersion <= $versionStore}
                     <DungeonElement image={dungeon.img} name={dungeon.name} value={selectedDungeons.includes(dungeon.source)} onClick={() => selectItem(dungeon.source)}/>
                 {/if}
             {/each}

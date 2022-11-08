@@ -1,9 +1,8 @@
 <script lang="ts">
-    import type { songData } from 'src/config';
+    import type { songData } from '../config';
     import Song from './Song.svelte';
 
     export let discData : songData[] = [];
-    export let version : number;
 
     const addSong = () => {
     	const input = document.createElement('input');
@@ -44,7 +43,7 @@
 <div id="content">
     <div id="songscontainer">
         {#each discData as song, i}
-            <Song id={i} bind:song={song} bind:version={version} onRemove={() => removeSong(song)}></Song>
+            <Song id={i} bind:song={song} onRemove={() => removeSong(song)}></Song>
         {/each}
     </div>
     <hr class="hidden">

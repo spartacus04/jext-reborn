@@ -14,7 +14,6 @@
 
     export let song : songData;
     export let id : number;
-    export let version : number;
     export let onRemove = () => {}
 
     const regenNamespace = () => {
@@ -91,7 +90,7 @@
 </script>
 
 {#if popup}
-    <DungeonPopup bind:selectedDungeons={song.lootTables} bind:version={version} bind:closePopup={popup}/>
+    <DungeonPopup bind:selectedDungeons={song.lootTables} bind:closePopup={popup}/>
 {/if}
 
 <div id="song">

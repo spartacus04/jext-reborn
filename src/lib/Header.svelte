@@ -2,9 +2,10 @@
     import Tooltip from "./Tooltip.svelte";
     import pack_icon from '../assets/pack_icon.png'
     import { versions } from '../config';
+    import { versionStore } from "../store";
 
     export let packname = "your_pack_name";
-    export let version = 9;
+    //export let version = 9;
     export let imagesrc = pack_icon;
     export let useMono = true;
 
@@ -61,7 +62,7 @@
     <input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
     <input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
 
-    <select name="version" id="version_input" bind:value={version}>
+    <select name="version" id="version_input" bind:value={$versionStore}>
         {#each [...versions] as [key, value]}
             <option value={key}>{value}</option>
         {/each}

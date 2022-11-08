@@ -8,10 +8,8 @@
     import type { songData } from './config';
     import { generatePack } from './generator';
 
-
 	let packIcon : string;
 	let packName : string;
-	let packVersion : number;
 	let useMono : boolean;
 
 	let discDataList : songData[] = [];
@@ -23,7 +21,7 @@
 	};
 
 	const generate = () => {
-		generatePack(discDataList, packVersion, packIcon, packName, useMono);
+		generatePack(discDataList, packIcon, packName, useMono);
 	};
 </script>
 
@@ -32,9 +30,9 @@
 		<Popup text="Add at least a disc" bind:closePopup={popup}></Popup>
 	{/if}
 
-	<Header bind:packname={packName} bind:version={packVersion} bind:imagesrc={packIcon} bind:useMono={useMono}/>
+	<Header bind:packname={packName} bind:imagesrc={packIcon} bind:useMono={useMono}/>
 
-	<Content bind:discData={discDataList} bind:version={packVersion}/>
+	<Content bind:discData={discDataList} />
 
 	<div id="footer">
 		{#if discDataList.length > 0}
