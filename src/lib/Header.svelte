@@ -5,7 +5,6 @@
     import { versionStore } from "../store";
 
     export let packname = "your_pack_name";
-    //export let version = 9;
     export let imagesrc = pack_icon;
     export let useMono = true;
 
