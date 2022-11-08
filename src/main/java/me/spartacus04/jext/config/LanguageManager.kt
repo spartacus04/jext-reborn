@@ -16,45 +16,40 @@ import kotlin.collections.HashMap
 class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPlugin) {
     private val loadedLanguageMap = HashMap<String, Map<String, String>>()
 
-    private lateinit var gson : Gson
+    private var gson : Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
     init {
-        if(autoMode) {
-            // Uses languages translated by crowdin
-            gson = GsonBuilder().setLenient().setPrettyPrinting().create()
+        val path = "langs"
 
-            val path = "langs"
+        JarFile(File(javaClass.protectionDomain.codeSource.location.path).absolutePath.replace("%20", " ")).use {
+            val entries: Enumeration<JarEntry> = it.entries() //gives ALL entries in jar
+            while (entries.hasMoreElements()) {
+                val element = entries.nextElement()
+                if (element.name.startsWith("$path/") && element.name.endsWith(".json")) {
+                    val langName = element.name.replaceFirst("$path/", "")
 
-            JarFile(File(javaClass.protectionDomain.codeSource.location.path).absolutePath.replace("%20", " ")).use {
-                val entries: Enumeration<JarEntry> = it.entries() //gives ALL entries in jar
-                while (entries.hasMoreElements()) {
-                    val element = entries.nextElement()
-                    if (element.name.startsWith("$path/") && element.name.endsWith(".json")) {
-                        val langName = element.name.replaceFirst("$path/", "")
+                    plugin.getResource("langs/$langName")!!.bufferedReader().use {file ->
+                        val mapType = object : TypeToken<Map<String, String>>() {}.type
+                        val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
 
-                        plugin.getResource("langs/$langName")!!.bufferedReader().use {file ->
-                            val mapType = object : TypeToken<Map<String, String>>() {}.type
-                            val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
-
-                            loadedLanguageMap.put(langName.replace(".json", "").lowercase(), languageMap)
-                        }
+                        loadedLanguageMap.put(langName.replace(".json", "").lowercase(), languageMap)
                     }
                 }
             }
         }
-        else {
+
+        if(!autoMode) {
             // Lets the server owner set a custom file
             val customFile = plugin.dataFolder.resolve("lang.json")
 
-            if(!customFile.exists()) {
-                customFile.createNewFile()
-
+            if (!customFile.exists()) {
                 plugin.getResource("langs/en_US.json")!!.bufferedReader().use {
+                    customFile.createNewFile()
                     customFile.writeText(it.readText())
                 }
             }
 
-            ConfigVersionManager.updateLang(customFile)
+            ConfigVersionManager.updateLang(customFile, loadedLanguageMap["en_us"]!!)
             customFile.bufferedReader().use {
                 val mapType = object : TypeToken<Map<String, String>>() {}.type
                 val languageMap : Map<String, String> = gson.fromJson(it.readText(), mapType)

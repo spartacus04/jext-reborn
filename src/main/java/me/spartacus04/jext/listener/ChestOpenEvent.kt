@@ -11,8 +11,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
@@ -20,7 +18,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
-import kotlin.reflect.typeOf
 
 private fun Inventory.containsAny(itemStacks: MutableList<ItemStack>): Boolean {
     itemStacks.forEach {
@@ -33,7 +30,7 @@ private fun Inventory.containsAny(itemStacks: MutableList<ItemStack>): Boolean {
 internal class ChestOpenEvent : Listener {
     private val commonDiscs = arrayListOf(Material.MUSIC_DISC_13, Material.MUSIC_DISC_CAT).map { ItemStack(it) }
 
-    fun generateItems(inventory: Inventory, dungeonDiscs: List<ItemStack>, key: String) {
+    private fun generateItems(inventory: Inventory, dungeonDiscs: List<ItemStack>, key: String) {
         if(inventory.containsAny(DiscLootTable.creeperDroppableDiscs)) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
                 if (itemstack == null) null
@@ -92,7 +89,7 @@ internal class ChestOpenEvent : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onChestBreak(e : BlockBreakEvent) {
-        if(e.block.type != Material.CHEST) return;
+        if(e.block.type != Material.CHEST) return
 
         val chest = e.block.state as Chest
         val key = chest.lootTable?.key?.key ?: return
