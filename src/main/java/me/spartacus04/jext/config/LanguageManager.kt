@@ -3,6 +3,7 @@ package me.spartacus04.jext.config
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -80,7 +81,9 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     }
 
     fun format(commandSender: CommandSender, key: String, noPrefix: Boolean = false) : String {
-        return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
+        return if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
+            if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
+        } else ""
     }
 
     fun hasLanguage(locale: String) : Boolean {
