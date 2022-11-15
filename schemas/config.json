@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "lang": {
+      "type": "string",
+      "enum": ["auto", "custom", "silent"]
+    },
+    "force-resource-pack": {
+      "type": "boolean"
+    },
+    "ignore-failed-download": {
+      "type": "boolean"
+    },
+    "allow-music-overlapping": {
+      "type": "boolean"
+    },
+    "allow-metrics": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "lang",
+    "force-resource-pack",
+    "ignore-failed-download",
+    "allow-music-overlapping",
+    "allow-metrics"
+  ]
+}
