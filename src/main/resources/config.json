@@ -1,5 +1,9 @@
 {
-  // Language mode [ auto or custom ]
+  // Schema (do not change, it adds autocomplete to this file)
+  "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json",
+
+
+  // Language mode [ auto, custom, silent ]
   "lang": "auto",
 
   // Kick players who decline server resource pack
