@@ -17,6 +17,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10")
     implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("com.github.stefvanschie.inventoryframework:IF:0.10.7")
 }
 
 group = "me.spartacus04.jext"
