@@ -1,5 +1,5 @@
 {
-  // Language mode [ auto or custom ]
+  // Language mode [ auto, custom, or silent ]
   "lang": "auto",
 
   // Kick players who decline server resource pack
