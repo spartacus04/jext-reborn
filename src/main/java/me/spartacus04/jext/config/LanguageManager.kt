@@ -90,3 +90,14 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
         return  loadedLanguageMap.containsKey(locale.lowercase())
     }
 }
+
+fun CommandSender.send(message: String, noPrefix: Boolean = false) {
+    if(CONFIG.LANGUAGE_MODE.lowercase() == "silent") {
+        if(this !is Player) {
+            if(noPrefix) sendMessage() else sendMessage("[§aJEXT§f] $message")
+        }
+    }
+    else {
+        if(noPrefix) sendMessage() else sendMessage("[§aJEXT§f] $message")
+    }
+}
