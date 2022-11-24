@@ -81,9 +81,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     }
 
     fun format(commandSender: CommandSender, key: String, noPrefix: Boolean = false) : String {
-        return if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
-            if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
-        } else ""
+        return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
     }
 
     fun hasLanguage(locale: String) : Boolean {
@@ -91,13 +89,13 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     }
 }
 
-fun CommandSender.send(message: String, noPrefix: Boolean = false) {
+fun CommandSender.send(message: String) {
     if(CONFIG.LANGUAGE_MODE.lowercase() == "silent") {
         if(this !is Player) {
-            if(noPrefix) sendMessage() else sendMessage("[§aJEXT§f] $message")
+            sendMessage(message)
         }
     }
     else {
-        if(noPrefix) sendMessage() else sendMessage("[§aJEXT§f] $message")
+        sendMessage(message)
     }
 }

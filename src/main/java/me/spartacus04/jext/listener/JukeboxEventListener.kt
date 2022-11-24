@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerInteractEvent
 internal class JukeboxEventListener : Listener {
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
-        if(CONFIG.DISC_HOLDER_BEHAVIOUR) return discholderBehaviour(event)
         jukeboxBehaviour(event)
     }
 
@@ -48,10 +47,6 @@ internal class JukeboxEventListener : Listener {
                 discPlayer.stop(location)
             } catch (_: IllegalStateException) { }
         }
-    }
-
-    private fun discholderBehaviour(event: PlayerInteractEvent) {
-        //TODO: implement jukeboxholder behaviour
     }
 
     @EventHandler(ignoreCancelled = true)
