@@ -90,12 +90,7 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
 }
 
 fun CommandSender.send(message: String) {
-    if(CONFIG.LANGUAGE_MODE.lowercase() == "silent") {
-        if(this !is Player) {
-            sendMessage(message)
-        }
-    }
-    else {
+    if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
         sendMessage(message)
     }
 }
