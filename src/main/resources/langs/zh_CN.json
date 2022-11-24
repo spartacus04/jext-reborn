@@ -1,5 +1,5 @@
 {
-  "now-playing": "§6正在玩游戏: §a%author% §7- §6%title%",
+  "now-playing": "§6正在玩游戏: §a%author% §7- §6%title%!",
   "now-playing-no-author": "§6正在播放: §a%title%",
   "resource-pack-decline-kick-message": "请为音乐启用资源包！",
   "failed-download-kick-message": "资源包下载失败，请重新加入后重试。",
@@ -12,7 +12,7 @@
   "invalid-location": "§c无效的位置!",
   "wrong-number-format": "§c %param% 参数的数字格式错误！",
   "cannot-find-player": "§c找不到玩家: §6%player%§c.",
-  "music-now-playing": "§fMusic §d%name% §fis now playing!",
+  "music-now-playing": "§fMusic §d%name% §fis now playing",
   "played-music-to-multiple": "§f播放的音乐 §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§f播放音乐 §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§f播放的音乐没有玩家, 出错了!",
