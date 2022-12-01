@@ -24,8 +24,6 @@ group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
-tasks.jar { enabled = false }
-
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
@@ -47,7 +45,19 @@ java {
     val javaVersion = JavaVersion.toVersion(17)
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
+
     if(JavaVersion.current() < javaVersion) {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    }
+
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(tasks.shadowJar)
+        }
     }
 }
