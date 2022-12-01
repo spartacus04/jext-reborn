@@ -46,7 +46,6 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
                     )
 
                     actionBarDisplay(player, container)
-
                 }
             }.runTaskLater(plugin, 4)
         }

@@ -1,6 +1,6 @@
 plugins {
     java
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.7.22"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -17,6 +17,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10")
     implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("com.github.stefvanschie.inventoryframework:IF:0.10.7")
 }
 
 group = "me.spartacus04.jext"
