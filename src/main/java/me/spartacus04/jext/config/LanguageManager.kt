@@ -81,12 +81,16 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
     }
 
     fun format(commandSender: CommandSender, key: String, noPrefix: Boolean = false) : String {
-        return if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
-            if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
-        } else ""
+        return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
     }
 
     fun hasLanguage(locale: String) : Boolean {
         return  loadedLanguageMap.containsKey(locale.lowercase())
+    }
+}
+
+fun CommandSender.send(message: String) {
+    if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
+        sendMessage(message)
     }
 }

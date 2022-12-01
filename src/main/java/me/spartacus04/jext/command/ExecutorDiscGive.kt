@@ -1,6 +1,7 @@
 package me.spartacus04.jext.command
 
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.send
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -25,7 +26,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         val disc = ParameterDisc.getDisc(args[1])
 
         if (disc == null) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[1])
             )
@@ -35,7 +36,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         for (player in players) {
             player.inventory.addItem(DiscContainer(disc).discItem)
 
-            player.sendMessage(
+            player.send(
                 LANG.format(sender, "disc-received")
                     .replace("%disc%", disc.TITLE)
             )
@@ -44,19 +45,19 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "disc-given-multiple")
                     .replace("%disc%", disc.TITLE)
                     .replace("%playercount%", playerCount.toString())
             )
         } else if (playerCount == 1) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "disc-given")
                     .replace("%disc%", disc.TITLE)
                     .replace("%player%", players[0].name)
             )
         } else {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "no-disc-given")
             )
         }

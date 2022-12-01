@@ -3,7 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json",
 
 
-  // Language mode [ auto, custom, silent ]
+  // Language mode [ auto, custom or silent ]
   "lang": "auto",
 
   // Kick players who decline server resource pack

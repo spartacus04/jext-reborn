@@ -1,6 +1,7 @@
 package me.spartacus04.jext.command
 
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.send
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.*
@@ -28,7 +29,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         val disc = ParameterDisc.getDisc(args[1])
         if (disc == null) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "disc-namespace-not-found")
                     .replace("%namespace%", args[1])
             )
@@ -42,7 +43,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             pitch = try {
                 args[2].toFloat()
             } catch (e: NumberFormatException) {
-                sender.sendMessage(
+                sender.send(
                     LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "pitch")
                 )
@@ -60,7 +61,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 discPlayer.setPitch(pitch)
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                sender.sendMessage(
+                sender.send(
                     LANG.format(sender, "wrong-number-format")
                         .replace("%param%", "volume")
                 )
@@ -71,7 +72,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         for (player in players) {
             if (isMusic) {
                 player.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
-                player.sendMessage(
+                player.send(
                     LANG.format(sender, "music-now-playing")
                         .replace("%name%", disc.TITLE)
                 )
@@ -83,19 +84,19 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "played-music-to-multiple")
                     .replace("%name%", disc.TITLE)
                     .replace("%playercount%", playerCount.toString())
             )
         } else if (playerCount == 1) {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "played-music-to")
                     .replace("%name%", disc.TITLE)
                     .replace("%player%", players[0].name)
             )
         } else {
-            sender.sendMessage(
+            sender.send(
                 LANG.format(sender, "played-music-to-no-one")
             )
         }
