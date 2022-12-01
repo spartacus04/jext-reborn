@@ -2,7 +2,7 @@ plugins {
     java
     kotlin("jvm") version "1.7.22"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("maven-publish")
+    `maven-publish`
 }
 
 repositories {
@@ -56,8 +56,11 @@ java {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            groupId = "me.spartacus04"
+            artifactId = "jext"
+            version = "0.6.11b"
+
             from(components["java"])
-            artifact(tasks.shadowJar)
         }
     }
 }
