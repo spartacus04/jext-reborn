@@ -21,3 +21,11 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 - Auto kick players who rejected the server resource pack.
 - Allay duplication works with custom music.
 - Parrot will still dance to the music!
+
+## Other features
+
+- Optionally replace the vanilla jukebox behavior with a custom one.
+
+## Integrations
+
+[JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.

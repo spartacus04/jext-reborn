@@ -1,9 +1,7 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
-import me.spartacus04.jext.disc.JukeboxContainer
 import org.bukkit.Material
 import org.bukkit.block.Jukebox
 import org.bukkit.event.EventHandler
@@ -11,16 +9,10 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.plugin.java.JavaPlugin
 
-internal class JukeboxEventListener() : Listener {
+internal class JukeboxEventListener : Listener {
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
-        if(!CONFIG.DISC_HOLDER_BEHAVIOUR) return discholderBehaviour(event)
-        jukeboxBehaviour(event)
-    }
-
-    private fun jukeboxBehaviour(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
 
         if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
@@ -50,17 +42,6 @@ internal class JukeboxEventListener() : Listener {
                 discPlayer.stop(location)
             } catch (_: IllegalStateException) { }
         }
-    }
-
-    private fun discholderBehaviour(event: PlayerInteractEvent) {
-        val block = event.clickedBlock ?: return
-
-        if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
-
-        if (block.state !is Jukebox) return
-
-        JukeboxContainer(block.location, event.player)
-        //TODO: implement jukeboxholder behaviour
     }
 
     @EventHandler(ignoreCancelled = true)

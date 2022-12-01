@@ -42,7 +42,6 @@ class Jext : JavaPlugin() {
         // Loads languages
         LANG = LanguageManager(CONFIG.LANGUAGE_MODE.lowercase() == "auto", this)
 
-
         // Setups commands
         CommandsRegistrant.registerCommands(this)
 
