@@ -23,22 +23,32 @@ dependencies {
 group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+version = "0.6.11b"
 
 artifacts.archives(tasks.shadowJar)
 
-tasks.shadowJar {
-    val version = "0.6.11b"
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
 
-    archiveFileName.set("${rootProject.name}_${version}.jar")
-    val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
-    relocate("kotlin", "${dependencyPackage}.kotlin")
-    relocate("com/google/gson", "${dependencyPackage}.gson")
-    relocate("org/intellij/lang", "${dependencyPackage}.lang")
-    relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
-    relocate("org/bstats", "${dependencyPackage}.bstats")
-    exclude("ScopeJVMKt.class")
-    exclude("DebugProbesKt.bin")
-    exclude("META-INF/**")
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    shadowJar {
+        archiveFileName.set("${rootProject.name}_${project.version}.jar")
+        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
+        
+        relocate("kotlin", "${dependencyPackage}.kotlin")
+        relocate("com/google/gson", "${dependencyPackage}.gson")
+        relocate("org/intellij/lang", "${dependencyPackage}.lang")
+        relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
+        relocate("org/bstats", "${dependencyPackage}.bstats")
+        exclude("ScopeJVMKt.class")
+        exclude("DebugProbesKt.bin")
+        exclude("META-INF/**")
+    }
 }
 
 java {
