@@ -5,6 +5,10 @@ plugins {
     `maven-publish`
 }
 
+apply {
+    plugin("com.github.johnrengelman.shadow")
+}
+
 repositories {
     mavenLocal()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
