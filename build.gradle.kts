@@ -58,7 +58,10 @@ java {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifact(tasks.shadowJar)
+            groupId = rootProject.group.toString()
+            artifactId = rootProject.name.toLowerCase()
+            version = rootProject.version.toString()
+            from(components["java"])
         }
     }
 }
