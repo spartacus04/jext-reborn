@@ -59,8 +59,6 @@ java {
     if(JavaVersion.current() < javaVersion) {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
-
-    withSourcesJar()
 }
 
 publishing {
@@ -70,7 +68,6 @@ publishing {
             artifactId = "jext"
             version = "0.6.11b"
 
-            from(components["java"])
             artifact(tasks.shadowJar)
         }
     }
