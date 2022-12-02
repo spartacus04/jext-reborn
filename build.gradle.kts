@@ -2,6 +2,7 @@ plugins {
     java
     kotlin("jvm") version "1.7.22"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    `maven-publish`
 }
 
 repositories {
@@ -44,7 +45,7 @@ artifacts {
     archives(tasks.shadowJar)
 }
 
-/*java {
+java {
     val javaVersion = JavaVersion.toVersion(17)
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
@@ -52,4 +53,12 @@ artifacts {
     if(JavaVersion.current() < javaVersion) {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
-}*/
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifact(tasks.shadowJar)
+        }
+    }
+}
