@@ -45,16 +45,6 @@ artifacts {
     archives(tasks.shadowJar)
 }
 
-java {
-    val javaVersion = JavaVersion.toVersion(17)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-
-    if(JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
