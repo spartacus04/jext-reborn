@@ -39,7 +39,7 @@ tasks {
     shadowJar {
         archiveFileName.set("${rootProject.name}_${project.version}.jar")
         val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
-        
+
         relocate("kotlin", "${dependencyPackage}.kotlin")
         relocate("com/google/gson", "${dependencyPackage}.gson")
         relocate("org/intellij/lang", "${dependencyPackage}.lang")
@@ -71,6 +71,7 @@ publishing {
             version = "0.6.11b"
 
             from(components["java"])
+            artifact(tasks.shadowJar)
         }
     }
 }
