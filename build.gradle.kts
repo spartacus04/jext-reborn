@@ -63,15 +63,3 @@ java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "me.spartacus04"
-            artifactId = "jext"
-            version = "0.6.11b"
-
-            artifact(tasks.shadowJar)
-        }
-    }
-}
