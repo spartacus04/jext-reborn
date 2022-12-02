@@ -4,10 +4,6 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-apply {
-    plugin("com.github.johnrengelman.shadow")
-}
-
 repositories {
     mavenLocal()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
@@ -28,17 +24,7 @@ description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 version = "0.6.11b"
 
-artifacts.archives(tasks.shadowJar)
-
 tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
     shadowJar {
         archiveFileName.set("${rootProject.name}_${project.version}.jar")
         val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
@@ -54,7 +40,11 @@ tasks {
     }
 }
 
-java {
+artifacts {
+    archives(tasks.shadowJar)
+}
+
+/*java {
     val javaVersion = JavaVersion.toVersion(17)
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
@@ -62,4 +52,4 @@ java {
     if(JavaVersion.current() < javaVersion) {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
-}
+}*/
