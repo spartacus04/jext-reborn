@@ -3,7 +3,7 @@
   "now-playing-no-author": "§6正在播放: §a%title%",
   "resource-pack-decline-kick-message": "请为音乐启用资源包！",
   "failed-download-kick-message": "资源包下载失败，请重新加入后重试。",
-  "jukebox": "§bJukebox",
+  "jukebox": "§b唱片机",
   "disc-command-success": "§f已获取 §d%disc% §fdisces!",
   "disc-namespace-not-found": "§c有命名空间 §6%namespace% §cc找不到!",
   "disc-received": "§f已接收 §d%disc% §fdiscussi!",
