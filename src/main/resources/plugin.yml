@@ -1,7 +1,7 @@
 main: me.spartacus04.jext.Jext
 name: JukeboxExtendedReborn
 author: Tajam - Spartacus04
-version: 0.6.11b
+version: 0.7b
 api-version: 1.14
 depend: [ProtocolLib]
 
@@ -26,6 +26,10 @@ commands:
     description: Stop specified custom music or all custom music for selected player(s). 
     permission: jext.stopmusic
     usage: /stopmusic [selector] <name>
+  jukeboxgui:
+    description: Opens a player specific jukebox gui
+    permission: jext.jukeboxgui
+    usage: /jukeboxgui
   jext:
     description: Reloads the plugin
     permission: jext.reload
@@ -40,6 +44,7 @@ permissions:
       jext.playmusic: true
       jext.playat: true
       jext.stopmusic: true
+      jext.jukeboxgui: true
       jext.reload: true
   jext.disc:
     description: Allows player to access all custom disc.
@@ -61,4 +66,7 @@ permissions:
     default: op
   jext.notifyupdate:
     description: Notifies player of new update
+    default: op
+  jext.jukeboxgui:
+    description: Allows player to open the jukebox gui
     default: op

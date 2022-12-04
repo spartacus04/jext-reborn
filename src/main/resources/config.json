@@ -16,5 +16,8 @@
   "allow-music-overlapping": false,
 
   // Allow/Disallow plugin metrics (no personal data is going to be collected)
-  "allow-metrics": true
+  "allow-metrics": true,
+
+  // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)
+  "jukebox-gui": false
 }

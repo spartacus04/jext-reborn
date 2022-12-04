@@ -17,6 +17,9 @@
     },
     "allow-metrics": {
       "type": "boolean"
+    },
+    "jukebox-gui": {
+      "type": "boolean"
     }
   },
   "required": [
@@ -24,6 +27,7 @@
     "force-resource-pack",
     "ignore-failed-download",
     "allow-music-overlapping",
-    "allow-metrics"
+    "allow-metrics",
+    "jukebox-gui"
   ]
 }

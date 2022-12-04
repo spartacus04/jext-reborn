@@ -18,8 +18,8 @@ data class Config (
     @SerializedName("allow-metrics")
     var ALLOW_METRICS : Boolean,
 
-    @SerializedName("disc-holder")
-    var DISC_HOLDER_BEHAVIOUR : Boolean
+    @SerializedName("jukebox-gui")
+    var JUKEBOX_GUI : Boolean
 )
 
 data class Disc(

@@ -14,7 +14,7 @@ class ListenersRegistrant private constructor() {
 
             // Register spigot listeners
             val pluginManager = plugin.server.pluginManager
-            pluginManager.registerEvents(JukeboxEventListener(), plugin)
+            pluginManager.registerEvents(JukeboxEventListener(plugin), plugin)
             pluginManager.registerEvents(ResourceStatusListener(plugin), plugin)
             pluginManager.registerEvents(CreeperDeathListener(), plugin)
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)

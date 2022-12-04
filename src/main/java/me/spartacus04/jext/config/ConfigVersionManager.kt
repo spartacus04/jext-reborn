@@ -64,10 +64,10 @@ data class V2Config (
     var ALLOW_MUSIC_OVERLAPPING : Boolean,
 ) {
     companion object {
-        private fun fromJson(json: String): V1Config {
+        private fun fromJson(json: String): V2Config {
             val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
 
-            return gson.fromJson(json, V1Config::class.java)
+            return gson.fromJson(json, V2Config::class.java)
         }
 
         fun isOldConfig(jsonConfig: String) : Boolean {
@@ -84,6 +84,50 @@ data class V2Config (
                     .replace("\"force-resource-pack\": true", "\"force-resource-pack\": ${oldconfig.FORCE_RESOURCE_PACK}")
                     .replace("\"ignore-failed-download\": false", "\"ignore-failed-download\": ${oldconfig.IGNORE_FAILED_DOWNLOAD}")
                     .replace("\"allow-music-overlapping\": false", "\"allow-music-overlapping\": ${oldconfig.ALLOW_MUSIC_OVERLAPPING}")
+            }
+        }
+    }
+}
+
+data class V3Config (
+    @SerializedName("lang")
+    var LANGUAGE_MODE: String,
+
+    @SerializedName("force-resource-pack")
+    var FORCE_RESOURCE_PACK : Boolean,
+
+    @SerializedName("ignore-failed-download")
+    var IGNORE_FAILED_DOWNLOAD : Boolean,
+
+    @SerializedName("allow-music-overlapping")
+    var ALLOW_MUSIC_OVERLAPPING : Boolean,
+
+    @SerializedName("allow-metrics")
+    var ALLOW_METRICS : Boolean,
+) {
+    companion object {
+        private fun fromJson(json: String): V3Config {
+            val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
+
+            return gson.fromJson(json, V3Config::class.java)
+        }
+
+        fun isOldConfig(jsonConfig: String) : Boolean {
+            return !jsonConfig.contains("\"jukebox-gui\"")
+        }
+
+        fun migrateToNewConfig(jsonConfig: String, plugin: JavaPlugin) : String {
+            val oldconfig = fromJson(jsonConfig)
+
+            return plugin.getResource("config.json")!!.bufferedReader().use {
+                val text = it.readText()
+
+                return@use text
+                    .replace("\"lang\": \"en\"", "\"lang\": \"${oldconfig.LANGUAGE_MODE}\"")
+                    .replace("\"force-resource-pack\": true", "\"force-resource-pack\": ${oldconfig.FORCE_RESOURCE_PACK}")
+                    .replace("\"ignore-failed-download\": false", "\"ignore-failed-download\": ${oldconfig.IGNORE_FAILED_DOWNLOAD}")
+                    .replace("\"allow-music-overlapping\": false", "\"allow-music-overlapping\": ${oldconfig.ALLOW_MUSIC_OVERLAPPING}")
+                    .replace("\"allow-metrics\": true", "\"allow-metrics\": ${oldconfig.ALLOW_METRICS}")
             }
         }
     }
@@ -127,6 +171,10 @@ class ConfigVersionManager {
 
             if(V2Config.isOldConfig(jsonConfig)) {
                 return file.writeText(V2Config.migrateToNewConfig(jsonConfig, plugin))
+            }
+
+            if(V3Config.isOldConfig(jsonConfig)) {
+                return file.writeText(V3Config.migrateToNewConfig(jsonConfig, plugin))
             }
         }
 
