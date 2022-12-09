@@ -22,11 +22,6 @@ class ConfigManager {
                     configFile.writeText(it.readText())
                 }
             }
-
-            if(!discsFile.exists()) {
-                println("discs.json file does not exist, generate it with the provided tool")
-                return plugin.server.pluginManager.disablePlugin(plugin)
-            }
         }
 
         private fun <T> deserialize(file: File, type: Type) : T {
@@ -43,14 +38,13 @@ class ConfigManager {
             discsFile = plugin.dataFolder.resolve("discs.json")
 
             defaultConfig(plugin)
+            if(!discsFile.exists()) return false
 
             val configType = object : TypeToken<Config>() {}.type
             val discsType = object : TypeToken<List<Disc>>() {}.type
 
             ConfigVersionManager.updateConfig(configFile, plugin)
             ConfigData.CONFIG = deserialize(configFile, configType)
-
-            if(!discsFile.exists()) return false
 
             ConfigVersionManager.updateDiscs(discsFile)
             ConfigData.DISCS = deserialize(discsFile, discsType)

@@ -14,11 +14,11 @@ class Jext : JavaPlugin() {
     override fun onEnable() {
         try {
             load()
+            ENABLED_MESSAGE.send()
         } catch (e: Exception) {
             e.printStackTrace()
             server.pluginManager.disablePlugin(this)
         }
-        ENABLED_MESSAGE.send()
     }
 
     override fun onDisable() {
@@ -37,6 +37,8 @@ class Jext : JavaPlugin() {
             Bukkit.getConsoleSender().sendMessage(
                 "[§aJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
             )
+
+            return server.pluginManager.disablePlugin(this)
         }
 
         // Loads languages
