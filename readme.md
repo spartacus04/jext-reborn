@@ -28,4 +28,4 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 ## Integrations
 
-[JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs. (Working on it RN)
+[JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.
