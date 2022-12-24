@@ -58,7 +58,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 		overrides: data.map((disc, i) => {
 			return {
 				predicate: {
-					custom_model_data: i,
+					custom_model_data: i + 1,
 				},
 				model: `item/music_disc_${disc.namespace}`,
 			};
@@ -93,7 +93,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 				title: disc.name,
 				author: disc.author,
 				'disc-namespace': `music_disc.${disc.namespace}`,
-				'model-data': i,
+				'model-data': i + 1,
 				'creeper-drop': disc.creeperDrop,
 				lores: disc.lores.split('\n'),
 				'loot-tables': disc.lootTables.join(',').split(','),
