@@ -8,7 +8,6 @@ enum class JextNamespace(val key: String) {
     NAMESPACE_ID("jext.namespace_id"),
     IDENTIFIER("jext.identifier"),
     TITLE("jext.title"),
-    CREEPERLT("jext.creeperloottable"),
     DISCS("jext.discs"),
     DISCS_INDEX("jext.discs_index");
 
