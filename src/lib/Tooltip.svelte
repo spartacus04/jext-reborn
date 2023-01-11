@@ -1,11 +1,17 @@
 <script lang="ts">
     export let text;
-    export let width = '120px'
+    export let width = '120px';
+	export let right = true;
 </script>
 
 <div id="container">
-    <span id="tooltiptext" style="width: {width};">{@html text}</span>
-    <slot />
+	{#if right}
+    	<span id="tooltiptext" class="right" style="width: {width};">{@html text}</span>
+    	<slot />
+	{:else}
+		<slot />
+		<span id="tooltiptext" class="left" style="width: {width};">{@html text}</span>
+	{/if}
 </div>
 
 <style lang="scss">
@@ -34,8 +40,15 @@
             z-index: 1;
 
             top: -5px;
-            left: 105%;
         }
+
+		.right {
+            left: 105%;
+		}
+
+		.left {
+			left: -110%;
+		}
     }
 
     #container:hover #tooltiptext {

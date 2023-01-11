@@ -1,5 +1,7 @@
 <script lang="ts">
     import Tooltip from "./Tooltip.svelte";
+	import ImportPopup from "./ImportPopup.svelte";
+	
     import pack_icon from '../assets/pack_icon.png'
     import { versions } from '../config';
     import { versionStore } from "../store";
@@ -38,7 +40,7 @@
 			};
 
 			reader.readAsDataURL(file);
-		});
+		}, { once: true });
         
 		(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
     }
@@ -51,7 +53,17 @@
     };
 
     const toggleMono = () => useMono = !useMono;
+
+	let popup = false;
+
+	const showPopup = () => {
+		popup = true;
+	};
 </script>
+
+{#if popup} 
+	<ImportPopup bind:closePopup={popup}/>
+{/if}
 
 <div id="header">
     <Tooltip text="Sets the resourcepack icon">
@@ -74,6 +86,12 @@
             <button on:click={toggleMono}>Stereo</button>
         {/if}
     </Tooltip>
+
+	<div id="import_container">
+		<Tooltip text="Import an existing resourcepack" right={false}>
+			<input type="button" name="import" id="pack_import" value="import" on:click={showPopup}>
+		</Tooltip>
+	</div>
 </div>
 
 <style lang="scss">
@@ -83,6 +101,10 @@
         font-size: 1.2em;
         padding: 0.5em;
         width: fit-content;
+
+		&:hover {
+			background-color: #404040;
+		}
     }
 
     #header {
@@ -95,11 +117,16 @@
             cursor: pointer;
         }
 
-        #pack_name_input, select {
+        #pack_name_input, select, #pack_import {
             @extend %textSettings;
             margin-left: 1em;
             background-color: #303030;
         }
+
+		#import_container {
+			justify-self: flex-end;
+			margin-left: auto;
+		}
 
         button {
             @extend #pack_name_input;

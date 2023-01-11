@@ -1,8 +1,13 @@
 <script lang="ts">
+	import { discStore } from '../store';
     import type { songData } from '../config';
     import Song from './Song.svelte';
 
     export let discData : songData[] = [];
+
+	discStore.subscribe(value => {
+		discData = value;
+	});
 
     const addSong = () => {
     	const input = document.createElement('input');

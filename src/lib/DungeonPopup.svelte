@@ -61,7 +61,6 @@
             display: flex;
             flex-flow: row wrap;
             align-items: flex-start;
-            align-items: flex-start;
             padding: 0;
             width: 816px;
             max-width: 816px;

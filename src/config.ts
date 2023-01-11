@@ -125,3 +125,13 @@ export interface songData {
 	creeperDrop: boolean,
 	lootTables: string[]
 }
+
+export interface Disc {
+	title: string;
+	author: string;
+	'disc-namespace': string;
+	'model-data': number;
+	'creeper-drop': boolean;
+	lores: string[];
+	'loot-tables'?: string[]
+}
