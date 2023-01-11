@@ -3,26 +3,26 @@
     import Header from './lib/Header.svelte';
     import Popup from './lib/Popup.svelte';
 
-	import generate_btn from './assets/generate_btn.png';
+import generate_btn from './assets/generate_btn.png';
 
     import type { songData } from './config';
     import { generatePack } from './generator';
 
-	let packIcon : string;
-	let packName : string;
-	let useMono : boolean;
+let packIcon : string;
+let packName : string;
+let useMono : boolean;
 
-	let discDataList : songData[] = [];
+let discDataList : songData[] = [];
 
-	let popup = false;
+let popup = false;
 
-	const showPopup = () => {
-		popup = true;
-	};
+const showPopup = () => {
+        popup = true;
+};
 
-	const generate = () => {
-		generatePack(discDataList, packIcon, packName, useMono);
-	};
+const generate = () => {
+        generatePack(discDataList, packIcon, packName, useMono);
+};
 </script>
 
 <main>

@@ -14,57 +14,57 @@
 
     export let song : songData;
     export let id : number;
-    export let onRemove = () => {}
+    export let onRemove = () => { null; };
 
     const regenNamespace = () => {
-    	song.namespace = `${song.name}${song.author}${id}`
-		.replace(/[^a-zA-Z0-9]/g, '')
-		.replaceAll('1', 'one')
-		.replaceAll('2', 'two')
-		.replaceAll('3', 'three')
-		.replaceAll('4', 'four')
-		.replaceAll('5', 'five')
-		.replaceAll('6', 'six')
-		.replaceAll('7', 'seven')
-		.replaceAll('8', 'eight')
-		.replaceAll('9', 'nine')
-		.replaceAll('0', 'zero')
-		.toLowerCase();
+        song.namespace = `${song.name}${song.author}${id}`
+            .replace(/[^a-zA-Z0-9]/g, '')
+            .replaceAll('1', 'one')
+            .replaceAll('2', 'two')
+            .replaceAll('3', 'three')
+            .replaceAll('4', 'four')
+            .replaceAll('5', 'five')
+            .replaceAll('6', 'six')
+            .replaceAll('7', 'seven')
+            .replaceAll('8', 'eight')
+            .replaceAll('9', 'nine')
+            .replaceAll('0', 'zero')
+            .toLowerCase();
     };
 
     const prepareDisc = async () : Promise<void> => {
-    	const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
+        const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
     
-    	if(splitName.length >= 1) song.name = splitName.shift();
-    	if(splitName.length >= 1) song.author = splitName.join();
+        if(splitName.length >= 1) song.name = splitName.shift();
+        if(splitName.length >= 1) song.author = splitName.join();
 
-    	regenNamespace();
+        regenNamespace();
 
-    	song.oggFile = await convertToOgg(song.uploadedFile);
-    	song.monoFile = await stereoToMono(song.oggFile);
+        song.oggFile = await convertToOgg(song.uploadedFile);
+        song.monoFile = await stereoToMono(song.oggFile);
 
-    	song.texture = await (await fetch(default_disk)).blob();
+        song.texture = await (await fetch(default_disk)).blob();
     };
 
     const loadingImage = async () => {
-    	return await new Promise<void>(resolve => {
-    		setTimeout(() => {
-    			resolve();
-    		}, 1);
-    	});
+        return await new Promise<void>(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 1);
+        });
     };
     
     const prepareDiscPromise = prepareDisc();
     const loadingImagePromise = loadingImage();
 
     const toggle_creeper = () => {
-    	song.creeperDrop = !song.creeperDrop;
+        song.creeperDrop = !song.creeperDrop;
     };
 
     let trash_hovered = false;
 
     const trash_toggle = () => {
-    	trash_hovered = !trash_hovered;
+        trash_hovered = !trash_hovered;
     };
 
     const newImage = () => {
@@ -75,18 +75,18 @@
         input.addEventListener('change', () => {
             const file = input.files![0];
             if (file) {
-                song.texture = <Blob>file
+                song.texture = <Blob>file;
             }
         });
 
         input.click();
-    }
+    };
 
     let popup = false;
 
-	const showPopup = () => {
-		popup = true;
-	};
+    const showPopup = () => {
+        popup = true;
+    };
 </script>
 
 {#if popup}

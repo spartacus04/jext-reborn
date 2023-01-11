@@ -7,7 +7,7 @@
     import { dungeons } from '../config';
     import { versionStore } from '../store';
 
-    export let selectedDungeons : string[] = []
+    export let selectedDungeons : string[] = [];
     export let closePopup : boolean;
     
 
@@ -17,7 +17,7 @@
     };
 
     const close = () => {
-    	closePopup = false;
+        closePopup = false;
         (<HTMLElement>document.querySelector('.popup')).style.display = 'none';
     };
 </script>

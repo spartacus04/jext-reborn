@@ -1,23 +1,23 @@
 <script lang="ts">
     import loading from '../assets/loading.webp';
 
-    import { fade } from 'svelte/transition'; 
+    import { fade } from 'svelte/transition';
 
     export let value = false;
     export let image : string;
     export let name : string;
-    export let onClick = () => {};
+    export let onClick = () => { null; };
 
 
-    const getImage = async (name: string) : Promise<string> => {
-        const response = await fetch(name);
+    const getImage = async (dungeonName: string) : Promise<string> => {
+        const response = await fetch(dungeonName);
 
         const blob = await response.blob();
 
         return URL.createObjectURL(blob);
-    }
+    };
 
-    const getImagePromise = getImage(image); 
+    const getImagePromise = getImage(image);
 </script>
 
 {#await getImagePromise}

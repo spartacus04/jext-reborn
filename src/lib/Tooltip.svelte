@@ -1,7 +1,7 @@
 <script lang="ts">
     export let text;
     export let width = '120px';
-	export let right = true;
+    export let right = true;
 </script>
 
 <div id="container">

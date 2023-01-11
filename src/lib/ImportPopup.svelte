@@ -2,81 +2,82 @@
     import { fade } from 'svelte/transition';
 
     import dirt from '../assets/dirt.png';
-	import pack_icon from '../assets/pack_icon.png'
-	import default_disk from '../assets/default_disk.png'
-	import { importResourcePack, isDiscsJson, isMinecraftRP } from '../importer';
+    import pack_icon from '../assets/pack_icon.png';
+    import default_disk from '../assets/default_disk.png';
+    import { importResourcePack, isDiscsJson, isMinecraftRP } from '../importer';
 
     export let closePopup : boolean;
 
     const close = () => {
-    	closePopup = false;
+        closePopup = false;
         (<HTMLElement>document.querySelector('.popup')).style.display = 'none';
     };
 
-	let pack_status = 'ready';
-	let pack_name = 'Resource pack';
-	let pack_file : File;
+    let pack_status = 'ready';
+    let pack_name = 'Resource pack';
+    let pack_file : File;
 
-	const import_pack = () => {
-		document.querySelector('#pack_input')?.addEventListener('change', async (e) => {
-			const files = (<HTMLInputElement>e.target).files;
-			if(!files || files.length === 0) return;
+    const import_pack = () => {
+        document.querySelector('#pack_input')?.addEventListener('change', async (e) => {
+            const files = (<HTMLInputElement>e.target).files;
+            if(!files || files.length === 0) return;
 
-			const file = files[0];
+            const file = files[0];
 
-			if(file.name.length > 13) pack_name = file.name.substring(0, 10) + '...';
-			else pack_name = file.name;
+            if(file.name.length > 13) pack_name = file.name.substring(0, 10) + '...';
+            else pack_name = file.name;
 
-			if(await isMinecraftRP(file)) {
-				pack_status = 'success';
-			} else {
-				pack_status = 'error';
-			}
+            if(await isMinecraftRP(file)) {
+                pack_status = 'success';
+            }
+            else {
+                pack_status = 'error';
+            }
 
-			pack_file = file;
-		}, { once: true });
+            pack_file = file;
+        }, { once: true });
 
-		(<HTMLInputElement>document.querySelector('#pack_input')).click();
-	}
+        (<HTMLInputElement>document.querySelector('#pack_input')).click();
+    };
 
-	let disc_status = 'ready';
-	let disc_name = 'discs.json';
-	let disc_file : File;
+    let disc_status = 'ready';
+    let disc_name = 'discs.json';
+    let disc_file : File;
 
-	const import_discs = () => {
-		document.querySelector('#discs_input')?.addEventListener('change', async (e) => {
-			const files = (<HTMLInputElement>e.target).files;
-			if(!files || files.length === 0) return;
+    const import_discs = () => {
+        document.querySelector('#discs_input')?.addEventListener('change', async (e) => {
+            const files = (<HTMLInputElement>e.target).files;
+            if(!files || files.length === 0) return;
 
-			const file = files[0];
+            const file = files[0];
 
-			if(file.name.length > 13) disc_name = file.name.substring(0, 10) + '...';
-			else disc_name = file.name;
+            if(file.name.length > 13) disc_name = file.name.substring(0, 10) + '...';
+            else disc_name = file.name;
 
-			// read file text
-			if(await isDiscsJson(file)) {
-				disc_status = 'success';
-			} else {
-				disc_status = 'error';
-			}
+            if(await isDiscsJson(file)) {
+                disc_status = 'success';
+            }
+            else {
+                disc_status = 'error';
+            }
 
-			disc_file = file;
-		}, { once: true });
+            disc_file = file;
+        }, { once: true });
 
-		(<HTMLInputElement>document.querySelector('#discs_input')).click();
-	}
+        (<HTMLInputElement>document.querySelector('#discs_input')).click();
+    };
 
-	$: forbid = pack_status !== 'success' || disc_status !== 'success' ? 'forbid' : '';
+    $: forbid = pack_status !== 'success' || disc_status !== 'success' ? 'forbid' : '';
 
-	let isImporting = false;
+    let isImporting = false;
 
-	const importRP = async () => {
-		if(pack_status === 'success' && disc_status === 'success' && !isImporting) {
-			isImporting = true;
-			await importResourcePack(disc_file, pack_file);
-			close();
-		}
-	}
+    const importRP = async () => {
+        if(pack_status === 'success' && disc_status === 'success' && !isImporting) {
+            isImporting = true;
+            await importResourcePack(disc_file, pack_file);
+            close();
+        }
+    };
 </script>
 
 <div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
