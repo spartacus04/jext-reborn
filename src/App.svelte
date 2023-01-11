@@ -17,11 +17,11 @@
 	let popup = false;
 
 	const showPopup = () => {
-			popup = true;
+		popup = true;
 	};
 
 	const generate = () => {
-			generatePack(discDataList, packIcon, packName, useMono);
+		generatePack(discDataList, packIcon, packName, useMono);
 	};
 </script>
 
