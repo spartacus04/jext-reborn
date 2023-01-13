@@ -3,12 +3,13 @@ import { resizeImageBlob, saveAs } from './utils';
 import type { songData } from './config';
 import README from './assets/readme.txt';
 import { versionStore } from './store';
+import { isMinecraftRP } from './importer';
 
 let version : number;
 
 versionStore.subscribe(v => version = v);
 
-export const generatePack = async (data: songData[], icon : string, name : string, mono : boolean) => {
+export const generatePack = async (data: songData[], icon : string, name : string, mono : boolean, merge : boolean) => {
     const rp = new JSZip();
 
     const packmcmeta = `
@@ -83,6 +84,44 @@ export const generatePack = async (data: songData[], icon : string, name : strin
                 layer0: `item/music_disc_${disc.namespace}`,
             },
         }, null, 2));
+    }
+
+    if(merge) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.zip';
+        input.click();
+
+        await new Promise<void>((resolve, reject) => {
+            input.onchange = async () => {
+                if(!input.files || input.files.length == 0) reject('No file was selected');
+
+                if(!(await isMinecraftRP(input.files[0]))) reject('The selected file is not a valid resource pack');
+
+                const ufile = input.files[0];
+                const zip = await JSZip.loadAsync(ufile);
+
+                // foreach file in the zip
+                await zip.forEach(async (path, nfile) => {
+                    if(path == 'pack.mcmeta') return;
+                    if(path == 'pack.png') return;
+
+                    if(nfile.dir) {
+                        if(!rp.folder(path)) rp.folder(path);
+                    }
+                    else if(!rp.file(path)) {
+                        rp.file(path, await nfile.async('arraybuffer'));
+                    }
+                    else {
+                        reject('Cannot merge resource pack manually as there are conflicting files');
+                    }
+                });
+
+                resolve();
+            };
+        }).catch(e => {
+            return alert(e);
+        });
     }
 
     rp.generateAsync({ type: 'blob' }).then(async content => {

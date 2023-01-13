@@ -7,6 +7,8 @@
 
     import type { songData } from './config';
     import { generatePack } from './generator';
+	import CSelect from './lib/CSelect.svelte';
+	import { saveAs } from './utils';
 
 	let packIcon : string;
 	let packName : string;
@@ -15,13 +17,14 @@
 	let discDataList : songData[] = [];
 
 	let popup = false;
+	let type = 'Generate';
 
 	const showPopup = () => {
 		popup = true;
 	};
 
 	const generate = () => {
-		generatePack(discDataList, packIcon, packName, useMono);
+		generatePack(discDataList, packIcon, packName, useMono, type == 'Merge');
 	};
 </script>
 
@@ -36,14 +39,11 @@
 
 	<div id="footer">
 		{#if discDataList.length > 0}
-			<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null}>
-				<p id="generate_text" class="noselect">GENERATE</p>
-			</div>
+			<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null} />
 		{:else}
-			<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null}>
-				<p id="generate_text" class="noselect">GENERATE</p>
-			</div>
+			<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null} />
 		{/if}
+		<CSelect options={['Generate', 'Merge']} bind:selected={type} />
 	</div>
 </main>
 
@@ -81,16 +81,6 @@
 				background-size: cover;
 
 				@extend %crisp;
-
-				#generate_text {
-					font-family: 'minecraft';
-					color: white;
-					font-size: 2em;
-					padding: 0;
-					margin: 0;
-
-					transition: ease-in-out all 0.4s;
-				}
 
 				&:hover:not(.grayscale) {
 					filter: drop-shadow(1px 1px 5px green) contrast(130%);
