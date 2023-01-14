@@ -13,7 +13,7 @@
 	const select = (ele : string) => {
 		selected = ele;
 		open = false;
-	}
+	};
 </script>
 
 {#if open}
