@@ -75,6 +75,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
         textures.file(`music_disc_${disc.namespace}.png`, resizedTexture);
 
         const soundbuffer = mono ? await disc.monoFile.arrayBuffer() : await disc.oggFile.arrayBuffer();
+
         sounds.file(`${disc.namespace}.ogg`, soundbuffer);
 
         console.log(disc);
@@ -139,6 +140,9 @@ export const generatePack = async (data: songData[], icon : string, name : strin
             };
         });
 
+        const jukelooper = await jukelooperIntegration(data, mono);
+
+        zip.file('integrations.txt', jukelooper);
 
         zip.file('README.md', await (await fetch(README)).arrayBuffer());
         zip.file(`${name}.zip`, await content.arrayBuffer());
@@ -148,4 +152,26 @@ export const generatePack = async (data: songData[], icon : string, name : strin
             saveAs(resources, 'open me.zip');
         });
     });
+};
+
+const jukelooperIntegration = async (data: songData[], mono: boolean) : Promise<string> => {
+    const map : { namespace: string, duration: number}[] = await Promise.all(data.map(async disc =>
+        new Promise(resolve => {
+            const ogg = mono ? disc.monoFile : disc.oggFile;
+
+            const audio = document.createElement('audio');
+            audio.src = URL.createObjectURL(ogg);
+            // get audio source duration
+            audio.onloadedmetadata = () => {
+                URL.revokeObjectURL(audio.src);
+                resolve({ namespace: disc.namespace, duration: Math.ceil(audio.duration) });
+            };
+        })
+    ));
+
+    const yaml = map.map(disc => `    music_disc.${disc.namespace}: ${disc.duration}`).join('\n');
+
+    console.log(yaml);
+
+    return `# JukeLooper integration\n## Copy the following lines in the config.yaml file of JukeLooper under the namespace node\n\n${yaml}`;
 };

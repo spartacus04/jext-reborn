@@ -25,4 +25,10 @@ edited   url: https://www.dropbox.com/s/msie7hucnpbkfy/test.PNG?dl=1
 
 then in the server.properties file set the server-resource-pack to the edited url
 
+## Setting up integrations
+
+You should have a integrations.txt file in downloaded files
+
+In it you can find necessary configuration for other plugins
+
 # Your plugin is now ready to go, restart the server to start using jext
