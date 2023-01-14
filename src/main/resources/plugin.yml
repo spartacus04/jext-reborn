@@ -23,7 +23,7 @@ commands:
     permission: jext.playat
     usage: /playat [X] [Y] [Z] <pitch> <volume>
   stopmusic:
-    description: Stop specified custom music or all custom music for selected player(s). 
+    description: Stop specified custom music or all custom music for selected player(s).
     permission: jext.stopmusic
     usage: /stopmusic [selector] <name>
   jukeboxgui:
