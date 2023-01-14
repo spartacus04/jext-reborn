@@ -8,7 +8,6 @@
     import type { songData } from './config';
     import { generatePack } from './generator';
 	import CSelect from './lib/CSelect.svelte';
-	import { saveAs } from './utils';
 
 	let packIcon : string;
 	let packName : string;
