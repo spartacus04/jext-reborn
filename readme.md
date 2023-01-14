@@ -2,6 +2,7 @@
 
 [![Crowdin](https://badges.crowdin.net/jext-reborn/localized.svg)](https://crowdin.com/project/jext-reborn)
 [![Build](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml/badge.svg?branch=master&event=push)](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/spartacus04/jext-reborn/badge/gh-pages)](https://www.codefactor.io/repository/github/spartacus04/jext-reborn/overview/gh-pages)
 
 ## gh-pages branch
 
