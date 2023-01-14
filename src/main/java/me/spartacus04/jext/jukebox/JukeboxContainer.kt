@@ -123,7 +123,6 @@ class JukeboxContainer : Listener {
                     return
                 }
 
-                //TODO: fix this and add command
                 oldContents.forEachIndexed { i, itemStack ->
                     if(itemStack != newContents[i]) {
                         if(itemStack == null) {
