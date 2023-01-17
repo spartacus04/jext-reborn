@@ -29,6 +29,9 @@ data class Disc(
     @SerializedName("author")
     var AUTHOR: String,
 
+    @SerializedName("duration")
+    var DURATION: Int = -1,
+
     @SerializedName("disc-namespace")
     var DISC_NAMESPACE: String,
 

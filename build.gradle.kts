@@ -7,9 +7,9 @@ plugins {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://repo.dmulloy2.net/nexus/repository/public/") }
-    maven { url = uri("https://repo.maven.apache.org/maven2/") }
 }
 
 dependencies {

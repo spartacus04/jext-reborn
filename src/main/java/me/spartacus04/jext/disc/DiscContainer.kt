@@ -2,6 +2,7 @@ package me.spartacus04.jext.disc
 
 import me.spartacus04.jext.Log
 import me.spartacus04.jext.SpigotVersion
+import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.Disc
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -20,6 +21,7 @@ class DiscContainer {
     private var customModelData = 0
     private var creeperDrop = false
     private var lores: ArrayList<String>
+    private var duration: Int = -1
 
 
     val material: Material = Material.MUSIC_DISC_11
@@ -31,6 +33,7 @@ class DiscContainer {
         customModelData = data.MODEL_DATA
         creeperDrop = data.CREEPER_DROP
         lores = data.LORE.toCollection(ArrayList())
+        duration = data.DURATION
     }
 
     constructor(disc: ItemStack) {
@@ -44,6 +47,8 @@ class DiscContainer {
             author = helper.author!!
             namespace = helper.namespaceID!!
             title = helper.title!!
+
+            duration = DISCS.find { it.DISC_NAMESPACE == namespace }!!.DURATION
         } else {
             throw IllegalStateException("Custom disc identifier missing!")
         }
