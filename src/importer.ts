@@ -78,6 +78,7 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
             author: disc.author,
             namespace: disc['disc-namespace'],
             creeperDrop: disc['creeper-drop'],
+            isMono: true,
             lores: disc.lores.join('\n'),
             lootTables: disc['loot-tables'] ?? [],
             uploadedFile: new File([musicBlob], `music_disc.${namespace}.ogg`),

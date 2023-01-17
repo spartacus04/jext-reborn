@@ -87,6 +87,10 @@
     const showPopup = () => {
         popup = true;
     };
+
+	const toggle_mono = () => {
+		song.isMono = !song.isMono;
+	};
 </script>
 
 {#if popup}
@@ -110,29 +114,56 @@
                 <img id="disc_texture" src={URL.createObjectURL(song.texture)} height="64" width="64" alt="disc icon" on:click={newImage} on:keydown={null}>
             </Tooltip>
             <div id="buttons">
-                <div id="wrapper">
-                    <Tooltip text="Toggles Creeper drops">
-                        {#if !song.creeperDrop}
-                            <img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null} class="grayscale">
-                        {:else}
-                            <img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null}>
-                        {/if}
-                    </Tooltip>
-                </div>
-                <div id="wrapper">
-                    <Tooltip text="Selects structures in which the disc can be found">
-                        <img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
-                    </Tooltip>
-                </div>
-                <div id="wrapper">
-                    <Tooltip text="Removes the disc">
-                        {#if !trash_hovered}
-                            <img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
-                        {:else}
-                            <img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
-                        {/if}
-                    </Tooltip>
-                </div>
+				<div id="buttonscol">
+					<div id="wrapper">
+						<Tooltip text="Toggles Creeper drops">
+							{#if !song.creeperDrop}
+								<img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null} class="grayscale">
+							{:else}
+								<img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null}>
+							{/if}
+						</Tooltip>						
+					</div>
+					<div id="wrapper">
+						<Tooltip text="Selects structures in which the disc can be found">
+							<img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
+						</Tooltip>
+					</div>
+					<div id="wrapper">
+						<Tooltip text="Removes the disc">
+							{#if !trash_hovered}
+								<img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
+							{:else}
+								<img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
+							{/if}
+						</Tooltip>
+					</div>
+				</div>
+				<div id="buttonscol">
+					<div id="wrapper">
+						<Tooltip text="(M)ono: single audio channel but music fading<br>(S)tereo: multiple audio channels but no music fading" width="22em">
+							{#if !song.isMono}
+								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>M</p>
+							{:else}
+								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>S</p>
+							{/if}
+						</Tooltip>
+					</div>
+					<div id="wrapper">
+						<Tooltip text="Selects structures in which the disc can be found">
+							<img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
+						</Tooltip>
+					</div>
+					<div id="wrapper">
+						<Tooltip text="Removes the disc">
+							{#if !trash_hovered}
+								<img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
+							{:else}
+								<img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
+							{/if}
+						</Tooltip>
+					</div>
+				</div>
             </div>
         </div>
         <div id="names">
@@ -189,31 +220,52 @@
                 cursor: pointer;
             }
 
-            #buttons {
-                display: flex;
+			#buttons {
+				display: flex;
+				margin-left: 1em;
 
-                height: 84px;
-                flex: 1;
-                flex-direction: column;
-                justify-content: space-between;
-                margin-left: 1em;
+				#buttonscol {
+					display: flex;
 
-                img {
-	                width: 24px;
-	                height: 24px;
-	                padding: 2px;
+					height: 84px;
+					flex: 1;
+					flex-direction: column;
+					justify-content: space-between;
 
-                    margin-bottom: -5px;
-                }
+					img {
+						width: 24px;
+						height: 24px;
+						padding: 2px;
 
-                #wrapper:hover {
-                    border: 1px solid white;
-                    margin-right: -2px;
-                    margin-top: -1px;
-                    margin-bottom: -1px;
-                    z-index: 10;
-                }
-            }
+						margin-bottom: -5px;
+					}
+
+					#toggle_mono {
+						width: 24px;
+						height: 24px;
+						padding: 2px;
+						margin: 0;
+						font-size: 27px;
+						font-family: 'Minecraft';
+
+						user-select: none;
+
+						text-align: center;
+						background-color: #202020;
+
+						cursor: pointer;
+					}
+
+					#wrapper:hover {
+						border: 1px solid white;
+						margin-right: -2px;
+						margin-top: -1px;
+						margin-bottom: -1px;
+						z-index: 10;
+					}
+				}
+			}
+            
         }
 
         #names {

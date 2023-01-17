@@ -9,7 +9,7 @@ let version : number;
 
 versionStore.subscribe(v => version = v);
 
-export const generatePack = async (data: songData[], icon : string, name : string, mono : boolean, merge : boolean) => {
+export const generatePack = async (data: songData[], icon : string, name : string, merge : boolean) => {
     const rp = new JSZip();
 
     const packmcmeta = `
@@ -74,7 +74,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
         const resizedTexture = await (await resizeImageBlob(disc.texture, 16, 16)).arrayBuffer();
         textures.file(`music_disc_${disc.namespace}.png`, resizedTexture);
 
-        const soundbuffer = mono ? await disc.monoFile.arrayBuffer() : await disc.oggFile.arrayBuffer();
+        const soundbuffer = disc.isMono ? await disc.monoFile.arrayBuffer() : await disc.oggFile.arrayBuffer();
 
         sounds.file(`${disc.namespace}.ogg`, soundbuffer);
 
@@ -133,7 +133,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
             return {
                 title: disc.name,
                 author: disc.author,
-                duration: await getDuration(mono ? disc.monoFile : disc.oggFile),
+                duration: await getDuration(disc.isMono ? disc.monoFile : disc.oggFile),
                 'disc-namespace': `music_disc.${disc.namespace}`,
                 'model-data': i + 1,
                 'creeper-drop': disc.creeperDrop,

@@ -117,6 +117,7 @@ export interface songData {
 	uploadedFile: File,
 	oggFile : Blob,
 	monoFile : Blob,
+	isMono: boolean,
 	name: string,
 	author: string,
 	lores: string,

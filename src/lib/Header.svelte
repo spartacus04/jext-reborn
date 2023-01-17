@@ -8,7 +8,6 @@
 
     export let packname = 'your_pack_name';
     export let imagesrc = pack_icon;
-    export let useMono = true;
 
     const updateImage = () => {
         document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
@@ -52,8 +51,6 @@
             .toLowerCase();
     };
 
-    const toggleMono = () => useMono = !useMono;
-
     let popup = false;
 
     const showPopup = () => {
@@ -78,14 +75,6 @@
             <option value={key}>{value}</option>
         {/each}
     </select>
-
-    <Tooltip text="Mono: single audio channel but music fading<br>Stereo: multiple audio channels but no music fading" width="22em">
-        {#if useMono}
-            <button on:click={toggleMono}>Mono</button>
-        {:else}
-            <button on:click={toggleMono}>Stereo</button>
-        {/if}
-    </Tooltip>
 
 	<div id="import_container">
 		<Tooltip text="Import an existing resourcepack" right={false}>
@@ -127,11 +116,5 @@
 			justify-self: flex-end;
 			margin-left: auto;
 		}
-
-        button {
-            @extend #pack_name_input;
-            min-width: 5em;
-            text-align: center;
-        }
     }
 </style>

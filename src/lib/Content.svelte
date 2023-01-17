@@ -28,6 +28,7 @@ const addSong = () => {
                 author: 'Disc Author',
                 lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
                 texture: null,
+				isMono: true,
                 creeperDrop: true,
                 lootTables: [],
                 monoFile: null,

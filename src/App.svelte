@@ -8,11 +8,9 @@
     import type { songData } from './config';
     import { generatePack } from './generator';
 	import CSelect from './lib/CSelect.svelte';
-	import { saveAs } from './utils';
 
 	let packIcon : string;
 	let packName : string;
-	let useMono : boolean;
 
 	let discDataList : songData[] = [];
 
@@ -24,7 +22,7 @@
 	};
 
 	const generate = () => {
-		generatePack(discDataList, packIcon, packName, useMono, type == 'Merge');
+		generatePack(discDataList, packIcon, packName, type == 'Merge');
 	};
 </script>
 
@@ -33,7 +31,7 @@
 		<Popup text="Add at least a disc" bind:closePopup={popup}></Popup>
 	{/if}
 
-	<Header bind:packname={packName} bind:imagesrc={packIcon} bind:useMono={useMono}/>
+	<Header bind:packname={packName} bind:imagesrc={packIcon} />
 
 	<Content bind:discData={discDataList} />
 
