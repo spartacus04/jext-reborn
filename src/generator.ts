@@ -128,21 +128,19 @@ export const generatePack = async (data: songData[], icon : string, name : strin
     rp.generateAsync({ type: 'blob' }).then(async content => {
         const zip = new JSZip();
 
-        const discjson = data.map((disc, i) => {
+
+        const discjson = await Promise.all(data.map(async (disc, i) => {
             return {
                 title: disc.name,
                 author: disc.author,
+                duration: await getDuration(mono ? disc.monoFile : disc.oggFile),
                 'disc-namespace': `music_disc.${disc.namespace}`,
                 'model-data': i + 1,
                 'creeper-drop': disc.creeperDrop,
                 lores: disc.lores.split('\n'),
                 'loot-tables': disc.lootTables.join(',').split(','),
             };
-        });
-
-        const jukelooper = await jukelooperIntegration(data, mono);
-
-        zip.file('integrations.txt', jukelooper);
+        }));
 
         zip.file('README.md', await (await fetch(README)).arrayBuffer());
         zip.file(`${name}.zip`, await content.arrayBuffer());
@@ -154,24 +152,13 @@ export const generatePack = async (data: songData[], icon : string, name : strin
     });
 };
 
-const jukelooperIntegration = async (data: songData[], mono: boolean) : Promise<string> => {
-    const map : { namespace: string, duration: number}[] = await Promise.all(data.map(async disc =>
-        new Promise(resolve => {
-            const ogg = mono ? disc.monoFile : disc.oggFile;
-
-            const audio = document.createElement('audio');
-            audio.src = URL.createObjectURL(ogg);
-            // get audio source duration
-            audio.onloadedmetadata = () => {
-                URL.revokeObjectURL(audio.src);
-                resolve({ namespace: disc.namespace, duration: Math.ceil(audio.duration) });
-            };
-        })
-    ));
-
-    const yaml = map.map(disc => `    music_disc.${disc.namespace}: ${disc.duration}`).join('\n');
-
-    console.log(yaml);
-
-    return `# JukeLooper integration\n## Copy the following lines in the config.yaml file of JukeLooper under the namespace node\n\n${yaml}`;
+const getDuration = async (blob: Blob) : Promise<number> => {
+    return new Promise(resolve => {
+        const audio = document.createElement('audio');
+        audio.src = URL.createObjectURL(blob);
+        audio.onloadedmetadata = () => {
+            URL.revokeObjectURL(audio.src);
+            resolve(Math.ceil(audio.duration));
+        };
+    });
 };
