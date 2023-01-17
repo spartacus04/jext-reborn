@@ -11,6 +11,7 @@
     import delete_btn from '../assets/delete_btn.png';
     import delete_btn_hover from '../assets/delete_btn_hover.png';
     import DungeonPopup from './DungeonPopup.svelte';
+	import fragment_icon from '../assets/fragment_icon.png';
 
     export let song : songData;
     export let id : number;
@@ -41,7 +42,6 @@
         regenNamespace();
 
         song.oggFile = await convertToOgg(song.uploadedFile);
-        song.monoFile = await stereoToMono(song.oggFile);
 
         song.texture = await (await fetch(default_disk)).blob();
     };
@@ -142,7 +142,7 @@
 				<div id="buttonscol">
 					<div id="wrapper">
 						<Tooltip text="(M)ono: single audio channel but music fading<br>(S)tereo: multiple audio channels but no music fading" width="22em">
-							{#if !song.isMono}
+							{#if song.isMono}
 								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>M</p>
 							{:else}
 								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>S</p>
@@ -150,8 +150,8 @@
 						</Tooltip>
 					</div>
 					<div id="wrapper">
-						<Tooltip text="Selects structures in which the disc can be found">
-							<img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
+						<Tooltip text="Selects structures in which the disc fragments can be found">
+							<img id="loot_selector" src={fragment_icon} alt="fragment icon" on:click={showPopup} on:keydown={null}>
 						</Tooltip>
 					</div>
 					<div id="wrapper">

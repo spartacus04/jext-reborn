@@ -116,7 +116,7 @@ interface dungeon {
 export interface songData {
 	uploadedFile: File,
 	oggFile : Blob,
-	monoFile : Blob,
+	monoFile ?: Blob,
 	isMono: boolean,
 	name: string,
 	author: string,

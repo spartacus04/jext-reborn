@@ -4,6 +4,7 @@
     import Popup from './lib/Popup.svelte';
 
 	import generate_btn from './assets/generate_btn.png';
+	import spinner from './assets/spinner.gif';
 
     import type { songData } from './config';
     import { generatePack } from './generator';
@@ -17,12 +18,18 @@
 	let popup = false;
 	let type = 'Generate';
 
+	let is_generating = false;
+
 	const showPopup = () => {
 		popup = true;
 	};
 
-	const generate = () => {
-		generatePack(discDataList, packIcon, packName, type == 'Merge');
+	const generate = async () => {
+		if(is_generating) return;
+
+		is_generating = true;
+		await generatePack(discDataList, packIcon, packName, type == 'Merge');
+		is_generating = false;
 	};
 </script>
 
@@ -36,12 +43,19 @@
 	<Content bind:discData={discDataList} />
 
 	<div id="footer">
-		{#if discDataList.length > 0}
-			<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null} />
+		{#if is_generating}
+			<div id="generate_button" style="background-image: url({generate_btn});">
+				<img src={spinner} alt="loading" height="32" width="32">
+			</div>
 		{:else}
-			<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null} />
+			{#if discDataList.length > 0}
+				<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null} />
+			{:else}
+				<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null} />
+			{/if}
+			<CSelect options={['Generate', 'Merge']} bind:selected={type} />
 		{/if}
-		<CSelect options={['Generate', 'Merge']} bind:selected={type} />
+		
 	</div>
 </main>
 
