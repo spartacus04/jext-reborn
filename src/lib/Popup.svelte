@@ -4,16 +4,16 @@
     import { fade } from 'svelte/transition';
 
     export let text : string;
-    export let closePopup : boolean;
+    export let active : boolean;
 
-    const close = () => {
-        closePopup = false;
-    };
+	const close = () => active = false;
 </script>
 
-<div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
+{#if active}
+	<div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
+{/if}
 
-{#if closePopup}
+{#if active}
     <div class="popup">
         <div class="popupcontainer" id="messagepopupcontainer">{text}</div>
 

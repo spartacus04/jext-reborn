@@ -6,8 +6,8 @@
 
 <div id="container">
 	{#if right}
-    	<span id="tooltiptext" class="right" style="width: {width};">{@html text}</span>
-    	<slot />
+		<span id="tooltiptext" class="right" style="width: {width};">{@html text}</span>
+		<slot />
 	{:else}
 		<slot />
 		<span id="tooltiptext" class="left" style="width: {width};">{@html text}</span>

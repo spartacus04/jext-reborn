@@ -1,6 +1,7 @@
 <script lang="ts">
     import Tooltip from './Tooltip.svelte';
     import ImportPopup from './ImportPopup.svelte';
+	import { outline } from './../ui/outline';
 
     import pack_icon from '../assets/pack_icon.png';
     import { versions } from '../config';
@@ -10,61 +11,56 @@
     export let imagesrc = pack_icon;
 
     const updateImage = () => {
-        document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
-            const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
-            if(!files || files.length === 0) return;
+    	document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
+    		const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
+    		if(!files || files.length === 0) return;
 
-            const file = files[0];
-            const reader = new FileReader();
+    		const file = files[0];
+    		const reader = new FileReader();
 
-            reader.onload = () => {
-                const image = new Image();
+    		reader.onload = () => {
+    			const image = new Image();
 
-                image.onload = () => {
-                    const canvas = document.createElement('canvas');
+    			image.onload = () => {
+    				const canvas = document.createElement('canvas');
 
-                    canvas.width = 64;
-                    canvas.height = 64;
+    				canvas.width = 64;
+    				canvas.height = 64;
 
-                    const ctx = canvas.getContext('2d');
+    				const ctx = canvas.getContext('2d');
 
                     ctx!.drawImage(image, 0, 0, 64, 64);
 
                     const dataURL = canvas.toDataURL('image/png');
 
                     (<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
-                };
+    			};
 
-                imagesrc = image.src = <string>reader.result;
-            };
+    			imagesrc = image.src = <string>reader.result;
+    		};
 
-            reader.readAsDataURL(file);
-        }, { once: true });
-    
-        (<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
+    		reader.readAsDataURL(file);
+    	}, { once: true });
+
+    	(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
     };
 
     const replaceText = () => {
-        packname = packname
-            .replace(' ', '_')
-            .replace(/[^a-zA-Z0-9_]/g, '')
-            .toLowerCase();
+    	packname = packname
+    		.replace(' ', '_')
+    		.replace(/[^a-zA-Z0-9_]/g, '')
+    		.toLowerCase();
     };
 
-    let popup = false;
+    let import_popup_active = false;
 
-    const showPopup = () => {
-        popup = true;
-    };
 </script>
 
-{#if popup} 
-	<ImportPopup bind:closePopup={popup}/>
-{/if}
+<ImportPopup bind:active={import_popup_active}/>
 
 <div id="header">
     <Tooltip text="Sets the resourcepack icon">
-        <img src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
+        <img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
     </Tooltip>
 
     <input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
@@ -78,7 +74,7 @@
 
 	<div id="import_container">
 		<Tooltip text="Import an existing resourcepack" right={false}>
-			<input type="button" name="import" id="pack_import" value="import" on:click={showPopup}>
+			<input type="button" name="import" id="pack_import" value="import" on:click={() => import_popup_active = true}>
 		</Tooltip>
 	</div>
 </div>

@@ -8,37 +8,35 @@
     import { versionStore } from '../store';
 
     export let selectedDungeons : string[] = [];
-    export let closePopup : boolean;
-    
+    export let active = true;
 
     const selectItem = (value : string) => {
-        if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
-        else selectedDungeons = [...selectedDungeons, value];
+    	if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
+    	else selectedDungeons = [...selectedDungeons, value];
     };
 
-    const close = () => {
-        closePopup = false;
-        (<HTMLElement>document.querySelector('.popup')).style.display = 'none';
-    };
+    const close = () => active = false;
 </script>
 
-<div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
+{#if active}
+	<div class="popupbackground" style:background-image="url({dirt})" transition:fade on:click={close} on:keydown={null}></div>
+{/if}
 
-{#if closePopup}
-    <div class="popup">
-        <div class="popupcontainer">
-            {#each dungeons as dungeon}
-                {#if dungeon.minVersion && dungeon.minVersion <= $versionStore}
-                    <DungeonElement image={dungeon.img} name={dungeon.name} value={selectedDungeons.includes(dungeon.source)} onClick={() => selectItem(dungeon.source)}/>
-                {/if}
-            {/each}
-        </div>
-        <div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
-            <div id="content">
-                <p id="generate_text" class="noselect">OK</p>
-            </div>
-        </div>
-    </div>
+{#if active}
+	<div class="popup">
+		<div class="popupcontainer">
+			{#each dungeons as dungeon}
+				{#if dungeon.minVersion && dungeon.minVersion <= $versionStore}
+					<DungeonElement image={dungeon.img} name={dungeon.name} value={selectedDungeons.includes(dungeon.source)} onClick={() => selectItem(dungeon.source)}/>
+				{/if}
+			{/each}
+		</div>
+		<div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
+			<div id="content">
+				<p id="generate_text" class="noselect">OK</p>
+			</div>
+		</div>
+	</div>
 {/if}
 
 <style lang="scss">

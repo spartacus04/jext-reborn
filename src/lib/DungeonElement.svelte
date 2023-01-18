@@ -1,5 +1,5 @@
 <script lang="ts">
-    import loading from '../assets/loading.webp';
+	import spinner from '../assets/spinner.gif';
 
     import { fade } from 'svelte/transition';
 
@@ -10,41 +10,24 @@
 
 
     const getImage = async (dungeonName: string) : Promise<string> => {
-        const response = await fetch(dungeonName);
+    	const response = await fetch(dungeonName);
 
-        const blob = await response.blob();
+    	const blob = await response.blob();
 
-        return URL.createObjectURL(blob);
+    	return URL.createObjectURL(blob);
     };
 
     const getImagePromise = getImage(image);
 </script>
 
-{#await getImagePromise}
-    {#if value}
-        <div class="selected" on:click={onClick} on:keydown={null} in:fade>
-            <img src={loading} alt={name}>
-            <p>{name}</p>
-        </div>
-        {:else}
-        <div on:click={onClick} on:keydown={null} in:fade>
-            <img src={image} alt={name}>
-            <p>{name}</p>
-        </div>
-    {/if}
-{:then imageSrc} 
-    {#if value}
-        <div class="selected" on:click={onClick} on:keydown={null} in:fade>
-            <img src={imageSrc} alt={name}>
-            <p>{name}</p>
-        </div>
-        {:else}
-        <div on:click={onClick} on:keydown={null} in:fade>
-            <img src={image} alt={name}>
-            <p>{name}</p>
-        </div>
-    {/if}
-{/await}
+<div class={value ? 'selected' : ''} on:click={onClick} on:keydown={null} in:fade>
+	{#await getImagePromise}
+		<img src={spinner} alt={name}>
+	{:then imageSrc}
+		<img src={imageSrc} alt={name}>
+	{/await}
+	<p>{name}</p>
+</div>
 
 <style lang="scss">
     div {
@@ -69,15 +52,15 @@
             object-fit: contain;
         }
 
-        
+
     }
 
     div:hover:not(.selected) {
-	    background-color: #252525;
+		background-color: #252525;
     }
 
     .selected {
         background-color: white;
-	    color: black;
+		color: black;
     }
 </style>

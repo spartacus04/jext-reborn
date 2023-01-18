@@ -6,20 +6,18 @@
 
 	let open = false;
 
-	const toggleMenu = () => {
-		open = !open;
-	};
+	const toggleMenu = () => open = !open;
 
 	const select = (ele : string) => {
-		selected = ele;
-		open = false;
-	}
+	    selected = ele;
+	    open = false;
+	};
 </script>
 
 {#if open}
 	<div id="openmenu">
 		{#each options as option}
-			<div class="selectopt" on:click={() => select(option)}  on:keydown={null}>{option}</div>
+			<div class="selectopt" on:click={() => select(option)} on:keydown={null}>{option}</div>
 		{/each}
 	</div>
 {/if}
@@ -118,7 +116,7 @@
 
 	.selectopt {
 		font-family: 'Minecraft';
-		
+
 		text-align: center;
 		font-family: 'minecraft';
 		color: white;
@@ -128,7 +126,7 @@
 		width: 216px;
 		height: 24px;
 		padding: 20px;
-		
+
 		background-color: #404040;
 		pointer-events: all;
 

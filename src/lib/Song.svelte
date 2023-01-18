@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { convertToOgg, stereoToMono } from '../utils';
+	import { hoversrc } from '../ui/hoversrc';
+	import { outline } from '../ui/outline';
+	import { restartAnim } from '../ui/restartanim';
+    import { convertToOgg } from '../ffmpeg';
     import type { songData } from '../config';
 
     import Tooltip from './Tooltip.svelte';
@@ -12,158 +15,116 @@
     import delete_btn_hover from '../assets/delete_btn_hover.png';
     import DungeonPopup from './DungeonPopup.svelte';
 	import fragment_icon from '../assets/fragment_icon.png';
+	import audio_btn from '../assets/audio_btn.png';
+	import audio_btn_hover from '../assets/audio_btn_hover.png';
+
 
     export let song : songData;
     export let id : number;
     export let onRemove = () => { null; };
 
     const regenNamespace = () => {
-        song.namespace = `${song.name}${song.author}${id}`
-            .replace(/[^a-zA-Z0-9]/g, '')
-            .replaceAll('1', 'one')
-            .replaceAll('2', 'two')
-            .replaceAll('3', 'three')
-            .replaceAll('4', 'four')
-            .replaceAll('5', 'five')
-            .replaceAll('6', 'six')
-            .replaceAll('7', 'seven')
-            .replaceAll('8', 'eight')
-            .replaceAll('9', 'nine')
-            .replaceAll('0', 'zero')
-            .toLowerCase();
+		song.namespace = `${song.name}${song.author}${id}`
+    		.replace(/[^a-zA-Z0-9]/g, '')
+    		.replaceAll('1', 'one')
+    		.replaceAll('2', 'two')
+    		.replaceAll('3', 'three')
+    		.replaceAll('4', 'four')
+    		.replaceAll('5', 'five')
+    		.replaceAll('6', 'six')
+    		.replaceAll('7', 'seven')
+    		.replaceAll('8', 'eight')
+    		.replaceAll('9', 'nine')
+    		.replaceAll('0', 'zero')
+    		.toLowerCase();
     };
 
     const prepareDisc = async () : Promise<void> => {
-        const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
-    
-        if(splitName.length >= 1) song.name = splitName.shift();
-        if(splitName.length >= 1) song.author = splitName.join();
+    	const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
 
-        regenNamespace();
+    	if(splitName.length >= 1) song.name = splitName.shift();
+    	if(splitName.length >= 1) song.author = splitName.join();
 
-        song.oggFile = await convertToOgg(song.uploadedFile);
+    	regenNamespace();
 
-        song.texture = await (await fetch(default_disk)).blob();
+    	song.oggFile = await convertToOgg(song.uploadedFile);
+
+    	song.texture = await (await fetch(default_disk)).blob();
     };
 
-    const loadingImage = async () => {
-        return await new Promise<void>(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, 1);
-        });
-    };
-    
-    const prepareDiscPromise = prepareDisc();
-    const loadingImagePromise = loadingImage();
+	const prepareDiscPromise = prepareDisc();
 
-    const toggle_creeper = () => {
-        song.creeperDrop = !song.creeperDrop;
-    };
+    const changeTexture = () => {
+    	const input = document.createElement('input');
+    	input.type = 'file';
+    	input.accept = 'image/*';
 
-    let trash_hovered = false;
+    	input.addEventListener('change', () => {
+    		const file = input.files![0];
+    		if (file) {
+    			song.texture = <Blob>file;
+    		}
+    	}, { once: true });
 
-    const trash_toggle = () => {
-        trash_hovered = !trash_hovered;
+    	input.click();
     };
 
-    const newImage = () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
+    let dungeon_popup_active = false;
 
-        input.addEventListener('change', () => {
-            const file = input.files![0];
-            if (file) {
-                song.texture = <Blob>file;
-            }
-        });
-
-        input.click();
-    };
-
-    let popup = false;
-
-    const showPopup = () => {
-        popup = true;
-    };
-
-	const toggle_mono = () => {
-		song.isMono = !song.isMono;
-	};
 </script>
 
-{#if popup}
-    <DungeonPopup bind:selectedDungeons={song.lootTables} bind:closePopup={popup}/>
-{/if}
+<DungeonPopup bind:selectedDungeons={song.lootTables} bind:active={dungeon_popup_active}/>
 
 <div id="song">
     {#await prepareDiscPromise}
-        {#await loadingImagePromise}
-            <div id="loading">
-                <img src="" alt="loading">
-            </div>
-        {:then _} 
-            <div id="loading">
-                <img src={loading} alt="loading">
-            </div>
-        {/await}
-    {:then _} 
+		<div id="loading">
+			<img use:restartAnim={loading} alt="loading">
+		</div>
+    {:then _}
+
         <div id="icons">
             <Tooltip text="Changes the disc icon">
-                <img id="disc_texture" src={URL.createObjectURL(song.texture)} height="64" width="64" alt="disc icon" on:click={newImage} on:keydown={null}>
+                <img use:outline id="disc_texture" src={URL.createObjectURL(song.texture)}
+					height="64" width="64" alt="disc icon"
+					on:click={changeTexture} on:keydown={null}
+				>
             </Tooltip>
+
             <div id="buttons">
-				<div id="buttonscol">
-					<div id="wrapper">
-						<Tooltip text="Toggles Creeper drops">
-							{#if !song.creeperDrop}
-								<img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null} class="grayscale">
-							{:else}
-								<img id="toggle_creeper" src={creeper} alt="creeper icon" on:click={toggle_creeper} on:keydown={null}>
-							{/if}
-						</Tooltip>						
-					</div>
-					<div id="wrapper">
-						<Tooltip text="Selects structures in which the disc can be found">
-							<img id="loot_selector" src={chest} alt="chest icon" on:click={showPopup} on:keydown={null}>
-						</Tooltip>
-					</div>
-					<div id="wrapper">
-						<Tooltip text="Removes the disc">
-							{#if !trash_hovered}
-								<img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
-							{:else}
-								<img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
-							{/if}
-						</Tooltip>
-					</div>
-				</div>
-				<div id="buttonscol">
-					<div id="wrapper">
-						<Tooltip text="(M)ono: single audio channel but music fading<br>(S)tereo: multiple audio channels but no music fading" width="22em">
-							{#if song.isMono}
-								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>M</p>
-							{:else}
-								<p id="toggle_mono" on:click={toggle_mono} on:keydown={null}>S</p>
-							{/if}
-						</Tooltip>
-					</div>
-					<div id="wrapper">
-						<Tooltip text="Selects structures in which the disc fragments can be found">
-							<img id="loot_selector" src={fragment_icon} alt="fragment icon" on:click={showPopup} on:keydown={null}>
-						</Tooltip>
-					</div>
-					<div id="wrapper">
-						<Tooltip text="Removes the disc">
-							{#if !trash_hovered}
-								<img id="song_delete" src={delete_btn} alt="delete icon" on:mouseenter={trash_toggle} on:click={onRemove} on:keydown={null}>
-							{:else}
-								<img id="song_delete" src={delete_btn_hover} alt="delete icon" on:mouseleave={trash_toggle} on:click={onRemove} on:keydown={null}>
-							{/if}
-						</Tooltip>
-					</div>
-				</div>
+				<Tooltip text="Toggles Creeper drops">
+					<img use:outline id="toggle_creeper" src={creeper}
+						alt="creeper icon" on:click={() => song.creeperDrop = !song.creeperDrop} on:keydown={null}
+						class="{song.creeperDrop ? '' : 'grayscale'}"
+					>
+				</Tooltip>
+				<Tooltip text="Selects structures in which the disc can be found">
+					<img use:outline id="loot_selector" src={chest} alt="chest icon"
+						on:click={() => dungeon_popup_active = true} on:keydown={null}
+					>
+				</Tooltip>
+				<Tooltip text="Selects structures in which the disc fragments can be found">
+					<img use:outline id="loot_selector" src={fragment_icon}
+						alt="fragment icon" on:click={() => dungeon_popup_active} on:keydown={null}
+					>
+				</Tooltip>
+				<Tooltip
+					text="(M)ono: single audio channel but music fading<br>(S)tereo: multiple audio channels but no music fading"
+					width="22em"
+				>
+					<p use:outline id="toggle_mono" on:click={() => song.isMono = !song.isMono} on:keydown={null}>
+						{song.isMono ? 'M' : 'S'}
+					</p>
+				</Tooltip>
+				<Tooltip text="Adjusts audio volume">
+					<img use:outline use:hoversrc={{ src: audio_btn, hover: audio_btn_hover }} id="audio_delete"
+						alt="audio icon" on:click={onRemove} on:keydown={null}
+					>
+				</Tooltip>
+				<Tooltip text="Removes the disc">
+					<img use:outline use:hoversrc={{ src: delete_btn, hover: delete_btn_hover }} id="song_delete"
+						alt="delete icon" on:click={onRemove} on:keydown={null}
+					>
+				</Tooltip>
             </div>
         </div>
         <div id="names">
@@ -205,67 +166,47 @@
         #icons {
             display: flex;
 
-            #disc_texture:hover {
-                border: 1px solid white;
-                margin-right: -2px;
-                margin-top: -1px;
-                margin-bottom: -1px;
-                z-index: 10;
-            }
-
             img {
                 background-color: #202020;
 
-                padding: 10px;
+                padding: 12px;
                 cursor: pointer;
             }
 
 			#buttons {
 				display: flex;
 				margin-left: 1em;
+				width: 60px;
+				height: 90px;
+				flex-direction: column;
+				justify-content: space-between;
+				flex-wrap: wrap;
 
-				#buttonscol {
-					display: flex;
+				img {
+					width: 24px;
+					height: 24px;
+					padding: 2px;
 
-					height: 84px;
-					flex: 1;
-					flex-direction: column;
-					justify-content: space-between;
+					margin-bottom: -5px;
+				}
 
-					img {
-						width: 24px;
-						height: 24px;
-						padding: 2px;
+				#toggle_mono {
+					width: 24px;
+					height: 24px;
+					padding: 2px;
+					margin: 0;
+					font-size: 27px;
+					font-family: 'Minecraft';
 
-						margin-bottom: -5px;
-					}
+					user-select: none;
 
-					#toggle_mono {
-						width: 24px;
-						height: 24px;
-						padding: 2px;
-						margin: 0;
-						font-size: 27px;
-						font-family: 'Minecraft';
+					text-align: center;
+					background-color: #202020;
 
-						user-select: none;
-
-						text-align: center;
-						background-color: #202020;
-
-						cursor: pointer;
-					}
-
-					#wrapper:hover {
-						border: 1px solid white;
-						margin-right: -2px;
-						margin-top: -1px;
-						margin-bottom: -1px;
-						z-index: 10;
-					}
+					cursor: pointer;
 				}
 			}
-            
+
         }
 
         #names {

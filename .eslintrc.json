@@ -1,7 +1,6 @@
 {
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
-		"svelte3",
 		"@typescript-eslint"
 	],
 	"env": {
@@ -10,7 +9,10 @@
 	},
 	"overrides": [{
 		"files": ["*.svelte"],
-		"processor": "svelte3/svelte3"
+		"parser": "svelte-eslint-parser",
+		"parserOptions": {
+			"parser": "@typescript-eslint/parser"
+		}
 	}],
 	"settings": {
 		"svelte3/typescript": true
@@ -23,7 +25,8 @@
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended"
+		"plugin:@typescript-eslint/recommended",
+		"plugin:svelte/recommended"
 	],
 	"rules": {
 		"brace-style": ["error", "stroustrup", {
@@ -35,7 +38,7 @@
 		"curly": ["error", "multi-line", "consistent"],
 		"dot-location": ["error", "property"],
 		"handle-callback-err": "off",
-		"indent": ["error"],
+		"indent": ["error", "tab"],
 		"max-nested-callbacks": ["error", {
 			"max": 4
 		}],
@@ -75,6 +78,8 @@
 		"space-infix-ops": "error",
 		"space-unary-ops": "error",
 		"spaced-comment": "error",
-		"yoda": "error"
+		"yoda": "error",
+		"svelte/no-at-html-tags": "off"
+		
 	}
 }

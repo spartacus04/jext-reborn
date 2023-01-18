@@ -1,54 +1,46 @@
 <script lang="ts">
 	import { discStore } from '../store';
-import type { songData } from '../config';
-import Song from './Song.svelte';
+	import type { songData } from '../config';
+	import Song from './Song.svelte';
 
-export let discData : songData[] = [];
+	const addSong = () => {
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.multiple = true;
+		input.accept = import.meta.env.PROD ? 'audio/*' : '.ogg';
+		input.click();
 
-discStore.subscribe(value => {
-    discData = value;
-});
+		input.addEventListener('change', async () => {
+			if(!input.files || input.files.length === 0) return;
 
-const addSong = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.multiple = true;
-    input.accept = import.meta.env.PROD ? 'audio/*' : '.ogg';
-    input.click();
+			const tempDiscData : songData[] = [];
 
-    input.addEventListener('change', async () => {
-        if(!input.files || input.files.length === 0) return;
+			for(let i = 0; i < input.files.length; i++) {
+				tempDiscData.push({
+					uploadedFile: input.files[i],
+					name: 'Disc Name',
+					author: 'Disc Author',
+					lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
+					texture: null,
+					isMono: true,
+					creeperDrop: true,
+					lootTables: [],
+					monoFile: null,
+					namespace: '',
+					oggFile: null,
+				});
+			}
 
-        const tempDiscData : songData[] = [];
+			discStore.update(discs => discs = [...discs, ...tempDiscData]);
+		});
+	};
 
-        for(let i = 0; i < input.files.length; i++) {
-            tempDiscData.push({
-                uploadedFile: input.files[i],
-                name: 'Disc Name',
-                author: 'Disc Author',
-                lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
-                texture: null,
-				isMono: true,
-                creeperDrop: true,
-                lootTables: [],
-                monoFile: null,
-                namespace: '',
-                oggFile: null,
-            });
-        }
-
-        discData = [...discData, ...tempDiscData];
-    });
-};
-
-const removeSong = (song : songData) => {
-    discData = discData.filter(e => e != song);
-};
+	const removeSong = (song : songData) => discStore.update(discs => discs = discs.filter(e => e != song));
 </script>
 
 <div id="content">
     <div id="songscontainer">
-        {#each discData as song, i}
+        {#each $discStore as song, i}
             <Song id={i} bind:song={song} onRemove={() => removeSong(song)}></Song>
         {/each}
     </div>
