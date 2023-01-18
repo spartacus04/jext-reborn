@@ -39,42 +39,42 @@
 </script>
 
 <div id="content">
-    <div id="songscontainer">
-        {#each $discStore as song, i}
-            <Song id={i} bind:song={song} onRemove={() => removeSong(song)}></Song>
-        {/each}
-    </div>
-    <hr class="hidden">
-    <div id="addsongsbtn" on:click={addSong} on:keydown={null}>
-        <h1 class="noselect">+</h1>
-    </div>
+	<div id="songscontainer">
+		{#each $discStore as song, i}
+			<Song id={i} bind:song={song} onRemove={() => removeSong(song)}></Song>
+		{/each}
+	</div>
+	<hr class="hidden">
+	<div id="addsongsbtn" on:click={addSong} on:keydown={null}>
+		<h1 class="noselect">+</h1>
+	</div>
 </div>
 
 <style lang="scss">
-    #content {
-        flex-grow: 1;
-        padding: 1em;
-        overflow-y: auto;
-        height: max-content;
+	#content {
+		flex-grow: 1;
+		padding: 1em;
+		overflow-y: auto;
+		height: max-content;
 
-        #addsongsbtn {
-            background-color: #484848;
-            height: 64px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid black;
+		#addsongsbtn {
+			background-color: #484848;
+			height: 64px;
+			margin: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 2px solid black;
 
-            cursor: pointer;
+			cursor: pointer;
 
-            h1 {
-                color: #d3d3d3;
-            }
+			h1 {
+				color: #d3d3d3;
+			}
 
-            &:hover {
-                background-color: #404040;
-            }
-        }
-    }
+			&:hover {
+				background-color: #404040;
+			}
+		}
+	}
 </style>

@@ -1,76 +1,76 @@
 <script lang="ts">
-    import Tooltip from './Tooltip.svelte';
-    import ImportPopup from './ImportPopup.svelte';
+	import Tooltip from './Tooltip.svelte';
+	import ImportPopup from './ImportPopup.svelte';
 	import { outline } from './../ui/outline';
 
-    import pack_icon from '../assets/pack_icon.png';
-    import { versions } from '../config';
-    import { versionStore } from '../store';
+	import pack_icon from '../assets/pack_icon.png';
+	import { versions } from '../config';
+	import { versionStore } from '../store';
 
-    export let packname = 'your_pack_name';
-    export let imagesrc = pack_icon;
+	export let packname = 'your_pack_name';
+	export let imagesrc = pack_icon;
 
-    const updateImage = () => {
-    	document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
-    		const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
-    		if(!files || files.length === 0) return;
+	const updateImage = () => {
+		document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
+			const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
+			if(!files || files.length === 0) return;
 
-    		const file = files[0];
-    		const reader = new FileReader();
+			const file = files[0];
+			const reader = new FileReader();
 
-    		reader.onload = () => {
-    			const image = new Image();
+			reader.onload = () => {
+				const image = new Image();
 
-    			image.onload = () => {
-    				const canvas = document.createElement('canvas');
+				image.onload = () => {
+					const canvas = document.createElement('canvas');
 
-    				canvas.width = 64;
-    				canvas.height = 64;
+					canvas.width = 64;
+					canvas.height = 64;
 
-    				const ctx = canvas.getContext('2d');
+					const ctx = canvas.getContext('2d');
 
-                    ctx!.drawImage(image, 0, 0, 64, 64);
+					ctx!.drawImage(image, 0, 0, 64, 64);
 
-                    const dataURL = canvas.toDataURL('image/png');
+					const dataURL = canvas.toDataURL('image/png');
 
-                    (<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
-    			};
+					(<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
+				};
 
-    			imagesrc = image.src = <string>reader.result;
-    		};
+				imagesrc = image.src = <string>reader.result;
+			};
 
-    		reader.readAsDataURL(file);
-    	}, { once: true });
+			reader.readAsDataURL(file);
+		}, { once: true });
 
-    	(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
-    };
+		(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
+	};
 
-    const replaceText = () => {
-    	packname = packname
-    		.replace(' ', '_')
-    		.replace(/[^a-zA-Z0-9_]/g, '')
-    		.toLowerCase();
-    };
+	const replaceText = () => {
+		packname = packname
+			.replace(' ', '_')
+			.replace(/[^a-zA-Z0-9_]/g, '')
+			.toLowerCase();
+	};
 
-    let import_popup_active = false;
+	let import_popup_active = false;
 
 </script>
 
 <ImportPopup bind:active={import_popup_active}/>
 
 <div id="header">
-    <Tooltip text="Sets the resourcepack icon">
-        <img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
-    </Tooltip>
+	<Tooltip text="Sets the resourcepack icon">
+		<img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
+	</Tooltip>
 
-    <input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
-    <input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
+	<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
+	<input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
 
-    <select name="version" id="version_input" bind:value={$versionStore}>
-        {#each [...versions] as [key, value]}
-            <option value={key}>{value}</option>
-        {/each}
-    </select>
+	<select name="version" id="version_input" bind:value={$versionStore}>
+		{#each [...versions] as [key, value]}
+			<option value={key}>{value}</option>
+		{/each}
+	</select>
 
 	<div id="import_container">
 		<Tooltip text="Import an existing resourcepack" right={false}>
@@ -80,37 +80,37 @@
 </div>
 
 <style lang="scss">
-    %textSettings {
-        border-radius: 0;
-        color: white;
-        font-size: 1.2em;
-        padding: 0.5em;
-        width: fit-content;
+	%textSettings {
+		border-radius: 0;
+		color: white;
+		font-size: 1.2em;
+		padding: 0.5em;
+		width: fit-content;
 
 		&:hover {
 			background-color: #404040;
 		}
-    }
+	}
 
-    #header {
-        display: flex;
-        align-items: center;
-        padding: 1em;
-        background-color: #202020;
+	#header {
+		display: flex;
+		align-items: center;
+		padding: 1em;
+		background-color: #202020;
 
-        #pack_icon {
-            cursor: pointer;
-        }
+		#pack_icon {
+			cursor: pointer;
+		}
 
-        #pack_name_input, select, #pack_import {
-            @extend %textSettings;
-            margin-left: 1em;
-            background-color: #303030;
-        }
+		#pack_name_input, select, #pack_import {
+			@extend %textSettings;
+			margin-left: 1em;
+			background-color: #303030;
+		}
 
 		#import_container {
 			justify-self: flex-end;
 			margin-left: auto;
 		}
-    }
+	}
 </style>

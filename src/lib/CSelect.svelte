@@ -9,8 +9,8 @@
 	const toggleMenu = () => open = !open;
 
 	const select = (ele : string) => {
-	    selected = ele;
-	    open = false;
+		selected = ele;
+		open = false;
 	};
 </script>
 

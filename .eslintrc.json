@@ -79,7 +79,10 @@
 		"space-unary-ops": "error",
 		"spaced-comment": "error",
 		"yoda": "error",
-		"svelte/no-at-html-tags": "off"
-		
+		"svelte/no-at-html-tags": "off",
+		"no-unused-vars": ["error", {
+			"args": "^_",
+    		"vargs": "^_"
+		}]
 	}
 }
