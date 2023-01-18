@@ -1,10 +1,12 @@
 <script lang="ts">
-    import dirt from '../assets/dirt.png';
-
     import { fade } from 'svelte/transition';
+
+    import { dirt } from '@assets';
+
 
     export let text : string;
     export let active : boolean;
+
 
 	const close = () => active = false;
 </script>

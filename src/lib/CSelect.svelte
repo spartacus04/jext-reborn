@@ -1,10 +1,12 @@
 <script lang="ts">
-	import Arrow from '../assets/arrow.png';
+	import { arrow } from '@assets';
 
 	export let options: string[];
 	export let selected = options[0];
 
+
 	let open = false;
+
 
 	const toggleMenu = () => open = !open;
 
@@ -28,7 +30,7 @@
 			{selected}
 		</div>
 		<div id="arrowcontainer" on:click={toggleMenu} on:keydown={null}>
-			<img src="{Arrow}" alt="🢓" id="arrow" class={open ? 'active' : ''}>
+			<img src={arrow} alt="🢓" id="arrow" class={open ? 'active' : ''}>
 		</div>
 	</div>
 </div>

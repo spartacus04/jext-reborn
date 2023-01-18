@@ -1,88 +1,116 @@
 {
-	"parser": "@typescript-eslint/parser",
-	"plugins": [
-		"@typescript-eslint"
-	],
-	"env": {
-		"es6": true,
-		"browser": true
-	},
-	"overrides": [{
-		"files": ["*.svelte"],
-		"parser": "svelte-eslint-parser",
-		"parserOptions": {
-			"parser": "@typescript-eslint/parser"
-		}
-	}],
-	"settings": {
-		"svelte3/typescript": true
-	},
-	"parserOptions": {
-		"tsconfigRootDir": ".",
-		"project": ["./tsconfig.json"],
-		"extraFileExtensions": [".svelte"]
-	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:svelte/recommended"
-	],
-	"rules": {
-		"brace-style": ["error", "stroustrup", {
-			"allowSingleLine": true
-		}],
-		"comma-dangle": ["error", "always-multiline"],
-		"comma-spacing": "error",
-		"comma-style": "error",
-		"curly": ["error", "multi-line", "consistent"],
-		"dot-location": ["error", "property"],
-		"handle-callback-err": "off",
-		"indent": ["error", "tab"],
-		"max-nested-callbacks": ["error", {
-			"max": 4
-		}],
-		"max-statements-per-line": ["error", {
-			"max": 2
-		}],
-		"no-console": "off",
-		"@typescript-eslint/no-explicit-any": "off",
-		"no-empty-function": "error",
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"no-floating-decimal": "error",
-		"no-inline-comments": "error",
-		"no-lonely-if": "error",
-		"no-multi-spaces": "error",
-		"no-multiple-empty-lines": ["error", {
-			"max": 2,
-			"maxEOF": 1,
-			"maxBOF": 0
-		}],
-		"no-async-promise-executor": "off",
-		"no-shadow": ["error", {
-			"allow": ["err", "resolve", "reject"]
-		}],
-		"no-trailing-spaces": ["error"],
-		"no-var": "error",
-		"object-curly-spacing": ["error", "always"],
-		"prefer-const": "error",
-		"quotes": ["error", "single"],
-		"semi": ["error", "always"],
-		"space-before-blocks": "error",
-		"space-before-function-paren": ["error", {
-			"anonymous": "never",
-			"named": "never",
-			"asyncArrow": "always"
-		}],
-		"space-in-parens": "error",
-		"space-infix-ops": "error",
-		"space-unary-ops": "error",
-		"spaced-comment": "error",
-		"yoda": "error",
-		"svelte/no-at-html-tags": "off",
-		"no-unused-vars": ["error", {
-			"args": "^_",
-    		"vargs": "^_"
-		}]
-	}
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:svelte/recommended"
+    ],
+    "overrides": [
+        {
+            "files": [ "*.svelte" ],
+            "parser": "svelte-eslint-parser",
+            "parserOptions": {
+                "parser": "@typescript-eslint/parser"
+            }
+        }
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "extraFileExtensions": [ ".svelte" ],
+        "project": [ "./tsconfig.json" ],
+        "tsconfigRootDir": "."
+    },
+    "plugins": [ "@typescript-eslint" ],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unused-vars": [ "error",
+            {
+                "argsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_"
+            }
+        ],
+        "brace-style": [ "error", "stroustrup",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "comma-dangle": [ "error", "always-multiline" ],
+        "comma-spacing": "error",
+        "comma-style": "error",
+        "curly": [ "error", "multi-line", "consistent" ],
+        "dot-location": [ "error", "property" ],
+        "handle-callback-err": "off",
+        "indent": [ "error", "tab" ],
+        "max-nested-callbacks": [ "error",
+            {
+                "max": 4
+            }
+        ],
+        "max-statements-per-line": [ "error",
+            {
+                "max": 2
+            }
+        ],
+        "no-async-promise-executor": "off",
+        "no-console": "off",
+        "no-empty-function": "error",
+        "no-floating-decimal": "error",
+        "no-inline-comments": "error",
+        "no-lonely-if": "error",
+        "no-multi-spaces": "error",
+        "no-multiple-empty-lines": [ "error",
+            {
+                "max": 2,
+                "maxBOF": 0,
+                "maxEOF": 1
+            }
+        ],
+        "no-shadow": [ "error",
+            {
+                "allow": [
+                    "err",
+                    "resolve",
+                    "reject"
+                ]
+            }
+        ],
+        "no-trailing-spaces": [ "error" ],
+        "no-var": "error",
+        "object-curly-spacing": [ "error", "always" ],
+        "prefer-const": "error",
+        "quotes": [ "error", "single" ],
+        "semi": [ "error", "always" ],
+        "space-before-blocks": "error",
+        "space-before-function-paren": [ "error",
+            {
+                "anonymous": "never",
+                "asyncArrow": "always",
+                "named": "never"
+            }
+        ],
+        "space-in-parens": "error",
+        "space-infix-ops": "error",
+        "space-unary-ops": "error",
+        "spaced-comment": "error",
+        "svelte/no-at-html-tags": "off",
+        "yoda": "error"
+    },
+    "settings": {
+        "import/resolver": {
+            "alias": {
+                "map": [
+                    [ "@", "./src" ],
+                    [ "@assets", "./src/assets" ],
+                    [ "@styles", "./src/styles" ],
+                    [ "@lib", "./src/lib" ],
+                    [ "@ui", "./src/ui" ]
+                ],
+                "extensions": [ ".ts", ".js", ".svelte" ]
+            }
+        }
+    }
 }

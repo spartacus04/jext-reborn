@@ -1,27 +1,21 @@
 <script lang="ts">
-	import { hoversrc } from '../ui/hoversrc';
-	import { outline } from '../ui/outline';
-	import { restartAnim } from '../ui/restartanim';
-	import { convertToOgg } from '../ffmpeg';
-	import type { songData } from '../config';
+	import { Tooltip, DungeonPopup } from '@lib';
 
-	import Tooltip from './Tooltip.svelte';
+	import { hoversrc, inputFile, outline, restartAnim } from '@ui';
 
-	import default_disk from '../assets/default_disk.png';
-	import loading from '../assets/loading.webp';
-	import creeper from '../assets/creeper.png';
-	import chest from '../assets/chest.png';
-	import delete_btn from '../assets/delete_btn.png';
-	import delete_btn_hover from '../assets/delete_btn_hover.png';
-	import DungeonPopup from './DungeonPopup.svelte';
-	import fragment_icon from '../assets/fragment_icon.png';
-	import audio_btn from '../assets/audio_btn.png';
-	import audio_btn_hover from '../assets/audio_btn_hover.png';
+	import { convertToOgg } from '@/ffmpeg';
+	import type { songData } from '@/config';
+
+	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_hover } from '@assets';
 
 
 	export let song : songData;
 	export let id : number;
 	export let onRemove = () => { null; };
+
+
+	let dungeon_popup_active = false;
+
 
 	const regenNamespace = () => {
 		song.namespace = `${song.name}${song.author}${id}`
@@ -49,28 +43,19 @@
 
 		song.oggFile = await convertToOgg(song.uploadedFile);
 
-		song.texture = await (await fetch(default_disk)).blob();
+		song.texture = await (await fetch(default_disc)).blob();
 	};
 
 	const prepareDiscPromise = prepareDisc();
 
-	const changeTexture = () => {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.accept = 'image/*';
 
-		input.addEventListener('change', () => {
-			const file = input.files![0];
-			if (file) {
-				song.texture = <Blob>file;
-			}
-		}, { once: true });
+	const setTexture = (files: FileList) => {
+		const file = files![0];
 
-		input.click();
+		if (file) {
+			song.texture = file;
+		}
 	};
-
-	let dungeon_popup_active = false;
-
 </script>
 
 <DungeonPopup bind:selectedDungeons={song.lootTables} bind:active={dungeon_popup_active}/>
@@ -86,7 +71,7 @@
 			<Tooltip text="Changes the disc icon">
 				<img use:outline id="disc_texture" src={URL.createObjectURL(song.texture)}
 					height="64" width="64" alt="disc icon"
-					on:click={changeTexture} on:keydown={null}
+					use:inputFile={{ accept: 'image/*', cb: setTexture }} on:keydown={null}
 				>
 			</Tooltip>
 

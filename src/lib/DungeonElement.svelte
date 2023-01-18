@@ -1,7 +1,8 @@
 <script lang="ts">
-	import spinner from '../assets/spinner.gif';
-
 	import { fade } from 'svelte/transition';
+
+	import { spinner } from '@/assets';
+
 
 	export let value = false;
 	export let image : string;

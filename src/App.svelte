@@ -1,14 +1,10 @@
 <script lang="ts">
-    import Content from './lib/Content.svelte';
-    import Header from './lib/Header.svelte';
-    import Popup from './lib/Popup.svelte';
+	import { Content, Popup, CSelect, Header } from '@lib';
 
-	import generate_btn from './assets/generate_btn.png';
-	import spinner from './assets/spinner.gif';
+	import { generate_btn, spinner } from '@assets';
 
-    import { generatePack } from './generator';
-	import CSelect from './lib/CSelect.svelte';
-	import { discStore } from './store';
+    import { generatePack } from '@/generator';
+	import { discStore } from '@/store';
 
 	let packIcon : string;
 	let packName : string;

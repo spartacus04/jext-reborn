@@ -1,48 +1,46 @@
 <script lang="ts">
-	import Tooltip from './Tooltip.svelte';
-	import ImportPopup from './ImportPopup.svelte';
-	import { outline } from './../ui/outline';
+	import { Tooltip, ImportPopup } from '@lib';
+	import { outline, inputFile } from '@ui';
 
-	import pack_icon from '../assets/pack_icon.png';
-	import { versions } from '../config';
-	import { versionStore } from '../store';
+	import { versions } from '@/config';
+	import { versionStore } from '@/store';
+
+	import { pack_icon } from '@assets';
+
 
 	export let packname = 'your_pack_name';
 	export let imagesrc = pack_icon;
 
-	const updateImage = () => {
-		document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
-			const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
-			if(!files || files.length === 0) return;
 
-			const file = files[0];
-			const reader = new FileReader();
+	let import_popup_active = false;
 
-			reader.onload = () => {
-				const image = new Image();
 
-				image.onload = () => {
-					const canvas = document.createElement('canvas');
+	const updateImage = (files : FileList) => {
+		if(!files || files.length === 0) return;
 
-					canvas.width = 64;
-					canvas.height = 64;
+		const file = files[0];
+		const reader = new FileReader();
 
-					const ctx = canvas.getContext('2d');
+		reader.onload = () => {
+			const image = new Image();
 
-					ctx!.drawImage(image, 0, 0, 64, 64);
+			image.onload = () => {
+				const canvas = document.createElement('canvas');
 
-					const dataURL = canvas.toDataURL('image/png');
+				canvas.width = 64;
+				canvas.height = 64;
 
-					(<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
-				};
+				const ctx = canvas.getContext('2d');
 
-				imagesrc = image.src = <string>reader.result;
+				ctx!.drawImage(image, 0, 0, 64, 64);
+
+				imagesrc = canvas.toDataURL('image/png');
 			};
 
-			reader.readAsDataURL(file);
-		}, { once: true });
+			image.src = reader.result as string;
+		};
 
-		(<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
+		reader.readAsDataURL(file);
 	};
 
 	const replaceText = () => {
@@ -51,19 +49,15 @@
 			.replace(/[^a-zA-Z0-9_]/g, '')
 			.toLowerCase();
 	};
-
-	let import_popup_active = false;
-
 </script>
 
 <ImportPopup bind:active={import_popup_active}/>
 
 <div id="header">
 	<Tooltip text="Sets the resourcepack icon">
-		<img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
+		<img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
 	</Tooltip>
 
-	<input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
 	<input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
 
 	<select name="version" id="version_input" bind:value={$versionStore}>

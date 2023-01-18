@@ -1,72 +1,65 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import dirt from '../assets/dirt.png';
-	import pack_icon from '../assets/pack_icon.png';
-	import default_disk from '../assets/default_disk.png';
-	import { importResourcePack, isDiscsJson, isMinecraftRP } from '../importer';
+	import { inputFile } from '@ui';
+
+	import { importResourcePack, isDiscsJson, isMinecraftRP } from '@/importer';
+
+	import { dirt, pack_icon, default_disc } from '@assets';
+
 
 	export let active : boolean;
 
-	const close = () => active = false;
 
 	let pack_status = 'ready';
 	let pack_name = 'Resource pack';
 	let pack_file : File;
 
-	const import_pack = () => {
-		document.querySelector('#pack_input')?.addEventListener('change', async (e) => {
-			const files = (<HTMLInputElement>e.target).files;
-			if(!files || files.length === 0) return;
-
-			const file = files[0];
-
-			if(file.name.length > 13) pack_name = file.name.substring(0, 10) + '...';
-			else pack_name = file.name;
-
-			if(await isMinecraftRP(file)) {
-				pack_status = 'success';
-			}
-			else {
-				pack_status = 'error';
-			}
-
-			pack_file = file;
-		}, { once: true });
-
-		(<HTMLInputElement>document.querySelector('#pack_input')).click();
-	};
-
 	let disc_status = 'ready';
 	let disc_name = 'discs.json';
 	let disc_file : File;
 
-	const import_discs = () => {
-		document.querySelector('#discs_input')?.addEventListener('change', async (e) => {
-			const files = (<HTMLInputElement>e.target).files;
-			if(!files || files.length === 0) return;
+	let isImporting = false;
 
-			const file = files[0];
-
-			if(file.name.length > 13) disc_name = file.name.substring(0, 10) + '...';
-			else disc_name = file.name;
-
-			if(await isDiscsJson(file)) {
-				disc_status = 'success';
-			}
-			else {
-				disc_status = 'error';
-			}
-
-			disc_file = file;
-		}, { once: true });
-
-		(<HTMLInputElement>document.querySelector('#discs_input')).click();
-	};
 
 	$: forbid = pack_status !== 'success' || disc_status !== 'success' ? 'forbid' : '';
 
-	let isImporting = false;
+
+	const import_pack = async (files : FileList) => {
+		if(!files || files.length === 0) return;
+
+		const file = files[0];
+
+		if(file.name.length > 13) pack_name = file.name.substring(0, 10) + '...';
+		else pack_name = file.name;
+
+		if(await isMinecraftRP(file)) {
+			pack_status = 'success';
+		}
+		else {
+			pack_status = 'error';
+		}
+
+		pack_file = file;
+	};
+
+	const import_discs = async (files: FileList) => {
+		if(!files || files.length === 0) return;
+
+		const file = files[0];
+
+		if(file.name.length > 13) disc_name = file.name.substring(0, 10) + '...';
+		else disc_name = file.name;
+
+		if(await isDiscsJson(file)) {
+			disc_status = 'success';
+		}
+		else {
+			disc_status = 'error';
+		}
+
+		disc_file = file;
+	};
 
 	const importRP = async () => {
 		if(pack_status === 'success' && disc_status === 'success' && !isImporting) {
@@ -75,6 +68,8 @@
 			close();
 		}
 	};
+
+	const close = () => active = false;
 </script>
 
 {#if active}
@@ -84,15 +79,14 @@
 {#if active}
 	<div class="popup">
 		<div class="popupcontainer">
-			<div on:click={import_pack} on:keydown={null} class={pack_status} in:fade>
-				<input type="file" name="pack_input" id="pack_input" accept=".zip">
+			<div use:inputFile={{ accept: '.zip', cb: import_pack }} on:keydown={null} class={pack_status} in:fade>
 				<img src={pack_icon} alt="">
 				<p id="error">Not Valid</p>
 				<p>{pack_name}</p>
 			</div>
-			<div on:click={import_discs} on:keydown={null} class={disc_status} in:fade>
+			<div use:inputFile={{ accept: '.json', cb: import_discs }} on:keydown={null} class={disc_status} in:fade>
 				<input type="file" name="discs_input" id="discs_input" accept=".json">
-				<img src={default_disk} alt="">
+				<img src={default_disc} alt="">
 				<p id="error">Not Valid</p>
 				<p>{disc_name}</p>
 			</div>

@@ -1,14 +1,17 @@
 <script lang="ts">
-	import DungeonElement from './DungeonElement.svelte';
 	import { fade } from 'svelte/transition';
 
-	import dirt from '../assets/dirt.png';
+	import { DungeonElement } from '@lib';
 
-	import { dungeons } from '../config';
-	import { versionStore } from '../store';
+	import { dungeons } from '@/config';
+	import { versionStore } from '@/store';
+
+	import { dirt } from '@assets';
+
 
 	export let selectedDungeons : string[] = [];
 	export let active = true;
+
 
 	const selectItem = (value : string) => {
 		if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
