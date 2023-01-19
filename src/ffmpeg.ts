@@ -1,12 +1,5 @@
-import { createFFmpeg } from '@ffmpeg/ffmpeg';
-
+import Worker from '@/worker?worker';
 import { dataURLToBlob } from '@/utils';
-
-
-const ffmpeg = createFFmpeg({
-	corePath: '../ffmpeg-core/ffmpeg-core.js',
-	mainName: 'main',
-});
 
 
 export const convertToOgg = async (file: File) : Promise<Blob> => {
@@ -22,14 +15,14 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 
 		reader.onload = async () => {
 			const arrayBuffer = <ArrayBuffer>reader.result;
-			await ffmpeg.load();
-			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
-			await ffmpeg.run('-i', 'audio', '-acodec', 'libvorbis', '/output.ogg');
 
-			const output = ffmpeg.FS('readFile', '/output.ogg');
-			ffmpeg.exit();
+			const worker = new Worker();
 
-			resolve(new Blob([output], { type: 'audio/ogg' }));
+			worker.onmessage = (e) => {
+				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+			};
+
+			worker.postMessage({ audio: arrayBuffer, args: ['-acodec', 'libvorbis'] });
 		};
 	});
 };
@@ -44,14 +37,14 @@ export const normalize = async (blob: Blob) : Promise<Blob> => {
 
 		reader.onload = async () => {
 			const arrayBuffer = <ArrayBuffer>reader.result;
-			await ffmpeg.load();
-			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
-			await ffmpeg.run('-i', 'audio', '-af', 'loudnorm', '/output.ogg');
 
-			const output = ffmpeg.FS('readFile', '/output.ogg');
-			ffmpeg.exit();
+			const worker = new Worker();
 
-			resolve(new Blob([output], { type: 'audio/ogg' }));
+			worker.onmessage = (e) => {
+				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+			};
+
+			worker.postMessage({ audio: arrayBuffer, args: ['-af', 'loudnorm'] });
 		};
 	});
 };
@@ -66,14 +59,14 @@ export const stereoToMono = async (blob: Blob) : Promise<Blob> => {
 
 		reader.onload = async () => {
 			const arrayBuffer = <ArrayBuffer>reader.result;
-			await ffmpeg.load();
-			ffmpeg.FS('writeFile', 'audio', new Uint8Array(arrayBuffer));
-			await ffmpeg.run('-i', 'audio', '-ac', '1', '/output.ogg');
 
-			const output = ffmpeg.FS('readFile', '/output.ogg');
-			ffmpeg.exit();
+			const worker = new Worker();
 
-			resolve(new Blob([output], { type: 'audio/ogg' }));
+			worker.onmessage = (e) => {
+				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+			};
+
+			worker.postMessage({ audio: arrayBuffer, args: ['-ac', '1'] });
 		};
 	});
 };
