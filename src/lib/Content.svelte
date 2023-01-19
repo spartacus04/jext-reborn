@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Song } from '@lib';
+	import { inputFile } from '@ui';
 
 	import { discStore } from '@/store';
 	import type { songData } from '@/config';
-	import { inputFile } from '@/ui';
 
 
 	const addSong = (files : FileList) => {

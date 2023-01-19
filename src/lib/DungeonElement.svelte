@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import { spinner } from '@/assets';
+	import { spinner } from '@assets';
 
 
 	export let value = false;
