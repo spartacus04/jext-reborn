@@ -1,7 +1,9 @@
 import JSZip from 'jszip';
 import Ajv from 'ajv';
-import type { Disc, songData } from './config';
-import { discStore } from './store';
+
+import type { Disc, songData } from '@/config';
+import { discStore } from '@/store';
+
 
 export const isMinecraftRP = async (blob: Blob) : Promise<boolean> => {
 	const zip = await JSZip.loadAsync(blob);

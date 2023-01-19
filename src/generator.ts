@@ -1,11 +1,15 @@
 import JSZip from 'jszip';
-import { resizeImageBlob, saveAs, stereoToMono } from './ffmpeg';
-import type { songData } from './config';
-import README from './assets/readme.txt';
-import { versionStore } from './store';
-import { isMinecraftRP } from './importer';
+
+import { resizeImageBlob, saveAs, stereoToMono } from '@/ffmpeg';
+import type { songData } from '@/config';
+import { versionStore } from '@/store';
+import { isMinecraftRP } from '@/importer';
+
+import { readme } from '@assets';
+
 
 let version : number;
+
 
 versionStore.subscribe(v => version = v);
 
@@ -149,7 +153,7 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 				};
 			}));
 
-			zip.file('README.md', await (await fetch(README)).arrayBuffer());
+			zip.file('README.md', await (await fetch(readme)).arrayBuffer());
 			zip.file(`${name}.zip`, await content.arrayBuffer());
 			zip.file('discs.json', JSON.stringify(discjson, null, 2));
 
