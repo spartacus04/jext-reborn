@@ -1,7 +1,8 @@
 import JSZip from 'jszip';
 
-import { resizeImageBlob, saveAs, stereoToMono } from '@/ffmpeg';
-import type { songData } from '@/config';
+import { resizeImageBlob, stereoToMono, normalize } from '@/ffmpeg';
+import { saveAs } from '@/utils';
+import type { SongData } from '@/config';
 import { versionStore } from '@/store';
 import { isMinecraftRP } from '@/importer';
 
@@ -13,7 +14,7 @@ let version : number;
 
 versionStore.subscribe(v => version = v);
 
-export const generatePack = async (data: songData[], icon : string, name : string, merge : boolean) => {
+export const generatePack = async (data: SongData[], icon : string, name : string, merge : boolean) => {
 	return new Promise<void>(async (res) => {
 		const rp = new JSZip();
 
@@ -85,7 +86,11 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 			const resizedTexture = await (await resizeImageBlob(disc.texture, 16, 16)).arrayBuffer();
 			textures.file(`music_disc_${disc.namespace}.png`, resizedTexture);
 
-			const soundbuffer = disc.isMono ? await disc.monoFile.arrayBuffer() : await disc.oggFile.arrayBuffer();
+			const sound = disc.isMono ? disc.monoFile : disc.oggFile;
+
+			const normalized = disc.normalize ? await normalize(sound) : sound;
+
+			const soundbuffer = await normalized.arrayBuffer();
 
 			sounds.file(`${disc.namespace}.ogg`, soundbuffer);
 
@@ -112,7 +117,6 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 					const ufile = input.files[0];
 					const zip = await JSZip.loadAsync(ufile);
 
-					// foreach file in the zip
 					await zip.forEach(async (path, nfile) => {
 						if(path == 'pack.mcmeta') return;
 						if(path == 'pack.png') return;

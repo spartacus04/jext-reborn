@@ -3,13 +3,13 @@
 	import { inputFile } from '@ui';
 
 	import { discStore } from '@/store';
-	import type { songData } from '@/config';
+	import type { SongData } from '@/config';
 
 
 	const addSong = (files : FileList) => {
 		if(!files || files.length === 0) return;
 
-		const tempDiscData : songData[] = [];
+		const tempDiscData : SongData[] = [];
 
 		for(let i = 0; i < files.length; i++) {
 			tempDiscData.push({
@@ -19,6 +19,7 @@
 				lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
 				texture: null,
 				isMono: true,
+				normalize: false,
 				creeperDrop: true,
 				lootTables: [],
 				monoFile: null,
@@ -30,7 +31,7 @@
 		discStore.update(discs => discs = [...discs, ...tempDiscData]);
 	};
 
-	const removeSong = (song : songData) => discStore.update(discs => discs = discs.filter(e => e != song));
+	const removeSong = (song : SongData) => discStore.update(discs => discs = discs.filter(e => e != song));
 </script>
 
 <div id="content">
