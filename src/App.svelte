@@ -18,7 +18,7 @@
 
 
 	discStore.subscribe(discs => {
-		can_generate = discs.every(disc => disc.texture != null);
+		can_generate = discs.every(disc => disc.texture != null) && discs.length > 0;
 	});
 
 	const generate = async () => {

@@ -18,6 +18,7 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 	return new Promise<void>(async (res) => {
 		const rp = new JSZip();
 
+		// Pack meta
 		const packmcmeta = `
 			{"pack": {"pack_format": ${version},"description": "Adds custom musics discs"}}
 		`;
@@ -31,6 +32,7 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 
 		const minecraft = rp.folder('assets')!.folder('minecraft')!;
 
+		// sounds.json
 		const soundsjson : {
 			[key: string]: {
 				sounds: {
@@ -57,6 +59,7 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 		const sounds = minecraft.folder('sounds')!.folder('records')!;
 		const textures = minecraft.folder('textures')!.folder('item')!;
 
+		// disc 11 overrides
 		const m11 = {
 			parent: 'item/generated',
 			textures: {
@@ -72,19 +75,43 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 			}),
 		};
 
-		models.file('music_disc_11.json', JSON.stringify(m11, null, 2));
+		// fragment
 
+		const mbone = {
+			parent: 'item/generated',
+			textures: {
+				layer0: 'item/bone',
+			},
+			overrides: data.map((disc, i) => {
+				return {
+					predicate: {
+						custom_model_data: i + 1,
+					},
+					model: `item/fragment_${disc.namespace}`,
+				};
+			}),
+		};
+
+
+		models.file('music_disc_11.json', JSON.stringify(m11, null, 2));
+		models.file('bone.json', JSON.stringify(mbone, null, 2));
+
+		// converts stereo to mono
 		await data.forEachParallel(async (disc) => {
 			if(disc.isMono && !disc.monoFile) {
 				disc.monoFile = await stereoToMono(disc.oggFile);
 			}
 		});
 
+		// disc 11 texture, audio and model
 		for(let i = 0; i < data.length; i++) {
 			const disc = data[i];
 
 			const resizedTexture = await (await resizeImageBlob(disc.texture, 16, 16)).arrayBuffer();
 			textures.file(`music_disc_${disc.namespace}.png`, resizedTexture);
+
+			const resizedFragment = await (await resizeImageBlob(disc.fragmentTexture, 16, 16)).arrayBuffer();
+			textures.file(`fragment_${disc.namespace}.png`, resizedFragment);
 
 			const sound = disc.isMono ? disc.monoFile : disc.oggFile;
 
@@ -98,6 +125,15 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 				parent: 'item/generated',
 				textures: {
 					layer0: `item/music_disc_${disc.namespace}`,
+				},
+			}, null, 2));
+
+			// fragment
+
+			models.file(`fragment_${disc.namespace}.json`, JSON.stringify({
+				parent: 'item/generated',
+				textures: {
+					layer0: `item/fragment_${disc.namespace}`,
 				},
 			}, null, 2));
 		}
