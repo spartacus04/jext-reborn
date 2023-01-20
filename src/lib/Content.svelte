@@ -24,6 +24,7 @@
 				monoFile: null,
 				namespace: '',
 				oggFile: null,
+				fragmentLootTables: [],
 			});
 		}
 

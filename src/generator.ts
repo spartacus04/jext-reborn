@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 
 import { resizeImageBlob, saveAs, stereoToMono } from '@/ffmpeg';
-import type { songData } from '@/config';
+import type { Disc, songData } from '@/config';
 import { versionStore } from '@/store';
 import { isMinecraftRP } from '@/importer';
 
@@ -149,8 +149,9 @@ export const generatePack = async (data: songData[], icon : string, name : strin
 					'model-data': i + 1,
 					'creeper-drop': disc.creeperDrop,
 					lores: disc.lores.split('\n'),
-					'loot-tables': disc.lootTables.join(',').split(','),
-				};
+					'loot-tables': disc.lootTables,
+					'fragment-loot-tables' : disc.fragmentLootTables,
+				} satisfies Disc;
 			}));
 
 			zip.file('README.md', await (await fetch(readme)).arrayBuffer());

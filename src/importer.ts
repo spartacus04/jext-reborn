@@ -83,11 +83,12 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 			isMono: true,
 			lores: disc.lores.join('\n'),
 			lootTables: disc['loot-tables'] ?? [],
+			fragmentLootTables: disc['fragment-loot-tables'] ?? [],
 			uploadedFile: new File([musicBlob], `music_disc.${namespace}.ogg`),
 			oggFile: musicBlob,
 			monoFile: musicBlob,
 			texture: textureBlob,
-		};
+		} satisfies songData;
 	}));
 
 	discStore.set(importedDiscs);

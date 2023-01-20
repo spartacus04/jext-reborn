@@ -5,7 +5,7 @@ export const versions = new Map([
 	[7, '1.17 - 1.17.1'],
 	[8, '1.18 - 1.18.2'],
 	[9, '1.19 - 1.19.2'],
-	// skipped 10 because mojang is weird
+	// skipped 10 because Mojang is weird
 	// [11, '22w42a - 22w44a'] Why generate for snapshots for older versions?
 	[12, '1.19.3'],
 ]);
@@ -127,15 +127,18 @@ export interface songData {
 	texture: Blob,
 	namespace: string,
 	creeperDrop: boolean,
-	lootTables: string[]
+	lootTables: string[],
+	fragmentLootTables: string[],
 }
 
 export interface Disc {
 	title: string;
 	author: string;
+	duration?: number;
 	'disc-namespace': string;
 	'model-data': number;
 	'creeper-drop': boolean;
 	lores: string[];
-	'loot-tables'?: string[]
+	'loot-tables'?: string[];
+	'fragment-loot-tables'?: string[];
 }
