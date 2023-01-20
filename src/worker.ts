@@ -1,5 +1,6 @@
-declare let createFFmpegCore;
+// #region FFmpeg
 
+declare let createFFmpegCore;
 // FFMPEG class - which was former createFFmpeg in ffmpeg/ffmpeg
 
 export class FFmpeg {
@@ -274,6 +275,8 @@ const defaultArgs = [
 	/* Force to override output file */
 	'-y',
 ];
+
+// #endregion
 
 
 const audio_processes : string[] = [];
