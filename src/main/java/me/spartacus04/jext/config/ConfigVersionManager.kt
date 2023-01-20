@@ -183,7 +183,7 @@ data class V2Disc(
 ) {
     companion object {
         fun isOldConfig(jsonConfig: String) : Boolean {
-            return !jsonConfig.contains("duration")
+            return !jsonConfig.contains("duration") || !jsonConfig.contains("fragment-loot-tables")
         }
     }
 }
