@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 
-import type { songData } from '@/config';
+import type { SongData } from '@/config';
 
 
 export const versionStore = writable(12);
 
-export const discStore = writable<songData[]>([]);
+export const discStore = writable<SongData[]>([]);

@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import Ajv from 'ajv';
 
-import type { Disc, songData } from '@/config';
+import type { Disc, SongData } from '@/config';
 import { discStore } from '@/store';
 
 
@@ -70,7 +70,7 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 
 	const zip = await new JSZip().loadAsync(RP);
 
-	const importedDiscs : songData[] = await Promise.all(discsJson.map(async disc => {
+	const importedDiscs : SongData[] = await Promise.all(discsJson.map(async disc => {
 		const namespace = disc['disc-namespace'].substring(disc['disc-namespace'].indexOf('.') + 1);
 		const musicBlob = await zip.file(`assets/minecraft/sounds/records/${namespace}.ogg`).async('blob');
 		const textureBlob = await zip.file(`assets/minecraft/textures/item/music_disc_${namespace}.png`).async('blob');
@@ -81,6 +81,7 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 			namespace: disc['disc-namespace'],
 			creeperDrop: disc['creeper-drop'],
 			isMono: true,
+			normalize: true,
 			lores: disc.lores.join('\n'),
 			lootTables: disc['loot-tables'] ?? [],
 			fragmentLootTables: disc['fragment-loot-tables'] ?? [],
@@ -88,7 +89,7 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 			oggFile: musicBlob,
 			monoFile: musicBlob,
 			texture: textureBlob,
-		} satisfies songData;
+		} satisfies SongData;
 	}));
 
 	discStore.set(importedDiscs);

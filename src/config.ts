@@ -10,7 +10,7 @@ export const versions = new Map([
 	[12, '1.19.3'],
 ]);
 
-export const dungeons : dungeon[] = [
+export const dungeons : Dungeon[] = [
 	{
 		source: 'chests/ancient_city,chests/ancient_city_ice_box',
 		img: 'loottable_icons/Ancient_City.webp',
@@ -109,18 +109,22 @@ export const dungeons : dungeon[] = [
 	},
 ];
 
-interface dungeon {
+export const maxNormalizedVolume = 0;
+
+
+interface Dungeon {
 	source: string,
 	img: string,
 	name: string,
 	minVersion: number
 }
 
-export interface songData {
+export interface SongData {
 	uploadedFile: File,
 	oggFile : Blob,
 	monoFile ?: Blob,
 	isMono: boolean,
+	normalize: boolean,
 	name: string,
 	author: string,
 	lores: string,

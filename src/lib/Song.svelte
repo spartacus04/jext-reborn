@@ -4,12 +4,12 @@
 	import { hoversrc, inputFile, outline, restartAnim } from '@ui';
 
 	import { convertToOgg } from '@/ffmpeg';
-	import type { songData } from '@/config';
+	import type { SongData } from '@/config';
 
-	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_hover } from '@assets';
+	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_selected } from '@assets';
 
 
-	export let song : songData;
+	export let song : SongData;
 	export let id : number;
 	export let onRemove = () => { null; };
 
@@ -100,9 +100,9 @@
 						{song.isMono ? 'M' : 'S'}
 					</p>
 				</Tooltip>
-				<Tooltip text="Adjusts audio volume">
-					<img use:outline use:hoversrc={{ src: audio_btn, hover: audio_btn_hover }} id="audio_delete"
-						alt="audio icon" on:click={onRemove} on:keydown={null}
+				<Tooltip text="Enabled: increases or decreases the volume to match the other minecraft discs<br>Disabled: keeps the song as is" width="35em">
+					<img use:outline src={song.normalize ? audio_btn_selected : audio_btn} id="audio_normalize"
+						alt="audio icon" on:click={() => song.normalize = !song.normalize} on:keydown={null}
 					>
 				</Tooltip>
 				<Tooltip text="Removes the disc">

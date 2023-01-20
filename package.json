@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
-    "@ffmpeg/ffmpeg": "^0.11.6",
+    "@ffmpeg/ffmpeg": "nxtexe/ffmpeg.wasm",
     "ajv": "^8.12.0",
     "jszip": "^3.10.1"
   },

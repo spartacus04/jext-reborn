@@ -1,5 +1,5 @@
 export { default as arrow } from './arrow.png';
-export { default as audio_btn_hover } from './audio_btn_hover.png';
+export { default as audio_btn_selected } from './audio_btn_selected.png';
 export { default as audio_btn } from './audio_btn.png';
 export { default as chest } from './chest.png';
 export { default as creeper } from './creeper.png';
