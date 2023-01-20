@@ -1,7 +1,6 @@
 import Worker from '@/worker?worker';
 import { dataURLToBlob } from '@/utils';
 
-
 export const convertToOgg = async (file: File) : Promise<Blob> => {
 	if(file.type == 'audio/ogg' || import.meta.env.DEV) {
 		return new Blob([file], { type: 'audio/ogg' });
@@ -22,7 +21,10 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 				resolve(new Blob([e.data], { type: 'audio/ogg' }));
 			};
 
-			worker.postMessage({ audio: arrayBuffer, args: ['-acodec', 'libvorbis'] });
+			worker.postMessage({
+				audio: arrayBuffer,
+				args: ['-acodec', 'libvorbis'],
+			});
 		};
 	});
 };
