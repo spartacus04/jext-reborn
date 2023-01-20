@@ -96,14 +96,10 @@
 		</p>
 		<div id="input">
 			<div id="messagepopupconfirm" class="popupconfirm {forbid}" on:click={() => importRP()} on:keydown={null}>
-				<div id="content">
-					<p id="generate_text" class="noselect">Import</p>
-				</div>
+				<p id="generate_text" class="noselect">Import</p>
 			</div>
 			<div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
-				<div id="content">
-					<p id="generate_text" class="noselect">Discard</p>
-				</div>
+				<p id="generate_text" class="noselect">Discard</p>
 			</div>
 		</div>
 	</div>
@@ -204,7 +200,7 @@
 		}
 
 		.popupconfirm:hover,
-		.popupconfirm:hover>#content>#generate_text {
+		.popupconfirm:hover>#generate_text {
 			color: black;
 			background-color: white;
 		}
@@ -243,5 +239,9 @@
 
 	.noselect {
 		user-select: none;
+	}
+
+	#generate_text {
+		margin: 0;
 	}
 </style>

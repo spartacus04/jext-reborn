@@ -7,3 +7,4 @@ export { default as ImportPopup } from './ImportPopup.svelte';
 export { default as Song } from './Song.svelte';
 export { default as Popup } from './Popup.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
+export { default as DungeonFragmentPopup } from './DungeonFragmentPopup.svelte';

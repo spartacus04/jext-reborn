@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Tooltip, DungeonPopup } from '@lib';
+	import { Tooltip, DungeonPopup, DungeonFragmentPopup } from '@lib';
 
 	import { hoversrc, inputFile, outline, restartAnim } from '@ui';
 
 	import { convertToOgg } from '@/ffmpeg';
 	import type { SongData } from '@/config';
 
-	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_selected } from '@assets';
+	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_selected, default_fragment } from '@assets';
 
 
 	export let song : SongData;
@@ -15,6 +15,7 @@
 
 
 	let dungeon_popup_active = false;
+	let dungeon_fragment_popup_active = false;
 
 
 	const regenNamespace = () => {
@@ -43,6 +44,8 @@
 
 		song.oggFile = await convertToOgg(song.uploadedFile);
 
+		song.fragmentTexture = await (await fetch(default_fragment)).blob();
+
 		song.texture = await (await fetch(default_disc)).blob();
 	};
 
@@ -59,6 +62,7 @@
 </script>
 
 <DungeonPopup bind:selectedDungeons={song.lootTables} bind:active={dungeon_popup_active}/>
+<DungeonFragmentPopup bind:selectedDungeons={song.fragmentLootTables} bind:active={dungeon_fragment_popup_active} bind:texture={song.fragmentTexture}/>
 
 <div id="song">
 	{#await prepareDiscPromise}
@@ -88,8 +92,8 @@
 					>
 				</Tooltip>
 				<Tooltip text="Selects structures in which the disc fragments can be found">
-					<img use:outline id="loot_selector" src={fragment_icon}
-						alt="fragment icon" on:click={() => dungeon_popup_active} on:keydown={null}
+					<img use:outline id="loot_fragment_selector" src={fragment_icon}
+						alt="fragment icon" on:click={() => dungeon_fragment_popup_active = true} on:keydown={null}
 					>
 				</Tooltip>
 				<Tooltip
@@ -100,7 +104,7 @@
 						{song.isMono ? 'M' : 'S'}
 					</p>
 				</Tooltip>
-				<Tooltip text="Enabled: increases or decreases the volume to match the other minecraft discs<br>Disabled: keeps the song as is" width="35em">
+				<Tooltip text="Enabled: Normalizes the audio<br>Disabled: Keeps the song as is" width="15em">
 					<img use:outline src={song.normalize ? audio_btn_selected : audio_btn} id="audio_normalize"
 						alt="audio icon" on:click={() => song.normalize = !song.normalize} on:keydown={null}
 					>

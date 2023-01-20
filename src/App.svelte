@@ -12,7 +12,14 @@
 	let popup_active = false;
 	let type = 'Generate';
 
+	let can_generate = false;
+
 	let is_generating = false;
+
+
+	discStore.subscribe(discs => {
+		can_generate = discs.every(disc => disc.texture != null);
+	});
 
 	const generate = async () => {
 		if(is_generating) return;
@@ -24,7 +31,7 @@
 </script>
 
 <main>
-	<Popup text="Add at least a disc" bind:active={popup_active}></Popup>
+	<Popup text={$discStore.length > 0 ? 'Can\'t generate discs while adding one' : 'Add at least a disc'} bind:active={popup_active}></Popup>
 
 	<Header bind:packname={packName} bind:imagesrc={packIcon} />
 
@@ -36,8 +43,6 @@
 				<img src={spinner} alt="loading" height="32" width="32">
 			</div>
 		{:else}
-			{@const can_generate = $discStore.length > 0}
-
 			<div id="generate_button" style:background-image="url({generate_btn})" class={can_generate ? '' : 'grayscale'} on:click={can_generate ? generate : () => popup_active = true} on:keydown={null} />
 			<CSelect options={['Generate', 'Merge']} bind:selected={type} />
 		{/if}

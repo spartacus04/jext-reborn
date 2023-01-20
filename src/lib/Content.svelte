@@ -17,15 +17,16 @@
 				name: 'Disc Name',
 				author: 'Disc Author',
 				lores: 'This is the lore of the disc\n\nYou can have multiple lines\n\nIf you don\'t want any lores you can leave this empty',
-				texture: null,
-				isMono: true,
-				normalize: false,
+				namespace: '',
 				creeperDrop: true,
 				lootTables: [],
-				monoFile: null,
-				namespace: '',
-				oggFile: null,
 				fragmentLootTables: [],
+				normalize: false,
+				isMono: true,
+				oggFile: null,
+				monoFile: null,
+				texture: null,
+				fragmentTexture: null,
 			});
 		}
 

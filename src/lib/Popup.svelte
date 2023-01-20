@@ -66,6 +66,10 @@
             padding: 0.5em 1em 0.5em 1em;
 
             transition: ease-in-out all 0.4s;
+
+			p {
+				margin: 0;
+			}
         }
 
         .popupconfirm:hover,
