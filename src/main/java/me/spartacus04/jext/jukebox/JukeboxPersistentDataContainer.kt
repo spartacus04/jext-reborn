@@ -1,143 +1,188 @@
 package me.spartacus04.jext.jukebox
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
-import me.spartacus04.jext.disc.DiscPlayer
+import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import java.io.File
-import java.util.UUID
-import java.util.stream.Collectors
-import kotlin.collections.HashMap
 
-class JukeboxPersistentDataContainer {
-    private var playingLocation: Location? = null
-    var playingDisc: Int = -1
-    var discs: HashMap<Int, String> = HashMap()
+class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
+    private val containers = arrayListOf(jukeboxContainer)
+    private val id = jukeboxContainer.id
+    private val plugin = jukeboxContainer.plugin
 
-    @Transient
-    val subscribed = HashMap<UUID, () -> Unit>()
-    val unsubscribedFuncs = HashMap<UUID, () -> Unit>()
+    private var location : Location? = null
+    private var playing : JukeboxEntry? = null
+    var slot = -1
+
+    private fun refresh() {
+        containers.forEach {
+            it.refresh()
+        }
+    }
 
     fun addDisc(disc: DiscContainer, slot: Int) {
-        discs[slot] = disc.namespace
-
-        notifySubscribers()
-        JukeboxPersistentDataContainerManager.save()
+        addDisc(JukeboxEntry("jext", disc.namespace), slot)
     }
 
     fun addDisc(itemStack: ItemStack, slot: Int) {
-        discs[slot] = itemStack.type.name
-
-        notifySubscribers()
-        JukeboxPersistentDataContainerManager.save()
+        addDisc(JukeboxEntry("minecraft", itemStack.type.name), slot)
     }
 
-    fun playDisc(slot: Int, location: Location) {
-        if(playingDisc != -1) {
-            stopPlaying()
+    private fun addDisc(disc: JukeboxEntry, slot: Int) {
+        if(!loadedData.containsKey(id)) {
+            loadedData[id] = HashMap()
         }
 
-        playingLocation = location
-        playingDisc = slot
+        loadedData[id]!![slot] = disc
 
-        if(JukeboxPersistentDataContainerManager.isDiscContainer(discs[slot]!!)) {
-            val disc = DISCS.first { it.DISC_NAMESPACE == discs[slot] }
-            DiscPlayer(DiscContainer(disc)).play(location)
-        } else {
-            val type = Material.matchMaterial(discs[slot] as String)
-            if(type != null && type.isRecord) {
-                location.world!!.playSound(location, DiscContainer.SOUND_MAP[type]!!, 1f, 1f)
-            }
-        }
-
-        notifySubscribers()
-    }
-
-    fun stopPlaying() {
-        playingLocation?.let {
-            discs[playingDisc]?.let { disc ->
-                if(JukeboxPersistentDataContainerManager.isDiscContainer(disc)) {
-                    val dsc = DISCS.first { it.DISC_NAMESPACE == disc }
-                    DiscPlayer(DiscContainer(dsc)).stop(it)
-                } else {
-                    // stop vanilla record
-                    it.world!!.players.forEach { player ->
-                        player.stopSound(DiscContainer.SOUND_MAP[Material.matchMaterial(disc)!!]!!)
-                    }
-                }
-            }
-        }
-
-        playingLocation = null
-        playingDisc = -1
-        notifySubscribers()
+        refresh()
+        save(plugin)
     }
 
     fun removeDisc(slot: Int) {
-        discs.remove(slot)
+        if (!loadedData.containsKey(id)) return
 
-        notifySubscribers()
-        JukeboxPersistentDataContainerManager.save()
+        loadedData[id]!!.remove(slot)
+
+        refresh()
+        save(plugin)
     }
 
-    fun subscribe(self: UUID, f: () -> Unit) {
-        subscribed[self] = f
+    fun playDisc(slot: Int, location: Location) {
+        if(!loadedData.containsKey(id)) return
+        if(!loadedData[id]!!.containsKey(slot)) return
+
+
+        if (this.slot != -1) {
+            stopPlaying()
+        }
+
+        this.location = location
+        this.slot = slot
+
+        refresh()
+
+        val duration = loadedData[id]!![slot]!!.play(location)
+        playing = loadedData[id]!![slot]!!
+
+        if(duration.toInt() == 0) return
+
+        Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying() }, duration * 20)
     }
 
-    private fun notifySubscribers() {
-        subscribed.forEach { it.value() }
+    fun stopPlaying() {
+        if (playing == null || location == null) return
+
+        playing!!.stop(location!!)
+
+        slot = -1
+        location = null
+
+        refresh()
     }
 
-    fun unsubscribe(self: UUID) {
-        unsubscribedFuncs[self]?.invoke()
-        unsubscribedFuncs.remove(self)
-        subscribed.remove(self)
-    }
-}
+    fun getDiscs() : HashMap<Int, JukeboxEntry> {
+        if(!loadedData.containsKey(id)) {
+            return HashMap()
+        }
 
-class JukeboxPersistentDataContainerManager {
+        return loadedData[id]!!
+    }
+
     companion object {
-        var jukeboxContainers = HashMap<String, JukeboxPersistentDataContainer>()
-        private lateinit var file: File
-        private lateinit var gson: Gson
+        private val gson = GsonBuilder().setPrettyPrinting().create()
+        private val loadedData = HashMap<String, HashMap<Int, JukeboxEntry>>()
+        private val instances = ArrayList<JukeboxPersistentDataContainer>()
 
-        fun init(plugin: JavaPlugin) {
-            // load data from file
-            gson = GsonBuilder().setPrettyPrinting().setLenient().create()
-            file = plugin.dataFolder.resolve(".savedata")
+        fun reload(plugin: JavaPlugin) {
+            val legacyTypeToken = object: TypeToken<HashMap<String, HashMap<Int, String>>>() {}.type
+            val typeToken = object: TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
+            val file = plugin.dataFolder.resolve(".savedata")
+
+            if(loadedData.isNotEmpty()) {
+                save(plugin)
+            }
 
             if(!file.exists()) {
                 file.createNewFile()
             } else {
-                val json = file.readText()
-                val data = gson.fromJson(json, object: TypeToken <HashMap<String, HashMap<Int, String>>>() {}.type) as HashMap<String, HashMap<Int, String>>? ?: return
+                val text = file.readText()
 
-                jukeboxContainers = data.mapValues { entry ->
-                    val container = JukeboxPersistentDataContainer()
-                    container.discs = entry.value
-                    container
-                } as HashMap<String, JukeboxPersistentDataContainer>
+                try {
+                    // new format
+                    val data = gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken)
+
+                    loadedData.putAll(data)
+                } catch (_: JsonSyntaxException) {
+                    // legacy format
+
+                    val data = gson.fromJson<HashMap<String, HashMap<Int, String>>>(text, legacyTypeToken)
+
+                    loadedData.putAll(
+                        data.mapValues { entry ->
+                            entry.value.mapValues { JukeboxEntry.fromLegacyString(it.value) }.toMap(HashMap())
+                        }
+                    )
+                }
             }
         }
 
-        fun save() {
-            val cleaned = jukeboxContainers.map {
-                it.key to it.value.discs
-            }.filter { it.second.isNotEmpty() }.stream().collect(Collectors.toMap({ it.first }, { it.second }))
+        fun get(jukeboxContainer: JukeboxContainer): JukeboxPersistentDataContainer {
+            fixer(jukeboxContainer)
 
+            val instance = instances.find { it.id == jukeboxContainer.id }
 
-            val json = gson.toJson(cleaned, HashMap<String, JukeboxPersistentDataContainer>()::class.java)
-            file.writeText(json)
+            return if(instance != null) {
+                instance.containers.add(jukeboxContainer)
+                instance
+            } else {
+                val newInstance = JukeboxPersistentDataContainer(jukeboxContainer)
+                instances.add(newInstance)
+                newInstance
+            }
         }
 
-        fun isDiscContainer(namespace: String) : Boolean {
-            return DISCS.any { it.DISC_NAMESPACE == namespace }
+        fun remove(jukeboxContainer: JukeboxContainer) {
+            val instance = instances.find { it.containers.contains(jukeboxContainer) } ?: return
+
+            instance.containers.remove(jukeboxContainer)
+        }
+
+        fun save(plugin: JavaPlugin) {
+            val file = plugin.dataFolder.resolve(".savedata")
+
+            if(!file.exists()) {
+                file.createNewFile()
+            }
+
+            file.writeText(gson.toJson(loadedData))
+        }
+
+        fun breakJukebox(id: String) {
+            val instance = instances.find { it.id == id }
+
+            loadedData.remove(id)
+
+            instance?.stopPlaying()
+            instance?.containers?.forEach {
+                it.close()
+            }
+        }
+
+        // Fixes a bug where two or more jukeboxes with the same id are loaded
+        private fun fixer(jukeboxContainer: JukeboxContainer) {
+            val id = "${jukeboxContainer.location.world!!.name}${jukeboxContainer.location.blockX}${jukeboxContainer.location.blockY}${jukeboxContainer.location.blockZ}"
+
+            if(loadedData.containsKey(id)) {
+                loadedData[jukeboxContainer.id] = loadedData[id]!!
+                loadedData.remove(id)
+            }
+
+            save(jukeboxContainer.plugin)
         }
     }
 }

@@ -6,6 +6,7 @@
   "failed-download-kick-message": "Resource pack download failed, please re-join to try again.",
 
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
 
   "disc-command-success": "§fObtained §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc with namespace §6%namespace% §ccouldn't be found!",
