@@ -43,7 +43,7 @@
 		{/each}
 	</div>
 	<hr class="hidden">
-	<div id="addsongsbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong }} on:keydown={null}>
+	<div id="addsongsbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }} on:keydown={null}>
 		<h1 class="noselect">+</h1>
 	</div>
 </div>
