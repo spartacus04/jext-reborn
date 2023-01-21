@@ -18,10 +18,13 @@ class DiscContainer {
     var namespace: String
         private set
 
+    var duration: Int = -1
+        private set
+
+
     private var customModelData = 0
     private var creeperDrop = false
     private var lores: ArrayList<String>
-    var duration: Int = -1
 
 
     val material: Material = Material.MUSIC_DISC_11

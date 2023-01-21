@@ -2,7 +2,6 @@ package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
-import me.spartacus04.jext.disc.DiscLootTable
 import org.bukkit.Material
 import org.bukkit.block.Chest
 import org.bukkit.entity.EntityType
@@ -19,38 +18,61 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
 
-private fun Inventory.containsAny(itemStacks: MutableList<ItemStack>): Boolean {
-    itemStacks.forEach {
-        if(this.contains(it)) return true
+internal class ChestOpenEvent : Listener {
+    private val discsMap = hashMapOf(
+        LootTables.SIMPLE_DUNGEON.key.key to arrayListOf(
+            Material.MUSIC_DISC_13,
+            Material.MUSIC_DISC_CAT,
+            Material.MUSIC_DISC_OTHERSIDE
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.ANCIENT_CITY.key.key to arrayListOf(
+            Material.MUSIC_DISC_13,
+            Material.MUSIC_DISC_CAT,
+            Material.MUSIC_DISC_OTHERSIDE
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.WOODLAND_MANSION.key.key to arrayListOf(
+            Material.MUSIC_DISC_13,
+            Material.MUSIC_DISC_CAT
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.STRONGHOLD_CORRIDOR.key.key to arrayListOf(
+            Material.MUSIC_DISC_OTHERSIDE
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.BASTION_TREASURE.key.key to arrayListOf(
+            Material.MUSIC_DISC_PIGSTEP
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.BASTION_OTHER.key.key to arrayListOf(
+            Material.MUSIC_DISC_PIGSTEP
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.BASTION_BRIDGE.key.key to arrayListOf(
+            Material.MUSIC_DISC_PIGSTEP
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+        LootTables.BASTION_HOGLIN_STABLE.key.key to arrayListOf(
+            Material.MUSIC_DISC_PIGSTEP
+        ).map { ItemStack(it) }.toCollection(ArrayList()),
+    )
+
+    init {
+        DISCS.forEach {
+            it.LOOT_TABLES?.forEach { lootTable ->
+                if (discsMap.containsKey(lootTable)) {
+                    discsMap[lootTable]!!.add(DiscContainer(it).discItem)
+                } else {
+                    discsMap[lootTable] = arrayListOf(DiscContainer(it).discItem)
+                }
+            }
+        }
     }
 
-    return false
-}
-
-internal class ChestOpenEvent : Listener {
-    private val commonDiscs = arrayListOf(Material.MUSIC_DISC_13, Material.MUSIC_DISC_CAT).map { ItemStack(it) }
-
-    private fun generateItems(inventory: Inventory, dungeonDiscs: List<ItemStack>, key: String) {
-        if(inventory.containsAny(DiscLootTable.creeperDroppableDiscs)) {
+    private fun generateItems(inventory: Inventory, key: String) {
+        if(inventory.any { it.type.isRecord }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
-                if (itemstack == null) null
-
-                else if (!commonDiscs.map { it.type }.contains(itemstack.type)) itemstack
-
-                else {
-                    val list = ArrayList<ItemStack>()
-
-                    if(key == LootTables.SIMPLE_DUNGEON.key.key ||
-                        key == LootTables.ANCIENT_CITY.key.key ||
-                        key == LootTables.WOODLAND_MANSION.key.key)
-                        list.addAll(commonDiscs)
-                    list.addAll(dungeonDiscs)
-
-                    list.random()
+                return@map if(itemstack.type.isRecord) {
+                    discsMap[key]?.random() ?: itemstack
+                } else {
+                    itemstack
                 }
             }.toTypedArray()
-        }
-        else {
+        } else {
             var discstoadd = when(Random.nextInt(0, 101)) {
                 in 0..4 -> 2
                 in 5..20 -> 1
@@ -59,13 +81,14 @@ internal class ChestOpenEvent : Listener {
 
             var size = inventory.size
 
-            while(discstoadd != 0) {
-                if(size <= 0) break
+            while(discstoadd <= 0 && size > 0) {
                 size--
 
                 val randNum = Random.nextInt(inventory.size)
-                if(inventory.getItem(randNum) != null) {
-                    inventory.setItem(randNum, dungeonDiscs.random())
+                val randItem = inventory.getItem(randNum)
+
+                if(randItem == null) {
+                    inventory.setItem(randNum, discsMap[key]?.random())
                     discstoadd--
                 }
             }
@@ -78,13 +101,9 @@ internal class ChestOpenEvent : Listener {
 
         val chest = e.clickedBlock!!.state as Chest
         val key = chest.lootTable?.key?.key ?: return
+        if(!discsMap.containsKey(key)) return
 
-        val dungeonDiscs = DISCS.filter {
-            if(it.LOOT_TABLES == null) false
-            else it.LOOT_TABLES.contains(key)
-        }.map { DiscContainer(it).discItem }.toCollection(ArrayList())
-
-        generateItems(chest.inventory, dungeonDiscs, key)
+        generateItems(chest.blockInventory, key)
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -93,13 +112,9 @@ internal class ChestOpenEvent : Listener {
 
         val chest = e.block.state as Chest
         val key = chest.lootTable?.key?.key ?: return
+        if(!discsMap.containsKey(key)) return
 
-        val dungeonDiscs = DISCS.filter {
-            if(it.LOOT_TABLES == null) false
-            else it.LOOT_TABLES.contains(key)
-        }.map { DiscContainer(it).discItem }.toCollection(ArrayList())
-
-        generateItems(chest.inventory, dungeonDiscs, key)
+        generateItems(chest.inventory, key)
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -108,13 +123,9 @@ internal class ChestOpenEvent : Listener {
 
         val minecart = e.rightClicked as StorageMinecart
         val key = minecart.lootTable?.key?.key ?: return
+        if(!discsMap.containsKey(key)) return
 
-        val dungeonDiscs = DISCS.filter {
-            if(it.LOOT_TABLES == null) false
-            else it.LOOT_TABLES.contains(key)
-        }.map { DiscContainer(it).discItem }.toCollection(ArrayList())
-
-        generateItems(minecart.inventory, dungeonDiscs, key)
+        generateItems(minecart.inventory, key)
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -123,13 +134,8 @@ internal class ChestOpenEvent : Listener {
 
         val minecart = e.vehicle as StorageMinecart
         val key = minecart.lootTable?.key?.key ?: return
+        if(!discsMap.containsKey(key)) return
 
-        val dungeonDiscs = DISCS.filter {
-            if(it.LOOT_TABLES == null) false
-            else it.LOOT_TABLES.contains(key)
-        }.map { DiscContainer(it).discItem }.toCollection(ArrayList())
-
-        generateItems(minecart.inventory, dungeonDiscs, key)
+        generateItems(minecart.inventory, key)
     }
-
 }
