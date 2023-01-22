@@ -108,6 +108,17 @@ class JukeboxContainer : Listener {
     fun onInventoryClose(e: InventoryCloseEvent) {
         if(e.inventory != inventory) return
 
+        // save jukebox contents
+        val contents = e.inventory.contents
+
+        contents.forEachIndexed { index, itemStack ->
+            if(itemStack != null) {
+                dataContainer.addDisc(DiscContainer(itemStack), index)
+            } else {
+                dataContainer.removeDisc(index)
+            }
+        }
+
         JukeboxPersistentDataContainer.remove(this)
     }
 
@@ -140,9 +151,13 @@ class JukeboxContainer : Listener {
             return
         }
 
-        // FIXME: some items are removed from the inventory randomly
         Bukkit.getScheduler().runTaskLater(plugin, Runnable {
             val newContents = e.view.topInventory.contents
+
+            if(e.currentItem != null && !e.currentItem!!.type.isRecord) {
+                e.isCancelled = true
+                return@Runnable
+            }
 
             oldContents.forEachIndexed { i, itemStack ->
                 if(itemStack != newContents[i]) {
