@@ -77,10 +77,10 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 
 		// fragment
 
-		const mbone = {
+		const mfragment = {
 			parent: 'item/generated',
 			textures: {
-				layer0: 'item/bone',
+				layer0: 'item/disc_fragment_5',
 			},
 			overrides: data.map((disc, i) => {
 				return {
@@ -94,7 +94,7 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 
 
 		models.file('music_disc_11.json', JSON.stringify(m11, null, 2));
-		models.file('bone.json', JSON.stringify(mbone, null, 2));
+		models.file('disc_fragment_5.json', JSON.stringify(mfragment, null, 2));
 
 		// converts stereo to mono
 		await data.forEachParallel(async (disc) => {
