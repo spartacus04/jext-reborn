@@ -18,6 +18,7 @@ class DiscContainer {
     var namespace: String
         private set
 
+    @SuppressWarnings
     var duration: Int = -1
         private set
 
@@ -83,6 +84,30 @@ class DiscContainer {
             meta.lore = lores
             disc.itemMeta = meta
             return disc
+        }
+
+    val fragmentItem: ItemStack
+        get() {
+            val fragment = ItemStack(Material.DISC_FRAGMENT_5)
+            val meta = fragment.itemMeta
+
+            meta!!.setCustomModelData(customModelData)
+            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+
+            val helper = DiscPersistentDataContainer(meta)
+            helper.author = author
+            helper.namespaceID = namespace
+            helper.title = title
+            helper.setIdentifier()
+
+            val lores = ArrayList<String?>()
+            lores.add(Log().gr(author).gr(" - ").gr(title).text())
+            lores.addAll(this.lores)
+
+            meta.lore = lores
+            fragment.itemMeta = meta
+
+            return fragment
         }
 
     override fun toString(): String {

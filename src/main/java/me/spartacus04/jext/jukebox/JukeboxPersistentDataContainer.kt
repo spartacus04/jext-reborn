@@ -116,7 +116,9 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
                     // new format
                     val data = gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken)
 
-                    loadedData.putAll(data)
+                    if(data != null) {
+                        loadedData.putAll(data)
+                    }
                 } catch (_: JsonSyntaxException) {
                     // legacy format
 

@@ -18,46 +18,70 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
 
+private val Material.isRecordFragment: Boolean
+    get() {
+        return when (this) {
+            Material.DISC_FRAGMENT_5 -> true
+            else -> false
+        }
+    }
+
 internal class ChestOpenEvent : Listener {
+    data class ChanceStack(val chance: Int, val stack: ItemStack)
+
+    private val discFragmentMap = hashMapOf(
+        LootTables.ANCIENT_CITY.key.key to arrayListOf(
+            ChanceStack(298, ItemStack(Material.DISC_FRAGMENT_5)),
+        )
+    )
+
     private val discsMap = hashMapOf(
         LootTables.SIMPLE_DUNGEON.key.key to arrayListOf(
-            Material.MUSIC_DISC_13,
-            Material.MUSIC_DISC_CAT,
-            Material.MUSIC_DISC_OTHERSIDE
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(215, ItemStack(Material.MUSIC_DISC_13)),
+            ChanceStack(215, ItemStack(Material.MUSIC_DISC_CAT)),
+            ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+        ),
         LootTables.ANCIENT_CITY.key.key to arrayListOf(
-            Material.MUSIC_DISC_13,
-            Material.MUSIC_DISC_CAT,
-            Material.MUSIC_DISC_OTHERSIDE
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
+            ChanceStack(161, ItemStack(Material.MUSIC_DISC_CAT)),
+            ChanceStack(81, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+        ),
         LootTables.WOODLAND_MANSION.key.key to arrayListOf(
-            Material.MUSIC_DISC_13,
-            Material.MUSIC_DISC_CAT
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(218, ItemStack(Material.MUSIC_DISC_13)),
+            ChanceStack(218, ItemStack(Material.MUSIC_DISC_CAT)),
+        ),
         LootTables.STRONGHOLD_CORRIDOR.key.key to arrayListOf(
-            Material.MUSIC_DISC_OTHERSIDE
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(25, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+        ),
         LootTables.BASTION_TREASURE.key.key to arrayListOf(
-            Material.MUSIC_DISC_PIGSTEP
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+        ),
         LootTables.BASTION_OTHER.key.key to arrayListOf(
-            Material.MUSIC_DISC_PIGSTEP
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+        ),
         LootTables.BASTION_BRIDGE.key.key to arrayListOf(
-            Material.MUSIC_DISC_PIGSTEP
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+        ),
         LootTables.BASTION_HOGLIN_STABLE.key.key to arrayListOf(
-            Material.MUSIC_DISC_PIGSTEP
-        ).map { ItemStack(it) }.toCollection(ArrayList()),
+            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+        ),
     )
 
     init {
         DISCS.forEach {
             it.LOOT_TABLES?.forEach { lootTable ->
                 if (discsMap.containsKey(lootTable)) {
-                    discsMap[lootTable]!!.add(DiscContainer(it).discItem)
+                    discsMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).discItem))
                 } else {
-                    discsMap[lootTable] = arrayListOf(DiscContainer(it).discItem)
+                    discsMap[lootTable] = arrayListOf(ChanceStack(200, DiscContainer(it).discItem))
+                }
+            }
+
+            it.FRAGMENT_LOOT_TABLES?.forEach { lootTable ->
+                if (discFragmentMap.containsKey(lootTable)) {
+                    discFragmentMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).fragmentItem))
+                } else {
+                    discFragmentMap[lootTable] = arrayListOf(ChanceStack(200, DiscContainer(it).fragmentItem))
                 }
             }
         }
@@ -66,30 +90,61 @@ internal class ChestOpenEvent : Listener {
     private fun generateItems(inventory: Inventory, key: String) {
         if(inventory.any { it.type.isRecord }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
-                return@map if(itemstack.type.isRecord) {
-                    discsMap[key]?.random() ?: itemstack
+                if(itemstack.type.isRecord) {
+                    ItemStack(Material.AIR)
                 } else {
                     itemstack
                 }
             }.toTypedArray()
-        } else {
-            var discstoadd = when(Random.nextInt(0, 101)) {
-                in 0..4 -> 2
-                in 5..20 -> 1
-                else -> 0
+        }
+
+        if(inventory.any { it.type.isRecordFragment }) {
+            inventory.storageContents = inventory.storageContents.map { itemstack ->
+                if(itemstack.type.isRecordFragment) {
+                    ItemStack(Material.AIR)
+                } else {
+                    itemstack
+                }
+            }.toTypedArray()
+        }
+
+        // Reroll discs
+        discsMap[key]?.forEach { chanceStack ->
+            if (Random.nextInt(0, 1001) < chanceStack.chance) {
+                var size = inventory.size
+
+                while (size > 0) {
+                    val slot = Random.nextInt(0, size)
+                    val item = inventory.getItem(slot)
+
+                    if (item == null || item.type == Material.AIR) {
+                        inventory.setItem(slot, chanceStack.stack)
+                        break
+                    }
+
+                    size--
+                }
             }
+        }
 
-            var size = inventory.size
+        discFragmentMap[key]?.forEach { chanceStack ->
+            if (Random.nextInt(0, 1001) < chanceStack.chance) {
+                val number = Random.nextInt(0, 4)
+                var size = inventory.size
 
-            while(discstoadd <= 0 && size > 0) {
-                size--
+                while (size > 0) {
+                    val slot = Random.nextInt(0, size)
+                    val item = inventory.getItem(slot)
 
-                val randNum = Random.nextInt(inventory.size)
-                val randItem = inventory.getItem(randNum)
+                    if (item == null || item.type == Material.AIR) {
+                        inventory.setItem(slot, chanceStack.stack.apply {
+                            amount = number
+                        })
 
-                if(randItem == null) {
-                    inventory.setItem(randNum, discsMap[key]?.random())
-                    discstoadd--
+                        break
+                    }
+
+                    size--
                 }
             }
         }
