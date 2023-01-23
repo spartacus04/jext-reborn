@@ -189,8 +189,8 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 					'model-data': i + 1,
 					'creeper-drop': disc.creeperDrop,
 					lores: disc.lores.split('\n'),
-					'loot-tables': disc.lootTables,
-					'fragment-loot-tables' : disc.fragmentLootTables,
+					'loot-tables': disc.lootTables.join(',').split(','),
+					'fragment-loot-tables' : disc.fragmentLootTables.join(',').split(','),
 				} satisfies Disc;
 			}));
 
