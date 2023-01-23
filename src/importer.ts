@@ -74,7 +74,9 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 		const namespace = disc['disc-namespace'].substring(disc['disc-namespace'].indexOf('.') + 1);
 		const musicBlob = await zip.file(`assets/minecraft/sounds/records/${namespace}.ogg`).async('blob');
 		const textureBlob = await zip.file(`assets/minecraft/textures/item/music_disc_${namespace}.png`).async('blob');
+		const fragmentBlob = await zip.file(`assets/minecraft/textures/item/fragment_${namespace}.png`).async('blob');
 
+		// TODO: import lootTables and fragmentLootTables correctly
 		return {
 			name: disc.title,
 			author: disc.author,
@@ -89,6 +91,7 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 			oggFile: musicBlob,
 			monoFile: musicBlob,
 			texture: textureBlob,
+			fragmentTexture: fragmentBlob,
 		} satisfies SongData;
 	}));
 
