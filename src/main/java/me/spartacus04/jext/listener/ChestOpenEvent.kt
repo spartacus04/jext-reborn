@@ -100,7 +100,7 @@ internal class ChestOpenEvent : Listener {
     private fun generateItems(inventory: Inventory, key: String) {
         if(inventory.any { it != null && it.type.isRecord }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
-                if(itemstack.type.isRecord) {
+                if(itemstack != null && itemstack.type.isRecord) {
                     ItemStack(Material.AIR)
                 } else {
                     itemstack
@@ -110,7 +110,7 @@ internal class ChestOpenEvent : Listener {
 
         if(inventory.any { it != null && it.type.isRecordFragment }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
-                if(itemstack.type.isRecordFragment) {
+                if(itemstack != null && itemstack.type.isRecordFragment) {
                     ItemStack(Material.AIR)
                 } else {
                     itemstack
@@ -118,7 +118,6 @@ internal class ChestOpenEvent : Listener {
             }.toTypedArray()
         }
 
-        // Reroll discs
         discsMap[key]?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
                 var size = inventory.size
