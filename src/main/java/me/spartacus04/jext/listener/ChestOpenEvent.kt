@@ -1,5 +1,6 @@
 package me.spartacus04.jext.listener
 
+import me.spartacus04.jext.SpigotVersion.Companion.VERSION
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.Material
@@ -69,13 +70,22 @@ internal class ChestOpenEvent : Listener {
 
     init {
         DISCS.forEach {
-            it.LOOT_TABLES?.forEach { lootTable ->
+            it.LOOT_TABLES?.forEachIndexed { _, lootTable ->
+                val item = DiscContainer(it).discItem.type
+
+                if(item == Material.MUSIC_DISC_PIGSTEP && VERSION < 16) return@forEach
+                if(item == Material.MUSIC_DISC_OTHERSIDE && VERSION < 18) return@forEach
+                if(item == Material.MUSIC_DISC_5 && VERSION < 19) return@forEach
+
                 if (discsMap.containsKey(lootTable)) {
                     discsMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).discItem))
                 } else {
                     discsMap[lootTable] = arrayListOf(ChanceStack(200, DiscContainer(it).discItem))
                 }
             }
+
+
+            if(VERSION < 19) return@forEach
 
             it.FRAGMENT_LOOT_TABLES?.forEach { lootTable ->
                 if (discFragmentMap.containsKey(lootTable)) {
@@ -88,7 +98,7 @@ internal class ChestOpenEvent : Listener {
     }
 
     private fun generateItems(inventory: Inventory, key: String) {
-        if(inventory.any { it.type.isRecord }) {
+        if(inventory.any { it != null && it.type.isRecord }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
                 if(itemstack.type.isRecord) {
                     ItemStack(Material.AIR)
@@ -98,7 +108,7 @@ internal class ChestOpenEvent : Listener {
             }.toTypedArray()
         }
 
-        if(inventory.any { it.type.isRecordFragment }) {
+        if(inventory.any { it != null && it.type.isRecordFragment }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
                 if(itemstack.type.isRecordFragment) {
                     ItemStack(Material.AIR)
