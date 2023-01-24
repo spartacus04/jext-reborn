@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Aktivér venligst ressourcepakke til musikken!",
   "failed-download-kick-message": "Ressourcepakke download mislykkedes. Forbind igen for at prøve igen.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fObtained §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc med navneområde §6%namespace% §cckunne ikke findes!",
   "disc-received": "§fModtaget §d%disc% §fdisc!",
