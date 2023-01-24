@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Пожалуйста, загрузите ресурспак для музыки!",
   "failed-download-kick-message": "Не удалось загрузить ресурспак, пожалуйста, повторите попытку.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fПолучен диск - §d%disc%§f!",
   "disc-namespace-not-found": "§cДиск с именем - §6%namespace% §cне найден!",
   "disc-received": "§fПолучен диск - §d%disc%§f!",
