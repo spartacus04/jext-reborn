@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "音楽のリソースパックを有効にしてください！",
   "failed-download-kick-message": "リソースパックのダウンロードに失敗しました。もう一度やり直してください。",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§f§d%disc% §fdiscを獲得しました！",
   "disc-namespace-not-found": "§cディスクは名前空間§6%namespace% §c見つかりませんでした！",
   "disc-received": "§f Received §d%disc% §fdisc!",
