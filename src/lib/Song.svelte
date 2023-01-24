@@ -5,6 +5,7 @@
 
 	import { convertToOgg } from '@/ffmpeg';
 	import type { SongData } from '@/config';
+	import { versionStore } from '@/store';
 
 	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_selected, default_fragment } from '@assets';
 
@@ -91,11 +92,19 @@
 						on:click={() => dungeon_popup_active = true} on:keydown={null}
 					>
 				</Tooltip>
-				<Tooltip text="Selects structures in which the disc fragments can be found">
-					<img use:outline id="loot_fragment_selector" src={fragment_icon}
-						alt="fragment icon" on:click={() => dungeon_fragment_popup_active = true} on:keydown={null}
-					>
-				</Tooltip>
+				{#if $versionStore >= 9}
+					<Tooltip text="Selects structures in which the disc fragments can be found">
+						<img use:outline id="loot_fragment_selector" src={fragment_icon}
+							alt="fragment icon" on:click={() => dungeon_fragment_popup_active = true} on:keydown={null}
+						>
+					</Tooltip>
+				{:else}
+					<Tooltip text="Not avaiable in versions lower than 1.19">
+						<img use:outline id="loot_fragment_selector" src={fragment_icon}
+							alt="fragment icon" class="disabled"
+						>
+					</Tooltip>
+				{/if}
 				<Tooltip
 					text="(M)ono: single audio channel but music fading<br>(S)tereo: multiple audio channels but no music fading"
 					width="22em"
@@ -195,7 +204,6 @@
 					cursor: pointer;
 				}
 			}
-
 		}
 
 		#names {
@@ -225,5 +233,9 @@
 			background-color: #202020;
 			color: white;
 		}
+	}
+
+	.disabled {
+		opacity: 0.5;
 	}
 </style>

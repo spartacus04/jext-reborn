@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import Ajv from 'ajv';
 
 import type { Disc, SongData } from '@/config';
+import { dungeons } from '@/config';
 import { discStore } from '@/store';
 
 
@@ -76,7 +77,6 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 		const textureBlob = await zip.file(`assets/minecraft/textures/item/music_disc_${namespace}.png`).async('blob');
 		const fragmentBlob = await zip.file(`assets/minecraft/textures/item/fragment_${namespace}.png`).async('blob');
 
-		// TODO: import lootTables and fragmentLootTables correctly
 		return {
 			name: disc.title,
 			author: disc.author,
@@ -85,8 +85,8 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 			isMono: true,
 			normalize: true,
 			lores: disc.lores.join('\n'),
-			lootTables: disc['loot-tables'] ?? [],
-			fragmentLootTables: disc['fragment-loot-tables'] ?? [],
+			lootTables: getLootTables(disc['loot-tables'] ?? []),
+			fragmentLootTables: getLootTables(disc['fragment-loot-tables'] ?? []),
 			uploadedFile: new File([musicBlob], `music_disc.${namespace}.ogg`),
 			oggFile: musicBlob,
 			monoFile: musicBlob,
@@ -96,4 +96,19 @@ export const importResourcePack = async (discs: Blob, RP: Blob) : Promise<void> 
 	}));
 
 	discStore.set(importedDiscs);
+};
+
+const getLootTables = (arr: string[]) : string[] => {
+	const lootTables : string[] = [];
+
+	arr.forEach((table) => {
+		// check if every element of dungeons contains table, if so, add it to lootTables
+		if (dungeons.every(dungeon => dungeon.source.includes(table))) {
+			if(!lootTables.includes(table)) {
+				lootTables.push(table);
+			}
+		}
+	});
+
+	return lootTables;
 };
