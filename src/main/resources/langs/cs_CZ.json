@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Prosím povolte balíček zdrojů pro hudbu!",
   "failed-download-kick-message": "Stahování balíčku dokumentů se nezdařilo, zkuste to prosím znovu.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fZískáno §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisk s jmenným prostorem §6%namespace% nebyl nalezen!",
   "disc-received": "§fObdrženo §d%disc% §fdisku!",
