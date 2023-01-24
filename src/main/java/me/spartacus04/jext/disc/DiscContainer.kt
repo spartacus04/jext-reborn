@@ -45,14 +45,13 @@ class DiscContainer {
             val meta = disc.itemMeta
             customModelData = meta!!.customModelData
 
-            lores = meta.lore?.let { ArrayList(it) }!!
-
             val helper = DiscPersistentDataContainer(meta)
             author = helper.author!!
             namespace = helper.namespaceID!!
             title = helper.title!!
 
-            duration = DISCS.find { it.DISC_NAMESPACE == namespace }!!.DURATION
+            lores = DISCS.find { it.DISC_NAMESPACE == namespace }?.LORE?.toCollection(ArrayList()) ?: ArrayList()
+            duration = DISCS.find { it.DISC_NAMESPACE == namespace }?.DURATION ?: -1
         } else {
             throw IllegalStateException("Custom disc identifier missing!")
         }
@@ -76,12 +75,7 @@ class DiscContainer {
             helper.title = title
             helper.setIdentifier()
 
-            // Lores and disc info
-            val lores = ArrayList<String?>()
-            lores.add(Log().gr(author).gr(" - ").gr(title).text())
-            lores.addAll(this.lores)
-
-            meta.lore = lores
+            meta.lore = getProcessedLores()
             disc.itemMeta = meta
             return disc
         }
@@ -100,15 +94,21 @@ class DiscContainer {
             helper.title = title
             helper.setIdentifier()
 
-            val lores = ArrayList<String?>()
-            lores.add(Log().gr(author).gr(" - ").gr(title).text())
-            lores.addAll(this.lores)
+            val lores = getProcessedLores()
 
             meta.lore = lores
             fragment.itemMeta = meta
 
             return fragment
         }
+
+    fun getProcessedLores(): ArrayList<String> {
+        val lores = ArrayList<String>()
+        lores.add(Log().gr(author).gr(" - ").gr(title).text())
+        lores.addAll(this.lores)
+
+        return lores
+    }
 
     override fun toString(): String {
         return title

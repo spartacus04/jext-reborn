@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
 
-private val Material.isRecordFragment: Boolean
+val Material.isRecordFragment: Boolean
     get() {
         return when (this) {
             Material.DISC_FRAGMENT_5 -> true
