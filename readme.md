@@ -24,6 +24,7 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 - Parrot will still dance to the music!
 - Discs can be found in dungeons.
 - A website to generate the required files for the music discs.
+- Disc fragments can be found in dungeons and be crafted back together
 
 ## Other features
 
