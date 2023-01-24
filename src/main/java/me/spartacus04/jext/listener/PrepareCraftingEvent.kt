@@ -36,8 +36,7 @@ internal class PrepareCraftingEvent : Listener {
 
         if (isCustomDisc && namespace != null) {
             e.inventory.result = DiscContainer(DISCS.first { it.DISC_NAMESPACE == namespace }).discItem
-        }
-        else if(isCustomDisc) {
+        } else if(isCustomDisc) {
             e.inventory.result = null
         }
     }
