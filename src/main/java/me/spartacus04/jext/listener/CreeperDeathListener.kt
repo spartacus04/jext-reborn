@@ -15,7 +15,7 @@ internal class CreeperDeathListener : Listener {
     fun onCreeperDeath(event: EntityDeathEvent) {
         val lastDamageCause = event.entity.lastDamageCause ?: return
         if(lastDamageCause !is EntityDamageByEntityEvent) return
-        val killerArrow = (EntityDamageByEntityEvent::class.java.cast(lastDamageCause)).damager
+        val killerArrow = EntityDamageByEntityEvent::class.java.cast(lastDamageCause).damager
         if(killerArrow !is Arrow) return
         if (killerArrow.shooter !is Skeleton) return
         if (event.entity !is Creeper) return
