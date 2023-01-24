@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Bitte aktivieren Sie das Ressourcenpaket für die Musik!",
   "failed-download-kick-message": "Download des Ressourcenpakets fehlgeschlagen, bitte erneut beitreten um es erneut zu versuchen.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fErhalten §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc mit dem Namensraum §6%namespace% §ccccccnell nicht gefunden!",
   "disc-received": "§fErhalten §d%disc% §fdisc!",
