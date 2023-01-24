@@ -8,8 +8,9 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 
-class CreeperDeathListener : Listener {
+internal class CreeperDeathListener : Listener {
     @EventHandler(ignoreCancelled = true)
     fun onCreeperDeath(event: EntityDeathEvent) {
         val lastDamageCause = event.entity.lastDamageCause ?: return

@@ -7,9 +7,7 @@ enum class JextNamespace(val key: String) {
     AUTHOR("jext.author"),
     NAMESPACE_ID("jext.namespace_id"),
     IDENTIFIER("jext.identifier"),
-    TITLE("jext.title"),
-    DISCS("jext.discs"),
-    DISCS_INDEX("jext.discs_index");
+    TITLE("jext.title");
 
     private var namespacedKey: NamespacedKey? = null
     fun get(): NamespacedKey? {

@@ -29,6 +29,9 @@ data class Disc(
     @SerializedName("author")
     var AUTHOR: String,
 
+    @SerializedName("duration")
+    var DURATION: Int = -1,
+
     @SerializedName("disc-namespace")
     var DISC_NAMESPACE: String,
 
@@ -42,5 +45,8 @@ data class Disc(
     var LORE: List<String>,
 
     @SerializedName("loot-tables")
-    val LOOT_TABLES: List<String>?
+    val LOOT_TABLES: List<String>?,
+
+    @SerializedName("fragment-loot-tables")
+    val FRAGMENT_LOOT_TABLES: List<String>?
 )

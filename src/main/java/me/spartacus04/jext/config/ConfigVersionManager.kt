@@ -159,6 +159,35 @@ data class V1Disc(
     }
 }
 
+data class V2Disc(
+    @SerializedName("title")
+    var TITLE: String,
+
+    @SerializedName("author")
+    var AUTHOR: String,
+
+    @SerializedName("disc-namespace")
+    var DISC_NAMESPACE: String,
+
+    @SerializedName("model-data")
+    var MODEL_DATA: Int,
+
+    @SerializedName("creeper-drop")
+    var CREEPER_DROP: Boolean,
+
+    @SerializedName("lores")
+    var LORE: List<String>,
+
+    @SerializedName("loot-tables")
+    val LOOT_TABLES: List<String>?
+) {
+    companion object {
+        fun isOldConfig(jsonConfig: String) : Boolean {
+            return !jsonConfig.contains("duration") || !jsonConfig.contains("fragment-loot-tables")
+        }
+    }
+}
+
 class ConfigVersionManager {
     companion object {
         fun updateConfig(file: File, plugin: JavaPlugin) {
@@ -183,7 +212,13 @@ class ConfigVersionManager {
 
             if(V1Disc.isOldConfig(jsonConfig)) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] music disc format is old, you can update it by using the wiki\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/Configuring-manually#creating-discsjson§6]"
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
+                )
+            }
+
+            if(V2Disc.isOldConfig(jsonConfig)) {
+                Bukkit.getConsoleSender().sendMessage(
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
                 )
             }
         }

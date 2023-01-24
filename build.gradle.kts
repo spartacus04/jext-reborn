@@ -7,9 +7,9 @@ plugins {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://repo.dmulloy2.net/nexus/repository/public/") }
-    maven { url = uri("https://repo.maven.apache.org/maven2/") }
 }
 
 dependencies {
@@ -23,7 +23,7 @@ dependencies {
 group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-version = "0.7.2b"
+version = "1.0"
 
 tasks {
     shadowJar {

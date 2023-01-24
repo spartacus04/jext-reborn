@@ -2,6 +2,7 @@ package me.spartacus04.jext.disc
 
 import me.spartacus04.jext.Log
 import me.spartacus04.jext.SpigotVersion
+import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.Disc
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -17,6 +18,11 @@ class DiscContainer {
     var namespace: String
         private set
 
+    @SuppressWarnings
+    var duration: Int = -1
+        private set
+
+
     private var customModelData = 0
     private var creeperDrop = false
     private var lores: ArrayList<String>
@@ -31,6 +37,7 @@ class DiscContainer {
         customModelData = data.MODEL_DATA
         creeperDrop = data.CREEPER_DROP
         lores = data.LORE.toCollection(ArrayList())
+        duration = data.DURATION
     }
 
     constructor(disc: ItemStack) {
@@ -38,12 +45,13 @@ class DiscContainer {
             val meta = disc.itemMeta
             customModelData = meta!!.customModelData
 
-            lores = meta.lore?.let { ArrayList(it) }!!
-
             val helper = DiscPersistentDataContainer(meta)
             author = helper.author!!
             namespace = helper.namespaceID!!
             title = helper.title!!
+
+            lores = DISCS.find { it.DISC_NAMESPACE == namespace }?.LORE?.toCollection(ArrayList()) ?: ArrayList()
+            duration = DISCS.find { it.DISC_NAMESPACE == namespace }?.DURATION ?: -1
         } else {
             throw IllegalStateException("Custom disc identifier missing!")
         }
@@ -67,15 +75,40 @@ class DiscContainer {
             helper.title = title
             helper.setIdentifier()
 
-            // Lores and disc info
-            val lores = ArrayList<String?>()
-            lores.add(Log().gr(author).gr(" - ").gr(title).text())
-            lores.addAll(this.lores)
-
-            meta.lore = lores
+            meta.lore = getProcessedLores()
             disc.itemMeta = meta
             return disc
         }
+
+    val fragmentItem: ItemStack
+        get() {
+            val fragment = ItemStack(Material.DISC_FRAGMENT_5)
+            val meta = fragment.itemMeta
+
+            meta!!.setCustomModelData(customModelData)
+            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+
+            val helper = DiscPersistentDataContainer(meta)
+            helper.author = author
+            helper.namespaceID = namespace
+            helper.title = title
+            helper.setIdentifier()
+
+            val lores = getProcessedLores()
+
+            meta.lore = lores
+            fragment.itemMeta = meta
+
+            return fragment
+        }
+
+    fun getProcessedLores(): ArrayList<String> {
+        val lores = ArrayList<String>()
+        lores.add(Log().gr(author).gr(" - ").gr(title).text())
+        lores.addAll(this.lores)
+
+        return lores
+    }
 
     override fun toString(): String {
         return title
@@ -101,33 +134,35 @@ class DiscContainer {
     }
 
     companion object {
-        val SOUND_MAP = HashMap<Material, Sound>()
+        val SOUND_MAP = HashMap<Material, SoundData>()
 
         init {
-            SOUND_MAP[Material.MUSIC_DISC_11] = Sound.MUSIC_DISC_11
-            SOUND_MAP[Material.MUSIC_DISC_13] = Sound.MUSIC_DISC_13
-            SOUND_MAP[Material.MUSIC_DISC_BLOCKS] = Sound.MUSIC_DISC_BLOCKS
-            SOUND_MAP[Material.MUSIC_DISC_CAT] = Sound.MUSIC_DISC_CAT
-            SOUND_MAP[Material.MUSIC_DISC_CHIRP] = Sound.MUSIC_DISC_CHIRP
-            SOUND_MAP[Material.MUSIC_DISC_FAR] = Sound.MUSIC_DISC_FAR
-            SOUND_MAP[Material.MUSIC_DISC_MALL] = Sound.MUSIC_DISC_MALL
-            SOUND_MAP[Material.MUSIC_DISC_MELLOHI] = Sound.MUSIC_DISC_MELLOHI
-            SOUND_MAP[Material.MUSIC_DISC_STAL] = Sound.MUSIC_DISC_STAL
-            SOUND_MAP[Material.MUSIC_DISC_STRAD] = Sound.MUSIC_DISC_STRAD
-            SOUND_MAP[Material.MUSIC_DISC_WAIT] = Sound.MUSIC_DISC_WAIT
-            SOUND_MAP[Material.MUSIC_DISC_WARD] = Sound.MUSIC_DISC_WARD
+            SOUND_MAP[Material.MUSIC_DISC_11] = SoundData(Sound.MUSIC_DISC_11, 72)
+            SOUND_MAP[Material.MUSIC_DISC_13] = SoundData(Sound.MUSIC_DISC_13, 179)
+            SOUND_MAP[Material.MUSIC_DISC_BLOCKS] = SoundData(Sound.MUSIC_DISC_BLOCKS, 346)
+            SOUND_MAP[Material.MUSIC_DISC_CAT] = SoundData(Sound.MUSIC_DISC_CAT, 186)
+            SOUND_MAP[Material.MUSIC_DISC_CHIRP] = SoundData(Sound.MUSIC_DISC_CHIRP, 186)
+            SOUND_MAP[Material.MUSIC_DISC_FAR] = SoundData(Sound.MUSIC_DISC_FAR, 175)
+            SOUND_MAP[Material.MUSIC_DISC_MALL] = SoundData(Sound.MUSIC_DISC_MALL, 198)
+            SOUND_MAP[Material.MUSIC_DISC_MELLOHI] = SoundData(Sound.MUSIC_DISC_MELLOHI, 97)
+            SOUND_MAP[Material.MUSIC_DISC_STAL] = SoundData(Sound.MUSIC_DISC_STAL, 151)
+            SOUND_MAP[Material.MUSIC_DISC_STRAD] = SoundData(Sound.MUSIC_DISC_STRAD, 189)
+            SOUND_MAP[Material.MUSIC_DISC_WAIT] = SoundData(Sound.MUSIC_DISC_WAIT, 238)
+            SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 252)
 
             if(SpigotVersion.VERSION >= 16) {
-                SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = Sound.MUSIC_DISC_PIGSTEP
+                SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = SoundData(Sound.MUSIC_DISC_PIGSTEP, 149)
             }
 
             if(SpigotVersion.VERSION >= 18) {
-                SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = Sound.MUSIC_DISC_OTHERSIDE
+                SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 196)
             }
 
             if(SpigotVersion.VERSION >= 19) {
-                SOUND_MAP[Material.MUSIC_DISC_5] = Sound.MUSIC_DISC_5
+                SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 179)
             }
         }
+
+        data class SoundData(val sound: Sound, val duration: Int)
     }
 }

@@ -41,7 +41,7 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
             object : BukkitRunnable() {
                 override fun run() {
                     player.stopSound(
-                        DiscContainer.SOUND_MAP[container.material]!!,
+                        DiscContainer.SOUND_MAP[container.material]!!.sound,
                         SoundCategory.RECORDS
                     )
 

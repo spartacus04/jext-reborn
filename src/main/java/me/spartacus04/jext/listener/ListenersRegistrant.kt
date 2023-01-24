@@ -19,6 +19,8 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(CreeperDeathListener(), plugin)
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
+            pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
+            pluginManager.registerEvents(DiscUpdateEvent(), plugin)
         }
     }
 }
