@@ -1,48 +1,53 @@
 <script lang="ts">
-    import Content from './lib/Content.svelte';
-    import Header from './lib/Header.svelte';
-    import Popup from './lib/Popup.svelte';
+	import { Content, Popup, CSelect, Header } from '@lib';
 
-	import generate_btn from './assets/generate_btn.png';
+	import { generate_btn, spinner } from '@assets';
 
-    import type { songData } from './config';
-    import { generatePack } from './generator';
-	import CSelect from './lib/CSelect.svelte';
+  import { generatePack } from '@/generator';
+	import { discStore } from '@/store';
+
 
 	let packIcon : string;
 	let packName : string;
-	let useMono : boolean;
 
-	let discDataList : songData[] = [];
-
-	let popup = false;
+	let popup_active = false;
 	let type = 'Generate';
 
-	const showPopup = () => {
-		popup = true;
-	};
+	let can_generate = false;
 
-	const generate = () => {
-		generatePack(discDataList, packIcon, packName, useMono, type == 'Merge');
+	let is_generating = false;
+
+
+	discStore.subscribe(discs => {
+		can_generate = discs.every(disc => disc.texture != null) && discs.length > 0;
+	});
+
+	const generate = async () => {
+		if(is_generating) return;
+
+		is_generating = true;
+		await generatePack($discStore, packIcon, packName, type == 'Merge');
+		is_generating = false;
 	};
 </script>
 
 <main>
-	{#if popup}
-		<Popup text="Add at least a disc" bind:closePopup={popup}></Popup>
-	{/if}
+	<Popup text={$discStore.length > 0 ? 'Can\'t generate discs while adding one' : 'Add at least a disc'} bind:active={popup_active}></Popup>
 
-	<Header bind:packname={packName} bind:imagesrc={packIcon} bind:useMono={useMono}/>
+	<Header bind:packname={packName} bind:imagesrc={packIcon} />
 
-	<Content bind:discData={discDataList} />
+	<Content />
 
 	<div id="footer">
-		{#if discDataList.length > 0}
-			<div id="generate_button" style="background-image: url({generate_btn});" on:click={generate} on:keydown={null} />
+		{#if is_generating}
+			<div id="generate_button" style="background-image: url({generate_btn});">
+				<img src={spinner} alt="loading" height="32" width="32">
+			</div>
 		{:else}
-			<div id="generate_button" style="background-image: url({generate_btn});" class="grayscale" on:click={showPopup} on:keydown={null} />
+			<div id="generate_button" style:background-image="url({generate_btn})" class={can_generate ? '' : 'grayscale'} on:click={can_generate ? generate : () => popup_active = true} on:keydown={null} />
+			<CSelect options={['Generate', 'Merge']} bind:selected={type} />
 		{/if}
-		<CSelect options={['Generate', 'Merge']} bind:selected={type} />
+
 	</div>
 </main>
 
@@ -67,7 +72,7 @@
 			padding: 0.5em;
 
 			#generate_button {
-				
+
 				width: 256px;
 				height: 64px;
 				display: flex;

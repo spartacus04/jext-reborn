@@ -1,137 +1,110 @@
 <script lang="ts">
-    import Tooltip from './Tooltip.svelte';
-    import ImportPopup from './ImportPopup.svelte';
+	import { Tooltip, ImportPopup } from '@lib';
+	import { outline, inputFile } from '@ui';
 
-    import pack_icon from '../assets/pack_icon.png';
-    import { versions } from '../config';
-    import { versionStore } from '../store';
+	import { versions } from '@/config';
+	import { versionStore } from '@/store';
 
-    export let packname = 'your_pack_name';
-    export let imagesrc = pack_icon;
-    export let useMono = true;
+	import { pack_icon } from '@assets';
 
-    const updateImage = () => {
-        document.querySelector('#pack_icon_input')?.addEventListener('change', () => {
-            const files = (<HTMLInputElement>document.querySelector('#pack_icon_input')).files;
-            if(!files || files.length === 0) return;
 
-            const file = files[0];
-            const reader = new FileReader();
+	export let packname = 'your_pack_name';
+	export let imagesrc = pack_icon;
 
-            reader.onload = () => {
-                const image = new Image();
 
-                image.onload = () => {
-                    const canvas = document.createElement('canvas');
+	let import_popup_active = false;
 
-                    canvas.width = 64;
-                    canvas.height = 64;
 
-                    const ctx = canvas.getContext('2d');
+	const updateImage = (files : FileList) => {
+		if(!files || files.length === 0) return;
 
-                    ctx!.drawImage(image, 0, 0, 64, 64);
+		const file = files[0];
+		const reader = new FileReader();
 
-                    const dataURL = canvas.toDataURL('image/png');
+		reader.onload = () => {
+			const image = new Image();
 
-                    (<HTMLImageElement>document.querySelector('#pack_icon')).src = dataURL;
-                };
+			image.onload = () => {
+				const canvas = document.createElement('canvas');
 
-                imagesrc = image.src = <string>reader.result;
-            };
+				canvas.width = 64;
+				canvas.height = 64;
 
-            reader.readAsDataURL(file);
-        }, { once: true });
-    
-        (<HTMLInputElement>document.querySelector('#pack_icon_input')).click();
-    };
+				const ctx = canvas.getContext('2d');
 
-    const replaceText = () => {
-        packname = packname
-            .replace(' ', '_')
-            .replace(/[^a-zA-Z0-9_]/g, '')
-            .toLowerCase();
-    };
+				ctx!.drawImage(image, 0, 0, 64, 64);
 
-    const toggleMono = () => useMono = !useMono;
+				imagesrc = canvas.toDataURL('image/png');
+			};
 
-    let popup = false;
+			image.src = reader.result as string;
+		};
 
-    const showPopup = () => {
-        popup = true;
-    };
+		reader.readAsDataURL(file);
+	};
+
+	const replaceText = () => {
+		packname = packname
+			.replace(' ', '_')
+			.replace(/[^a-zA-Z0-9_]/g, '')
+			.toLowerCase();
+	};
 </script>
 
-{#if popup} 
-	<ImportPopup bind:closePopup={popup}/>
-{/if}
+<ImportPopup bind:active={import_popup_active}/>
 
 <div id="header">
-    <Tooltip text="Sets the resourcepack icon">
-        <img src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" on:click={updateImage} on:keypress={null}>
-    </Tooltip>
+	<Tooltip text="Sets the resourcepack icon">
+		<img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+	</Tooltip>
 
-    <input type="file" name="pack_icon" id="pack_icon_input" class="hidden" accept="image/png">
-    <input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
+	<input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
 
-    <select name="version" id="version_input" bind:value={$versionStore}>
-        {#each [...versions] as [key, value]}
-            <option value={key}>{value}</option>
-        {/each}
-    </select>
-
-    <Tooltip text="Mono: single audio channel but music fading<br>Stereo: multiple audio channels but no music fading" width="22em">
-        {#if useMono}
-            <button on:click={toggleMono}>Mono</button>
-        {:else}
-            <button on:click={toggleMono}>Stereo</button>
-        {/if}
-    </Tooltip>
+	<select name="version" id="version_input" bind:value={$versionStore}>
+		{#each [...versions] as [key, value]}
+			<option value={key}>{value}</option>
+		{/each}
+	</select>
 
 	<div id="import_container">
 		<Tooltip text="Import an existing resourcepack" right={false}>
-			<input type="button" name="import" id="pack_import" value="import" on:click={showPopup}>
+			<input type="button" name="import" id="pack_import" value="import" on:click={() => import_popup_active = true}>
 		</Tooltip>
 	</div>
 </div>
 
 <style lang="scss">
-    %textSettings {
-        border-radius: 0;
-        color: white;
-        font-size: 1.2em;
-        padding: 0.5em;
-        width: fit-content;
+	%textSettings {
+		border-radius: 0;
+		color: white;
+		font-size: 1.2em;
+		padding: 0.5em;
+		width: fit-content;
 
 		&:hover {
 			background-color: #404040;
 		}
-    }
+	}
 
-    #header {
-        display: flex;
-        align-items: center;
-        padding: 1em;
-        background-color: #202020;
+	#header {
+		display: flex;
+		align-items: center;
+		padding: 1em;
+		background-color: #202020;
 
-        #pack_icon {
-            cursor: pointer;
-        }
+		#pack_icon {
+			cursor: pointer;
+		}
 
-        #pack_name_input, select, #pack_import {
-            @extend %textSettings;
-            margin-left: 1em;
-            background-color: #303030;
-        }
+		#pack_name_input, select, #pack_import {
+			@extend %textSettings;
+			margin-left: 1em;
+			background-color: #303030;
+		}
 
 		#import_container {
 			justify-self: flex-end;
 			margin-left: auto;
 		}
-
-        button {
-            @extend #pack_name_input;
-            min-width: 5em;
-            text-align: center;
-        }
-    }
+	}
 </style>

@@ -1,19 +1,21 @@
 <script lang="ts">
-    import dirt from '../assets/dirt.png';
-
     import { fade } from 'svelte/transition';
 
-    export let text : string;
-    export let closePopup : boolean;
+    import { dirt } from '@assets';
 
-    const close = () => {
-        closePopup = false;
-    };
+
+    export let text : string;
+    export let active : boolean;
+
+
+	const close = () => active = false;
 </script>
 
-<div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
+{#if active}
+	<div class="popupbackground" style="background-image: url({dirt});" transition:fade on:click={close} on:keydown={null}></div>
+{/if}
 
-{#if closePopup}
+{#if active}
     <div class="popup">
         <div class="popupcontainer" id="messagepopupcontainer">{text}</div>
 
@@ -64,6 +66,10 @@
             padding: 0.5em 1em 0.5em 1em;
 
             transition: ease-in-out all 0.4s;
+
+			p {
+				margin: 0;
+			}
         }
 
         .popupconfirm:hover,

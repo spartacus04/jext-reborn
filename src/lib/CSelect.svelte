@@ -1,14 +1,14 @@
 <script lang="ts">
-	import Arrow from '../assets/arrow.png';
+	import { arrow } from '@assets';
 
 	export let options: string[];
 	export let selected = options[0];
 
+
 	let open = false;
 
-	const toggleMenu = () => {
-		open = !open;
-	};
+
+	const toggleMenu = () => open = !open;
 
 	const select = (ele : string) => {
 		selected = ele;
@@ -19,7 +19,7 @@
 {#if open}
 	<div id="openmenu">
 		{#each options as option}
-			<div class="selectopt" on:click={() => select(option)}  on:keydown={null}>{option}</div>
+			<div class="selectopt" on:click={() => select(option)} on:keydown={null}>{option}</div>
 		{/each}
 	</div>
 {/if}
@@ -30,7 +30,7 @@
 			{selected}
 		</div>
 		<div id="arrowcontainer" on:click={toggleMenu} on:keydown={null}>
-			<img src="{Arrow}" alt="🢓" id="arrow" class={open ? 'active' : ''}>
+			<img src={arrow} alt="🢓" id="arrow" class={open ? 'active' : ''}>
 		</div>
 	</div>
 </div>
@@ -118,7 +118,7 @@
 
 	.selectopt {
 		font-family: 'Minecraft';
-		
+
 		text-align: center;
 		font-family: 'minecraft';
 		color: white;
@@ -128,7 +128,7 @@
 		width: 216px;
 		height: 24px;
 		padding: 20px;
-		
+
 		background-color: #404040;
 		pointer-events: all;
 

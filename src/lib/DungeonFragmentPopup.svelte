@@ -3,19 +3,31 @@
 
 	import { DungeonElement } from '@lib';
 
+	import { outline, inputFile } from '@ui';
+
 	import { dungeons } from '@/config';
 	import { versionStore } from '@/store';
 
-	import { dirt } from '@assets';
+	import { default_fragment, dirt } from '@assets';
+	import Tooltip from './Tooltip.svelte';
 
 
-	export let selectedDungeons : string[] = [];
+	export let selectedDungeons : string[];
+	export let texture: Blob;
 	export let active = true;
 
 
 	const selectItem = (value : string) => {
 		if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
 		else selectedDungeons = [...selectedDungeons, value];
+	};
+
+	const setTexture = (files: FileList) => {
+		const file = files![0];
+
+		if (file) {
+			texture = file;
+		}
 	};
 
 	const close = () => active = false;
@@ -34,9 +46,21 @@
 				{/if}
 			{/each}
 		</div>
-		<div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
-			<div id="content">
-				<p id="generate_text" class="noselect">OK</p>
+
+		<div id="out">
+			<div>
+				<Tooltip text="Selects a texture for the disc fragment">
+					<img use:outline src={default_fragment} alt="fragment icon"
+						id="fragment_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: setTexture }}
+						on:keypress={null}
+					>
+				</Tooltip>
+			</div>
+
+			<div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
+				<div id="content">
+					<p id="generate_text" class="noselect">OK</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -75,12 +99,15 @@
 		}
 
 		.popupconfirm {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
 
 			cursor: pointer;
-			margin-top: 2em;
 			width: min-content;
 			font-size: 1vw;
 			border: 1px solid white;
@@ -115,5 +142,22 @@
 		transition: ease-in-out all 0.2s;
 
 		@extend %crisp;
+	}
+
+	#fragment_icon {
+		height: 96px;
+		width: 96px;
+		margin: 0.5em;
+		cursor: pointer;
+
+		background-color: #181818;
+		margin-top: 1em;
+		justify-self: flex-start;
+	}
+
+	#out {
+		width: 100%;
+		display: flex;
+		align-items: center;
 	}
 </style>
