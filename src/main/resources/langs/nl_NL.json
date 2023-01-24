@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Activeer bronpakket voor de muziek!",
   "failed-download-kick-message": "Downloaden van bronpakket mislukt, gelieve opnieuw aan te melden om het opnieuw te proberen.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fVerkrijgen%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc met naamruimte §6%namespace% §ccniet gevonden!",
   "disc-received": "§fOntvangen%disc% §fdisc!",
