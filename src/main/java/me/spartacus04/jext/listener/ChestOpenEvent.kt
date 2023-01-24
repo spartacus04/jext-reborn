@@ -77,12 +77,6 @@ internal class ChestOpenEvent : Listener {
 
         DISCS.forEach {
             it.LOOT_TABLES?.forEachIndexed { _, lootTable ->
-                val item = DiscContainer(it).discItem.type
-
-                if(item == Material.MUSIC_DISC_PIGSTEP && VERSION < 16) return@forEach
-                if(item == Material.MUSIC_DISC_OTHERSIDE && VERSION < 18) return@forEach
-                if(item == Material.MUSIC_DISC_5 && VERSION < 19) return@forEach
-
                 if (discsMap.containsKey(lootTable)) {
                     discsMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).discItem))
                 } else {
@@ -114,15 +108,6 @@ internal class ChestOpenEvent : Listener {
             }.toTypedArray()
         }
 
-        if(inventory.any { it != null && it.type.isRecordFragment }) {
-            inventory.storageContents = inventory.storageContents.map { itemstack ->
-                if(itemstack != null && itemstack.type.isRecordFragment) {
-                    ItemStack(Material.AIR)
-                } else {
-                    itemstack
-                }
-            }.toTypedArray()
-        }
 
         discsMap[key]?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
@@ -140,6 +125,18 @@ internal class ChestOpenEvent : Listener {
                     size--
                 }
             }
+        }
+
+        if(VERSION < 19) return
+
+        if(inventory.any { it != null && it.type.isRecordFragment }) {
+            inventory.storageContents = inventory.storageContents.map { itemstack ->
+                if(itemstack != null && itemstack.type.isRecordFragment) {
+                    ItemStack(Material.AIR)
+                } else {
+                    itemstack
+                }
+            }.toTypedArray()
         }
 
         discFragmentMap[key]?.forEach { chanceStack ->
