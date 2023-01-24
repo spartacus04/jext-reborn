@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Παρακαλώ ενεργοποιήστε το πακέτο πόρων για τη μουσική!",
   "failed-download-kick-message": "Η λήψη του πακέτου πόρων απέτυχε, παρακαλώ ξανασυνδεθείτε για να προσπαθήσετε ξανά.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fObtained §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc με namespace §6%namespace% §ccould not be found!",
   "disc-received": "§fΕλήφθησαν §d%disc% §fdisc!",

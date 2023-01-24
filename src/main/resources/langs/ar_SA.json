@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "الرجاء تمكين حزمة الموارد للموسيقى!",
   "failed-download-kick-message": "فشل تنزيل حزمة الموارد، يرجى إعادة الانضمام للمحاولة مرة أخرى.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fObObd%disc% §fdisc!",
   "disc-namespace-not-found": "§cdisc مع مساحة الاسم §6 لم يتم العثور على%namespace% §ccc!",
   "disc-received": "القسم المستلم%disc% §fdisc!",
