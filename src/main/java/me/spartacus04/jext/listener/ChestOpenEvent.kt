@@ -30,45 +30,51 @@ val Material.isRecordFragment: Boolean
 internal class ChestOpenEvent : Listener {
     data class ChanceStack(val chance: Int, val stack: ItemStack)
 
-    private val discFragmentMap = hashMapOf(
-        LootTables.ANCIENT_CITY.key.key to arrayListOf(
-            ChanceStack(298, ItemStack(Material.DISC_FRAGMENT_5)),
-        )
-    )
+    private val discFragmentMap = HashMap<String, ArrayList<ChanceStack>>()
 
     private val discsMap = hashMapOf(
         LootTables.SIMPLE_DUNGEON.key.key to arrayListOf(
             ChanceStack(215, ItemStack(Material.MUSIC_DISC_13)),
             ChanceStack(215, ItemStack(Material.MUSIC_DISC_CAT)),
-            ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
-        ),
-        LootTables.ANCIENT_CITY.key.key to arrayListOf(
-            ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
-            ChanceStack(161, ItemStack(Material.MUSIC_DISC_CAT)),
-            ChanceStack(81, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
         ),
         LootTables.WOODLAND_MANSION.key.key to arrayListOf(
             ChanceStack(218, ItemStack(Material.MUSIC_DISC_13)),
             ChanceStack(218, ItemStack(Material.MUSIC_DISC_CAT)),
         ),
-        LootTables.STRONGHOLD_CORRIDOR.key.key to arrayListOf(
-            ChanceStack(25, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
-        ),
-        LootTables.BASTION_TREASURE.key.key to arrayListOf(
-            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
-        ),
-        LootTables.BASTION_OTHER.key.key to arrayListOf(
-            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
-        ),
-        LootTables.BASTION_BRIDGE.key.key to arrayListOf(
-            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
-        ),
-        LootTables.BASTION_HOGLIN_STABLE.key.key to arrayListOf(
-            ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
-        ),
     )
 
     init {
+        if(VERSION >= 16) {
+            discsMap[LootTables.BASTION_TREASURE.key.key] = arrayListOf(
+                ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+            )
+            discsMap[LootTables.BASTION_OTHER.key.key] = arrayListOf(
+                ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+            )
+            discsMap[LootTables.BASTION_BRIDGE.key.key] = arrayListOf(
+                ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+            )
+            discsMap[LootTables.BASTION_HOGLIN_STABLE.key.key] = arrayListOf(
+                ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
+            )
+        }
+
+        if(VERSION >= 18) {
+            discsMap[LootTables.SIMPLE_DUNGEON.key.key]!!.add(ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE)))
+        }
+
+        if(VERSION >= 19) {
+            discsMap[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
+                ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
+                ChanceStack(161, ItemStack(Material.MUSIC_DISC_CAT)),
+                ChanceStack(81, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+            )
+
+            discFragmentMap[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
+                ChanceStack(298, ItemStack(Material.DISC_FRAGMENT_5)),
+            )
+        }
+
         DISCS.forEach {
             it.LOOT_TABLES?.forEachIndexed { _, lootTable ->
                 val item = DiscContainer(it).discItem.type

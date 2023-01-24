@@ -2,6 +2,7 @@ package me.spartacus04.jext.listener
 
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
+import me.spartacus04.jext.SpigotVersion.Companion.VERSION
 import org.bukkit.plugin.java.JavaPlugin
 
 class ListenersRegistrant private constructor() {
@@ -19,8 +20,11 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(CreeperDeathListener(), plugin)
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
-            pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
             pluginManager.registerEvents(DiscUpdateEvent(), plugin)
+
+            if(VERSION >= 19) {
+                pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
+            }
         }
     }
 }
