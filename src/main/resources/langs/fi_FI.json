@@ -4,6 +4,7 @@
   "resource-pack-decline-kick-message": "Ole hyvä ja ota musiikin resurssipaketti käyttöön!",
   "failed-download-kick-message": "Resurssipaketin lataaminen epäonnistui, liity uudelleen yrittääksesi uudelleen.",
   "jukebox": "§bJukebox",
+  "playing": "§9Playing",
   "disc-command-success": "§fSaatu §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cLevyä nimiavaruudella §6%namespace% §cc!",
   "disc-received": "§fVastaanotettu §d%disc% §fdisc!",
