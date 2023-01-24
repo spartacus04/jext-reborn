@@ -3,8 +3,9 @@
 
 	import { generate_btn, spinner } from '@assets';
 
-    import { generatePack } from '@/generator';
+  import { generatePack } from '@/generator';
 	import { discStore } from '@/store';
+
 
 	let packIcon : string;
 	let packName : string;
