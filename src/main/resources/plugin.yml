@@ -30,6 +30,14 @@ commands:
     description: Opens a player specific jukebox gui
     permission: jext.jukeboxgui
     usage: /jukeboxgui
+  fragment:
+    description: Gives the player a fragment
+    permission: jext.fragment
+    usage: /fragment [name]
+  fragmentgive:
+    description: Gives the player a fragment
+    permission: jext.fragment.give
+    usage: /fragmentgive [selector] [name]
   jext:
     description: Reloads the plugin
     permission: jext.reload
@@ -46,6 +54,9 @@ permissions:
       jext.stopmusic: true
       jext.jukeboxgui: true
       jext.reload: true
+      jext.fragment: true
+      jext.fragment.give: true
+      jext.notifyupdate: true
   jext.disc:
     description: Allows player to access all custom disc.
     default: op
@@ -69,4 +80,10 @@ permissions:
     default: op
   jext.jukeboxgui:
     description: Allows player to open the jukebox gui
+    default: op
+  jext.fragment:
+    description: Allows player to access all custom fragments
+    default: op
+  jext.fragment.give:
+    description: Allows player to give others custom fragments
     default: op
