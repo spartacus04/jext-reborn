@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "Будь ласка, увімкніть пакет ресурсів для музики!",
   "failed-download-kick-message": "Помилка завантаження пакета ресурсів. Будь ласка, приєднайтеся ще раз, щоб спробувати ще раз.",
   "jukebox": "§bПрогравач",
-  "playing": "§9Playing",
+  "playing": "§9Грає",
   "disc-command-success": "§ftained §d%disc% §fдиско!",
   "disc-namespace-not-found": "§cДиск з простором імен §6%namespace% §cне знайдено!",
   "disc-received": "§fReceived §d%disc% §fдиско!",
