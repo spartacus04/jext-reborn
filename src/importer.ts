@@ -103,10 +103,13 @@ const getLootTables = (arr: string[]) : string[] => {
 
 	arr.forEach((table) => {
 		// check if every element of dungeons contains table, if so, add it to lootTables
-		if (dungeons.every(dungeon => dungeon.source.includes(table))) {
-			if(!lootTables.includes(table)) {
-				lootTables.push(table);
-			}
+		console.log(dungeons[0].source.includes(table));
+		const selectedDungeon = dungeons.find(dungeon => dungeon.source.includes(table));
+
+		if(!selectedDungeon) return;
+
+		if(!lootTables.includes(selectedDungeon.source)) {
+			lootTables.push(selectedDungeon.source);
 		}
 	});
 

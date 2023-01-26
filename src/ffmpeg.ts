@@ -23,7 +23,7 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 
 			worker.postMessage({
 				audio: arrayBuffer,
-				args: ['-acodec', 'libvorbis'],
+				args: ['-vn', '-acodec', 'libvorbis'],
 			});
 		};
 	});
