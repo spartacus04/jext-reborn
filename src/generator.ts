@@ -97,11 +97,20 @@ export const generatePack = async (data: SongData[], icon : string, name : strin
 		models.file('disc_fragment_5.json', JSON.stringify(mfragment, null, 2));
 
 		// converts stereo to mono
-		await data.forEachParallel(async (disc) => {
-			if(disc.isMono && !disc.monoFile) {
-				disc.monoFile = await stereoToMono(disc.oggFile);
-			}
-		});
+
+		// run foreach into chunks of 4 to avoid too many ffmpeg processes
+
+		for(let i = 0; i < data.length; i += 4) {
+			const chunk = data.slice(i, i + 4);
+
+			await chunk.forEachParallel(async (disc) => {
+				if(disc.isMono && !disc.monoFile) {
+					disc.monoFile = await stereoToMono(disc.oggFile);
+				}
+			});
+
+			data.splice(i, 4, ...chunk);
+		}
 
 		// disc 11 texture, audio and model
 		for(let i = 0; i < data.length; i++) {

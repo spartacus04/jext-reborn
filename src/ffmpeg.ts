@@ -19,6 +19,7 @@ export const convertToOgg = async (file: File) : Promise<Blob> => {
 
 			worker.onmessage = (e) => {
 				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+				worker.terminate();
 			};
 
 			worker.postMessage({
@@ -44,6 +45,7 @@ export const normalize = async (blob: Blob) : Promise<Blob> => {
 
 			worker.onmessage = (e) => {
 				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+				worker.terminate();
 			};
 
 			worker.postMessage({ audio: arrayBuffer, args: ['-af', 'loudnorm'] });
@@ -66,6 +68,7 @@ export const stereoToMono = async (blob: Blob) : Promise<Blob> => {
 
 			worker.onmessage = (e) => {
 				resolve(new Blob([e.data], { type: 'audio/ogg' }));
+				worker.terminate();
 			};
 
 			worker.postMessage({ audio: arrayBuffer, args: ['-ac', '1'] });
