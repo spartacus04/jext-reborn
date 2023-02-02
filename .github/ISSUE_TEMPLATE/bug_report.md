@@ -24,8 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, upload the error logs (please use something like [pastebin](https://pastebin.com/)).
 
 **Enviroment (please complete the following information):**
- - Server type: [e.g. spigot, paper]
+ - Server type: [e.g. spigot, paper, purpur]
  - Version [e.g. 1.19]
+ - Java version: [e.g. openjdk 17.0.5 2022-10-18]
 
 **Additional context**
 Add any other context about the problem here.
