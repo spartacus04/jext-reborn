@@ -101,14 +101,9 @@ body:
       options:
         - label: >-
             I have searched the issue tracker and did not find an issue
-            describing my bug. *
+            describing my bug.
           required: true
         - label: >-
             I agree to the fact that if this issue becomes inactive it will be
-            closed
+            closed.
           required: true
-  - type: markdown
-    attributes:
-      value: >-
-        This template was generated with [Issue Forms
-        Creator](https://issue-forms-creator.netlify.app)
