@@ -17,7 +17,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.1")
 }
 
 group = "me.spartacus04.jext"
