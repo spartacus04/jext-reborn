@@ -1,9 +1,10 @@
 main: me.spartacus04.jext.Jext
 name: JukeboxExtendedReborn
-author: Tajam - Spartacus04
-version: 1.0.2
+authors: [Tajam, Spartacus04]
+version: 1.0.3
 api-version: 1.14
 depend: [ProtocolLib]
+prefix: JEXT
 
 commands:
   disc:

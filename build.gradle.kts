@@ -23,7 +23,7 @@ dependencies {
 group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-version = "1.0.2"
+version = "1.0.3"
 
 tasks {
     shadowJar {

@@ -182,9 +182,9 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
             if(loadedData.containsKey(id)) {
                 loadedData[jukeboxContainer.id] = loadedData[id]!!
                 loadedData.remove(id)
-            }
 
-            save(jukeboxContainer.plugin)
+                save(jukeboxContainer.plugin)
+            }
         }
     }
 }
