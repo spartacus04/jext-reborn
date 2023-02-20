@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 
-import { resizeImageBlob, stereoToMono, normalize } from '@/ffmpeg';
-import { saveAs } from '@/utils';
+import { stereoToMono, normalize } from '@/ffmpeg';
+import { saveAs, resizeImageBlob } from '@/utils';
 import type { Disc, SongData } from '@/config';
 import { versionStore } from '@/store';
 import { isMinecraftRP } from '@/importer';

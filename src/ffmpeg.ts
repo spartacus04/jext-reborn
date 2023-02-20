@@ -1,5 +1,4 @@
 import Worker from '@/worker?worker';
-import { dataURLToBlob } from '@/utils';
 
 export const convertToOgg = async (file: File) : Promise<Blob> => {
 	if(file.type == 'audio/ogg' || import.meta.env.DEV) {
@@ -72,27 +71,6 @@ export const stereoToMono = async (blob: Blob) : Promise<Blob> => {
 			};
 
 			worker.postMessage({ audio: arrayBuffer, args: ['-ac', '1'] });
-		};
-	});
-};
-
-export const resizeImageBlob = async (blob: Blob, width: number, height: number) : Promise<Blob> => {
-	return await new Promise((resolve) => {
-		const image = new Image();
-		image.src = URL.createObjectURL(blob);
-
-		image.onload = () => {
-			const canvas = document.createElement('canvas');
-			canvas.width = width;
-			canvas.height = height;
-
-			const ctx = canvas.getContext('2d');
-
-			ctx!.drawImage(image, 0, 0, width, height);
-
-			const dataURL = canvas.toDataURL('image/png');
-
-			resolve(dataURLToBlob(dataURL));
 		};
 	});
 };

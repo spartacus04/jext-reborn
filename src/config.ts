@@ -6,7 +6,7 @@ export const versions = new Map([
 	[8, '1.18 - 1.18.2'],
 	[9, '1.19 - 1.19.2'],
 	// skipped 10 because Mojang is weird
-	// [11, '22w42a - 22w44a'] Why generate for snapshots for older versions?
+	// [11, '22w42a - 22w44a'] Why generate for snapshots of older versions?
 	[12, '1.19.3'],
 ]);
 

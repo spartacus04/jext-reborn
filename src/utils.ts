@@ -25,6 +25,27 @@ export const saveAs = (blob: Blob, filename: string) => {
 	link.click();
 };
 
+export const resizeImageBlob = async (blob: Blob, width: number, height: number) : Promise<Blob> => {
+	return await new Promise((resolve) => {
+		const image = new Image();
+		image.src = URL.createObjectURL(blob);
+
+		image.onload = () => {
+			const canvas = document.createElement('canvas');
+			canvas.width = width;
+			canvas.height = height;
+
+			const ctx = canvas.getContext('2d');
+
+			ctx!.drawImage(image, 0, 0, width, height);
+
+			const dataURL = canvas.toDataURL('image/png');
+
+			resolve(dataURLToBlob(dataURL));
+		};
+	});
+};
+
 declare global {
 	interface Array<T> {
 		mapAsync<U>(callback: (value: T, index: number, array: T[]) => Promise<U>): Promise<U[]>;

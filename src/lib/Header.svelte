@@ -55,7 +55,7 @@
 
 <div id="header">
 	<Tooltip text="Sets the resourcepack icon">
-		<img use:outline src={pack_icon} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+		<img use:outline src={imagesrc} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
 	</Tooltip>
 
 	<input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
