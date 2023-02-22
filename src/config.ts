@@ -1,13 +1,13 @@
 export const versions = new Map([
 	[4, '1.14 - 1.14.4'],
 	[5, '1.15 - 1.16.1'],
-	[6, '1.16.2-1.16.5'],
+	[6, '1.16.2 - 1.16.5'],
 	[7, '1.17 - 1.17.1'],
 	[8, '1.18 - 1.18.2'],
 	[9, '1.19 - 1.19.2'],
 	// skipped 10 because Mojang is weird
 	// [11, '22w42a - 22w44a'] Why generate for snapshots of older versions?
-	[12, '1.19.3'],
+	[12, '1.19.3 - 1.19.4'],
 ]);
 
 export const dungeons : Dungeon[] = [
