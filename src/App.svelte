@@ -1,14 +1,10 @@
 <script lang="ts">
 	import { Content, Popup, CSelect, Header } from '@lib';
-
 	import { generate_btn, spinner } from '@assets';
 
-  import { generatePack } from '@/generator';
+	import { currentCount, generatePack, totalCount } from '@/generator';
 	import { discStore } from '@/store';
 
-
-	let packIcon : string;
-	let packName : string;
 
 	let popup_active = false;
 	let type = 'Generate';
@@ -26,7 +22,7 @@
 		if(is_generating) return;
 
 		is_generating = true;
-		await generatePack($discStore, packIcon, packName, type == 'Merge');
+		await generatePack(type == 'Merge');
 		is_generating = false;
 	};
 </script>
@@ -34,14 +30,17 @@
 <main>
 	<Popup text={$discStore.length > 0 ? 'Can\'t generate discs while adding one' : 'Add at least a disc'} bind:active={popup_active}></Popup>
 
-	<Header bind:packname={packName} bind:imagesrc={packIcon} />
+	<Header />
 
 	<Content />
 
 	<div id="footer">
 		{#if is_generating}
 			<div id="generate_button" style="background-image: url({generate_btn});">
-				<img src={spinner} alt="loading" height="32" width="32">
+				<img src={spinner} alt="loading" height="28" width="28">
+				<div id="progressbar">
+					<div id="progress" style:width="calc(100% / {$totalCount} * {$currentCount})"></div>
+				</div>
 			</div>
 		{:else}
 			<div id="generate_button" style:background-image="url({generate_btn})" class={can_generate ? '' : 'grayscale'} on:click={can_generate ? generate : () => popup_active = true} on:keydown={null} />
@@ -76,6 +75,7 @@
 				width: 256px;
 				height: 64px;
 				display: flex;
+				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 
@@ -91,5 +91,19 @@
 				}
 			}
 		}
+	}
+
+	#progressbar {
+		width: 100px;
+		height: 2px;
+		margin: 2px 0px 2px 0px;
+		background-color: #303030;
+		padding: 0;
+	}
+
+	#progress {
+		height: 100%;
+		background-color: white;
+		margin: 0;
 	}
 </style>

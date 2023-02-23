@@ -5,19 +5,6 @@ export const dataURLToBlob = (dataURL: string): Blob | PromiseLike<Blob> => {
 	});
 };
 
-const dataURLToArrayBuffer = (dataURL: string) : ArrayBuffer => {
-	const base64 = dataURL.split(',')[1];
-	const binary = window.atob(base64);
-	const arrayBuffer = new ArrayBuffer(binary.length);
-	const uint8Array = new Uint8Array(arrayBuffer);
-
-	for (let i = 0; i < binary.length; i++) {
-		uint8Array[i] = binary.charCodeAt(i);
-	}
-
-	return arrayBuffer;
-};
-
 export const saveAs = (blob: Blob, filename: string) => {
 	const link = document.createElement('a');
 	link.href = URL.createObjectURL(blob);
@@ -45,6 +32,34 @@ export const resizeImageBlob = async (blob: Blob, width: number, height: number)
 		};
 	});
 };
+
+export const getDuration = async (blob: Blob) : Promise<number> => {
+	return new Promise(resolve => {
+		const audio = document.createElement('audio');
+
+		audio.src = URL.createObjectURL(blob);
+
+		audio.onloadedmetadata = () => {
+			URL.revokeObjectURL(audio.src);
+			resolve(Math.ceil(audio.duration));
+		};
+	});
+};
+
+
+const dataURLToArrayBuffer = (dataURL: string) : ArrayBuffer => {
+	const base64 = dataURL.split(',')[1];
+	const binary = window.atob(base64);
+	const arrayBuffer = new ArrayBuffer(binary.length);
+	const uint8Array = new Uint8Array(arrayBuffer);
+
+	for (let i = 0; i < binary.length; i++) {
+		uint8Array[i] = binary.charCodeAt(i);
+	}
+
+	return arrayBuffer;
+};
+
 
 declare global {
 	interface Array<T> {

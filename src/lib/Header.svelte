@@ -3,13 +3,7 @@
 	import { outline, inputFile } from '@ui';
 
 	import { versions } from '@/config';
-	import { versionStore } from '@/store';
-
-	import { pack_icon } from '@assets';
-
-
-	export let packname = 'your_pack_name';
-	export let imagesrc = pack_icon;
+	import { versionStore, nameStore, iconStore } from '@/store';
 
 
 	let import_popup_active = false;
@@ -34,7 +28,7 @@
 
 				ctx!.drawImage(image, 0, 0, 64, 64);
 
-				imagesrc = canvas.toDataURL('image/png');
+				iconStore.set(canvas.toDataURL('image/png'));
 			};
 
 			image.src = reader.result as string;
@@ -44,10 +38,11 @@
 	};
 
 	const replaceText = () => {
-		packname = packname
+		nameStore.update(packName => packName
 			.replace(' ', '_')
 			.replace(/[^a-zA-Z0-9_]/g, '')
-			.toLowerCase();
+			.toLowerCase()
+		);
 	};
 </script>
 
@@ -55,10 +50,10 @@
 
 <div id="header">
 	<Tooltip text="Sets the resourcepack icon">
-		<img use:outline src={imagesrc} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+		<img use:outline src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
 	</Tooltip>
 
-	<input type="text" name="pack_name" id="pack_name_input" bind:value={packname} on:input={replaceText}>
+	<input type="text" name="pack_name" id="pack_name_input" bind:value={$nameStore} on:input={replaceText}>
 
 	<select name="version" id="version_input" bind:value={$versionStore}>
 		{#each [...versions] as [key, value]}
