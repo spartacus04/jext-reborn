@@ -46,6 +46,16 @@ export const getDuration = async (blob: Blob) : Promise<number> => {
 	});
 };
 
+export const mergeJson = (base: any, toMerge: any) : any => {
+	if(toMerge.overrides) {
+		base.overrides.push(...toMerge.overrides);
+
+		return base;
+	}
+
+	return Object.assign(base, toMerge);
+};
+
 
 const dataURLToArrayBuffer = (dataURL: string) : ArrayBuffer => {
 	const base64 = dataURL.split(',')[1];

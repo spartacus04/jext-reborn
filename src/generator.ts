@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import { writable } from 'svelte/store';
 
 import { stereoToMono, normalize } from '@/ffmpeg';
-import { saveAs, resizeImageBlob, getDuration } from '@/utils';
+import { saveAs, resizeImageBlob, getDuration, mergeJson } from '@/utils';
 import type { Disc, SongData } from '@/config';
 import { versionStore, iconStore, nameStore, discStore } from '@/store';
 import { isMinecraftRP } from '@/importer';
@@ -178,6 +178,7 @@ const generateResourcePack = async () : Promise<JSZip> => {
 	return rp;
 };
 
+// TODO: handle resourcepack merging
 const mergeResourcePack = async (rp : JSZip) : Promise<JSZip|string> => {
 	return await new Promise<JSZip>((resolve, reject) => {
 		const input = document.createElement('input');
@@ -190,21 +191,29 @@ const mergeResourcePack = async (rp : JSZip) : Promise<JSZip|string> => {
 
 			if(!(await isMinecraftRP(input.files[0]))) reject('The selected file is not a valid resource pack');
 
-			const ufile = input.files[0];
-			const zip = await JSZip.loadAsync(ufile);
+			const toMerge = await JSZip.loadAsync(input.files[0]);
 
-			await zip.forEach(async (path, nfile) => {
+			await toMerge.forEach(async (path, file) => {
 				if(path == 'pack.mcmeta') return;
 				if(path == 'pack.png') return;
 
-				if(nfile.dir) {
+				if(file.dir) {
 					if(!rp.folder(path)) rp.folder(path);
 				}
 				else if(!rp.file(path)) {
-					rp.file(path, await nfile.async('arraybuffer'));
+					rp.file(path, await file.async('arraybuffer'));
+				}
+				else if(path.endsWith('.json')) {
+					// merge json file
+					const base = JSON.parse(await rp.file(path)!.async('text'));
+					const newRp = JSON.parse(await file.async('text'));
+
+					const merged = mergeJson(base, newRp);
+
+					rp.file(path, JSON.stringify(merged, null, 2));
 				}
 				else {
-					reject('Cannot merge resource pack manually as there are conflicting files');
+					reject('Cannot merge resource pack manually as there are conflicting files that cannot be merged');
 				}
 			});
 
