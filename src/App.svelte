@@ -30,7 +30,7 @@
 <main>
 	<Popup text={$discStore.length > 0 ? 'Can\'t generate discs while adding one' : 'Add at least a disc'} bind:active={popup_active}></Popup>
 
-	<Header />
+	<Header canEdit={!is_generating}/>
 
 	<Content />
 

@@ -9,6 +9,9 @@
 	let import_popup_active = false;
 
 
+	export let canEdit = true;
+
+
 	const updateImage = (files : FileList) => {
 		if(!files || files.length === 0) return;
 
@@ -50,20 +53,40 @@
 
 <div id="header">
 	<Tooltip text="Sets the resourcepack icon">
-		<img use:outline src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+		{#if canEdit}
+			<img use:outline src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+		{:else}
+			<img src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" on:keypress={null}>
+		{/if}
 	</Tooltip>
 
-	<input type="text" name="pack_name" id="pack_name_input" bind:value={$nameStore} on:input={replaceText}>
+	{#if canEdit}
+		<input type="text" name="pack_name" id="pack_name_input" bind:value={$nameStore} on:input={replaceText}>
+	{:else}
+		<input type="text" name="pack_name" id="pack_name_input" bind:value={$nameStore} on:input={replaceText} readonly>
+	{/if}
 
 	<select name="version" id="version_input" bind:value={$versionStore}>
 		{#each [...versions] as [key, value]}
-			<option value={key}>{value}</option>
+			{#if canEdit}
+				<option value={key}>{value}</option>
+			{:else}
+				{#if key === $versionStore}
+					<option value={key}>{value}</option>
+				{:else}
+					<option value={key} disabled>{value}</option>
+				{/if}
+			{/if}
 		{/each}
 	</select>
 
 	<div id="import_container">
 		<Tooltip text="Import an existing resourcepack" right={false}>
-			<input type="button" name="import" id="pack_import" value="import" on:click={() => import_popup_active = true}>
+			{#if canEdit}
+				<input type="button" name="import" id="pack_import" value="import" on:click={() => import_popup_active = true}>
+			{:else}
+				<input type="button" name="import" id="pack_import" value="import">
+			{/if}
 		</Tooltip>
 	</div>
 </div>
