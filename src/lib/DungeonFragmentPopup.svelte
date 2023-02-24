@@ -3,7 +3,7 @@
 
 	import { DungeonElement } from '@lib';
 
-	import { outline, inputFile } from '@ui';
+	import { outline, inputFile, dropFile } from '@ui';
 
 	import { dungeons } from '@/config';
 	import { versionStore } from '@/store';
@@ -22,7 +22,7 @@
 		else selectedDungeons = [...selectedDungeons, value];
 	};
 
-	const setTexture = (files: FileList) => {
+	const setTexture = (files: File[]) => {
 		const file = files![0];
 
 		if (file) {
@@ -52,6 +52,7 @@
 				<Tooltip text="Selects a texture for the disc fragment">
 					<img use:outline src={default_fragment} alt="fragment icon"
 						id="fragment_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: setTexture }}
+						use:dropFile={{ accept: 'image/png', cb: setTexture }}
 						on:keypress={null}
 					>
 				</Tooltip>

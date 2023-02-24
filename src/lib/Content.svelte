@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Song } from '@lib';
-	import { inputFile } from '@ui';
+	import { dropFile, inputFile } from '@ui';
 
 	import { discStore } from '@/store';
 	import type { SongData } from '@/config';
 
 
-	const addSong = (files : FileList) => {
+	const addSong = (files : File[]) => {
 		if(!files || files.length === 0) return;
 
 		const tempDiscData : SongData[] = [];
@@ -43,7 +43,8 @@
 		{/each}
 	</div>
 	<hr class="hidden">
-	<div id="addsongsbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }} on:keydown={null}>
+	<div class="addsongsbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }}
+		use:dropFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }} on:keydown={null}>
 		<h1 class="noselect">+</h1>
 	</div>
 </div>
@@ -55,7 +56,7 @@
 		overflow-y: auto;
 		height: max-content;
 
-		#addsongsbtn {
+		.addsongsbtn {
 			background-color: #484848;
 			height: 64px;
 			margin: 0;

@@ -9,8 +9,18 @@ export const hoversrc = (e : HTMLImageElement, params: { src: string, hover: str
 		e.src = src;
 	};
 
+
 	mouseLeave();
+
 
 	e.addEventListener('mouseenter', mouseEnter);
 	e.addEventListener('mouseleave', mouseLeave);
+
+
+	return {
+		destroy() {
+			e.removeEventListener('mouseenter', mouseEnter);
+			e.removeEventListener('mouseleave', mouseLeave);
+		},
+	};
 };

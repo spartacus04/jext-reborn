@@ -7,10 +7,13 @@ export const outline = (e : HTMLElement, { width = '1px', color = 'white' } : {w
 		e.style.border = `${width} solid transparent`;
 	};
 
+
 	e.addEventListener('mouseenter', mouseEnter);
 	e.addEventListener('mouseleave', mouseLeave);
 
+
 	mouseLeave();
+
 
 	return {
 		destroy() {

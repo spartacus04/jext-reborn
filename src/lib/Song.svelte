@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Tooltip, DungeonPopup, DungeonFragmentPopup } from '@lib';
 
-	import { hoversrc, inputFile, outline, restartAnim } from '@ui';
+	import { dropFile, hoversrc, inputFile, outline, restartAnim } from '@ui';
 
 	import { convertToOgg } from '@/ffmpeg';
 	import type { SongData } from '@/config';
@@ -53,7 +53,7 @@
 	const prepareDiscPromise = prepareDisc();
 
 
-	const setTexture = (files: FileList) => {
+	const setTexture = (files: File[]) => {
 		const file = files![0];
 
 		if (file) {
@@ -77,6 +77,7 @@
 				<img use:outline id="disc_texture" src={URL.createObjectURL(song.texture)}
 					height="64" width="64" alt="disc icon"
 					use:inputFile={{ accept: 'image/*', cb: setTexture }} on:keydown={null}
+					use:dropFile={{ accept: 'image/*', cb: setTexture }}
 				>
 			</Tooltip>
 

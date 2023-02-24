@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Tooltip, ImportPopup } from '@lib';
-	import { outline, inputFile } from '@ui';
+	import { outline, inputFile, dropFile } from '@ui';
 
 	import { versions } from '@/config';
 	import { versionStore, nameStore, iconStore } from '@/store';
@@ -12,7 +12,7 @@
 	export let canEdit = true;
 
 
-	const updateImage = (files : FileList) => {
+	const updateImage = (files : File[]) => {
 		if(!files || files.length === 0) return;
 
 		const file = files[0];
@@ -54,7 +54,8 @@
 <div id="header">
 	<Tooltip text="Sets the resourcepack icon">
 		{#if canEdit}
-			<img use:outline src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
+			<img use:outline src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: updateImage }}
+				use:dropFile={{ accept: 'image/png', cb: updateImage }} on:keypress={null}>
 		{:else}
 			<img src={$iconStore} alt="pack icon" id="pack_icon" class="noselect" on:keypress={null}>
 		{/if}

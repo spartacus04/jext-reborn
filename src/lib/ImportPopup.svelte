@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import { inputFile } from '@ui';
+	import { dropFile, inputFile } from '@ui';
 
 	import { importResourcePack, isDiscsJson, isMinecraftRP } from '@/importer';
 
@@ -25,8 +25,9 @@
 	$: forbid = pack_status !== 'success' || disc_status !== 'success' ? 'forbid' : '';
 
 
-	const import_pack = async (files : FileList) => {
+	const import_pack = async (files : File[]) => {
 		if(!files || files.length === 0) return;
+		if(!files[0]) return;
 
 		const file = files[0];
 
@@ -43,8 +44,9 @@
 		pack_file = file;
 	};
 
-	const import_discs = async (files: FileList) => {
+	const import_discs = async (files: File[]) => {
 		if(!files || files.length === 0) return;
+		if(!files[0]) return;
 
 		const file = files[0];
 
@@ -79,12 +81,14 @@
 {#if active}
 	<div class="popup">
 		<div class="popupcontainer">
-			<div use:inputFile={{ accept: '.zip', cb: import_pack }} on:keydown={null} class={pack_status} in:fade>
+			<div use:inputFile={{ accept: '.zip', cb: import_pack }} on:keydown={null} class={pack_status}
+				use:dropFile={{ accept: '.zip', cb: import_pack }} in:fade>
 				<img src={pack_icon} alt="">
 				<p id="error">Not Valid</p>
 				<p>{pack_name}</p>
 			</div>
-			<div use:inputFile={{ accept: '.json', cb: import_discs }} on:keydown={null} class={disc_status} in:fade>
+			<div use:inputFile={{ accept: '.json', cb: import_discs }} on:keydown={null} class={disc_status}
+				use:dropFile={{ accept: '.json', cb: import_discs }} in:fade>
 				<input type="file" name="discs_input" id="discs_input" accept=".json">
 				<img src={default_disc} alt="">
 				<p id="error">Not Valid</p>
@@ -174,6 +178,10 @@
 					#error {
 						display: block;
 					}
+				}
+
+				&:hover {
+					background-color: #404040;
 				}
 			}
 		}
