@@ -100,7 +100,7 @@
 						>
 					</Tooltip>
 				{:else}
-					<Tooltip text="Not avaiable in versions lower than 1.19">
+					<Tooltip text="Not available in versions lower than 1.19">
 						<img use:outline id="loot_fragment_selector" src={fragment_icon}
 							alt="fragment icon" class="disabled"
 						>
