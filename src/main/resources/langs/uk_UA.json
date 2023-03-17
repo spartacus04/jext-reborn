@@ -1,6 +1,6 @@
 {
-  "now-playing": "§6Тепер грає: §a%author% §7- §6%title%",
-  "now-playing-no-author": "§6Тепер грає: §a%title%",
+  "now-playing": "§6Зараз відтворюється: §a%author% §7- §6%title%",
+  "now-playing-no-author": "§6Зараз відтворюється: §a%title% §- §6",
   "resource-pack-decline-kick-message": "Будь ласка, увімкніть пакет ресурсів для музики!",
   "failed-download-kick-message": "Помилка завантаження пакета ресурсів. Будь ласка, приєднайтеся ще раз, щоб спробувати ще раз.",
   "jukebox": "§bПрогравач",
