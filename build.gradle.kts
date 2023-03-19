@@ -28,7 +28,7 @@ version = "1.0.3"
 tasks {
     shadowJar {
         archiveFileName.set("${rootProject.name}_${project.version}.jar")
-        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.toLowerCase()}"
+        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.lowercase()}"
 
         relocate("kotlin", "${dependencyPackage}.kotlin")
         relocate("com/google/gson", "${dependencyPackage}.gson")
@@ -49,7 +49,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = rootProject.group.toString()
-            artifactId = rootProject.name.toLowerCase()
+            artifactId = rootProject.name.lowercase()
             version = rootProject.version.toString()
             from(components["java"])
         }
