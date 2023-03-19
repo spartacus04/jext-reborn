@@ -23,6 +23,7 @@ dependencies {
 group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 version = "1.0.3"
 
 tasks {
@@ -38,6 +39,15 @@ tasks {
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
         exclude("META-INF/**")
+    }
+}
+
+java {
+    val javaVersion = JavaVersion.toVersion(17)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if(JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
