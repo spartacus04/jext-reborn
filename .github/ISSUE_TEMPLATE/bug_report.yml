@@ -39,6 +39,7 @@ body:
       label: Server Version
       description: Select the server version
       options:
+        - 1.19.4
         - 1.19.3
         - 1.19.2
         - 1.19.1
@@ -79,6 +80,7 @@ body:
     id: JavaVersion
     attributes:
       label: Java Version
+    description: e.g. openjdk 18.0.1.1 2022-04-22
     validations:
       required: true
   - type: textarea
