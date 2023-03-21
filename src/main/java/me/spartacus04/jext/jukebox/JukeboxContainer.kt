@@ -129,6 +129,8 @@ class JukeboxContainer : Listener {
         if(e.isRightClick) {
             e.isCancelled = true
 
+            if(e.cursor == e.inventory.getItem(e.slot)) return
+
             return if(e.slot == dataContainer.slot) {
                 dataContainer.stopPlaying()
             } else {
@@ -137,6 +139,11 @@ class JukeboxContainer : Listener {
 
                 dataContainer.playDisc(e.slot, location)
             }
+        }
+
+        if(e.cursor?.type?.isRecord == true && e.currentItem != null) {
+            e.isCancelled = true
+            return
         }
 
         if(e.slot == dataContainer.slot) {
