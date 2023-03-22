@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
 
 class DiscLootTable {
     companion object {
-        val creeperDroppableDiscs: MutableList<ItemStack> = arrayListOf(
+        private val creeperDroppableDiscs: MutableList<ItemStack> = arrayListOf(
             ItemStack(Material.MUSIC_DISC_11),
             ItemStack(Material.MUSIC_DISC_13),
             ItemStack(Material.MUSIC_DISC_BLOCKS),

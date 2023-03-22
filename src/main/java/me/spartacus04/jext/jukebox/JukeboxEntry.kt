@@ -4,8 +4,11 @@ import de.tr7zw.nbtapi.NBT
 import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
+import me.spartacus04.jext.disc.DiscPlayer.Companion.plugin
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.block.Jukebox
 import org.bukkit.inventory.ItemStack
 
 data class JukeboxEntry(
@@ -16,12 +19,12 @@ data class JukeboxEntry(
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if(location.block.type == Material.JUKEBOX) {
-                NBT.modify(location.block.state) {
-                    it.setItemStack("RecordItem", DiscContainer(disc).discItem)
-                    it.setBoolean("IsPlaying", true)
-                }
-            }
+            // Due to a spigot bug the redstone parity is not enabled for jukebox guis
+            // if(location.block.type == Material.JUKEBOX) {
+            //     val jukebox = location.block.state as Jukebox
+            //
+            //    jukebox.setRecord(ItemStack(Material.MUSIC_DISC_11))
+            // }
 
             DiscPlayer(DiscContainer(disc)).play(location)
 
@@ -39,12 +42,12 @@ data class JukeboxEntry(
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if(location.block.type == Material.JUKEBOX) {
-                NBT.modify(location.block.state) {
-                    it.removeKey("RecordItem")
-                    it.setBoolean("IsPlaying", false)
-                }
-            }
+            // Due to a spigot bug the redstone parity is not enabled for jukebox guis
+            // if(location.block.type == Material.JUKEBOX) {
+            //     val jukebox = location.block.state as Jukebox
+            //
+            //    jukebox.setRecord(null)
+            // }
 
             DiscPlayer(DiscContainer(disc)).stop(location)
         } else {

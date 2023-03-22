@@ -1,9 +1,23 @@
 package me.spartacus04.jext.config
 
-class ConfigData {
-    companion object {
-        lateinit var CONFIG: Config
-        lateinit var DISCS: List<Disc>
-        lateinit var LANG: LanguageManager
-    }
-}
+import com.google.gson.annotations.SerializedName
+
+data class Config (
+    @SerializedName("lang")
+    var LANGUAGE_MODE: String,
+
+    @SerializedName("force-resource-pack")
+    var FORCE_RESOURCE_PACK : Boolean,
+
+    @SerializedName("ignore-failed-download")
+    var IGNORE_FAILED_DOWNLOAD : Boolean,
+
+    @SerializedName("allow-music-overlapping")
+    var ALLOW_MUSIC_OVERLAPPING : Boolean,
+
+    @SerializedName("allow-metrics")
+    var ALLOW_METRICS : Boolean,
+
+    @SerializedName("jukebox-gui")
+    var JUKEBOX_GUI : Boolean
+)
