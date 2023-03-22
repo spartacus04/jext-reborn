@@ -52,6 +52,13 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
                 player.stopSound(namespace!!, SoundCategory.RECORDS)
             }
         }
+
+        if(location.block.type != Material.JUKEBOX) return
+        if(MAJORVERSION < 19 || (MAJORVERSION == 19 && MINORVERSION < 4)) return
+
+        NBT.modify(location.block.state) {
+            it.setLong("TickCount", it.getLong("RecordStartTick") + 72 * 20)
+        }
     }
 
     companion object {

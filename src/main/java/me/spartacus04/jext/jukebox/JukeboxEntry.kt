@@ -1,5 +1,6 @@
 package me.spartacus04.jext.jukebox
 
+import de.tr7zw.nbtapi.NBT
 import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
@@ -14,6 +15,13 @@ data class JukeboxEntry(
     fun play(location: Location) : Long {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
+
+            if(location.block.type == Material.JUKEBOX) {
+                NBT.modify(location.block.state) {
+                    it.setItemStack("RecordItem", DiscContainer(disc).discItem)
+                    it.setBoolean("IsPlaying", true)
+                }
+            }
 
             DiscPlayer(DiscContainer(disc)).play(location)
 
@@ -30,6 +38,13 @@ data class JukeboxEntry(
     fun stop(location: Location) {
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
+
+            if(location.block.type == Material.JUKEBOX) {
+                NBT.modify(location.block.state) {
+                    it.removeKey("RecordItem")
+                    it.setBoolean("IsPlaying", false)
+                }
+            }
 
             DiscPlayer(DiscContainer(disc)).stop(location)
         } else {
