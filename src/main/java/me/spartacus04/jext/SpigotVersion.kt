@@ -5,15 +5,14 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class SpigotVersion private constructor() {
     companion object {
-        var VERSION = 0
+        var MAJORVERSION = 0
+        var MINORVERSION = 0
 
         fun load(plugin: JavaPlugin) {
-            val vers = plugin.server.javaClass.`package`.name.replace(".", ",").split(",".toRegex())
-                .dropLastWhile { it.isEmpty() }
-                .toTypedArray()[3]
+            val versionString = plugin.server.bukkitVersion.split("-")[0]
 
-            VERSION = vers.replace("1_", "").replace(Regex("_R\\d"), "").replace("v", "").toInt()
+            MAJORVERSION = versionString.split(".")[1].toInt()
+            MINORVERSION = versionString.split(".")[2].toInt()
         }
-
     }
 }

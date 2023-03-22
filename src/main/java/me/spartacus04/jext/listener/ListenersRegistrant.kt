@@ -2,7 +2,7 @@ package me.spartacus04.jext.listener
 
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
-import me.spartacus04.jext.SpigotVersion.Companion.VERSION
+import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
 import org.bukkit.plugin.java.JavaPlugin
 
 class ListenersRegistrant private constructor() {
@@ -22,7 +22,7 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
             pluginManager.registerEvents(DiscUpdateEvent(), plugin)
 
-            if(VERSION >= 19) {
+            if(MAJORVERSION >= 19) {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
             }
         }

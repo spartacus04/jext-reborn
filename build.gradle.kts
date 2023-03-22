@@ -11,15 +11,17 @@ repositories {
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     // maven { url = uri("https://repo.dmulloy2.net/nexus/repository/public/") }
     maven { url = uri("https://jitpack.io") }
+    maven { url = uri("https://repo.codemc.io/repository/maven-public/")}
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     //compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
     compileOnly("com.github.dmulloy2:ProtocolLib:4.8.0")
+    implementation("org.bstats:bstats-bukkit:3.0.1")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.11.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.bstats:bstats-bukkit:3.0.1")
 }
 
 group = "me.spartacus04.jext"
@@ -38,6 +40,8 @@ tasks {
         relocate("org/intellij/lang", "${dependencyPackage}.lang")
         relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
         relocate("org/bstats", "${dependencyPackage}.bstats")
+        relocate("de/tr7zw/nbtapi", "${dependencyPackage}.nbtapi")
+        relocate("de/tr7zw/nbtinjector", "${dependencyPackage}.nbtinjector")
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
         exclude("META-INF/**")

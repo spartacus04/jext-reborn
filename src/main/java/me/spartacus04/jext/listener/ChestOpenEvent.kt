@@ -1,6 +1,6 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.SpigotVersion.Companion.VERSION
+import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.Material
@@ -44,7 +44,7 @@ internal class ChestOpenEvent : Listener {
     )
 
     init {
-        if(VERSION >= 16) {
+        if(MAJORVERSION >= 16) {
             discsMap[LootTables.BASTION_TREASURE.key.key] = arrayListOf(
                 ChanceStack(56, ItemStack(Material.MUSIC_DISC_PIGSTEP)),
             )
@@ -59,11 +59,11 @@ internal class ChestOpenEvent : Listener {
             )
         }
 
-        if(VERSION >= 18) {
+        if(MAJORVERSION >= 18) {
             discsMap[LootTables.SIMPLE_DUNGEON.key.key]!!.add(ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE)))
         }
 
-        if(VERSION >= 19) {
+        if(MAJORVERSION >= 19) {
             discsMap[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
                 ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
                 ChanceStack(161, ItemStack(Material.MUSIC_DISC_CAT)),
@@ -85,7 +85,7 @@ internal class ChestOpenEvent : Listener {
             }
 
 
-            if(VERSION < 19) return@forEach
+            if(MAJORVERSION < 19) return@forEach
 
             it.FRAGMENT_LOOT_TABLES?.forEach { lootTable ->
                 if (discFragmentMap.containsKey(lootTable)) {
@@ -127,7 +127,7 @@ internal class ChestOpenEvent : Listener {
             }
         }
 
-        if(VERSION < 19) return
+        if(MAJORVERSION < 19) return
 
         if(inventory.any { it != null && it.type.isRecordFragment }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
