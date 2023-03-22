@@ -29,10 +29,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         val disc = ParameterDisc.getDisc(args[1])
         if (disc == null) {
-            sender.send(
-                LANG.format(sender, "disc-namespace-not-found")
-                    .replace("%namespace%", args[1])
-            )
+            LANG.format(sender, "disc-namespace-not-found")
+                .replace("%namespace%", args[1])
+                .let { sender.send(it) }
+
             return true
         }
 
@@ -43,10 +43,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             pitch = try {
                 args[2].toFloat()
             } catch (e: NumberFormatException) {
-                sender.send(
-                    LANG.format(sender, "wrong-number-format")
-                        .replace("%param%", "pitch")
-                )
+                LANG.format(sender, "wrong-number-format")
+                    .replace("%param%", "pitch")
+                    .let { sender.send(it) }
+
                 return true
             }
         }
@@ -61,10 +61,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 discPlayer.setPitch(pitch)
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                sender.send(
-                    LANG.format(sender, "wrong-number-format")
-                        .replace("%param%", "volume")
-                )
+                LANG.format(sender, "wrong-number-format")
+                    .replace("%param%", "volume")
+                    .let { sender.send(it) }
+
                 return true
             }
         }
@@ -72,10 +72,10 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         for (player in players) {
             if (isMusic) {
                 player.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
-                player.send(
-                    LANG.format(sender, "music-now-playing")
-                        .replace("%name%", disc.TITLE)
-                )
+                LANG.format(sender, "music-now-playing")
+                    .replace("%name%", disc.TITLE)
+                    .let { sender.send(it) }
+
             } else {
                 discPlayer.play(player.location)
             }
@@ -84,21 +84,18 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            sender.send(
-                LANG.format(sender, "played-music-to-multiple")
-                    .replace("%name%", disc.TITLE)
-                    .replace("%playercount%", playerCount.toString())
-            )
+            LANG.format(sender, "played-music-to-multiple")
+                .replace("%name%", disc.TITLE)
+                .replace("%playercount%", playerCount.toString())
+                .let { sender.send(it) }
         } else if (playerCount == 1) {
-            sender.send(
-                LANG.format(sender, "played-music-to")
-                    .replace("%name%", disc.TITLE)
-                    .replace("%player%", players[0].name)
-            )
+            LANG.format(sender, "played-music-to")
+                .replace("%name%", disc.TITLE)
+                .replace("%player%", players[0].name)
+                .let { sender.send(it) }
         } else {
-            sender.send(
-                LANG.format(sender, "played-music-to-no-one")
-            )
+            LANG.format(sender, "played-music-to-no-one")
+                .let { sender.send(it) }
         }
 
         return true

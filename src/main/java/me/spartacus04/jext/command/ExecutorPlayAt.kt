@@ -20,19 +20,19 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
         val location = try {
             ParameterLocation.parseLocation(args[1], args[2], args[3], sender)
         } catch (e: NumberFormatException) {
-            sender.send(
-                LANG.format(sender, "invalid-location")
-            )
+            LANG.format(sender, "invalid-location")
+                .let { sender.send(it) }
+
             return true
         }
 
         val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
-            sender.send(
-                LANG.format(sender, "disc-namespace-not-found")
-                    .replace("%namespace%", args[0])
-            )
+            LANG.format(sender, "disc-namespace-not-found")
+                .replace("%namespace%", args[0])
+                .let { sender.send(it) }
+
             return true
         }
 
@@ -43,10 +43,10 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val pitch = args[4].toFloat()
                 discPlayer.setPitch(pitch)
             } catch (e: NumberFormatException) {
-                sender.send(
-                    LANG.format(sender, "wrong-number-format")
-                        .replace("%param%", "pitch")
-                )
+                LANG.format(sender, "wrong-number-format")
+                    .replace("%param%", "pitch")
+                    .let { sender.send(it) }
+
                 return true
             }
         }
@@ -56,10 +56,10 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val volume = args[5].toFloat()
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                sender.send(
-                    LANG.format(sender, "wrong-number-format")
-                        .replace("%param%", "volume")
-                )
+                LANG.format(sender, "wrong-number-format")
+                    .replace("%param%", "volume")
+                    .let { sender.send(it) }
+
                 return true
             }
         }

@@ -33,10 +33,10 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
             val disc = ParameterDisc.getDisc(args[1])
 
             if (disc == null) {
-                sender.send(
-                    LANG.format(sender, "disc-namespace-not-found")
-                        .replace("%namespace%", args[1])
-                )
+                LANG.format(sender, "disc-namespace-not-found")
+                    .replace("%namespace%", args[1])
+                    .let { sender.send(it) }
+
                 return true
             }
 
@@ -51,36 +51,31 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
 
                 player.stopSound(namespace, SoundCategory.RECORDS)
                 if (namespaces.size == 1) {
-                    player.send(
-                        LANG.format(sender, "stopped-music")
-                            .replace("%name%", DISCS.find { it.DISC_NAMESPACE == namespace }!!.TITLE)
-                    )
+                    LANG.format(sender, "stopped-music")
+                        .replace("%name%", DISCS.find { it.DISC_NAMESPACE == namespace }!!.TITLE)
+                        .let { sender.send(it) }
                 }
             }
 
             if (namespaces.size > 1) {
-                player.send(
-                    LANG.format(sender, "stopped-all-music")
-                )
+                LANG.format(sender, "stopped-all-music")
+                    .let { sender.send(it) }
             }
         }
 
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            sender.send(
-                LANG.format(sender, "stopped-music-for-multiple")
-                    .replace("%playercount%", playerCount.toString())
-            )
+            LANG.format(sender, "stopped-music-for-multiple")
+                .replace("%playercount%", playerCount.toString())
+                .let { sender.send(it) }
         } else if (playerCount == 1) {
-            sender.send(
-                LANG.format(sender, "stopped-music-for")
-                    .replace("%player%", players[0].name)
-            )
+            LANG.format(sender, "stopped-music-for")
+                .replace("%player%", players[0].name)
+                .let { sender.send(it) }
         } else {
-            sender.send(
-                LANG.format(sender, "stopped-music-for-no-one")
-            )
+            LANG.format(sender, "stopped-music-for-no-one")
+                .let { sender.send(it) }
         }
 
         return true

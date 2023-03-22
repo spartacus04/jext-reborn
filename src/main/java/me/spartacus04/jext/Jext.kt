@@ -5,16 +5,18 @@ import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.config.ConfigManager
 import me.spartacus04.jext.config.LanguageManager
+import me.spartacus04.jext.config.send
 import me.spartacus04.jext.listener.ListenersRegistrant
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 class Jext : JavaPlugin() {
     override fun onEnable() {
         try {
             load()
-            ENABLED_MESSAGE.send()
+            Bukkit.getConsoleSender().sendMessage(ENABLED_MESSAGE)
         } catch (e: Exception) {
             e.printStackTrace()
             server.pluginManager.disablePlugin(this)
@@ -22,7 +24,7 @@ class Jext : JavaPlugin() {
     }
 
     override fun onDisable() {
-        DISABLED_MESSAGE.send()
+        Bukkit.getConsoleSender().sendMessage(DISABLED_MESSAGE)
     }
 
     private fun load() {
@@ -34,9 +36,7 @@ class Jext : JavaPlugin() {
 
         // Loads configuration
         if(!ConfigManager.load(this)) {
-            Bukkit.getConsoleSender().sendMessage(
-                "[§aJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
-            )
+            Bukkit.getConsoleSender().sendMessage(DISCS_NOT_FOUND)
 
             return server.pluginManager.disablePlugin(this)
         }
@@ -52,9 +52,7 @@ class Jext : JavaPlugin() {
 
         Updater(this, 103219).getVersion {
             if(it != description.version) {
-                Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] A new update is available!\n§6[§2https://www.spigotmc.org/resources/jukebox-extended-reborn.103219/§6]"
-                )
+                Bukkit.getConsoleSender().sendMessage(UPDATE_DETECTED)
             }
         }
 
@@ -65,7 +63,10 @@ class Jext : JavaPlugin() {
     }
 
     companion object {
-        private val ENABLED_MESSAGE = Log().okay().t("Enabled Jukebox Extender Reborn, Do Re Mi!")
-        private val DISABLED_MESSAGE = Log().warn().t("Disabled Jukebox Extender Reborn, Mi Re Do!")
+        private const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extender Reborn, Do Re Mi!"
+        private const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extender Reborn, Mi Re Do!"
+
+        private const val DISCS_NOT_FOUND = "[§cJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
+        private const val UPDATE_DETECTED = "[§aJEXT§f] A new update is available!\n§6[§2https://www.spigotmc.org/resources/jukebox-extended-reborn.103219/§6]"
     }
 }

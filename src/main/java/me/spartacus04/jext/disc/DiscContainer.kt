@@ -1,9 +1,9 @@
 package me.spartacus04.jext.disc
 
-import me.spartacus04.jext.Log
 import me.spartacus04.jext.SpigotVersion
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.Disc
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.inventory.ItemFlag
@@ -104,7 +104,7 @@ class DiscContainer {
 
     fun getProcessedLores(): ArrayList<String> {
         val lores = ArrayList<String>()
-        lores.add(Log().gr(author).gr(" - ").gr(title).text())
+        lores.add("${ChatColor.GRAY}$author - $title")
         lores.addAll(this.lores)
 
         return lores
