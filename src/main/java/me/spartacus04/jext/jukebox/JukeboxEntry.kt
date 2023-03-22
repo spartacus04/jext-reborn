@@ -1,32 +1,48 @@
 package me.spartacus04.jext.jukebox
 
 import de.tr7zw.nbtapi.NBT
+import me.spartacus04.jext.SpigotVersion
+import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
+import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
-import me.spartacus04.jext.disc.DiscPlayer.Companion.plugin
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Jukebox
 import org.bukkit.inventory.ItemStack
+import org.bukkit.plugin.java.JavaPlugin
 
 data class JukeboxEntry(
     var type: String,
     var value: String
 ) {
-    fun play(location: Location) : Long {
+    fun play(location: Location, plugin: JavaPlugin) : Long {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            // Due to a spigot bug the redstone parity is not enabled for jukebox guis
-            // if(location.block.type == Material.JUKEBOX) {
-            //     val jukebox = location.block.state as Jukebox
-            //
-            //    jukebox.setRecord(ItemStack(Material.MUSIC_DISC_11))
-            // }
+            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+                try {
+                    if (location.block.type == Material.JUKEBOX) {
+                        val jukebox = location.block.state as Jukebox
 
-            DiscPlayer(DiscContainer(disc)).play(location)
+                        jukebox.setRecord(DiscContainer(disc).discItem)
+
+                        NBT.modify(jukebox) {
+                            it.setBoolean("IsPlaying", true)
+                        }
+
+                        jukebox.update()
+                    }
+                } catch (e: NullPointerException) {
+                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
+                }
+            }
+
+            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+                DiscPlayer(DiscContainer(disc)).play(location)
+            }, 1)
 
             disc.DURATION
         } else {
@@ -38,18 +54,27 @@ data class JukeboxEntry(
         }.toLong()
     }
 
-    fun stop(location: Location) {
+    fun stop(location: Location, plugin: JavaPlugin) {
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            // Due to a spigot bug the redstone parity is not enabled for jukebox guis
-            // if(location.block.type == Material.JUKEBOX) {
-            //     val jukebox = location.block.state as Jukebox
-            //
-            //    jukebox.setRecord(null)
-            // }
+            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+                try {
+                    if (location.block.type == Material.JUKEBOX) {
+                        val jukebox = location.block.state as Jukebox
 
-            DiscPlayer(DiscContainer(disc)).stop(location)
+                        //FIXME: This is not emptying the jukebox
+                        jukebox.setRecord(null)
+                        jukebox.update(true)
+                    }
+                } catch (e: NullPointerException) {
+                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
+                }
+            }
+
+            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+                DiscPlayer(DiscContainer(disc)).stop(location)
+            }, 1)
         } else {
             val material = Material.matchMaterial(value) ?: return
 

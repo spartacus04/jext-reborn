@@ -66,18 +66,19 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
 
         refresh()
 
-        val duration = loadedData[id]!![slot]!!.play(location)
+        val duration = loadedData[id]!![slot]!!.play(location, plugin)
         playing = loadedData[id]!![slot]!!
 
         if(duration.toInt() == 0) return
 
+        // FIXME: Music stopping earlier than it should
         Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying() }, duration * 20)
     }
 
     fun stopPlaying() {
         if (playing == null || location == null) return
 
-        playing!!.stop(location!!)
+        playing!!.stop(location!!, plugin)
 
         slot = -1
         location = null

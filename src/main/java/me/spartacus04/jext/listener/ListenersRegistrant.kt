@@ -3,6 +3,7 @@ package me.spartacus04.jext.listener
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
 import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
+import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import org.bukkit.plugin.java.JavaPlugin
 
 class ListenersRegistrant private constructor() {
@@ -24,6 +25,10 @@ class ListenersRegistrant private constructor() {
 
             if(MAJORVERSION >= 19) {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
+            }
+
+            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+                pluginManager.registerEvents(InventoryMoveItemEvent(), plugin)
             }
         }
     }
