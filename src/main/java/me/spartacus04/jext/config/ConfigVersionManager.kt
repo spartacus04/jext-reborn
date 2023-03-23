@@ -212,13 +212,13 @@ class ConfigVersionManager {
 
             if(V1Disc.isOldConfig(jsonConfig)) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]\n[§aJEXT§f] §aBecause of this the plugin will not work properly in versions >= 1.19.4"
                 )
             }
 
             if(V2Disc.isOldConfig(jsonConfig)) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]\n[§aJEXT§f] §aBecause of this the plugin will not work properly in versions >= 1.19.4"
                 )
             }
         }
