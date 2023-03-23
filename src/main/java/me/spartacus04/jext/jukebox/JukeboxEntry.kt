@@ -1,7 +1,6 @@
 package me.spartacus04.jext.jukebox
 
 import de.tr7zw.nbtapi.NBT
-import me.spartacus04.jext.SpigotVersion
 import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
 import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import me.spartacus04.jext.config.ConfigData
@@ -33,7 +32,7 @@ data class JukeboxEntry(
                             it.setBoolean("IsPlaying", true)
                         }
 
-                        jukebox.update()
+                        jukebox.update(true)
                     }
                 } catch (e: NullPointerException) {
                     Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
@@ -63,7 +62,10 @@ data class JukeboxEntry(
                     if (location.block.type == Material.JUKEBOX) {
                         val jukebox = location.block.state as Jukebox
 
-                        //FIXME: This is not emptying the jukebox
+                        NBT.modify(jukebox) {
+                            it.setBoolean("IsPlaying", false)
+                        }
+
                         jukebox.setRecord(null)
                         jukebox.update(true)
                     }
@@ -74,7 +76,7 @@ data class JukeboxEntry(
 
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {
                 DiscPlayer(DiscContainer(disc)).stop(location)
-            }, 1)
+            }, 1L)
         } else {
             val material = Material.matchMaterial(value) ?: return
 
