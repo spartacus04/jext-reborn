@@ -17,31 +17,11 @@ data class JukeboxEntry(
     var type: String,
     var value: String
 ) {
-    fun play(location: Location, plugin: JavaPlugin) : Long {
+    fun play(location: Location) : Long {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
-                try {
-                    if (location.block.type == Material.JUKEBOX) {
-                        val jukebox = location.block.state as Jukebox
-
-                        jukebox.setRecord(DiscContainer(disc).discItem)
-
-                        NBT.modify(jukebox) {
-                            it.setBoolean("IsPlaying", true)
-                        }
-
-                        jukebox.update(true)
-                    }
-                } catch (e: NullPointerException) {
-                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
-                }
-            }
-
-            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-                DiscPlayer(DiscContainer(disc)).play(location)
-            }, 1)
+            DiscPlayer(DiscContainer(disc)).play(location)
 
             disc.DURATION
         } else {
@@ -53,28 +33,11 @@ data class JukeboxEntry(
         }.toLong()
     }
 
-    fun stop(location: Location, plugin: JavaPlugin) {
+    fun stop(location: Location) {
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
-                try {
-                    if (location.block.type == Material.JUKEBOX) {
-                        val jukebox = location.block.state as Jukebox
-
-                        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-                            jukebox.inventory.clear()
-                            jukebox.update(true)
-                        }, 1L)
-                    }
-                } catch (e: NullPointerException) {
-                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
-                }
-            }
-
-            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-                DiscPlayer(DiscContainer(disc)).stop(location)
-            }, 1)
+            DiscPlayer(DiscContainer(disc)).stop(location)
         } else {
             val material = Material.matchMaterial(value) ?: return
 

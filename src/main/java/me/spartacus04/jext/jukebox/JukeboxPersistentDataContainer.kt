@@ -66,7 +66,7 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
 
         refresh()
 
-        val duration = loadedData[id]!![slot]!!.play(location, plugin)
+        val duration = loadedData[id]!![slot]!!.play(location)
         playing = loadedData[id]!![slot]!!
 
         if(duration.toInt() == 0) return
@@ -77,7 +77,7 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
     fun stopPlaying() {
         if (playing == null || location == null) return
 
-        playing!!.stop(location!!, plugin)
+        playing!!.stop(location!!)
 
         slot = -1
         location = null
