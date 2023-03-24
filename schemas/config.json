@@ -94,6 +94,6 @@
     "allow-metrics",
     "jukebox-gui",
     "disc-loottables-limit",
-    "fragment-loottables-limit",
+    "fragment-loottables-limit"
   ]
 }
