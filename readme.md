@@ -33,3 +33,9 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 ## Integrations
 
 [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.
+
+## Known Incompatibilities
+
+### GeyserMC
+
+Due to some parity issues Bedrock Edition doesn't support custom sounds, and as such working on a GeyserMC integration would be useless.
