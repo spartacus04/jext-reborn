@@ -62,12 +62,10 @@ data class JukeboxEntry(
                     if (location.block.type == Material.JUKEBOX) {
                         val jukebox = location.block.state as Jukebox
 
-                        NBT.modify(jukebox) {
-                            it.setBoolean("IsPlaying", false)
-                        }
-
-                        jukebox.setRecord(null)
-                        jukebox.update(true)
+                        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+                            jukebox.inventory.clear()
+                            jukebox.update(true)
+                        }, 1L)
                     }
                 } catch (e: NullPointerException) {
                     Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cRedstone parity is disabled due to a Spigot bug. Please update Spigot.")
@@ -76,7 +74,7 @@ data class JukeboxEntry(
 
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {
                 DiscPlayer(DiscContainer(disc)).stop(location)
-            }, 1L)
+            }, 1)
         } else {
             val material = Material.matchMaterial(value) ?: return
 
