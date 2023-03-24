@@ -48,6 +48,10 @@ class JukeboxContainer : Listener {
 
         refresh()
 
+        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+            refresh()
+        }, 1)
+
         Bukkit.getPluginManager().registerEvents(this, plugin)
     }
 
@@ -68,7 +72,7 @@ class JukeboxContainer : Listener {
             if(item != null) {
                 item.addUnsafeEnchantment(org.bukkit.enchantments.Enchantment.MENDING, 1)
 
-                item.itemMeta?.run {
+                item.itemMeta = item.itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
