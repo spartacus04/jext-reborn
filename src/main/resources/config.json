@@ -21,12 +21,12 @@
   // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)
   "jukebox-gui": false,
 
-  // Sets disc limit for loottables
+  // Sets disc limit per loottable
   "disc-loottables-limit": {
     "chests/*": 2
   },
 
-  // Sets fragment limit for loottables
+  // Sets fragment limit per loottable
   "fragment-loottables-limit": {
     "chests/*": 4
   }
