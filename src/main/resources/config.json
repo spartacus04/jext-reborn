@@ -19,5 +19,15 @@
   "allow-metrics": true,
 
   // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)
-  "jukebox-gui": false
+  "jukebox-gui": false,
+
+  // Sets disc limit for loottables
+  "disc-loottables-limit": {
+    "chests/*": 2
+  },
+
+  // Sets fragment limit for loottables
+  "fragment-loottables-limit": {
+    "chests/*": 4
+  }
 }
