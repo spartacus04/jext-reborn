@@ -21,6 +21,11 @@
     "jukebox-gui": {
       "type": "boolean"
     },
+    "discs-random-chance": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
     "disc-loottables-limit": {
       "type": "object",
       "discs/*": { "type": "integer" },
@@ -52,6 +57,11 @@
       "chests/abandoned_mineshaft": { "type": "integer" },
       "chests/simple_dungeon": { "type": "integer" },
       "chests/pillager_outpost": { "type": "integer" }
+    },
+    "fragments-random-chance": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
     },
     "fragment-lottables-limit": {
       "type": "object",

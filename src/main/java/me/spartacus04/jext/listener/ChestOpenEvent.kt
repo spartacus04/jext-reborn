@@ -1,6 +1,7 @@
 package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
+import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.Material
@@ -78,9 +79,9 @@ internal class ChestOpenEvent : Listener {
         DISCS.forEach {
             it.LOOT_TABLES?.forEachIndexed { _, lootTable ->
                 if (discsMap.containsKey(lootTable)) {
-                    discsMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).discItem))
+                    discsMap[lootTable]!!.add(ChanceStack(CONFIG.DISCS_RANDOM_CHANCE, DiscContainer(it).discItem))
                 } else {
-                    discsMap[lootTable] = arrayListOf(ChanceStack(200, DiscContainer(it).discItem))
+                    discsMap[lootTable] = arrayListOf(ChanceStack(CONFIG.DISCS_RANDOM_CHANCE, DiscContainer(it).discItem))
                 }
             }
 
@@ -89,9 +90,9 @@ internal class ChestOpenEvent : Listener {
 
             it.FRAGMENT_LOOT_TABLES?.forEach { lootTable ->
                 if (discFragmentMap.containsKey(lootTable)) {
-                    discFragmentMap[lootTable]!!.add(ChanceStack(200, DiscContainer(it).fragmentItem))
+                    discFragmentMap[lootTable]!!.add(ChanceStack(CONFIG.FRAGMENTS_RANDOM_CHANCE, DiscContainer(it).fragmentItem))
                 } else {
-                    discFragmentMap[lootTable] = arrayListOf(ChanceStack(200, DiscContainer(it).fragmentItem))
+                    discFragmentMap[lootTable] = arrayListOf(ChanceStack(CONFIG.FRAGMENTS_RANDOM_CHANCE, DiscContainer(it).fragmentItem))
                 }
             }
         }
@@ -108,17 +109,23 @@ internal class ChestOpenEvent : Listener {
             }.toTypedArray()
         }
 
+        val discMaxAmount = if(CONFIG.DISC_LIMIT.containsKey(key)) CONFIG.DISC_LIMIT[key]!!
+        else if(CONFIG.DISC_LIMIT.containsKey("chests/*")) CONFIG.DISC_LIMIT["chests/*"]!!
+        else 2
+
+        var discAmount = Random.nextInt(0, discMaxAmount + 1)
 
         discsMap[key]?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
                 var size = inventory.size
 
-                while (size > 0) {
+                while (size > 0 && discAmount > 0) {
                     val slot = Random.nextInt(0, size)
                     val item = inventory.getItem(slot)
 
                     if (item == null || item.type == Material.AIR) {
                         inventory.setItem(slot, chanceStack.stack)
+                        discAmount--
                         break
                     }
 
@@ -139,12 +146,20 @@ internal class ChestOpenEvent : Listener {
             }.toTypedArray()
         }
 
+        val fragmentMaxAmount = if(CONFIG.FRAGMENT_LIMIT.containsKey(key)) CONFIG.FRAGMENT_LIMIT[key]!!
+        else if(CONFIG.FRAGMENT_LIMIT.containsKey("chests/*")) CONFIG.FRAGMENT_LIMIT["chests/*"]!!
+        else 3
+
+        var fragmentAmount = Random.nextInt(0, fragmentMaxAmount + 1)
+
         discFragmentMap[key]?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
-                val number = Random.nextInt(0, 4)
+                val number = if(fragmentAmount > 3) Random.nextInt(0, 4)
+                else Random.nextInt(0, fragmentAmount + 1)
+
                 var size = inventory.size
 
-                while (size > 0) {
+                while (size > 0 && fragmentAmount > 0) {
                     val slot = Random.nextInt(0, size)
                     val item = inventory.getItem(slot)
 
@@ -152,6 +167,8 @@ internal class ChestOpenEvent : Listener {
                         inventory.setItem(slot, chanceStack.stack.apply {
                             amount = number
                         })
+
+                        fragmentAmount -= number
 
                         break
                     }

@@ -51,7 +51,7 @@ class ConfigManager {
             ConfigData.DISCS = deserialize(discsFile, discsType)
 
             JukeboxPersistentDataContainer.reload(plugin)
-            DiscPlayer.plugin = plugin;
+            DiscPlayer.plugin = plugin
 
             return true
         }

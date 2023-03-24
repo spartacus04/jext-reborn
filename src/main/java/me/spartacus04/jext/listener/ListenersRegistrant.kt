@@ -34,8 +34,8 @@ class ListenersRegistrant private constructor() {
                     InventoryType.JUKEBOX
                     pluginManager.registerEvents(InventoryMoveItemEvent(), plugin)
                 } catch (e: NoSuchFieldError) {
-                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it." +
-                            "\nIf you see this message again after updating please run BuildTools.")
+                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it.§f" +
+                            "\n§cIf you see this message again after updating please run BuildTools.")
                 }
             }
         }
