@@ -21,7 +21,6 @@
     "jukebox-gui": {
       "type": "boolean"
     },
-    // map of all loottables with integer associated
     "disc-loottables-limit": {
       "type": "object",
       "discs/*": { "type": "integer" },
