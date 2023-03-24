@@ -1,6 +1,6 @@
 package me.spartacus04.jext.disc
 
-import de.tr7zw.nbtapi.NBT
+import io.github.bananapuncher714.nbteditor.NBTEditor
 import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
 import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
@@ -38,12 +38,10 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         if(location.block.type != Material.JUKEBOX) return
         if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
 
-        NBT.modify(location.block.state) {
-            Bukkit.getScheduler().runTaskLater(plugin!!, Runnable {
-                val startTickCount = it.getLong("TickCount")
-                it.setLong("TickCount", startTickCount - (duration - 72) * 20 + 1)
-            }, 1)
-        }
+        Bukkit.getScheduler().runTaskLater(plugin!!, Runnable {
+            val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
+            NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 1, "TickCount")
+        }, 1)
     }
 
     fun stop(location: Location) {
@@ -56,9 +54,7 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         if(location.block.type != Material.JUKEBOX) return
         if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
 
-        NBT.modify(location.block.state) {
-            it.setLong("TickCount", it.getLong("RecordStartTick") + 72 * 20)
-        }
+        NBTEditor.set(location.block,NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
     }
 
     companion object {

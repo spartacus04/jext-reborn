@@ -20,7 +20,7 @@
 
   // Sets disc limit per loottable
   "disc-loottables-limit": {
-    "chests/*": 10
+    "chests/*": 2
   },
 
   // Sets custom fragments random chance (0 to 1000)
@@ -28,7 +28,7 @@
 
   // Sets fragment limit per loottable
   "fragment-loottables-limit": {
-    "chests/*": 5
+    "chests/*": 3
   },
 
   // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)

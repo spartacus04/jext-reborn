@@ -1,17 +1,11 @@
 package me.spartacus04.jext.jukebox
 
-import de.tr7zw.nbtapi.NBT
-import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
-import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.block.Jukebox
 import org.bukkit.inventory.ItemStack
-import org.bukkit.plugin.java.JavaPlugin
 
 data class JukeboxEntry(
     var type: String,
