@@ -71,7 +71,6 @@ class JukeboxPersistentDataContainer(jukeboxContainer: JukeboxContainer) {
 
         if(duration.toInt() == 0) return
 
-        // FIXME: Music stopping earlier than it should
         Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying() }, duration * 20)
     }
 

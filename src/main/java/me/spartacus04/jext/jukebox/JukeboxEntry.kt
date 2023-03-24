@@ -21,7 +21,7 @@ data class JukeboxEntry(
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
                 try {
                     if (location.block.type == Material.JUKEBOX) {
                         val jukebox = location.block.state as Jukebox
@@ -57,7 +57,7 @@ data class JukeboxEntry(
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
                 try {
                     if (location.block.type == Material.JUKEBOX) {
                         val jukebox = location.block.state as Jukebox

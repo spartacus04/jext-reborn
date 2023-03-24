@@ -36,7 +36,7 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         location.world!!.playSound(location, namespace!!, SoundCategory.RECORDS, volume, pitch)
 
         if(location.block.type != Material.JUKEBOX) return
-        if(MAJORVERSION < 19 || (MAJORVERSION == 19 && MINORVERSION < 4)) return
+        if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
 
         NBT.modify(location.block.state) {
             Bukkit.getScheduler().runTaskLater(plugin!!, Runnable {
@@ -54,7 +54,7 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         }
 
         if(location.block.type != Material.JUKEBOX) return
-        if(MAJORVERSION < 19 || (MAJORVERSION == 19 && MINORVERSION < 4)) return
+        if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
 
         NBT.modify(location.block.state) {
             it.setLong("TickCount", it.getLong("RecordStartTick") + 72 * 20)

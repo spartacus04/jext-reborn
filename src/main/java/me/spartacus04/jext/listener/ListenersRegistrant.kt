@@ -29,7 +29,7 @@ class ListenersRegistrant private constructor() {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
             }
 
-            if((MAJORVERSION == 19 && MINORVERSION >= 4) || MAJORVERSION >= 20) {
+            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
                 try {
                     InventoryType.JUKEBOX
                     pluginManager.registerEvents(InventoryMoveItemEvent(), plugin)
