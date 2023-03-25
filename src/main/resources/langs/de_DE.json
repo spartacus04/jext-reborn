@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "Bitte aktivieren Sie das Ressourcenpaket für die Musik!",
   "failed-download-kick-message": "Download des Ressourcenpakets fehlgeschlagen, bitte erneut beitreten um es erneut zu versuchen.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9Spiele",
   "disc-command-success": "§fErhalten §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc mit dem Namensraum §6%namespace% §ccccccnell nicht gefunden!",
   "disc-received": "§fErhalten §d%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§cUngültiger Standort!",
   "wrong-number-format": "§cFalsches Zahlenformat für %param% Parameter!",
   "cannot-find-player": "§cKann Spieler nicht finden: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMusik $d%name% §fis spielt!",
   "played-music-to-multiple": "§fSpielte Musik §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fGespielte Musik §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fSpielte Musik für keinen Spieler, etwas ist schief gelaufen!",
@@ -24,7 +24,7 @@
   "stopped-music-for": "§fStoppte Musik für §6%player%§f!",
   "stopped-music-for-no-one": "§fStoppte Musik für keinen Spieler, etwas ist schief gelaufen!",
   "reloaded": "§cNeugeladen!",
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing_permission": "§cDu hast keine Berechtigung, diesen Befehl zu benutzen!",
+  "invalid_runner": "§cDieser Befehl kann nur von §6%runner%§c ausgeführt werden.",
   "usage": "§6/%command%"
 }
