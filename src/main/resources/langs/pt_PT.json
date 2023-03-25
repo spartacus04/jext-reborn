@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fParada de música por §6%playercount% §fplayers!",
   "stopped-music-for": "§fParada de música por §6%player%§f!",
   "stopped-music-for-no-one": "§fParada de música para nenhum tocador, algo deu errado!",
-  "reloaded": "§cRecarregado!"
+  "reloaded": "§cRecarregado!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
