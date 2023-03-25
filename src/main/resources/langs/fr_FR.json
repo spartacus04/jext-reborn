@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fLa musique pour §6%playercount% §fplayers!",
   "stopped-music-for": "§fLa musique pour §6%player%§f a été arrêtée !",
   "stopped-music-for-no-one": "§fLa musique a été arrêtée pour aucun joueur, quelque chose s'est mal passé !",
-  "reloaded": "§cRechargé !"
+  "reloaded": "§cRechargé !",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
