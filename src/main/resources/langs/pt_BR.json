@@ -3,8 +3,8 @@
   "now-playing-no-author": "§6Tocando agora: §a%title%",
   "resource-pack-decline-kick-message": "Por favor, ative o pacote de recursos para a música!",
   "failed-download-kick-message": "Falha ao baixar o pacote de recursos, por favor, entre novamente para tentar novamente.",
-  "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "jukebox": "§bToca-discos",
+  "playing": "§9Jogando",
   "disc-command-success": "§fObtido §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisco com namespace §6%namespace% §cNão foi encontrado!",
   "disc-received": "§fRecebeu §d%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§cLocalização inválida!",
   "wrong-number-format": "§cFormato de número errado para parâmetro %param%!",
   "cannot-find-player": "§cNão foi possível encontrar o jogador: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMúsica $d%name% §fis agora tocando!",
   "played-music-to-multiple": "§fTocado música§6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fTocado música§6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fTocou música para nenhum reprodutor, algo deu errado!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fParada de música por §6%playercount% §fplayers!",
   "stopped-music-for": "§fParada de música por §6%player%§f!",
   "stopped-music-for-no-one": "§fParada de música para nenhum tocador, algo deu errado!",
-  "reloaded": "§cRecarregado!"
+  "reloaded": "§cRecarregado!",
+  "missing_permission": "§cVocê não tem permissão para usar esse comando!",
+  "invalid_runner": "§cEsse comando só pode ser executado por §6%runner%§c.",
+  "usage": "§6/%command%"
 }

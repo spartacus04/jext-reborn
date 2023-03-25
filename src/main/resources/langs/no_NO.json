@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "Vennligst aktiver ressurspakke for musikken!",
   "failed-download-kick-message": "Nedlasting av ressurspakke mislyktes, vennligst bli med igjen for å prøve på nytt.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9Avspilling",
   "disc-command-success": "§fObservert §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisk med navneområde §6%namespace% §ccoube not be funnet!",
   "disc-received": "§fatt §d%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§cUgyldig plassering!",
   "wrong-number-format": "§cFeil tallformat for %param% parameter!",
   "cannot-find-player": "§cKan ikke finne spiller: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMusikk $d%name% §fis nå spiller!",
   "played-music-to-multiple": "§fPlayed music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlayed music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fSpilt musikk til ingen spiller, noe gikk galt!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fStoppet musikk for §6%playercount% §fplayers!",
   "stopped-music-for": "§fStoppet musikk for §6%player%§f!",
   "stopped-music-for-no-one": "§fStoppet musikk for ingen spiller, noe gikk galt!",
-  "reloaded": "§cOppdatert!"
+  "reloaded": "§cOppdatert!",
+  "missing_permission": "§cDu har ikke tillatelse til å bruke denne kommandoen!",
+  "invalid_runner": "§cDenne kommandoen kan bare kjøres av §6%runner%§c.",
+  "usage": "§6/%command%"
 }

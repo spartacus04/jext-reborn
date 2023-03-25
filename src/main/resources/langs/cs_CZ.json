@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "Prosím povolte balíček zdrojů pro hudbu!",
   "failed-download-kick-message": "Stahování balíčku dokumentů se nezdařilo, zkuste to prosím znovu.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9Hraje",
   "disc-command-success": "§fZískáno §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisk s jmenným prostorem §6%namespace% nebyl nalezen!",
   "disc-received": "§fObdrženo §d%disc% §fdisku!",
@@ -14,7 +14,7 @@
   "invalid-location": "§cNeplatná poloha!",
   "wrong-number-format": "§cNesprávný formát čísla pro parametr %param%!",
   "cannot-find-player": "§cHrac nenalezen: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fHudba $d%name% §fis hraje!",
   "played-music-to-multiple": "§fHrana hudba §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fHrana hudba §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fHrál hudbu bez hráče, něco se pokazilo!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fZastavena hudba pro §6%playercount% §fplayers!",
   "stopped-music-for": "§fZastavena hudba pro §6%player%§f!",
   "stopped-music-for-no-one": "§fZastavena hudba pro žádného hráče, něco se pokazilo!",
-  "reloaded": "§cZnovu přidáno!"
+  "reloaded": "§cZnovu přidáno!",
+  "missing_permission": "§cNemáš oprávnění použít tento příkaz!",
+  "invalid_runner": "§cTento příkaz může být spuštěn pouze podle §6%runner%§c.",
+  "usage": "§6/%command%"
 }

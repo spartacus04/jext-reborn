@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "¡Habilite el paquete de recursos para la música!",
   "failed-download-kick-message": "La descarga del paquete de recursos falló, vuelva a unirse para intentarlo de nuevo.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9Jugando",
   "disc-command-success": "§¡fObtenido §fdisco §d%disc%§f!",
   "disc-namespace-not-found": "§c¡No se pudo encontrar el disco con el espacio de nombres §6%namespace% §c!",
   "disc-received": "§fRecibido disco §d%disc%§f!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fMúsica detenida para §6%playercount% §fjugadores!",
   "stopped-music-for": "§fMúsica detenida para §6%player%§f!",
   "stopped-music-for-no-one": "§fNo se detuvo la música para ningún reproductor, ¡algo salió mal!",
-  "reloaded": "§c¡Recargado!"
+  "reloaded": "§c¡Recargado!",
+  "missing_permission": "§c¡No tienes permiso para usar este comando!",
+  "invalid_runner": "§cEste comando solo puede ser ejecutado por §6%runner%§c.",
+  "usage": "§6/%command%"
 }

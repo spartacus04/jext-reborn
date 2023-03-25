@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "Proszę włączyć pakiet zasobów dla muzyki!",
   "failed-download-kick-message": "Pobieranie pakietu zasobów nie powiodło się, proszę dołącz ponownie, aby spróbować ponownie.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9Gra",
   "disc-command-success": "§fOtrzymano §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc z nazwami §7%namespace% §cccnie zostal znaleziony!",
   "disc-received": "§fOtrzymałeś §d%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§cNieprawidłowa lokalizacja!",
   "wrong-number-format": "§cNieprawidłowy format numeru dla parametru %param%!",
   "cannot-find-player": "§cNie można znaleźć gracza: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMuzyka $d%name% §fis teraz gra!",
   "played-music-to-multiple": "§fOdtwarzana muzyka §6%name% §fto §7%playercount% §fodtwarzaczy!",
   "played-music-to": "§fOdtwarzano muzykę §6%name% §fto §7%player%§f!",
   "played-music-to-no-one": "§fOdtworzono muzykę do żadnego odtwarzacza coś poszło nie tak!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fZatrzymano muzykę dla §7%playercount% §fodtwarzaczy!",
   "stopped-music-for": "§fZatrzymano muzykę na §7%player%§f!",
   "stopped-music-for-no-one": "§fZatrzymano muzykę dla żadnego odtwarzacza coś poszło nie tak!",
-  "reloaded": "§cPrzeładowano!"
+  "reloaded": "§cPrzeładowano!",
+  "missing_permission": "§cNie masz uprawnień do używania tej komendy!",
+  "invalid_runner": "§cTa komenda może być uruchomiona tylko przez §6%runner%§c.",
+  "usage": "§6/%command%"
 }

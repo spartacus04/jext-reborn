@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "الرجاء تمكين حزمة الموارد للموسيقى!",
   "failed-download-kick-message": "فشل تنزيل حزمة الموارد، يرجى إعادة الانضمام للمحاولة مرة أخرى.",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "المادة 9",
   "disc-command-success": "§fObObd%disc% §fdisc!",
   "disc-namespace-not-found": "§cdisc مع مساحة الاسم §6 لم يتم العثور على%namespace% §ccc!",
   "disc-received": "القسم المستلم%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§ca موقع غير صالح!",
   "wrong-number-format": "§cWnumber تنسيق رقم خاطئ للمعلمة %param%!",
   "cannot-find-player": "لا يمكن العثور على اللاعب: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMusic $d%name% §fis يلعب الآن!",
   "played-music-to-multiple": "§fPlay Music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§fPlay Music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§fPPlay موسيقى بدون لاعب، حدث خطأ ما!",
@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fتوقفت الموسيقى ل §6%playercount% §fplayers!",
   "stopped-music-for": "§fتوقفت الموسيقى ل §6%player%§f!",
   "stopped-music-for-no-one": "§fStopموسيقى لا لاعب ، حدث خطأ ما!",
-  "reloaded": "باسكويلد!"
+  "reloaded": "باسكويلد!",
+  "missing_permission": "§ ليس لديك إذن لاستخدام هذا الأمر!",
+  "invalid_runner": "§cهذا الأمر يمكن تشغيله فقط بواسطة §6%runner%§c.",
+  "usage": "§6/%command%"
 }
