@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fStoppad musik för §6%playercount% §fplayers!",
   "stopped-music-for": "§fStoppad musik för §6%player%§f!",
   "stopped-music-for-no-one": "§fStoppad musik för ingen spelare, något gick fel!",
-  "reloaded": "§cOmladdad!"
+  "reloaded": "§cOmladdad!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
