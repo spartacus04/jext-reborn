@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fStopat muzica pentru §6%playercount% §fplayers!",
   "stopped-music-for": "§fStopat muzica pentru §6%player%§f!",
   "stopped-music-for-no-one": "§fStopa muzica pentru nici un player, ceva nu a mers bine!",
-  "reloaded": "§cReincarcat!"
+  "reloaded": "§cReincarcat!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
