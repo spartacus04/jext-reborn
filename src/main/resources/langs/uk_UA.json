@@ -24,7 +24,7 @@
   "stopped-music-for": "§fМузику зупинено для §6%player%§f!",
   "stopped-music-for-no-one": "§fМузику не зупинено жодному гравцю, щось пішло не так!",
   "reloaded": "§cПерезавантажено!",
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing_permission": "§cУ вас немає прав для використання цієї команди!",
+  "invalid_runner": "§cцю команду можна запускати лише §6%runner%§c.",
   "usage": "§6/%command%"
 }
