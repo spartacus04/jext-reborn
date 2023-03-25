@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fPysäytetty musiikki §6%playercount% §fplayereille!",
   "stopped-music-for": "§fPysäytetty musiikki §6%player%§f!",
   "stopped-music-for-no-one": "§fPysäytetty musiikki ilman pelaajaa, jokin meni pieleen!",
-  "reloaded": "§cLadattu!"
+  "reloaded": "§cLadattu!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
