@@ -24,7 +24,7 @@
   "stopped-music-for": "§fОстановлена музыка для §6%player%§f!",
   "stopped-music-for-no-one": "§fОстановливать музыку не для кого!",
   "reloaded": "§cПерезагружено!",
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing_permission": "§cУ Вас нет прав для использования этой команды!",
+  "invalid_runner": "§cЭта команда может быть выполнена только по §6%runner%§c.",
   "usage": "§6/%command%"
 }
