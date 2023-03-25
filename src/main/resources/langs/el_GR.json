@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fStopped μουσική για §6%playercount% §fplayers!",
   "stopped-music-for": "§fStopped μουσική για §6%player%§f!",
   "stopped-music-for-no-one": "§fStopped μουσική για κανένα παίκτη, κάτι πήγε στραβά!",
-  "reloaded": "§cReloaded!"
+  "reloaded": "§cReloaded!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
