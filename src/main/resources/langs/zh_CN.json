@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "请为音乐启用资源包！",
   "failed-download-kick-message": "资源包下载失败，请重新加入后重试。",
   "jukebox": "§b唱片机",
-  "playing": "§9Playing",
+  "playing": "§9正在播放",
   "disc-command-success": "§f已获取 §d%disc% §fdisces!",
   "disc-namespace-not-found": "§c无法找到命名空间 §6%namespace% §c!",
   "disc-received": "§f已获取唱片 §d%disc% §f!",
@@ -24,7 +24,7 @@
   "stopped-music-for": "§f停止了§6%player%§f的音乐 ！",
   "stopped-music-for-no-one": "§f停止为玩家播放音乐，发生了一些错误!",
   "reloaded": "§c已重新载入!",
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing_permission": "§c你没有权限使用此命令!",
+  "invalid_runner": "§c此命令只能由 §6%runner%§c运行",
   "usage": "§6/%command%"
 }
