@@ -4,7 +4,7 @@
   "resource-pack-decline-kick-message": "音楽のリソースパックを有効にしてください！",
   "failed-download-kick-message": "リソースパックのダウンロードに失敗しました。もう一度やり直してください。",
   "jukebox": "§bJukebox",
-  "playing": "§9Playing",
+  "playing": "§9再生中",
   "disc-command-success": "§f§d%disc% §fdiscを獲得しました！",
   "disc-namespace-not-found": "§cディスクは名前空間§6%namespace% §c見つかりませんでした！",
   "disc-received": "§f Received §d%disc% §fdisc!",
@@ -14,7 +14,7 @@
   "invalid-location": "§c無効な場所です！",
   "wrong-number-format": "§c %param% パラメータの数値形式が間違っています！",
   "cannot-find-player": "§cプレイヤーが見つかりません: §6%player%§c.",
-  "music-now-playing": "§fMusic $d%name% §fis now playing!",
+  "music-now-playing": "§fMusic $d%name% §fがプレイ中です！",
   "played-music-to-multiple": "§f Played music §6%name% §fto §6%playercount% §fplayers!",
   "played-music-to": "§f Played music §6%name% §fto §6%player%§f!",
   "played-music-to-no-one": "§f音楽を再生しないようにしました。何か問題が発生しました！",
@@ -24,7 +24,7 @@
   "stopped-music-for": "§f音楽を§6%player%§f停止しました！",
   "stopped-music-for-no-one": "§fプレイヤーなしで音楽を停止しました。何か問題が発生しました！",
   "reloaded": "§c再読み込みしました！",
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing_permission": "§cこのコマンドを使用する権限がありません！",
+  "invalid_runner": "§cこのコマンドは§6%runner%§cでのみ実行できます。",
   "usage": "§6/%command%"
 }
