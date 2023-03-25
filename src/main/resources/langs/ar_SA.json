@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fتوقفت الموسيقى ل §6%playercount% §fplayers!",
   "stopped-music-for": "§fتوقفت الموسيقى ل §6%player%§f!",
   "stopped-music-for-no-one": "§fStopموسيقى لا لاعب ، حدث خطأ ما!",
-  "reloaded": "باسكويلد!"
+  "reloaded": "باسكويلد!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
