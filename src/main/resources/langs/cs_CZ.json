@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fZastavena hudba pro §6%playercount% §fplayers!",
   "stopped-music-for": "§fZastavena hudba pro §6%player%§f!",
   "stopped-music-for-no-one": "§fZastavena hudba pro žádného hráče, něco se pokazilo!",
-  "reloaded": "§cZnovu přidáno!"
+  "reloaded": "§cZnovu přidáno!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
