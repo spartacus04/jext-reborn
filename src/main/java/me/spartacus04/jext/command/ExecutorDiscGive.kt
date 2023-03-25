@@ -26,40 +26,36 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         val disc = ParameterDisc.getDisc(args[1])
 
         if (disc == null) {
-            sender.send(
-                LANG.format(sender, "disc-namespace-not-found")
-                    .replace("%namespace%", args[1])
-            )
+            LANG.format(sender, "disc-namespace-not-found")
+                .replace("%namespace%", args[1])
+                .let { sender.send(it) }
+
             return true
         }
 
         for (player in players) {
             player.inventory.addItem(DiscContainer(disc).discItem)
 
-            player.send(
-                LANG.format(sender, "disc-received")
-                    .replace("%disc%", disc.TITLE)
-            )
+            LANG.format(sender, "disc-received")
+                .replace("%disc%", disc.TITLE)
+                .let { sender.send(it) }
         }
 
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            sender.send(
-                LANG.format(sender, "disc-given-multiple")
-                    .replace("%disc%", disc.TITLE)
-                    .replace("%playercount%", playerCount.toString())
-            )
+            LANG.format(sender, "disc-given-multiple")
+                .replace("%disc%", disc.TITLE)
+                .replace("%playercount%", playerCount.toString())
+                .let { sender.send(it) }
         } else if (playerCount == 1) {
-            sender.send(
-                LANG.format(sender, "disc-given")
-                    .replace("%disc%", disc.TITLE)
-                    .replace("%player%", players[0].name)
-            )
+            LANG.format(sender, "disc-given")
+                .replace("%disc%", disc.TITLE)
+                .replace("%player%", players[0].name)
+                .let {sender.send(it) }
         } else {
-            sender.send(
-                LANG.format(sender, "no-disc-given")
-            )
+            LANG.format(sender, "no-disc-given")
+                .let { sender.send(it) }
         }
         return true
     }

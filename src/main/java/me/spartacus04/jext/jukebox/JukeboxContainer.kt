@@ -48,6 +48,10 @@ class JukeboxContainer : Listener {
 
         refresh()
 
+        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+            refresh()
+        }, 1)
+
         Bukkit.getPluginManager().registerEvents(this, plugin)
     }
 
@@ -68,7 +72,7 @@ class JukeboxContainer : Listener {
             if(item != null) {
                 item.addUnsafeEnchantment(org.bukkit.enchantments.Enchantment.MENDING, 1)
 
-                item.itemMeta?.run {
+                item.itemMeta = item.itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
@@ -129,6 +133,8 @@ class JukeboxContainer : Listener {
         if(e.isRightClick) {
             e.isCancelled = true
 
+            if(e.cursor == e.inventory.getItem(e.slot)) return
+
             return if(e.slot == dataContainer.slot) {
                 dataContainer.stopPlaying()
             } else {
@@ -137,6 +143,11 @@ class JukeboxContainer : Listener {
 
                 dataContainer.playDisc(e.slot, location)
             }
+        }
+
+        if(e.cursor?.type?.isRecord == true && e.currentItem != null) {
+            e.isCancelled = true
+            return
         }
 
         if(e.slot == dataContainer.slot) {

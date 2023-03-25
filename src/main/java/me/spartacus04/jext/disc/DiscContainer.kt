@@ -1,9 +1,9 @@
 package me.spartacus04.jext.disc
 
-import me.spartacus04.jext.Log
 import me.spartacus04.jext.SpigotVersion
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.Disc
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.inventory.ItemFlag
@@ -104,7 +104,7 @@ class DiscContainer {
 
     fun getProcessedLores(): ArrayList<String> {
         val lores = ArrayList<String>()
-        lores.add(Log().gr(author).gr(" - ").gr(title).text())
+        lores.add("${ChatColor.GRAY}$author - $title")
         lores.addAll(this.lores)
 
         return lores
@@ -150,15 +150,15 @@ class DiscContainer {
             SOUND_MAP[Material.MUSIC_DISC_WAIT] = SoundData(Sound.MUSIC_DISC_WAIT, 238)
             SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 252)
 
-            if(SpigotVersion.VERSION >= 16) {
+            if(SpigotVersion.MAJORVERSION >= 16) {
                 SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = SoundData(Sound.MUSIC_DISC_PIGSTEP, 149)
             }
 
-            if(SpigotVersion.VERSION >= 18) {
+            if(SpigotVersion.MAJORVERSION >= 18) {
                 SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 196)
             }
 
-            if(SpigotVersion.VERSION >= 19) {
+            if(SpigotVersion.MAJORVERSION >= 19) {
                 SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 179)
             }
         }

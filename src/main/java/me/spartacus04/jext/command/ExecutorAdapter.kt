@@ -1,6 +1,8 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.Log
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.send
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -32,12 +34,14 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
         command.setExecutor(this)
         command.tabCompleter = this
 
-        val usageSMS = Log("Usage").info().t("/").a(commandString)
+        var usageMessage = "[Usage]:" + LANG.format(Bukkit.getConsoleSender(), "usage", true)
+            .replace("%command%", commandString)
 
         for (parameter in parameters) {
-            usageSMS.rst(" ").rst(parameter.toString())
+            usageMessage += " $parameter"
         }
-        command.usage = usageSMS.text()
+
+        command.usage = usageMessage
     }
 
     override fun onTabComplete(
@@ -57,7 +61,9 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (!command.testPermissionSilent(sender)) {
-            PERMISSION_MESSAGE.send(sender)
+            LANG.format(sender, "missing_permission")
+                .let { sender.send(it) }
+
             return true
         }
 
@@ -72,17 +78,18 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
     }
 
     open fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        DEFAULT_MESSAGE.send(sender, "console")
+        LANG.format(sender, "invalid-runner")
+            .replace("%runner%", "console")
+            .let { sender.send(it) }
+
         return true
     }
 
     open fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        DEFAULT_MESSAGE.send(sender, "players")
-        return true
-    }
+        LANG.format(sender, "invalid-runner")
+            .replace("%runner%", "players")
+            .let { sender.send(it) }
 
-    companion object {
-        private val DEFAULT_MESSAGE = Log().info().t("This command is only for ").t().t(".")
-        private val PERMISSION_MESSAGE = Log().eror().t("You do not have permission to use this command.")
+        return true
     }
 }

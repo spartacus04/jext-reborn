@@ -15,9 +15,25 @@
   // Allow/Disallow overlapping music (two jukeboxes playing at the same time)
   "allow-music-overlapping": false,
 
-  // Allow/Disallow plugin metrics (no personal data is going to be collected)
-  "allow-metrics": true,
+  // Sets custom discs random chance (0 to 1000)
+  "discs-random-chance": 200,
+
+  // Sets disc limit per loottable
+  "disc-loottables-limit": {
+    "chests/*": 2
+  },
+
+  // Sets custom fragments random chance (0 to 1000)
+  "fragments-random-chance": 200,
+
+  // Sets fragment limit per loottable
+  "fragment-loottables-limit": {
+    "chests/*": 3
+  },
 
   // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)
-  "jukebox-gui": false
+  "jukebox-gui": false,
+
+  // Allow/Disallow plugin metrics (no personal data is going to be collected)
+  "allow-metrics": true
 }

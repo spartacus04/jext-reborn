@@ -2,6 +2,7 @@ package me.spartacus04.jext.config
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.jext.disc.DiscPlayer
 import me.spartacus04.jext.jukebox.JukeboxPersistentDataContainer
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -50,6 +51,7 @@ class ConfigManager {
             ConfigData.DISCS = deserialize(discsFile, discsType)
 
             JukeboxPersistentDataContainer.reload(plugin)
+            DiscPlayer.plugin = plugin
 
             return true
         }

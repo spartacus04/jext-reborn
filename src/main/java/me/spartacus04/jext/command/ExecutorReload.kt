@@ -4,6 +4,7 @@ import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.config.ConfigManager
 import me.spartacus04.jext.config.LanguageManager
+import me.spartacus04.jext.config.send
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -21,9 +22,9 @@ internal class ExecutorReload(private val plugin: JavaPlugin) : ExecutorAdapter(
         ConfigManager.load(this.plugin)
         LANG = LanguageManager(CONFIG.LANGUAGE_MODE.lowercase() == "auto", plugin)
 
-        sender.sendMessage(
-            LANG.format(sender, "reloaded")
-        )
+        LANG.format(sender, "reloaded")
+            .let { sender.send(it) }
+
         return true
     }
 }

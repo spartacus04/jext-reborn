@@ -133,6 +133,66 @@ data class V3Config (
     }
 }
 
+data class V4Config (
+    @SerializedName("lang")
+    var LANGUAGE_MODE: String,
+
+    @SerializedName("force-resource-pack")
+    var FORCE_RESOURCE_PACK : Boolean,
+
+    @SerializedName("ignore-failed-download")
+    var IGNORE_FAILED_DOWNLOAD : Boolean,
+
+    @SerializedName("allow-music-overlapping")
+    var ALLOW_MUSIC_OVERLAPPING : Boolean,
+
+    @SerializedName("allow-metrics")
+    var ALLOW_METRICS : Boolean,
+
+    @SerializedName("jukebox-gui")
+    var JUKEBOX_GUI : Boolean
+) {
+    companion object {
+        private fun fromJson(json: String): V4Config {
+            val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
+
+            return gson.fromJson(json, V4Config::class.java)
+        }
+
+        fun isOldConfig(jsonConfig: String): Boolean {
+            return !jsonConfig.contains("\"disc-loottables-limit\"") ||
+                    !jsonConfig.contains("\"fragment-loottables-limit\"") ||
+                    !jsonConfig.contains("\"discs-random-chance\"") ||
+                    !jsonConfig.contains("\"fragments-random-chance\"")
+        }
+
+        fun migrateToNewConfig(jsonConfig: String, plugin: JavaPlugin): String {
+            val oldconfig = fromJson(jsonConfig)
+
+            return plugin.getResource("config.json")!!.bufferedReader().use {
+                val text = it.readText()
+
+                return@use text
+                    .replace("\"lang\": \"auto\"", "\"lang\": \"${oldconfig.LANGUAGE_MODE}\"")
+                    .replace(
+                        "\"force-resource-pack\": true",
+                        "\"force-resource-pack\": ${oldconfig.FORCE_RESOURCE_PACK}"
+                    )
+                    .replace(
+                        "\"ignore-failed-download\": false",
+                        "\"ignore-failed-download\": ${oldconfig.IGNORE_FAILED_DOWNLOAD}"
+                    )
+                    .replace(
+                        "\"allow-music-overlapping\": false",
+                        "\"allow-music-overlapping\": ${oldconfig.ALLOW_MUSIC_OVERLAPPING}"
+                    )
+                    .replace("\"allow-metrics\": true", "\"allow-metrics\": ${oldconfig.ALLOW_METRICS}")
+                    .replace("\"jukebox-gui\": false", "\"jukebox-gui\": ${oldconfig.JUKEBOX_GUI}")
+            }
+        }
+    }
+}
+
 data class V1Disc(
     @SerializedName("title")
     var TITLE: String,
@@ -205,6 +265,10 @@ class ConfigVersionManager {
             if(V3Config.isOldConfig(jsonConfig)) {
                 return file.writeText(V3Config.migrateToNewConfig(jsonConfig, plugin))
             }
+
+            if (V4Config.isOldConfig(jsonConfig)) {
+                return file.writeText(V4Config.migrateToNewConfig(jsonConfig, plugin))
+            }
         }
 
         fun updateDiscs(file: File) {
@@ -212,13 +276,13 @@ class ConfigVersionManager {
 
             if(V1Disc.isOldConfig(jsonConfig)) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]\n[§aJEXT§f] §aBecause of this the plugin will not work properly in versions >= 1.19.4"
                 )
             }
 
             if(V2Disc.isOldConfig(jsonConfig)) {
                 Bukkit.getConsoleSender().sendMessage(
-                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
+                    "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]\n[§aJEXT§f] §aBecause of this the plugin will not work properly in versions >= 1.19.4"
                 )
             }
         }

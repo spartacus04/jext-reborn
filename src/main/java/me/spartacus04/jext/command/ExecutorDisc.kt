@@ -14,19 +14,19 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
         val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
-            sender.send(
-                LANG.format(sender, "disc-namespace-not-found")
-                    .replace("%namespace%", args[0])
-            )
+            LANG.format(sender, "disc-namespace-not-found")
+                .replace("%namespace%", args[0])
+                .let { sender.send(it) }
+
             return true
         }
 
         sender.inventory.addItem(DiscContainer(disc).discItem)
 
-        sender.send(
-            LANG.format(sender, "disc-command-success")
-                .replace("%disc%", disc.TITLE)
-        )
+        LANG.format(sender, "disc-command-success")
+            .replace("%disc%", disc.TITLE)
+            .let { sender.send(it) }
+
         return true
     }
 }
