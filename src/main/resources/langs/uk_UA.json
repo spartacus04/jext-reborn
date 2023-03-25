@@ -23,5 +23,8 @@
   "stopped-music-for-multiple": "§fЗупинено музику для §6%playercount% §fгравців!",
   "stopped-music-for": "§fМузику зупинено для §6%player%§f!",
   "stopped-music-for-no-one": "§fМузику не зупинено жодному гравцю, щось пішло не так!",
-  "reloaded": "§cПерезавантажено!"
+  "reloaded": "§cПерезавантажено!",
+  "missing_permission": "§cYou don't have permission to use this command!",
+  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "usage": "§6/%command%"
 }
