@@ -16,7 +16,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
-    implementation("org.bstats:bstats-bukkit:3.0.1")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.18.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
