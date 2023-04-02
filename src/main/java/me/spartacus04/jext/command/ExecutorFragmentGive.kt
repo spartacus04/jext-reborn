@@ -6,7 +6,7 @@ import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-internal class ExecutorFragmentGive : ExecutorAdapter("discgive") {
+internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
     init {
         addParameter(ParameterPlayer(true))
         addParameter(ParameterDisc(true))
