@@ -1,6 +1,10 @@
 
 rootProject.name = "JEXT-Reborn"
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version("0.4.0")
+}
+
 toolchainManagement {
     jvm { 
         javaRepositories {
