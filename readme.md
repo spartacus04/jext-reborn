@@ -41,3 +41,12 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 ### GeyserMC
 
 Due to some parity issues Bedrock Edition doesn't support custom sounds, and as such working on a GeyserMC integration would be useless.
+
+### Public Roadmap
+
+| Estimated Time | Feature                          |
+| -------------- | -------------------------------- |
+| March 2023     | Youtube support for generator    |
+| June 2023      | Soundcloud support for generator |
+| July 2023      | Bedrock support for plugin       |
+| Rest of 2023   | To be decided                    | 
