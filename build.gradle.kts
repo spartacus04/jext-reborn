@@ -2,7 +2,6 @@ plugins {
     java
     kotlin("jvm") version "1.8.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.gradle.toolchains.foojay-resolver-convention") version("0.4.0")
     `maven-publish`
 }
 
