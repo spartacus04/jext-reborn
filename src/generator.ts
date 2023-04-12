@@ -178,7 +178,6 @@ const generateResourcePack = async () : Promise<JSZip> => {
 	return rp;
 };
 
-// TODO: handle resourcepack merging
 const mergeResourcePack = async (rp : JSZip) : Promise<JSZip|string> => {
 	return await new Promise<JSZip>((resolve, reject) => {
 		const input = document.createElement('input');

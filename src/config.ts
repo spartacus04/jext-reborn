@@ -121,6 +121,7 @@ interface Dungeon {
 }
 
 export interface SongData {
+	downloadLink?: string,
 	uploadedFile: File,
 	oggFile : Blob,
 	monoFile ?: Blob,

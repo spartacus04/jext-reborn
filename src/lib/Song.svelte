@@ -6,6 +6,7 @@
 	import { convertToOgg } from '@/ffmpeg';
 	import type { SongData } from '@/config';
 	import { versionStore } from '@/store';
+	import { downloadSong } from '@/downloader';
 
 	import { default_disc, loading, creeper, chest, delete_btn, delete_btn_hover, fragment_icon, audio_btn, audio_btn_selected, default_fragment } from '@assets';
 
@@ -36,6 +37,10 @@
 	};
 
 	const prepareDisc = async () : Promise<void> => {
+		if(song.downloadLink) {
+			song.uploadedFile = await downloadSong(song.downloadLink);
+		}
+
 		const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
 
 		if(splitName.length >= 1) song.name = splitName.shift();
