@@ -76,13 +76,6 @@ body:
         - Purpur
     validations:
       required: true
-  - type: input
-    id: JavaVersion
-    attributes:
-      label: Java Version
-      description: e.g. openjdk 18.0.1.1 2022-04-22
-    validations:
-      required: true
   - type: textarea
     id: discsjson
     attributes:
