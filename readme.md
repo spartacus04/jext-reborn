@@ -42,7 +42,7 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 Due to some parity issues Bedrock Edition doesn't support custom sounds, and as such working on a GeyserMC integration would be useless.
 
-### Public Roadmap
+## Public Roadmap
 
 | Estimated Time | Feature                          |
 | -------------- | -------------------------------- |
