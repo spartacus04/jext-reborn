@@ -92,7 +92,9 @@ class JukeboxContainer : Listener {
     }
 
     fun close() {
-        HandlerList.unregisterAll(this)
+        InventoryCloseEvent.getHandlerList().unregister(this)
+        InventoryClickEvent.getHandlerList().unregister(this)
+
         inventory.viewers.forEach {
             it.closeInventory()
         }
@@ -117,7 +119,11 @@ class JukeboxContainer : Listener {
 
         contents.forEachIndexed { index, itemStack ->
             if(itemStack != null) {
-                dataContainer.addDisc(DiscContainer(itemStack), index)
+                try {
+                    dataContainer.addDisc(DiscContainer(itemStack), index)
+                } catch (e: IllegalStateException) {
+                    dataContainer.addDisc(itemStack, index)
+                }
             } else {
                 dataContainer.removeDisc(index)
             }
