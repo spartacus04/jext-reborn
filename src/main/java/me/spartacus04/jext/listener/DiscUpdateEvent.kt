@@ -29,54 +29,8 @@ internal class DiscUpdateEvent : Listener {
 
     private fun updateInventory(inv: Inventory) {
         inv.contents.forEachIndexed { i, it ->
-            if (it != null && it.type.isRecord) {
-                try {
-                    val container = DiscContainer(it)
-
-                    // check if any of the discs has a different namespace than the one in the config
-                    if(DISCS.any { disc-> disc.DISC_NAMESPACE == container.namespace }) {
-                        // check if title, author and lore is same
-                        val disc = DISCS.first { disc -> disc.DISC_NAMESPACE == container.namespace }
-
-                        if (disc.LORE != container.getProcessedLores()) {
-                            inv.setItem(i, DiscContainer(disc).discItem)
-                        }
-                    } else {
-                        val stacks = arrayListOf(
-                            SOUND_MAP.keys.map { material -> ItemStack(material) },
-                            DISCS.map { disc -> DiscContainer(disc).discItem }
-                        ).flatten()
-
-                        inv.setItem(i, stacks.random())
-                    }
-                } catch (_: IllegalStateException) { }
-            }
-
-            if(it != null && it.type.isRecordFragment) {
-                try {
-                    val container = DiscContainer(it)
-
-                    // check if any of the discs has a different namespace than the one in the config
-                    if(DISCS.any { disc-> disc.DISC_NAMESPACE == container.namespace }) {
-                        // check if title, author and lore is same
-                        val disc = DISCS.first { disc -> disc.DISC_NAMESPACE == container.namespace }
-
-                        if (disc.LORE != container.getProcessedLores()) {
-                            inv.setItem(i, DiscContainer(disc).fragmentItem.apply {
-                                amount = it.amount
-                            })
-                        }
-                    } else {
-                        val stacks = arrayListOf(
-                            SOUND_MAP.keys.map { material -> ItemStack(material) },
-                            DISCS.map { disc -> DiscContainer(disc).fragmentItem }
-                        ).flatten()
-
-                        inv.setItem(i, stacks.random().apply {
-                            amount = it.amount
-                        })
-                    }
-                } catch (_: IllegalStateException) { }
+            if (it != null) {
+                inv.setItem(i, updateItem(it))
             }
         }
     }
@@ -92,7 +46,11 @@ internal class DiscUpdateEvent : Listener {
                     val disc = DISCS.first { disc -> disc.DISC_NAMESPACE == container.namespace }
 
                     if (disc.LORE != container.getProcessedLores()) {
-                        return DiscContainer(disc).discItem
+                        return DiscContainer(disc).discItem.apply {
+                            itemMeta = itemMeta?.apply {
+                                setDisplayName(itemStack.itemMeta?.displayName)
+                            }
+                        }
                     }
                 } else {
                     val stacks = arrayListOf(
@@ -117,6 +75,9 @@ internal class DiscUpdateEvent : Listener {
                     if (disc.LORE != container.getProcessedLores()) {
                         return DiscContainer(disc).fragmentItem.apply {
                             amount = itemStack.amount
+                            itemMeta = itemMeta?.apply {
+                                setDisplayName(itemStack.itemMeta?.displayName)
+                            }
                         }
                     }
                 } else {
