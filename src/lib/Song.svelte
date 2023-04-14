@@ -36,10 +36,12 @@
 	};
 
 	const prepareDisc = async () : Promise<void> => {
-		const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
+		if(song.name === '' && song.author === '') {
+			const splitName = song.uploadedFile.name.replace(/(\.mp3)|(\.ogg)|(\.wav)/g, '').split(/ ?- ?/g);
 
-		if(splitName.length >= 1) song.name = splitName.shift();
-		if(splitName.length >= 1) song.author = splitName.join();
+			if(splitName.length >= 1) song.name = splitName.shift();
+			if(splitName.length >= 1) song.author = splitName.join();
+		}
 
 		regenNamespace();
 
