@@ -67,13 +67,16 @@
 	</div>
 	<hr class="hidden">
 	<div class="addsongsbtn" >
-		<div class="songdownloaddiv">
-			<input type="text" placeholder="Youtube link" bind:value={songUrl}>
-			<button on:click={downloadSong}>Download</button>
-		</div>
 		<div class="songaddbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }}
 			use:dropFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: addSong, multiple: true }} on:keydown={null}>
 			<h1 class="noselect">+</h1>
+		</div>
+		<div class="songdownloaddiv">
+			<p>Or download from Youtube</p>
+			<div>
+				<input type="text" placeholder="Youtube link" bind:value={songUrl}>
+				<button on:click={downloadSong}>Download</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -93,27 +96,39 @@
 
 	.songdownloaddiv {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
-		height: 63px;
-		border-bottom: 2px solid #202020;
+		height: 95px;
 
 		input, button {
 			@extend %textSettings;
 			margin-left: 1em;
 			background-color: #303030;
 		}
+
+		input {
+			width: 25em;
+		}
+
+		p {
+			margin: 10px;
+			font-size: 20px;
+			color: white;
+			font-family: 'VT323';
+		}
 	}
 
 	.songaddbtn {
+		border-bottom: 2px solid #202020;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
-		height: 63px;
+		height: 64px;
+		cursor: pointer;
 
 		&:hover {
 			background-color: #404040;
@@ -129,14 +144,13 @@
 		.addsongsbtn {
 			flex-direction: column;
 			background-color: #484848;
-			height: 128px;
 			margin: 0;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			border: 2px solid black;
+			height: 160px;
 
-			cursor: pointer;
 
 			h1 {
 				color: #d3d3d3;
