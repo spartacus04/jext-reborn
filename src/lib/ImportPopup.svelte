@@ -67,6 +67,14 @@
 		if(pack_status === 'success' && disc_status === 'success' && !isImporting) {
 			isImporting = true;
 			await importResourcePack(disc_file, pack_file);
+
+			pack_status = 'ready';
+			pack_name = 'Resource pack';
+			pack_file = undefined;
+
+			disc_status = 'ready';
+			disc_name = 'discs.json';
+			disc_file = undefined;
 			close();
 		}
 	};
