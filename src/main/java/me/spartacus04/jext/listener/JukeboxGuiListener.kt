@@ -1,5 +1,6 @@
 package me.spartacus04.jext.listener
 
+import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.jukebox.JukeboxContainer
 import me.spartacus04.jext.jukebox.JukeboxEntry
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.IllegalStateException
 
@@ -84,7 +86,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
 
         if(e.slot == playingSlot) {
             stopPlaying(jukeId)
-            e.currentItem?.removeEnchantment(org.bukkit.enchantments.Enchantment.MENDING)
+            e.currentItem?.removeEnchantment(Enchantment.MENDING)
         }
 
         val oldContents = JukeboxContainer.containers[jukeId]?.createContents()
@@ -143,9 +145,14 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
             JukeboxContainer.containers[id]?.inventory!!.getItem(slot).apply {
                 this ?: return
 
-                itemMeta = itemMeta!!.apply {
-                    addUnsafeEnchantment(Enchantment.MENDING, 1)
-                    // TODO: set playing
+                addUnsafeEnchantment(Enchantment.MENDING, 1)
+
+                itemMeta = itemMeta?.apply {
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                    lore = (lore ?: ArrayList()).apply {
+                        add(ConfigData.LANG.format("en_us", "playing", true))
+                    }
                 }
             }
         )

@@ -8,13 +8,12 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
-import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 class JukeboxContainer {
-    val id: String
+    private val id: String
     var location: Location
     val plugin: JavaPlugin
     val inventory = Bukkit.createInventory(null, 54, LANG.format("en_us", "jukebox", true))
@@ -28,7 +27,7 @@ class JukeboxContainer {
         location = loc
         this.plugin = plugin
 
-        mergedConstructor(plugin)
+        mergedConstructor()
     }
 
     private constructor(plugin: JavaPlugin, player: HumanEntity) {
@@ -36,23 +35,37 @@ class JukeboxContainer {
         location = player.location
         this.plugin = plugin
 
-        mergedConstructor(plugin)
+        mergedConstructor()
     }
 
-    private fun mergedConstructor(plugin: JavaPlugin) {
+    private fun mergedConstructor() {
         if(!loadedData.containsKey(id)) {
             loadedData[id] = HashMap()
         }
 
         refresh()
-
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-            refresh()
-        }, 1)
     }
 
     fun open(player: HumanEntity) {
         player.openInventory(inventory)
+
+        if(playingSlot != -1) {
+            val item = inventory.contents[playingSlot]
+
+            if(item != null) {
+                item.addUnsafeEnchantment(org.bukkit.enchantments.Enchantment.MENDING, 1)
+
+                item.itemMeta = item.itemMeta?.apply {
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                    lore = (lore ?: ArrayList()).apply {
+                        add(LANG.format("en_us", "playing", true))
+                    }
+                }
+
+                inventory.contents[playingSlot] = item
+            }
+        }
     }
 
     fun createContents(): Array<ItemStack?> {
