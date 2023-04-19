@@ -24,6 +24,7 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
             pluginManager.registerEvents(DiscUpdateEvent(), plugin)
+            pluginManager.registerEvents(JukeboxEventListener(plugin), plugin)
 
             if(MAJORVERSION >= 19) {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)

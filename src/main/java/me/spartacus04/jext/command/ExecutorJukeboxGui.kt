@@ -6,8 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin
 
 internal class ExecutorJukeboxGui(private val plugin: JavaPlugin) : ExecutorAdapter("jukeboxgui") {
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        JukeboxContainer(plugin, sender).open(sender)
-
+        JukeboxContainer.get(plugin, sender).open(sender)
         return true
     }
 }

@@ -56,14 +56,14 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
-        JukeboxContainer(plugin, block.location, event.player).open(event.player)
+        JukeboxContainer.get(plugin, block.location).open(event.player)
     }
 
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
-        JukeboxContainer(plugin, loc, event.player).breakJukebox()
+        JukeboxContainer.get(plugin, loc).breakJukebox()
 
         val block = event.block
         val state = block.state as? Jukebox ?: return

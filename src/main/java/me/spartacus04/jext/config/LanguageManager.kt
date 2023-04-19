@@ -84,6 +84,17 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
         return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
     }
 
+    fun format(locale: String, key: String, noPrefix: Boolean = false) : String {
+        val message = if(loadedLanguageMap.containsKey(locale)) {
+            loadedLanguageMap[locale.lowercase()]!![key]!!
+        }
+        else {
+            loadedLanguageMap["en_us"]!![key]!!
+        }
+
+        return if(noPrefix) message else "[§aJEXT§f] $message"
+    }
+
     fun hasLanguage(locale: String) : Boolean {
         return  loadedLanguageMap.containsKey(locale.lowercase())
     }
