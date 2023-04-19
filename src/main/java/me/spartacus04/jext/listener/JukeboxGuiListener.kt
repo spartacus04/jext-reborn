@@ -5,6 +5,7 @@ import me.spartacus04.jext.jukebox.JukeboxContainer
 import me.spartacus04.jext.jukebox.JukeboxEntry
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -137,6 +138,18 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         val duration = JukeboxContainer.loadedData[id]!![slot]!!.play(location)
         JukeboxContainer.containers[id]?.playing = JukeboxContainer.loadedData[id]!![slot]!!
 
+        JukeboxContainer.containers[id]?.inventory!!.setItem(
+            slot,
+            JukeboxContainer.containers[id]?.inventory!!.getItem(slot).apply {
+                this ?: return
+
+                itemMeta = itemMeta!!.apply {
+                    addUnsafeEnchantment(Enchantment.MENDING, 1)
+                    // TODO: set playing
+                }
+            }
+        )
+
         if(duration.toInt() == 0) return
         Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying(id) }, duration * 20)
     }
@@ -146,6 +159,15 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
             JukeboxContainer.containers[id]?.playing == null ||
             JukeboxContainer.containers[id]?.playingLocation == null
         ) return
+
+        val playingSlot = JukeboxContainer.containers[id]!!.playingSlot
+
+        if(playingSlot != -1) {
+            JukeboxContainer.containers[id]?.inventory?.setItem(
+                playingSlot,
+                JukeboxContainer.containers[id]!!.playing!!.getItemstack()
+            )
+        }
 
         JukeboxContainer.containers[id]?.playing?.stop(JukeboxContainer.containers[id]?.location!!)
 
