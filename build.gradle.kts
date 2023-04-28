@@ -26,7 +26,7 @@ group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
-version = "1.1.2"
+version = "1.1.3"
 
 tasks {
     shadowJar {

@@ -12,7 +12,9 @@ class SpigotVersion private constructor() {
             val versionString = plugin.server.bukkitVersion.split("-")[0]
 
             MAJORVERSION = versionString.split(".")[1].toInt()
-            MINORVERSION = versionString.split(".")[2].toInt()
+            try {
+                MINORVERSION = versionString.split(".")[2].toInt()
+            } catch (_: IndexOutOfBoundsException) { }
         }
     }
 }
