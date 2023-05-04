@@ -11,11 +11,13 @@ repositories {
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://repo.dmulloy2.net/nexus/repository/public/") }
     maven { url = uri("https://repo.codemc.io/repository/maven-public/")}
+    maven { url = uri("https://maven.enginehub.org/repo/")}
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.18.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")

@@ -1,12 +1,18 @@
 package me.spartacus04.jext.listener
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter
+import com.sk89q.worldguard.WorldGuard
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin
+import com.sk89q.worldguard.protection.flags.Flags
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import me.spartacus04.jext.jukebox.JukeboxContainer
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.Jukebox
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -56,6 +62,8 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
+        if(!canInteract(event.player, block)) return
+
         JukeboxContainer.get(plugin, block.location).open(event.player)
     }
 
@@ -77,5 +85,17 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
 
             discPlayer.stop(block.location)
         } catch (_: IllegalStateException) { }
+    }
+
+    private fun canInteract(player: Player, block: Block) : Boolean {
+        if(Bukkit.getServer().pluginManager.getPlugin("WorldGuard") == null) return true
+
+        val lPlayer = WorldGuardPlugin.inst().wrapPlayer(player)
+
+        if(WorldGuard.getInstance().platform.sessionManager.hasBypass(lPlayer, lPlayer.world)) return true
+
+        val containerQuery = WorldGuard.getInstance().platform.regionContainer.createQuery()
+
+        return containerQuery.testState(BukkitAdapter.adapt(block.location), lPlayer, Flags.CHEST_ACCESS)
     }
 }
