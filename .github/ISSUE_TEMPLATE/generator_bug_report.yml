@@ -5,6 +5,7 @@ assignees:
   - spartacus04
 labels:
   - bug
+  - generator
 body:
   - type: textarea
     id: description
