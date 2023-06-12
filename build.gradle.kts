@@ -19,7 +19,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("io.github.bananapuncher714:nbteditor:7.18.5")
+    implementation("io.github.bananapuncher714:nbteditor:7.18.6")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
 }
