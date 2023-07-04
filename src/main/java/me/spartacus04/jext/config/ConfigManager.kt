@@ -13,7 +13,7 @@ class ConfigManager {
         private lateinit var configFile: File
         private lateinit var discsFile: File
 
-        private fun defaultConfig(plugin: JavaPlugin) {
+        private fun createDefaultConfig(plugin: JavaPlugin) {
             if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
 
             if(!configFile.exists()) {
@@ -34,12 +34,11 @@ class ConfigManager {
             )
         }
 
-        fun load(plugin: JavaPlugin) : Boolean {
+        fun load(plugin: JavaPlugin) {
             configFile = plugin.dataFolder.resolve("config.json")
             discsFile = plugin.dataFolder.resolve("discs.json")
 
-            defaultConfig(plugin)
-            if(!discsFile.exists()) return false
+            if(!configFile.exists()) createDefaultConfig(plugin)
 
             val configType = object : TypeToken<Config>() {}.type
             val discsType = object : TypeToken<List<Disc>>() {}.type
@@ -52,8 +51,6 @@ class ConfigManager {
 
             JukeboxContainer.reload(plugin)
             DiscPlayer.plugin = plugin
-
-            return true
         }
     }
 }

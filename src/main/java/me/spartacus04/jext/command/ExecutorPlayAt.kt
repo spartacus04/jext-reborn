@@ -1,7 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.LANG
-import me.spartacus04.jext.config.send
+import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.entity.Player
@@ -20,18 +19,16 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
         val location = try {
             ParameterLocation.parseLocation(args[1], args[2], args[3], sender)
         } catch (e: NumberFormatException) {
-            LANG.format(sender, "invalid-location")
-                .let { sender.send(it) }
-
+            sender.sendJEXTMessage("invalid-location")
             return true
         }
 
         val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
-            LANG.format(sender, "disc-namespace-not-found")
-                .replace("%namespace%", args[0])
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("disc-namespace-not-found", hashMapOf(
+                "namespace" to args[0]
+            ))
 
             return true
         }
@@ -43,10 +40,9 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val pitch = args[4].toFloat()
                 discPlayer.setPitch(pitch)
             } catch (e: NumberFormatException) {
-                LANG.format(sender, "wrong-number-format")
-                    .replace("%param%", "pitch")
-                    .let { sender.send(it) }
-
+                sender.sendJEXTMessage("wrong-number-format", hashMapOf(
+                    "param" to "pitch"
+                ))
                 return true
             }
         }
@@ -56,10 +52,9 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
                 val volume = args[5].toFloat()
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                LANG.format(sender, "wrong-number-format")
-                    .replace("%param%", "volume")
-                    .let { sender.send(it) }
-
+                sender.sendJEXTMessage("wrong-number-format", hashMapOf(
+                    "param" to "volume"
+                ))
                 return true
             }
         }

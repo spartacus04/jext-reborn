@@ -1,7 +1,7 @@
 package me.spartacus04.jext.command
 
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
-import me.spartacus04.jext.config.send
+import me.spartacus04.jext.config.sendJEXTMessage
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -34,8 +34,9 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
         command.setExecutor(this)
         command.tabCompleter = this
 
-        var usageMessage = "[Usage]:" + LANG.format(Bukkit.getConsoleSender(), "usage", true)
-            .replace("%command%", commandString)
+        var usageMessage = "[Usage]:" + LANG.getKey(Bukkit.getConsoleSender(), "usage", hashMapOf(
+            "command" to commandString
+        ))
 
         for (parameter in parameters) {
             usageMessage += " $parameter"
@@ -61,8 +62,7 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (!command.testPermissionSilent(sender)) {
-            LANG.format(sender, "missing_permission")
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("missing_permission")
 
             return true
         }
@@ -78,17 +78,17 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
     }
 
     open fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        LANG.format(sender, "invalid-runner")
-            .replace("%runner%", "console")
-            .let { sender.send(it) }
+        sender.sendJEXTMessage("invalid-runner", hashMapOf(
+            "runner" to "console"
+        ))
 
         return true
     }
 
     open fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        LANG.format(sender, "invalid-runner")
-            .replace("%runner%", "players")
-            .let { sender.send(it) }
+        sender.sendJEXTMessage("invalid-runner", hashMapOf(
+            "runner" to "players"
+        ))
 
         return true
     }

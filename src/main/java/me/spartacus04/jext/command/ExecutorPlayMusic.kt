@@ -1,7 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.LANG
-import me.spartacus04.jext.config.send
+import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.*
@@ -29,9 +28,9 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         val disc = ParameterDisc.getDisc(args[1])
         if (disc == null) {
-            LANG.format(sender, "disc-namespace-not-found")
-                .replace("%namespace%", args[1])
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("disc-namespace-not-found", hashMapOf(
+                "namespace" to args[1]
+            ))
 
             return true
         }
@@ -43,9 +42,9 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             pitch = try {
                 args[2].toFloat()
             } catch (e: NumberFormatException) {
-                LANG.format(sender, "wrong-number-format")
-                    .replace("%param%", "pitch")
-                    .let { sender.send(it) }
+                sender.sendJEXTMessage("wrong-number-format", hashMapOf(
+                    "param" to "pitch"
+                ))
 
                 return true
             }
@@ -61,9 +60,9 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 discPlayer.setPitch(pitch)
                 discPlayer.setVolume(volume)
             } catch (e: NumberFormatException) {
-                LANG.format(sender, "wrong-number-format")
-                    .replace("%param%", "volume")
-                    .let { sender.send(it) }
+                sender.sendJEXTMessage("wrong-number-format", hashMapOf(
+                    "param" to "volume"
+                ))
 
                 return true
             }
@@ -72,10 +71,9 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         for (player in players) {
             if (isMusic) {
                 player.playSound(player.location, DiscContainer(disc).namespace, SoundCategory.RECORDS, Float.MAX_VALUE, pitch)
-                LANG.format(sender, "music-now-playing")
-                    .replace("%name%", disc.TITLE)
-                    .let { sender.send(it) }
-
+                sender.sendJEXTMessage("music-now-playing", hashMapOf(
+                    "name" to disc.TITLE
+                ))
             } else {
                 discPlayer.play(player.location)
             }
@@ -84,18 +82,17 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         val playerCount = players.size
 
         if (playerCount >= 2) {
-            LANG.format(sender, "played-music-to-multiple")
-                .replace("%name%", disc.TITLE)
-                .replace("%playercount%", playerCount.toString())
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("played-music-to-multiple", hashMapOf(
+                "name" to disc.TITLE,
+                "playercount" to playerCount.toString()
+            ))
         } else if (playerCount == 1) {
-            LANG.format(sender, "played-music-to")
-                .replace("%name%", disc.TITLE)
-                .replace("%player%", players[0].name)
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("played-music-to", hashMapOf(
+                "name" to disc.TITLE,
+                "player" to players[0].name
+            ))
         } else {
-            LANG.format(sender, "played-music-to-no-one")
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("played-music-to-no-one")
         }
 
         return true

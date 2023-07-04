@@ -1,6 +1,6 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.jukebox.JukeboxContainer
 import me.spartacus04.jext.jukebox.JukeboxEntry
@@ -151,7 +151,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
-                        add(ConfigData.LANG.format("en_us", "playing", true))
+                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
                     }
                 }
             }

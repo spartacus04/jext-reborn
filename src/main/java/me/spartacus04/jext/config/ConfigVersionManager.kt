@@ -7,6 +7,7 @@ import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
+//region Config
 data class V1Config (
     @SerializedName("force-resource-pack")
     var FORCE_RESOURCE_PACK : Boolean,
@@ -192,7 +193,9 @@ data class V4Config (
         }
     }
 }
+//endregion
 
+//region Discs
 data class V1Disc(
     @SerializedName("title")
     var TITLE: String,
@@ -247,7 +250,7 @@ data class V2Disc(
         }
     }
 }
-
+//endregion
 class ConfigVersionManager {
     companion object {
         fun updateConfig(file: File, plugin: JavaPlugin) {

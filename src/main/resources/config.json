@@ -1,9 +1,9 @@
 {
-  // Schema (do not change, it adds autocomplete to this file)
+  // Schema (do not change, it adds autocompletion to this file)
   "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json",
 
 
-  // Language mode [ auto, custom or silent ]
+  // Language mode [ auto, custom, silent or a language code ]
   "lang": "auto",
 
   // Kick players who decline server resource pack

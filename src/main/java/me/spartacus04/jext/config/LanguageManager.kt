@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
+import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -14,33 +15,30 @@ import java.util.jar.JarFile
 import kotlin.collections.HashMap
 
 
-class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPlugin) {
-    private val loadedLanguageMap = HashMap<String, Map<String, String>>()
-
+class LanguageManager(private val plugin: JavaPlugin) {
+    private val languageMap = HashMap<String, Map<String, String>>()
     private var gson : Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
     init {
-        val path = "langs"
-
+        // this loads all languages in the languagemap
         JarFile(File(javaClass.protectionDomain.codeSource.location.path).absolutePath.replace("%20", " ")).use {
             val entries: Enumeration<JarEntry> = it.entries() //gives ALL entries in jar
             while (entries.hasMoreElements()) {
                 val element = entries.nextElement()
-                if (element.name.startsWith("$path/") && element.name.endsWith(".json")) {
-                    val langName = element.name.replaceFirst("$path/", "")
+                if (element.name.startsWith("langs/") && element.name.endsWith(".json")) {
+                    val langName = element.name.replaceFirst("langs/", "")
 
                     plugin.getResource("langs/$langName")!!.bufferedReader().use {file ->
                         val mapType = object : TypeToken<Map<String, String>>() {}.type
                         val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
 
-                        loadedLanguageMap.put(langName.replace(".json", "").lowercase(), languageMap)
+                        this.languageMap.put(langName.replace(".json", "").lowercase(), languageMap)
                     }
                 }
             }
         }
 
-        if(!autoMode) {
-            // Lets the server owner set a custom file
+        if(CONFIG.LANGUAGE_MODE.lowercase() == "custom") {
             val customFile = plugin.dataFolder.resolve("lang.json")
 
             if (!customFile.exists()) {
@@ -50,58 +48,78 @@ class LanguageManager(private val autoMode : Boolean, private val plugin: JavaPl
                 }
             }
 
-            ConfigVersionManager.updateLang(customFile, loadedLanguageMap["en_us"]!!)
+            ConfigVersionManager.updateLang(customFile, languageMap["en_us"]!!)
+
             customFile.bufferedReader().use {
                 val mapType = object : TypeToken<Map<String, String>>() {}.type
                 val languageMap : Map<String, String> = gson.fromJson(it.readText(), mapType)
 
-                loadedLanguageMap.put("custom", languageMap)
+                this.languageMap.put("custom", languageMap)
             }
         }
     }
 
-    fun getString(commandSender: CommandSender, key : String) : String {
-        if(!autoMode) {
-            return loadedLanguageMap["custom"]!![key]!!
+    fun replaceParameters(string: String, params: HashMap<String, String>) : String {
+        var newString = string
+
+        params.forEach { (key, value) ->
+            newString = newString.replace("%$key%", value)
         }
 
-        val locale = if (commandSender is Player) {
-            commandSender.locale
-        }
-        else {
-            "en_us"
+        return newString
+    }
+
+    fun getKey(commandSender: CommandSender, key: String, params: HashMap<String, String> = HashMap()) : String {
+        if(commandSender !is Player) {
+            return LANG.replaceParameters(languageMap["en_us"]!![key]!!, params)
         }
 
-        return if(loadedLanguageMap.containsKey(locale)) {
-            loadedLanguageMap[locale.lowercase()]!![key]!!
-        }
-        else {
-            loadedLanguageMap["en_us"]!![key]!!
+        return when(CONFIG.LANGUAGE_MODE.lowercase()) {
+            "auto" -> LANG.replaceParameters(languageMap[commandSender.locale]!![key]!!, params)
+            "custom" -> LANG.replaceParameters(languageMap["custom"]!![key]!!, params)
+            else -> {
+                val lang = if(hasLanguage(commandSender.locale)) commandSender.locale
+                else "en_us"
+
+                return LANG.replaceParameters(languageMap[lang]!![key]!!, params)
+            }
         }
     }
 
-    fun format(commandSender: CommandSender, key: String, noPrefix: Boolean = false) : String {
-        return if(noPrefix) getString(commandSender, key) else "[§aJEXT§f] ${getString(commandSender, key)}"
-    }
+    fun hasLanguage(locale: String) = languageMap.containsKey(locale.lowercase())
+    operator fun get(locale: String, key: String) = languageMap[locale.lowercase()]!![key]!!
 
-    fun format(locale: String, key: String, noPrefix: Boolean = false) : String {
-        val message = if(loadedLanguageMap.containsKey(locale)) {
-            loadedLanguageMap[locale.lowercase()]!![key]!!
-        }
-        else {
-            loadedLanguageMap["en_us"]!![key]!!
-        }
+    companion object {
+        const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extended Reborn, Do Re Mi!"
+        const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extended Reborn, Mi Re Do!"
 
-        return if(noPrefix) message else "[§aJEXT§f] $message"
-    }
-
-    fun hasLanguage(locale: String) : Boolean {
-        return  loadedLanguageMap.containsKey(locale.lowercase())
+        const val DISCS_NOT_FOUND = "[§cJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
+        const val UPDATE_DETECTED = "[§aJEXT§f] A new update is available!"
     }
 }
 
-fun CommandSender.send(message: String) {
-    if(CONFIG.LANGUAGE_MODE.lowercase() != "silent") {
-        sendMessage(message)
+fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> = HashMap()) {
+    if(this !is Player) {
+        return sendMessage(
+            LANG.replaceParameters("[§aJEXT§f] ${LANG["en_us", key]}", params)
+        )
+    }
+
+    when(CONFIG.LANGUAGE_MODE.lowercase()) {
+        "auto" -> sendMessage(
+            LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale, key]}", params)
+        )
+        "custom" -> sendMessage(
+            LANG.replaceParameters("[§aJEXT§f] ${LANG["custom", key]}", params)
+        )
+        "silent" -> {}
+        else -> {
+            val lang = if(LANG.hasLanguage(this.locale)) this.locale
+            else "en_us"
+
+            sendMessage(
+                LANG.replaceParameters("[§aJEXT§f] ${LANG[lang, key]}", params)
+            )
+        }
     }
 }

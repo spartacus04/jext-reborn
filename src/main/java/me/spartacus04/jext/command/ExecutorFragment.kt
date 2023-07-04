@@ -1,7 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData
-import me.spartacus04.jext.config.send
+import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.entity.Player
 
@@ -14,18 +13,18 @@ internal class ExecutorFragment : ExecutorAdapter("fragment") {
         val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
-            ConfigData.LANG.format(sender, "disc-namespace-not-found")
-                .replace("%namespace%", args[0])
-                .let { sender.send(it) }
+            sender.sendJEXTMessage("disc-namespace-not-found", hashMapOf(
+                "namespace" to args[0]
+            ))
 
             return true
         }
 
         sender.inventory.addItem(DiscContainer(disc).fragmentItem)
 
-        ConfigData.LANG.format(sender, "disc-command-success")
-            .replace("%disc%", disc.TITLE)
-            .let { sender.send(it) }
+        sender.sendJEXTMessage("disc-command-success", hashMapOf(
+            "disc" to disc.TITLE
+        ))
 
         return true
     }

@@ -16,11 +16,11 @@ internal class ResourceStatusListener(private val plugin: JavaPlugin) : Listener
         object : BukkitRunnable() {
             override fun run() {
                 if (status == PlayerResourcePackStatusEvent.Status.DECLINED && CONFIG.FORCE_RESOURCE_PACK) {
-                    e.player.kickPlayer(LANG.getString(e.player, "resource-pack-decline-kick-message"))
+                    e.player.kickPlayer(LANG.getKey(e.player, "resource-pack-decline-kick-message"))
                     return
                 }
                 if (status == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD && !CONFIG.IGNORE_FAILED_DOWNLOAD) {
-                    e.player.kickPlayer(LANG.getString(e.player, "failed-download-kick-message"))
+                    e.player.kickPlayer(LANG.getKey(e.player, "failed-download-kick-message"))
                     return
                 }
             }

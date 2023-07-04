@@ -16,7 +16,7 @@ class JukeboxContainer {
     private val id: String
     var location: Location
     val plugin: JavaPlugin
-    val inventory = Bukkit.createInventory(null, 54, LANG.format("en_us", "jukebox", true))
+    val inventory = Bukkit.createInventory(null, 54, LANG["en_us", "jukebox"])  // TODO: make this player dependant
 
     var playingLocation: Location? = null
     var playingSlot = -1
@@ -59,7 +59,7 @@ class JukeboxContainer {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
-                        add(LANG.format("en_us", "playing", true))
+                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
                     }
                 }
 
@@ -87,7 +87,7 @@ class JukeboxContainer {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
-                        add(LANG.format("en_us", "playing", true))
+                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
                     }
                 }
 
