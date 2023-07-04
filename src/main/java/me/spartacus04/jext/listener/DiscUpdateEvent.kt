@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
+//TODO: fix this, causes a lot of bugs
 internal class DiscUpdateEvent : Listener {
     @EventHandler(ignoreCancelled = true)
     fun playerJoinEvent(e : PlayerJoinEvent) {
