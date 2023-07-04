@@ -1,7 +1,7 @@
 package me.spartacus04.jext.disc
 
-import me.spartacus04.jext.SpigotVersion
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.Disc
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -150,17 +150,19 @@ class DiscContainer {
             SOUND_MAP[Material.MUSIC_DISC_WAIT] = SoundData(Sound.MUSIC_DISC_WAIT, 238)
             SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 252)
 
-            if(SpigotVersion.MAJORVERSION >= 16) {
+            if(VERSION >= "1.16") {
                 SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = SoundData(Sound.MUSIC_DISC_PIGSTEP, 149)
             }
 
-            if(SpigotVersion.MAJORVERSION >= 18) {
+            if(VERSION >= "1.18") {
                 SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 196)
             }
 
-            if(SpigotVersion.MAJORVERSION >= 19) {
+            if(VERSION >= "1.19") {
                 SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 179)
             }
+
+            // TODO: update to 1.20
         }
 
         data class SoundData(val sound: Sound, val duration: Int)

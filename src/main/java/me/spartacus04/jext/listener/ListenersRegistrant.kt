@@ -2,8 +2,7 @@ package me.spartacus04.jext.listener
 
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
-import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
-import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.plugin.java.JavaPlugin
@@ -26,11 +25,11 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(DiscUpdateEvent(), plugin)
             pluginManager.registerEvents(JukeboxGuiListener(plugin), plugin)
 
-            if(MAJORVERSION >= 19) {
+            if(VERSION >= "1.19") {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)
             }
 
-            if(MAJORVERSION == 19 && MINORVERSION >= 4 || MAJORVERSION >= 20) {
+            if(VERSION >= "1.19.4") {
                 try {
                     InventoryType.JUKEBOX
                     pluginManager.registerEvents(InventoryMoveItemEvent(), plugin)

@@ -95,6 +95,10 @@ class LanguageManager(private val plugin: JavaPlugin) {
 
         const val DISCS_NOT_FOUND = "[§cJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
         const val UPDATE_DETECTED = "[§aJEXT§f] A new update is available!"
+
+        fun load(plugin: JavaPlugin) {
+            LANG = LanguageManager(plugin)
+        }
     }
 }
 

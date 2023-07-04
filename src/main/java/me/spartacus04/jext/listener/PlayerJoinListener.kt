@@ -11,10 +11,10 @@ internal class PlayerJoinListener(private val plugin: JavaPlugin) : Listener {
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
         if (playerJoinEvent.player.hasPermission("jext.notifyupdate")) {
-            Updater(plugin, 103219).getVersion {
+            Updater(plugin).getVersion {
                 if(it != plugin.description.version) {
                     playerJoinEvent.player.sendMessage("[§aJEXT§f] A new update is available!")
-                    playerJoinEvent.player.sendMessage("§6[§2https://www.spigotmc.org/resources/jukebox-extended-reborn.103219/§6]")
+                    playerJoinEvent.player.sendMessage("§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]")
                 }
             }
         }

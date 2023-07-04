@@ -1,9 +1,8 @@
 package me.spartacus04.jext.disc
 
 import io.github.bananapuncher714.nbteditor.NBTEditor
-import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
-import me.spartacus04.jext.SpigotVersion.Companion.MINORVERSION
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.*
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -36,7 +35,7 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         location.world!!.playSound(location, namespace!!, SoundCategory.RECORDS, volume, pitch)
 
         if(location.block.type != Material.JUKEBOX) return
-        if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
+        if(VERSION < "1.19.4") return
 
         Bukkit.getScheduler().runTaskLater(plugin!!, Runnable {
             val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
@@ -52,7 +51,7 @@ class DiscPlayer(private val namespace: String?, private val duration: Int) {
         }
 
         if(location.block.type != Material.JUKEBOX) return
-        if(MAJORVERSION < 19 || MAJORVERSION == 19 && MINORVERSION < 4) return
+        if(VERSION < "1.19.4") return
 
         NBTEditor.set(location.block,NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
     }

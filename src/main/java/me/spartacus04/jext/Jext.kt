@@ -31,20 +31,14 @@ class Jext : JavaPlugin() {
     }
 
     private fun load() {
-        if(!dataFolder.resolve("discs.json").exists()) {
-            Bukkit.getConsoleSender().sendMessage(DISCS_NOT_FOUND)
-
-            throw FileNotFoundException(DISCS_NOT_FOUND)
-        }
-
-        SpigotVersion.load(this)
+        ServerVersion.load(this)
         JextNamespace.registerNamespace(this)
         ConfigManager.load(this)
-        LANG = LanguageManager(this)
+        LanguageManager.load(this)
         CommandsRegistrant.registerCommands(this)
         ListenersRegistrant.registerListeners(this)
 
-        Updater(this, 103219).getVersion {
+        Updater(this).getVersion {
             if(it != description.version) {
                 Bukkit.getConsoleSender().sendMessage(UPDATE_DETECTED)
             }

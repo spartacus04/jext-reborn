@@ -4,8 +4,10 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.disc.DiscPlayer
 import me.spartacus04.jext.jukebox.JukeboxContainer
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
+import java.io.FileNotFoundException
 import java.lang.reflect.Type
 
 class ConfigManager {
@@ -39,6 +41,11 @@ class ConfigManager {
             discsFile = plugin.dataFolder.resolve("discs.json")
 
             if(!configFile.exists()) createDefaultConfig(plugin)
+            if(!discsFile.exists()) {
+                Bukkit.getConsoleSender().sendMessage(LanguageManager.DISCS_NOT_FOUND)
+
+                throw FileNotFoundException("discs.json file not found!")
+            }
 
             val configType = object : TypeToken<Config>() {}.type
             val discsType = object : TypeToken<List<Disc>>() {}.type

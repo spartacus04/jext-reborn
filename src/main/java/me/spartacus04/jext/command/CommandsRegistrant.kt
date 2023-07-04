@@ -1,6 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.SpigotVersion.Companion.MAJORVERSION
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.plugin.java.JavaPlugin
 
 class CommandsRegistrant private constructor() {
@@ -14,7 +14,7 @@ class CommandsRegistrant private constructor() {
             ExecutorReload(plugin).registerTo(plugin)
             ExecutorJukeboxGui(plugin).registerTo(plugin)
 
-            if(MAJORVERSION >= 19) {
+            if(VERSION >= "1.19") {
                 ExecutorFragment().registerTo(plugin)
                 ExecutorFragmentGive().registerTo(plugin)
             }
