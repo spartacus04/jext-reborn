@@ -15,7 +15,7 @@ data class JukeboxEntry(
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            DiscPlayer(DiscContainer(disc)).play(location)
+            DiscContainer(disc).play(location)
 
             disc.DURATION
         } else {
@@ -31,7 +31,7 @@ data class JukeboxEntry(
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
 
-            DiscPlayer(DiscContainer(disc)).stop(location)
+            DiscPlayer.stop(location, DiscContainer(disc).namespace)
         } else {
             val material = Material.matchMaterial(value) ?: return
 

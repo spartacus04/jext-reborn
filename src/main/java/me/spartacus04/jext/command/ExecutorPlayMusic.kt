@@ -2,7 +2,6 @@ package me.spartacus04.jext.command
 
 import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
-import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.*
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -35,7 +34,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
             return true
         }
 
-        val discPlayer = DiscPlayer(DiscContainer(disc))
+        val discContainer = DiscContainer(disc)
 
         var pitch = 1.0f
         if (args.size >= 3) {
@@ -52,13 +51,12 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
 
         var isMusic = true
 
+        var volume = 4.0f
         if (args.size >= 4) {
             isMusic = false
 
             try {
-                val volume = args[3].toFloat()
-                discPlayer.setPitch(pitch)
-                discPlayer.setVolume(volume)
+                volume = args[3].toFloat()
             } catch (e: NumberFormatException) {
                 sender.sendJEXTMessage("wrong-number-format", hashMapOf(
                     "param" to "volume"
@@ -75,7 +73,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                     "name" to disc.TITLE
                 ))
             } else {
-                discPlayer.play(player.location)
+                discContainer.play(player.location, pitch, volume)
             }
         }
 

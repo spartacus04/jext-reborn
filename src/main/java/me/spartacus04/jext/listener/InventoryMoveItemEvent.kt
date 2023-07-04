@@ -23,8 +23,7 @@ internal class InventoryMoveItemEvent : Listener {
 
             try {
                 val container = DiscContainer(e.item)
-                DiscPlayer(container).play(e.destination.location!!)
-
+                container.play(e.destination.location!!)
             } catch (_: IllegalStateException) {
                 return
             }

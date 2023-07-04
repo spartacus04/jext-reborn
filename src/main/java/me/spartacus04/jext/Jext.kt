@@ -3,6 +3,7 @@ package me.spartacus04.jext
 import me.spartacus04.jext.command.CommandsRegistrant
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
 import me.spartacus04.jext.config.ConfigManager
 import me.spartacus04.jext.config.LanguageManager
 import me.spartacus04.jext.config.LanguageManager.Companion.DISABLED_MESSAGE
@@ -31,6 +32,7 @@ class Jext : JavaPlugin() {
     }
 
     private fun load() {
+        PLUGIN = this
         ServerVersion.load(this)
         JextNamespace.registerNamespace(this)
         ConfigManager.load(this)

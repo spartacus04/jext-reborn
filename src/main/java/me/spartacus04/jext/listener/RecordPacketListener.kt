@@ -39,14 +39,7 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
             }
 
             object : BukkitRunnable() {
-                override fun run() {
-                    player.stopSound(
-                        DiscContainer.SOUND_MAP[container.material]!!.sound,
-                        SoundCategory.RECORDS
-                    )
-
-                    actionBarDisplay(player, container)
-                }
+                override fun run() = actionBarDisplay(player, container)
             }.runTaskLater(plugin, 1)
         }
     }

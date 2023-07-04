@@ -57,7 +57,6 @@ class ConfigManager {
             ConfigData.DISCS = deserialize(discsFile, discsType)
 
             JukeboxContainer.reload(plugin)
-            DiscPlayer.plugin = plugin
         }
     }
 }

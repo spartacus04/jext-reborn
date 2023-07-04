@@ -38,23 +38,17 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         if(state.record.type == Material.AIR) {
             try {
                 val disc = event.item ?: return
-
                 val discContainer = DiscContainer(disc)
 
-                val discPlayer = DiscPlayer(discContainer)
-
-                discPlayer.play(location)
+                discContainer.play(location)
             } catch (_: IllegalStateException) { }
         }
         else {
             try {
                 val disc = state.record
-
                 val discContainer = DiscContainer(disc)
 
-                val discPlayer = DiscPlayer(discContainer)
-
-                discPlayer.stop(location)
+                DiscPlayer.stop(location, discContainer.namespace)
             } catch (_: IllegalStateException) { }
         }
     }
@@ -78,12 +72,9 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
 
         try {
             val disc = state.record
-
             val discContainer = DiscContainer(disc)
 
-            val discPlayer = DiscPlayer(discContainer)
-
-            discPlayer.stop(block.location)
+            DiscPlayer.stop(loc, discContainer.namespace)
         } catch (_: IllegalStateException) { }
     }
 

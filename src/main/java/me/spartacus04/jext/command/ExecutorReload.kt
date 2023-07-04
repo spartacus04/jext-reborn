@@ -20,7 +20,7 @@ internal class ExecutorReload(private val plugin: JavaPlugin) : ExecutorAdapter(
 
     private fun mergedExecute(sender: CommandSender): Boolean {
         ConfigManager.load(plugin)
-        LANG = LanguageManager(plugin)
+        LanguageManager.load(plugin)
 
         sender.sendJEXTMessage("reloaded")
         return true

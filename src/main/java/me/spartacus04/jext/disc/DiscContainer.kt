@@ -1,41 +1,31 @@
 package me.spartacus04.jext.disc
 
+import io.github.bananapuncher714.nbteditor.NBTEditor
+import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
+import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.Disc
-import org.bukkit.ChatColor
-import org.bukkit.Material
-import org.bukkit.Sound
+import org.bukkit.*
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
 class DiscContainer {
-    private var title: String
-
-    var author: String
-        private set
-
-    var namespace: String
-        private set
-
-    @SuppressWarnings
-    var duration: Int = -1
-        private set
-
-
-    private var customModelData = 0
-    private var creeperDrop = false
-    private var lores: ArrayList<String>
-
-
+    private val title: String
+    val author: String
+    val namespace: String
+    val duration: Int
+    private val customModelData : Int
+    private val lores: ArrayList<String>
     val material: Material = Material.MUSIC_DISC_11
+
+    override fun toString() = title
 
     constructor(data: Disc) {
         title = data.TITLE
         author = data.AUTHOR
         namespace = data.DISC_NAMESPACE
         customModelData = data.MODEL_DATA
-        creeperDrop = data.CREEPER_DROP
         lores = data.LORE.toCollection(ArrayList())
         duration = data.DURATION
     }
@@ -52,13 +42,13 @@ class DiscContainer {
 
             lores = DISCS.find { it.DISC_NAMESPACE == namespace }?.LORE?.toCollection(ArrayList()) ?: ArrayList()
             duration = DISCS.find { it.DISC_NAMESPACE == namespace }?.DURATION ?: -1
+            // TODO: disc fixer if needed
         } else {
             throw IllegalStateException("Custom disc identifier missing!")
         }
     }
 
-
-    // Store custom disc data
+    // region items
     val discItem: ItemStack
         get() {
             val disc = ItemStack(material)
@@ -101,6 +91,7 @@ class DiscContainer {
 
             return fragment
         }
+    //endregion
 
     fun getProcessedLores(): ArrayList<String> {
         val lores = ArrayList<String>()
@@ -108,10 +99,6 @@ class DiscContainer {
         lores.addAll(this.lores)
 
         return lores
-    }
-
-    override fun toString(): String {
-        return title
     }
 
     private fun isCustomDisc(disc: ItemStack): Boolean {
@@ -131,6 +118,28 @@ class DiscContainer {
         }
 
         return true
+    }
+
+    fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
+        if (!ConfigData.CONFIG.ALLOW_MUSIC_OVERLAPPING) {
+            DiscPlayer.stop(location, namespace)
+        }
+
+        location.world!!.playSound(location, namespace, SoundCategory.RECORDS, volume, pitch)
+
+        if(location.block.type != Material.JUKEBOX) return
+
+        Bukkit.getScheduler().runTaskLater(PLUGIN, Runnable {
+            location.world!!.players.forEach {
+                it.stopSound(
+                    SOUND_MAP[material]!!.sound,
+                    SoundCategory.RECORDS
+                )
+            }
+
+            val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
+            NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
+        }, 5)
     }
 
     companion object {
@@ -162,7 +171,9 @@ class DiscContainer {
                 SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 179)
             }
 
-            // TODO: update to 1.20
+            if(VERSION >= "1.20") {
+                SOUND_MAP[Material.MUSIC_DISC_RELIC] = SoundData(Sound.MUSIC_DISC_RELIC, 218)
+            }
         }
 
         data class SoundData(val sound: Sound, val duration: Int)
