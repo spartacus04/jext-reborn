@@ -10,11 +10,8 @@ enum class JextNamespace(val key: String) {
     IDENTIFIER("jext.identifier"),
     TITLE("jext.title");
 
-    private var namespacedKey: NamespacedKey? = null
-    fun get(): NamespacedKey? {
-        if (namespacedKey == null) throw NullPointerException("Namespace not registered.")
-        return namespacedKey
-    }
+    private lateinit var namespacedKey: NamespacedKey
+    operator fun invoke(): NamespacedKey = namespacedKey
 
     companion object {
         fun registerNamespace(plugin: JavaPlugin) {

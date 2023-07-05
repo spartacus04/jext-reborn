@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.asKotlinRandom
 
-class CreeperCustomDiscLootTable : LootTable {
+class CreeperDiscLootTable : LootTable {
     companion object {
         private val creeperDroppableDiscs: MutableList<ItemStack> = arrayListOf(
             ItemStack(Material.MUSIC_DISC_11),
@@ -31,7 +31,7 @@ class CreeperCustomDiscLootTable : LootTable {
     }
 
     override fun getKey(): NamespacedKey {
-        return JextNamespace.CREEPER_LOOTTABLE.get()!!
+        return JextNamespace.CREEPER_LOOTTABLE()
     }
 
     override fun populateLoot(random: Random?, context: LootContext): MutableCollection<ItemStack> {

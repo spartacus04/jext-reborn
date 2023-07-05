@@ -1,6 +1,6 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.disc.CreeperCustomDiscLootTable
+import me.spartacus04.jext.disc.CreeperDiscLootTable
 import org.bukkit.entity.Creeper
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -19,8 +19,10 @@ internal class CreeperDeathListener : Listener {
         if (disc != null) {
             event.drops.remove(disc)
 
-            val lootTable = CreeperCustomDiscLootTable()
-            val discItem = lootTable.populateLoot(null, LootContext.Builder(event.entity.location).build())
+            val discItem = CreeperDiscLootTable().populateLoot(
+                null,
+                LootContext.Builder(event.entity.location).build()
+            )
             event.drops.addAll(discItem)
         }
     }

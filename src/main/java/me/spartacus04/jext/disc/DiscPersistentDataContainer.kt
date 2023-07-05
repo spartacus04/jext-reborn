@@ -15,12 +15,12 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
 
     var title: String?
         get() = container.get(
-            JextNamespace.TITLE.get()!!,
+            JextNamespace.TITLE(),
             PersistentDataType.STRING
         )
         set(value) {
             container.set(
-                JextNamespace.TITLE.get()!!,
+                JextNamespace.TITLE(),
                 PersistentDataType.STRING,
                 value!!
             )
@@ -28,12 +28,12 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
 
     var author: String?
         get() = container.get(
-            JextNamespace.AUTHOR.get()!!,
+            JextNamespace.AUTHOR(),
             PersistentDataType.STRING
         )
         set(value) {
             container.set(
-                JextNamespace.AUTHOR.get()!!,
+                JextNamespace.AUTHOR(),
                 PersistentDataType.STRING,
                 value!!
             )
@@ -41,12 +41,12 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
 
     var namespaceID: String?
         get() = container.get(
-            JextNamespace.NAMESPACE_ID.get()!!,
+            JextNamespace.NAMESPACE_ID(),
             PersistentDataType.STRING
         )
         set(value) {
             container.set(
-                JextNamespace.NAMESPACE_ID.get()!!,
+                JextNamespace.NAMESPACE_ID(),
                 PersistentDataType.STRING,
                 value!!
             )
@@ -54,17 +54,14 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
 
     fun setIdentifier() {
         container.set(
-            JextNamespace.IDENTIFIER.get()!!,
+            JextNamespace.IDENTIFIER(),
             PersistentDataType.STRING,
             id
         )
     }
 
-    fun checkIdentifier(): Boolean {
-        val value = container.get(
-            JextNamespace.IDENTIFIER.get()!!,
-            PersistentDataType.STRING
-        )
-        return value == id
-    }
+    fun checkIdentifier(): Boolean = container.get(
+        JextNamespace.IDENTIFIER(),
+        PersistentDataType.STRING
+    ) == id
 }
