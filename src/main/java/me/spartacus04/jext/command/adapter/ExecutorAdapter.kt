@@ -34,7 +34,7 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
         command.setExecutor(this)
         command.tabCompleter = this
 
-        var usageMessage = "[Usage]:" + LANG.getKey(Bukkit.getConsoleSender(), "usage", hashMapOf(
+        var usageMessage = LANG.getKey(Bukkit.getConsoleSender(), "usage", hashMapOf(
             "command" to commandString
         ))
 

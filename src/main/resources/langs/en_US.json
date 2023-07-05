@@ -33,5 +33,5 @@
   "missing-permission": "§cYou don't have permission to use this command!",
   "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
   "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
-  "usage": "§6/%command%"
+  "usage": "[Usage]: §6/%command%"
 }
