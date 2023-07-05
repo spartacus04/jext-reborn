@@ -17,7 +17,7 @@ class DiscContainer {
     val duration: Int
     private val customModelData : Int
     private val lores: ArrayList<String>
-    val material: Material = Material.MUSIC_DISC_11
+    private val material: Material = Material.MUSIC_DISC_11
 
     override fun toString() = title
 
@@ -42,7 +42,6 @@ class DiscContainer {
 
             lores = DISCS.find { it.DISC_NAMESPACE == namespace }?.LORE?.toCollection(ArrayList()) ?: ArrayList()
             duration = DISCS.find { it.DISC_NAMESPACE == namespace }?.DURATION ?: -1
-            // TODO: disc fixer if needed
         } else {
             throw IllegalStateException("Custom disc identifier missing!")
         }
@@ -93,7 +92,7 @@ class DiscContainer {
         }
     //endregion
 
-    fun getProcessedLores(): ArrayList<String> {
+    private fun getProcessedLores(): ArrayList<String> {
         val lores = ArrayList<String>()
         lores.add("${ChatColor.GRAY}$author - $title")
         lores.addAll(this.lores)
@@ -142,6 +141,16 @@ class DiscContainer {
         }, 5)
     }
 
+    override operator fun equals(other: Any?): Boolean {
+        if(other !is DiscContainer) return false
+
+        return other.namespace == namespace &&
+                other.title == title &&
+                other.author == author &&
+                other.duration == duration &&
+                other.lores == lores
+    }
+
     companion object {
         val SOUND_MAP = HashMap<Material, SoundData>()
 
@@ -179,3 +188,13 @@ class DiscContainer {
         data class SoundData(val sound: Sound, val duration: Int)
     }
 }
+
+val Material.isRecordFragment: Boolean
+    get() {
+        if(VERSION < "1.19") return false
+
+        return when (this) {
+            Material.DISC_FRAGMENT_5 -> true
+            else -> false
+        }
+    }

@@ -4,6 +4,7 @@ import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.disc.DiscContainer
+import me.spartacus04.jext.disc.isRecordFragment
 import org.bukkit.Material
 import org.bukkit.block.Chest
 import org.bukkit.entity.EntityType
@@ -19,14 +20,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
-
-val Material.isRecordFragment: Boolean
-    get() {
-        return when (this) {
-            Material.DISC_FRAGMENT_5 -> true
-            else -> false
-        }
-    }
 
 internal class ChestOpenEvent : Listener {
     data class ChanceStack(val chance: Int, val stack: ItemStack)

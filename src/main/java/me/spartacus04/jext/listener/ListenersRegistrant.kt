@@ -23,7 +23,7 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(CreeperDeathListener(), plugin)
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
-            pluginManager.registerEvents(DiscUpdateEvent(), plugin)
+            pluginManager.registerEvents(DiscReplaceEvent(), plugin)
             pluginManager.registerEvents(JukeboxGuiListener(plugin), plugin)
 
             if(VERSION >= "1.19") {
