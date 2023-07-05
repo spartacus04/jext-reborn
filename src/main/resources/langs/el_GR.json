@@ -1,6 +1,7 @@
 {
   "now-playing": "§6Τώρα παίζει: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Τώρα παίζει: §a%title%",
+  "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Παρακαλώ ενεργοποιήστε το πακέτο πόρων για τη μουσική!",
   "failed-download-kick-message": "Η λήψη του πακέτου πόρων απέτυχε, παρακαλώ ξανασυνδεθείτε για να προσπαθήσετε ξανά.",
   "jukebox": "§bJukebox",
@@ -24,7 +25,8 @@
   "stopped-music-for": "§fStopped μουσική για §6%player%§f!",
   "stopped-music-for-no-one": "§fStopped μουσική για κανένα παίκτη, κάτι πήγε στραβά!",
   "reloaded": "§cReloaded!",
-  "missing_permission": "§cΔεν έχεις άδεια να χρησιμοποιήσεις αυτήν την εντολή!",
-  "invalid_runner": "§cΑυτή η εντολή μπορεί να εκτελεστεί μόνο από §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cYou don't have permission to use this command!",
+  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
+  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
