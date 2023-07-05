@@ -3,6 +3,7 @@ package me.spartacus04.jext.listener
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
+import me.spartacus04.jext.config.LanguageManager.Companion.VULNERABLE_MESSAGE
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.plugin.java.JavaPlugin
@@ -34,8 +35,7 @@ class ListenersRegistrant private constructor() {
                     InventoryType.JUKEBOX
                     pluginManager.registerEvents(InventoryMoveItemEvent(), plugin)
                 } catch (e: NoSuchFieldError) {
-                    Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it.§f" +
-                            "\n§cIf you see this message again after updating please run BuildTools.")
+                    Bukkit.getConsoleSender().sendMessage(VULNERABLE_MESSAGE)
                 }
             }
         }

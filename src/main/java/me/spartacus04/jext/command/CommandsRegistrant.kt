@@ -13,11 +13,8 @@ class CommandsRegistrant private constructor() {
             ExecutorStopMusic().registerTo(plugin)
             ExecutorReload(plugin).registerTo(plugin)
             ExecutorJukeboxGui(plugin).registerTo(plugin)
-
-            if(VERSION >= "1.19") {
-                ExecutorFragment().registerTo(plugin)
-                ExecutorFragmentGive().registerTo(plugin)
-            }
+            ExecutorFragment().registerTo(plugin)
+            ExecutorFragmentGive().registerTo(plugin)
         }
     }
 }

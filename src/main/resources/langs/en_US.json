@@ -2,6 +2,8 @@
   "now-playing": "§6Now playing: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Now playing: §a%title%",
 
+  "update-available": "A new update is available!",
+
   "resource-pack-decline-kick-message": "Please enable resource pack for the music!",
   "failed-download-kick-message": "Resource pack download failed, please re-join to try again.",
 
@@ -28,7 +30,8 @@
   "stopped-music-for-no-one": "§fStopped music for no player, something went wrong!",
   "reloaded": "§cReloaded!",
 
-  "missing_permission": "§cYou don't have permission to use this command!",
-  "invalid_runner": "§cThis command can only be run by §6%runner%§c.",
+  "missing-permission": "§cYou don't have permission to use this command!",
+  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
+  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
   "usage": "§6/%command%"
 }

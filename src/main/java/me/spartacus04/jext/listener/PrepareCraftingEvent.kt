@@ -11,8 +11,7 @@ internal class PrepareCraftingEvent : Listener {
 
     @EventHandler
     fun prepareCraftingEvent(e: PrepareItemCraftEvent) {
-        val isDisc = e.inventory.result != null && e.inventory.result!!.type == Material.MUSIC_DISC_5
-        if(!isDisc) return
+        if(e.inventory.result == null || e.inventory.result!!.type != Material.MUSIC_DISC_5) return
 
         val isCustomDisc = e.inventory.matrix.any {
             try {

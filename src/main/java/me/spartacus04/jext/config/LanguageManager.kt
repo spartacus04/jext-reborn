@@ -92,9 +92,12 @@ class LanguageManager(private val plugin: JavaPlugin) {
     companion object {
         const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extended Reborn, Do Re Mi!"
         const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extended Reborn, Mi Re Do!"
-
         const val DISCS_NOT_FOUND = "[§cJEXT§f] §cDiscs.json file not found please provide it in the plugin directory\n§6[§2https://github.com/spartacus04/jext-reborn/wiki/How-to-set-up-the-plugin§6]"
         const val UPDATE_DETECTED = "[§aJEXT§f] A new update is available!"
+        const val UPDATE_LINK = "§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]"
+        const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
+        const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
+        const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
 
         fun load(plugin: JavaPlugin) {
             LANG = LanguageManager(plugin)

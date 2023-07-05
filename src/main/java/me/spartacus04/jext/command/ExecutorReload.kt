@@ -1,7 +1,6 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
-import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.command.adapter.ExecutorAdapter
 import me.spartacus04.jext.config.ConfigManager
 import me.spartacus04.jext.config.LanguageManager
 import me.spartacus04.jext.config.sendJEXTMessage

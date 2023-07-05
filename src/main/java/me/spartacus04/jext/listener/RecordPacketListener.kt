@@ -38,13 +38,11 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
                 return
             }
 
-            object : BukkitRunnable() {
-                override fun run() = actionBarDisplay(player, container)
-            }.runTaskLater(plugin, 1)
+            actionBarDisplay(player, container)
         }
     }
 
-    fun actionBarDisplay(player: Player, container: DiscContainer) {
+    private fun actionBarDisplay(player: Player, container: DiscContainer) {
         player.spigot().sendMessage(
             ChatMessageType.ACTION_BAR,
             *TextComponent.fromLegacyText(

@@ -1,5 +1,6 @@
 package me.spartacus04.jext.command
 
+import me.spartacus04.jext.command.adapter.ExecutorAdapter
 import me.spartacus04.jext.jukebox.JukeboxContainer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin

@@ -1,5 +1,8 @@
 package me.spartacus04.jext.command
 
+import me.spartacus04.jext.command.adapter.ExecutorAdapter
+import me.spartacus04.jext.command.adapter.ParameterDisc
+import me.spartacus04.jext.command.adapter.ParameterPlayer
 import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender

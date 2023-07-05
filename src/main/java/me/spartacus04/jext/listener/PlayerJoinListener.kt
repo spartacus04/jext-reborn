@@ -2,6 +2,10 @@ package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.Updater
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.LanguageManager.Companion.CROWDIN_LINK
+import me.spartacus04.jext.config.LanguageManager.Companion.CROWDIN_MESSAGE
+import me.spartacus04.jext.config.LanguageManager.Companion.UPDATE_LINK
+import me.spartacus04.jext.config.sendJEXTMessage
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -13,15 +17,15 @@ internal class PlayerJoinListener(private val plugin: JavaPlugin) : Listener {
         if (playerJoinEvent.player.hasPermission("jext.notifyupdate")) {
             Updater(plugin).getVersion {
                 if(it != plugin.description.version) {
-                    playerJoinEvent.player.sendMessage("[§aJEXT§f] A new update is available!")
-                    playerJoinEvent.player.sendMessage("§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]")
+                    playerJoinEvent.player.sendJEXTMessage("update-available")
+                    playerJoinEvent.player.sendMessage(UPDATE_LINK)
                 }
             }
         }
 
         if(!LANG.hasLanguage(playerJoinEvent.player.locale)) {
-            playerJoinEvent.player.sendMessage("[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?")
-            playerJoinEvent.player.sendMessage("§6[§2https://crwd.in/jext-reborn§6]")
+            playerJoinEvent.player.sendMessage(CROWDIN_MESSAGE)
+            playerJoinEvent.player.sendMessage(CROWDIN_LINK)
         }
     }
 }

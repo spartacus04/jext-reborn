@@ -1,5 +1,10 @@
 package me.spartacus04.jext.command
 
+import me.spartacus04.jext.command.adapter.ExecutorAdapter
+import me.spartacus04.jext.command.adapter.ParameterDisc
+import me.spartacus04.jext.command.adapter.ParameterPlayer
+import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.command.CommandSender
@@ -20,6 +25,13 @@ internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
     }
 
     private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+        if(VERSION < "1.19") {
+            sender.sendJEXTMessage("command-not-supported", hashMapOf(
+                "command" to "fragmentgive",
+                "reason" to "not supported in < 1.19"
+            ))
+        }
+
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
         val disc = ParameterDisc.getDisc(args[1])
