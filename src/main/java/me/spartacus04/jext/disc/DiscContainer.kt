@@ -14,7 +14,7 @@ class DiscContainer {
     private val title: String
     val author: String
     val namespace: String
-    val duration: Int
+    private val duration: Int
     private val customModelData : Int
     private val lores: ArrayList<String>
     private val material: Material = Material.MUSIC_DISC_11
@@ -144,12 +144,20 @@ class DiscContainer {
     override operator fun equals(other: Any?): Boolean {
         if(other !is DiscContainer) return false
 
-        return other.namespace == namespace &&
-                other.title == title &&
-                other.author == author &&
-                other.duration == duration &&
-                other.lores == lores
+        return hashCode() == other.hashCode()
     }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + author.hashCode()
+        result = 31 * result + namespace.hashCode()
+        result = 31 * result + duration
+        result = 31 * result + customModelData
+        result = 31 * result + lores.hashCode()
+        result = 31 * result + material.hashCode()
+        return result
+    }
+
 
     companion object {
         val SOUND_MAP = HashMap<Material, SoundData>()
