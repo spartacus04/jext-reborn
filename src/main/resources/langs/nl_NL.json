@@ -1,6 +1,7 @@
 {
   "now-playing": "§6Speelt nu: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Speelt nu: §a%title%",
+  "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Activeer bronpakket voor de muziek!",
   "failed-download-kick-message": "Downloaden van bronpakket mislukt, gelieve opnieuw aan te melden om het opnieuw te proberen.",
   "jukebox": "§bJukebox",
@@ -24,7 +25,8 @@
   "stopped-music-for": "§fGestopte muziek voor §6%player%§f!",
   "stopped-music-for-no-one": "§fGestopte muziek voor geen speler, er ging iets mis!",
   "reloaded": "§cHerladen!",
-  "missing_permission": "§cJe hebt geen toestemming om dit commando te gebruiken!",
-  "invalid_runner": "§cDit commando kan alleen uitgevoerd worden door §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cYou don't have permission to use this command!",
+  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
+  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
