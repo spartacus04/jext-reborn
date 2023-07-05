@@ -39,6 +39,8 @@ body:
       label: Server Version
       description: Select the server version
       options:
+        - 1.20.1
+        - 1.20
         - 1.19.4
         - 1.19.3
         - 1.19.2
@@ -74,6 +76,7 @@ body:
         - Spigot
         - Paper
         - Purpur
+        - Folia
     validations:
       required: true
   - type: textarea
