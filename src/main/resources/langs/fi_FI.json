@@ -1,6 +1,7 @@
 {
   "now-playing": "§6Nyt pelataan: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Nyt pelataan: §a%title%",
+  "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Ole hyvä ja ota musiikin resurssipaketti käyttöön!",
   "failed-download-kick-message": "Resurssipaketin lataaminen epäonnistui, liity uudelleen yrittääksesi uudelleen.",
   "jukebox": "§bJukeboksi",
@@ -24,7 +25,8 @@
   "stopped-music-for": "§fPysäytetty musiikki §6%player%§f!",
   "stopped-music-for-no-one": "§fPysäytetty musiikki ilman pelaajaa, jokin meni pieleen!",
   "reloaded": "§cLadattu!",
-  "missing_permission": "§cSinulla ei ole lupaa käyttää tätä komentoa!",
-  "invalid_runner": "§cTämän komennon voi suorittaa vain §6%runner%§c toimesta.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cYou don't have permission to use this command!",
+  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
+  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
