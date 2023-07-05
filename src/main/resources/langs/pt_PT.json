@@ -1,6 +1,7 @@
 {
   "now-playing": "§6Tocando agora: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Tocando agora: §a%title%",
+  "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Por favor, ative o pacote de recursos para a música!",
   "failed-download-kick-message": "Falha ao baixar o pacote de recursos, por favor, entre novamente para tentar novamente.",
   "jukebox": "§bToca-discos",
@@ -24,7 +25,8 @@
   "stopped-music-for": "§fParada de música por §6%player%§f!",
   "stopped-music-for-no-one": "§fParada de música para nenhum tocador, algo deu errado!",
   "reloaded": "§cRecarregado!",
-  "missing_permission": "§cVocê não tem permissão para usar esse comando!",
-  "invalid_runner": "§cEsse comando só pode ser executado por §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cYou don't have permission to use this command!",
+  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
+  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
