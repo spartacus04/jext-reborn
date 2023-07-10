@@ -1,6 +1,5 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.JextNamespace
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.Material
@@ -10,7 +9,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
 import kotlin.random.Random
 
 class BlockBrushEvent : Listener {
