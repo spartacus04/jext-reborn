@@ -17,7 +17,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.18.6")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -26,8 +26,8 @@ dependencies {
 
 group = "me.spartacus04.jext"
 description = "jukebox-extended-reborn"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 version = "1.1.3"
 
 tasks {
@@ -47,12 +47,9 @@ tasks {
     }
 }
 
-java {
-    val javaVersion = JavaVersion.toVersion(17)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if(JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 

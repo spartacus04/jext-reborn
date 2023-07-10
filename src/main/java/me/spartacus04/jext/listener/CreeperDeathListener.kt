@@ -1,11 +1,12 @@
 package me.spartacus04.jext.listener
 
-import me.spartacus04.jext.disc.CreeperDiscLootTable
+import me.spartacus04.jext.disc.DiscLootTable
 import org.bukkit.entity.Creeper
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.loot.LootContext
+import java.util.*
 
 internal class CreeperDeathListener : Listener {
     @EventHandler(ignoreCancelled = true)
@@ -19,10 +20,11 @@ internal class CreeperDeathListener : Listener {
         if (disc != null) {
             event.drops.remove(disc)
 
-            val discItem = CreeperDiscLootTable().populateLoot(
+            val discItem = DiscLootTable().populateLoot(
                 null,
                 LootContext.Builder(event.entity.location).build()
             )
+
             event.drops.addAll(discItem)
         }
     }

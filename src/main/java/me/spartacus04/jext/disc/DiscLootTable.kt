@@ -2,17 +2,19 @@ package me.spartacus04.jext.disc
 
 import me.spartacus04.jext.JextNamespace
 import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
+import me.spartacus04.jext.listener.ChestOpenEvent
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootContext
 import org.bukkit.loot.LootTable
+import org.bukkit.loot.LootTables
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.asKotlinRandom
 
-class CreeperDiscLootTable : LootTable {
+class DiscLootTable : LootTable {
     companion object {
         private val creeperDroppableDiscs: MutableList<ItemStack> = arrayListOf(
             ItemStack(Material.MUSIC_DISC_11),
@@ -30,9 +32,7 @@ class CreeperDiscLootTable : LootTable {
         )
     }
 
-    override fun getKey(): NamespacedKey {
-        return JextNamespace.CREEPER_LOOTTABLE()
-    }
+    override fun getKey() = JextNamespace.CREEPER_LOOTTABLE()
 
     override fun populateLoot(random: Random?, context: LootContext): MutableCollection<ItemStack> {
         val list = ArrayList<ItemStack>()
@@ -46,5 +46,5 @@ class CreeperDiscLootTable : LootTable {
         return arrayListOf(list.random((random ?: Random()).asKotlinRandom()))
     }
 
-    override fun fillInventory(inventory: Inventory, random: Random?, context: LootContext) { }
+    override fun fillInventory(inventory: Inventory, rnd: Random?, context: LootContext) { }
 }

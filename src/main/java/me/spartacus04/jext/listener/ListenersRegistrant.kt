@@ -38,6 +38,10 @@ class ListenersRegistrant private constructor() {
                     Bukkit.getConsoleSender().sendMessage(VULNERABLE_MESSAGE)
                 }
             }
+
+            if(VERSION >= "1.20") {
+                pluginManager.registerEvents(BlockBrushEvent(), plugin)
+            }
         }
     }
 }

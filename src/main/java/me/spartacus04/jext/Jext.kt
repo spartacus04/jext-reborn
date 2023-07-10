@@ -10,6 +10,7 @@ import me.spartacus04.jext.config.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.config.LanguageManager.Companion.UPDATE_DETECTED
 import me.spartacus04.jext.listener.ListenersRegistrant
 import org.bstats.bukkit.Metrics
+import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -46,6 +47,12 @@ class Jext : JavaPlugin() {
         // Start metrics if allowed
         if(!CONFIG.ALLOW_METRICS) return
 
-        Metrics(this, 16571)
+        val metrics = Metrics(this, 16571)
+
+        // TODO: update this when reworking juke gui
+        metrics.addCustomChart(SimplePie("juke_gui") {
+            if(CONFIG.JUKEBOX_GUI) return@SimplePie "Jukebox GUI"
+            return@SimplePie "Vanilla"
+        })
     }
 }

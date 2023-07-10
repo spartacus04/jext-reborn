@@ -55,13 +55,17 @@ internal class ChestOpenEvent : Listener {
 
         if(VERSION >= "1.18") {
             discsMap[LootTables.SIMPLE_DUNGEON.key.key]!!.add(ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE)))
+
+            discsMap[LootTables.STRONGHOLD_CORRIDOR.key.key] = arrayListOf(
+                ChanceStack(25, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+            )
         }
 
         if(VERSION >= "1.19") {
             discsMap[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
                 ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
                 ChanceStack(161, ItemStack(Material.MUSIC_DISC_CAT)),
-                ChanceStack(81, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
+                ChanceStack(84, ItemStack(Material.MUSIC_DISC_OTHERSIDE)),
             )
 
             discFragmentMap[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
@@ -70,14 +74,13 @@ internal class ChestOpenEvent : Listener {
         }
 
         DISCS.forEach {
-            it.LOOT_TABLES?.forEachIndexed { _, lootTable ->
+            it.LOOT_TABLES?.forEach { lootTable ->
                 if (discsMap.containsKey(lootTable)) {
                     discsMap[lootTable]!!.add(ChanceStack(CONFIG.DISCS_RANDOM_CHANCE, DiscContainer(it).discItem))
                 } else {
                     discsMap[lootTable] = arrayListOf(ChanceStack(CONFIG.DISCS_RANDOM_CHANCE, DiscContainer(it).discItem))
                 }
             }
-
 
             if(VERSION < "1.19") return@forEach
 
@@ -108,11 +111,12 @@ internal class ChestOpenEvent : Listener {
 
         var discAmount = Random.nextInt(0, discMaxAmount + 1)
 
-        discsMap[key]?.forEach { chanceStack ->
+        discsMap[key]?.apply{ shuffle() }?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
                 var size = inventory.size
 
                 while (size > 0 && discAmount > 0) {
+
                     val slot = Random.nextInt(0, size)
                     val item = inventory.getItem(slot)
 
@@ -145,27 +149,21 @@ internal class ChestOpenEvent : Listener {
 
         var fragmentAmount = Random.nextInt(0, fragmentMaxAmount + 1)
 
-        discFragmentMap[key]?.forEach { chanceStack ->
+        discFragmentMap[key]?.apply{ shuffle() }?.forEach { chanceStack ->
             if (Random.nextInt(0, 1001) < chanceStack.chance) {
                 val number = if(fragmentAmount > 3) Random.nextInt(0, 4)
                 else Random.nextInt(0, fragmentAmount + 1)
-
                 var size = inventory.size
-
                 while (size > 0 && fragmentAmount > 0) {
                     val slot = Random.nextInt(0, size)
                     val item = inventory.getItem(slot)
-
                     if (item == null || item.type == Material.AIR) {
                         inventory.setItem(slot, chanceStack.stack.apply {
                             amount = number
                         })
-
                         fragmentAmount -= number
-
                         break
                     }
-
                     size--
                 }
             }
@@ -215,4 +213,9 @@ internal class ChestOpenEvent : Listener {
 
         generateItems(minecart.inventory, key)
     }
+}
+
+private fun Random.Default.nextInt(from: Int, until: Int, seed: Long): Int {
+    val random = Random(seed)
+    return random.nextInt(until - from)
 }

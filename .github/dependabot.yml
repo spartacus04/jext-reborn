@@ -10,6 +10,8 @@ updates:
     target-branch: "master"
     schedule:
       interval: 'daily'
+    ignore:
+      - dependency-name: "com.sk89q.worldguard:worldguard-bukkit"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
