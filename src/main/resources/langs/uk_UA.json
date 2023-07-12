@@ -1,7 +1,7 @@
 {
   "now-playing": "§6Зараз відтворюється: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Зараз відтворюється: §a%title% §- §6",
-  "update-available": "A new update is available!",
+  "update-available": "Вийшло нове оновлення!",
   "resource-pack-decline-kick-message": "Будь ласка, увімкніть пакет ресурсів для музики!",
   "failed-download-kick-message": "Помилка завантаження пакета ресурсів. Будь ласка, приєднайтеся ще раз, щоб спробувати ще раз.",
   "jukebox": "§bПрогравач",
@@ -25,8 +25,8 @@
   "stopped-music-for": "§fМузику зупинено для §6%player%§f!",
   "stopped-music-for-no-one": "§fМузику не зупинено жодному гравцю, щось пішло не так!",
   "reloaded": "§cПерезавантажено!",
-  "missing-permission": "§cYou don't have permission to use this command!",
-  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
-  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "missing-permission": "§cУ вас немає дозволу на використання цієї команди!",
+  "invalid-runner": "§cЦю команду може виконувати лише §6%runner%§c.",
+  "command-not-supported": "§cКоманда §6%command%§c не підтримується: §6%reason%§c.",
   "usage": "[Usage]: §6/%command%"
 }
