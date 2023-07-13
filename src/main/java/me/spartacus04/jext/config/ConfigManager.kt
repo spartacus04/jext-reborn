@@ -15,6 +15,12 @@ class ConfigManager {
         private lateinit var configFile: File
         private lateinit var discsFile: File
 
+        /**
+         * The function creates a default configuration file for a Java plugin if it doesn't already exist.
+         *
+         * @param plugin The parameter "plugin" is of type JavaPlugin. It is used to reference the plugin instance that is
+         * calling the createDefaultConfig function.
+         */
         private fun createDefaultConfig(plugin: JavaPlugin) {
             if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
 
@@ -27,6 +33,8 @@ class ConfigManager {
             }
         }
 
+        /* The `deserialize` function is a generic function that takes a `File` object and a `Type` object as parameters
+        and returns an object of type `T`. */
         private fun <T> deserialize(file: File, type: Type) : T {
             val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
@@ -36,6 +44,13 @@ class ConfigManager {
             )
         }
 
+        /**
+         * The function loads configuration and disc data from files, updates the configuration if necessary, and then
+         * loads the data into the appropriate variables.
+         *
+         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to access the plugin's
+         * data folder and to send messages to the console.
+         */
         fun load(plugin: JavaPlugin) {
             configFile = plugin.dataFolder.resolve("config.json")
             discsFile = plugin.dataFolder.resolve("discs.json")

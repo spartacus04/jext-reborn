@@ -16,16 +16,40 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
         addParameter(ParameterDisc(false))
     }
 
+    /**
+     * The function executes a command for a player in Kotlin.
+     *
+     * @param sender The "sender" parameter is of type "Player", which represents the player who executed the command.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return The method is returning a boolean value of true.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function executes a command and returns a boolean value indicating success.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
+     * It could be a player, console, or any other entity that has the ability to execute commands.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return a boolean value of true.
+     */
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function `mergedExecute` stops music for specified players and namespaces, and sends messages to the sender
+     * based on the number of players affected.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
+     * It could be a player, console, or command block.
+     * @param args An array of strings representing the command arguments.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 

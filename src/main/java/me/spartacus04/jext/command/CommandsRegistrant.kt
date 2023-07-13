@@ -4,6 +4,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class CommandsRegistrant private constructor() {
     companion object {
+        /**
+         * The function registers various commands to a JavaPlugin in Kotlin.
+         *
+         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to register the commands
+         * to the plugin, allowing them to be executed within the plugin's context.
+         */
         fun registerCommands(plugin: JavaPlugin) {
             ExecutorDisc().registerTo(plugin)
             ExecutorDiscGive().registerTo(plugin)

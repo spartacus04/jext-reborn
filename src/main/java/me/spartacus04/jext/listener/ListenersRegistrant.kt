@@ -11,6 +11,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class ListenersRegistrant private constructor() {
     companion object {
+        /**
+         * The function "registerListeners" registers various listeners for different events in a Kotlin plugin.
+         *
+         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It represents the plugin that is
+         * registering the listeners.
+         */
         fun registerListeners(plugin: JavaPlugin) {
 
             // Register packet listeners

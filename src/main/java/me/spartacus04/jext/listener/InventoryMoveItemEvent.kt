@@ -9,6 +9,12 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 
 internal class InventoryMoveItemEvent : Listener {
+    /**
+     * The function `inventoryMoveItemEvent` is an event listener that is called when an item is moved from one inventory to another.
+     *
+     * @param e The `e` parameter is of type `InventoryMoveItemEvent`. It represents the event that is being listened to.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     @EventHandler
     fun inventoryMoveItemEvent(e: InventoryMoveItemEvent) {
         if(e.isCancelled) return

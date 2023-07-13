@@ -17,6 +17,9 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
+    /**
+     * The function `onJukeboxInteract` is an event listener that is called when a player interacts with a jukebox.
+     */
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
@@ -30,6 +33,16 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         }
     }
 
+    /**
+     * The function `defaultBehaviour` handles player interactions with jukeboxes, allowing them to play or stop music
+     * discs depending on the state of the jukebox.
+     *
+     * @param event PlayerInteractEvent - an event that is triggered when a player interacts with an object in the game
+     * world.
+     * @param block The "block" parameter is the block that the player interacted with. It is of type Block.
+     * @return In this code snippet, the function `defaultBehaviour` does not have a return type specified. Therefore, it
+     * does not explicitly return any value.
+     */
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
         if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) return
 
@@ -54,6 +67,15 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         }
     }
 
+    /**
+     * The function `legacyJukeboxGui` cancels the `PlayerInteractEvent`, checks if the player has access to the jukebox
+     * GUI, and opens the LegacyJukeboxContainer for the player.
+     *
+     * @param event The event parameter is of type PlayerInteractEvent. This event is triggered when a player interacts
+     * with an object in the game, such as right-clicking on a block.
+     * @param block The "block" parameter represents the block that the player interacted with.
+     * @return nothing (Unit) as it has a return type of "Unit" or "void".
+     */
     private fun legacyJukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
@@ -62,6 +84,16 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         LegacyJukeboxContainer.get(plugin, block.location).open(event.player)
     }
 
+    /**
+     * The function `jukeboxGui` cancels the `PlayerInteractEvent`, checks if the player has access to the Jukebox GUI, and
+     * opens the JukeboxContainer for the player.
+     *
+     * @param event The event parameter is of type PlayerInteractEvent. This event is triggered when a player interacts
+     * with an object in the game, such as right-clicking on a block.
+     * @param block The "block" parameter represents the block that the player interacted with. It is used to determine if
+     * the player has access to the jukebox GUI.
+     * @return nothing (Unit).
+     */
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
@@ -70,11 +102,19 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         JukeboxContainer(event.player, block)
     }
 
+    /**
+     * The function `onJukeboxBreak` is an event listener that is called when a player breaks a jukebox.
+     *
+     * @param event The event parameter is of type BlockBreakEvent. This event is triggered when a player breaks a block.
+     * @return nothing (Unit).
+     */
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
         LegacyJukeboxContainer.get(plugin, loc).breakJukebox()
+        JukeboxContainer.destroyJukebox(loc)
+        // TODO: drop all items in jukebox
 
         val block = event.block
         val state = block.state as? Jukebox ?: return
@@ -86,6 +126,4 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
             DiscPlayer.stop(loc, discContainer.namespace)
         } catch (_: IllegalStateException) { }
     }
-
-
 }

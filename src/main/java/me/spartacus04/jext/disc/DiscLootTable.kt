@@ -28,8 +28,22 @@ class DiscLootTable : LootTable {
         )
     }
 
+    /**
+     * The function returns the key for a specific loottable in the JextNamespace.
+     */
     override fun getKey() = JextNamespace.CREEPER_LOOTTABLE()
 
+    /**
+     * The function populates a collection of ItemStacks with random loot items, including discs that can be dropped by
+     * creepers.
+     *
+     * @param random The `random` parameter is an instance of the `Random` class, which is used to generate random numbers.
+     * It is nullable, meaning it can be null.
+     * @param context The `context` parameter is of type `LootContext` and is used to provide additional information about
+     * the loot generation context. It may contain information such as the entity that dropped the loot, the location of
+     * the loot generation, or any other relevant data.
+     * @return The method is returning a mutable collection of ItemStacks.
+     */
     override fun populateLoot(random: Random?, context: LootContext): MutableCollection<ItemStack> {
         val list = ArrayList<ItemStack>()
 
@@ -42,5 +56,16 @@ class DiscLootTable : LootTable {
         return arrayListOf(list.random((random ?: Random()).asKotlinRandom()))
     }
 
+    /**
+     * The function "fillInventory" does nothing in this class.
+     *
+     * @param inventory The inventory parameter is an object that represents the inventory that needs to be filled. It
+     * could be a player's inventory, a chest's inventory, or any other type of inventory.
+     * @param rnd The `rnd` parameter is of type `Random?`, which means it is an optional parameter of type `Random`. The
+     * `Random` class is used to generate random numbers and can be used to add randomness to the filling of the inventory.
+     * @param context The `context` parameter is of type `LootContext` and represents the context in which the inventory is
+     * being filled. It provides information about the current state of the game and can be used to determine what items
+     * should be added to the inventory.
+     */
     override fun fillInventory(inventory: Inventory, rnd: Random?, context: LootContext) { }
 }

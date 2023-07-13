@@ -9,6 +9,12 @@ data class JukeboxEntry(
     var type: String,
     var value: String
 ) {
+    /**
+     * The function `toItemStack` returns an `ItemStack` object based on the provided `type` and `value`, with different
+     * logic depending on the type.
+     *
+     * @return The method `toItemStack()` returns an `ItemStack` object.
+     */
     fun toItemStack() : ItemStack {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }

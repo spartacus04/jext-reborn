@@ -21,6 +21,13 @@ import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
 @ScheduledForRemoval(inVersion = "1.3")
 @Deprecated("This is part of the legacy jukebox gui system. It's going to be removed in the next major update.")
 internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
+    /**
+     * The function `getJukeboxGui` returns the key of a LegacyJukeboxContainer if its inventory matches the given
+     * inventory, otherwise it returns null.
+     *
+     * @param inv The parameter `inv` is of type `Inventory`.
+     * @return The function `getJukeboxGui` returns a String value.
+     */
     private fun getJukeboxGui(inv: Inventory): String? {
         return if(!LegacyJukeboxContainer.containers.any {
                 it.value.inventory == inv
@@ -31,6 +38,10 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         }
     }
 
+    /**
+     * The function `onInventoryClose` is called when a player closes an inventory. It checks if the inventory is a
+     * jukebox inventory and if so, it saves the data to the config.
+     */
     @EventHandler
     fun onInventoryClose(e: InventoryCloseEvent) {
         val jukeId = getJukeboxGui(e.inventory) ?: return
@@ -58,6 +69,14 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         LegacyJukeboxContainer.save(plugin)
     }
 
+    /**
+     * The function `onInventoryClick` is called when a player clicks in an inventory. It checks if the inventory is a
+     * jukebox inventory and if so, it handles the click.
+     * If the player clicks on the currently playing disc, the disc will stop playing.
+     * If the player clicks on a disc, the disc will start playing.
+     * If the player clicks on a disc in his inventory, the disc will be added to the jukebox.
+     * If the player clicks on a disc in the jukebox, the disc will be removed from the jukebox.
+     */
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val jukeId = getJukeboxGui(e.inventory) ?: return
@@ -130,6 +149,18 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         }, 1)
     }
 
+    /**
+     * The function `playDisc` plays a music disc in a jukebox container at a specified slot and location, and stops any
+     * currently playing disc in the container.
+     *
+     * @param id The `id` parameter is a unique identifier for a LegacyJukeboxContainer. It is used to retrieve the
+     * container and its data from the `LegacyJukeboxContainer` class.
+     * @param slot The `slot` parameter represents the slot number in the LegacyJukeboxContainer's inventory where the disc
+     * will be played.
+     * @param location The `location` parameter is of type `Location` and represents the location where the disc is being
+     * played. It is used to play the disc at the specified location.
+     * @return In this code, the function `playDisc` returns nothing (`Unit` in Kotlin).
+     */
     private fun playDisc(id : String, slot: Int, location: Location) {
         if(!LegacyJukeboxContainer.loadedData.containsKey(id)) return
         if(!LegacyJukeboxContainer.loadedData[id]!!.containsKey(slot)) return
@@ -165,6 +196,12 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying(id) }, duration * 20)
     }
 
+    /**
+     * The function `stopPlaying` stops the currently playing music in a LegacyJukeboxContainer and resets its state.
+     *
+     * @param id The parameter `id` is a String that represents the identifier of a LegacyJukeboxContainer.
+     * @return In the given code, the function `stopPlaying` returns nothing (Unit).
+     */
     private fun stopPlaying(id: String) {
         if(
             LegacyJukeboxContainer.containers[id]?.playing == null ||

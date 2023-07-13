@@ -15,6 +15,14 @@ data class LegacyJukeboxEntry(
     var type: String,
     var value: String
 ) {
+    /**
+     * The function "play" takes a location as input and plays a sound or disc based on the type and value provided,
+     * returning the duration of the sound or disc.
+     *
+     * @param location The `location` parameter represents the location where the play action will occur. It is of type
+     * `Location`.
+     * @return The code is returning a Long value.
+     */
     fun play(location: Location) : Long {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
@@ -31,6 +39,16 @@ data class LegacyJukeboxEntry(
         }.toLong()
     }
 
+    /**
+     * The function `stop` stops playing a sound or disc at a given location in Kotlin.
+     *
+     * @param location The `location` parameter represents a specific location in the game world where the action will take
+     * place. It is typically represented by an object of the `Location` class, which contains information such as the
+     * coordinates (x, y, z) and the world in which the location exists.
+     * @return In the given code snippet, nothing is being explicitly returned. However, if the condition
+     * `Material.matchMaterial(value)` evaluates to `null`, then the function will return and no further code will be
+     * executed.
+     */
     fun stop(location: Location) {
         if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
@@ -45,6 +63,11 @@ data class LegacyJukeboxEntry(
         }
     }
 
+    /**
+     * The function `getItemstack` returns an `ItemStack` object based on the provided `type` and `value` parameters.
+     *
+     * @return The function `getItemstack()` returns an `ItemStack` object.
+     */
     fun getItemstack() : ItemStack? {
         return if(type == "jext") {
             val disc = ConfigData.DISCS.first { it.DISC_NAMESPACE == value }
@@ -57,6 +80,14 @@ data class LegacyJukeboxEntry(
         }
     }
     companion object {
+        /**
+         * The function "fromLegacyString" takes a legacyString as input and returns a LegacyJukeboxEntry object with the
+         * appropriate namespace based on whether the legacyString matches any of the DISC_NAMESPACE values in the
+         * ConfigData.DISCS array.
+         *
+         * @param legacyString The `legacyString` parameter is a string that represents a legacy jukebox entry.
+         * @return a LegacyJukeboxEntry object.
+         */
         fun fromLegacyString(legacyString: String): LegacyJukeboxEntry {
             return if(ConfigData.DISCS.any { it.DISC_NAMESPACE == legacyString }) {
                 LegacyJukeboxEntry("jext", legacyString)

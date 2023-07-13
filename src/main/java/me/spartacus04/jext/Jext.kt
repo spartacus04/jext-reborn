@@ -18,6 +18,10 @@ import org.bukkit.plugin.java.JavaPlugin
 @Suppress("unused")
 class Jext : JavaPlugin() {
 
+    /**
+     * The function loads the plugin and sends an enabled message, but disables the plugin and prints the stack trace if an
+     * exception occurs.
+     */
     override fun onEnable() {
         try {
             load()
@@ -28,10 +32,15 @@ class Jext : JavaPlugin() {
         }
     }
 
+    /**
+     * The function sends a message to the console when the plugin is disabled.
+     */
     override fun onDisable() {
         Bukkit.getConsoleSender().sendMessage(DISABLED_MESSAGE)
     }
 
+    /* The `load()` function is responsible for initializing and setting up various components of the plugin. Here's a
+    breakdown of what it does: */
     private fun load() {
         PLUGIN = this
         ServerVersion.load(this)

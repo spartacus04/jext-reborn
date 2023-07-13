@@ -52,6 +52,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
             )
         }
 
+    /**
+     * The function sets an identifier value in a container using a specific data type.
+     */
     fun setIdentifier() {
         container.set(
             JextNamespace.IDENTIFIER(),
@@ -60,6 +63,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
         )
     }
 
+    /**
+     * The function checks if the identifier stored in the container matches the given id.
+     */
     fun checkIdentifier(): Boolean = container.get(
         JextNamespace.IDENTIFIER(),
         PersistentDataType.STRING

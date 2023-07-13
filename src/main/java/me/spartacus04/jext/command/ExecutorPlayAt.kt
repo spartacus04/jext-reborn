@@ -18,6 +18,15 @@ internal class ExecutorPlayAt : ExecutorAdapter("playat") {
         addParameter(ParameterNumber(false, 4.0f, 1.0f, 0.5f).setName("volume"))
     }
 
+    /**
+     * The function executes a player action by playing a disc at a specified location with optional volume and pitch
+     * parameters.
+     *
+     * @param sender The `sender` parameter is of type `Player`, which represents the player who executed the command.
+     * @param args args is an array of strings that contains the arguments passed to the executePlayer function. The
+     * arguments are used to specify the disc, location, pitch, and volume for playing a sound.
+     * @return a boolean value.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         val location = try {
             ParameterLocation.parseLocation(args[1], args[2], args[3], sender)

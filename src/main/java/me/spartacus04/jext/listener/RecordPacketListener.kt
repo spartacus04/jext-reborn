@@ -17,6 +17,14 @@ import org.bukkit.scheduler.BukkitRunnable
 internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?) :
     PacketAdapter(plugin, priority, PacketType.Play.Server.WORLD_EVENT) {
 
+    /**
+     * The function checks if a player is interacting with a jukebox and if a music disc is playing, then displays an
+     * action bar message to the player.
+     *
+     * @param event The `event` parameter is of type `PacketEvent`. It represents an event that occurs when a packet is
+     * being sent.
+     * @return The code is returning nothing (Unit) in the `onPacketSending` function.
+     */
     override fun onPacketSending(event: PacketEvent) {
         val packet = event.packet
         val position = packet.blockPositionModifier
@@ -44,6 +52,14 @@ internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?
         }
     }
 
+    /**
+     * The function `actionBarDisplay` sends an action bar message to a player with information about the currently playing
+     * disc container, including the author and title.
+     *
+     * @param player The `player` parameter is an object of type `Player`, which represents a player in the game.
+     * @param container The `container` parameter is of type `DiscContainer`. It represents a container that holds
+     * information about a disc, such as its author and title.
+     */
     fun actionBarDisplay(player: Player, container: DiscContainer) {
         player.spigot().sendMessage(
             ChatMessageType.ACTION_BAR,

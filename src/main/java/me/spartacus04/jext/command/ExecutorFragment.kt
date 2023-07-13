@@ -12,6 +12,14 @@ internal class ExecutorFragment : ExecutorAdapter("fragment") {
         addParameter(ParameterDisc(true))
     }
 
+    /**
+     * The function executes a player command in Kotlin, checking the version and adding a disc fragment to the player's
+     * inventory.
+     *
+     * @param sender The `sender` parameter represents the player who executed the command.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return The function `executePlayer` returns a boolean value.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         if(VERSION < "1.19") {
             sender.sendJEXTMessage("command-not-supported", hashMapOf(

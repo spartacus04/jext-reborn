@@ -42,6 +42,10 @@ class LegacyJukeboxContainer {
         mergedConstructor()
     }
 
+    /**
+     * The function checks if the loadedData map contains a specific id, and if not, it adds a new HashMap to it. Then, it
+     * calls the refresh function.
+     */
     private fun mergedConstructor() {
         if(!loadedData.containsKey(id)) {
             loadedData[id] = HashMap()
@@ -50,6 +54,12 @@ class LegacyJukeboxContainer {
         refresh()
     }
 
+    /**
+     * The function "open" opens the inventory for a player and adds an enchantment and lore to a specific item slot if it
+     * exists.
+     *
+     * @param player The "player" parameter is of type HumanEntity, which represents a player in the game.
+     */
     fun open(player: HumanEntity) {
         player.openInventory(inventory)
 
@@ -72,6 +82,12 @@ class LegacyJukeboxContainer {
         }
     }
 
+    /**
+     * The function creates an array of ItemStacks, populates it with data from a loadedData map, and applies enchantments
+     * and lore to the item in the playingSlot.
+     *
+     * @return The function `createContents()` returns an array of `ItemStack?`.
+     */
     fun createContents(): Array<ItemStack?> {
         val contents = arrayOfNulls<ItemStack>(54)
 
@@ -102,16 +118,26 @@ class LegacyJukeboxContainer {
         return contents
     }
 
+    /**
+     * The function "refresh" updates the contents of the inventory.
+     */
     fun refresh() {
         inventory.contents = createContents()
     }
 
+    /**
+     * The function "close" closes the inventory for all viewers.
+     */
     private fun close() {
         inventory.viewers.forEach {
             it.closeInventory()
         }
     }
 
+    /**
+     * The function "breakJukebox" drops all the items from the jukebox's contents into the world and then closes the
+     * jukebox.
+     */
     fun breakJukebox() {
         val contents = createContents().filterNotNull()
 
@@ -128,6 +154,17 @@ class LegacyJukeboxContainer {
         val loadedData = HashMap<String, HashMap<Int, LegacyJukeboxEntry>>()
         val containers = HashMap<String, LegacyJukeboxContainer>()
 
+        /**
+         * The function `get` returns a `LegacyJukeboxContainer` object based on the provided location, and handles cases
+         * where multiple jukeboxes with the same ID are loaded.
+         *
+         * @param plugin The `plugin` parameter is an instance of the `JavaPlugin` class. It represents the plugin that is
+         * calling this `get` function.
+         * @param loc The `loc` parameter is of type `Location` and represents the location of a jukebox block in the game
+         * world. It contains information such as the world name, block coordinates (x, y, z), and other properties related
+         * to the location.
+         * @return a `LegacyJukeboxContainer` object.
+         */
         fun get(plugin: JavaPlugin, loc: Location) : LegacyJukeboxContainer {
             val id = "${loc.world!!.name}:${loc.blockX}:${loc.blockY}:${loc.blockZ}"
 
@@ -151,6 +188,16 @@ class LegacyJukeboxContainer {
             return container
         }
 
+        /**
+         * The function returns a LegacyJukeboxContainer object associated with a player's unique ID, creating a new one if
+         * it doesn't already exist.
+         *
+         * @param plugin The "plugin" parameter is of type JavaPlugin, which is a class representing a plugin in the Bukkit
+         * API. It is used to access various plugin-related functionalities.
+         * @param player The "player" parameter is of type Player and represents the player for whom the
+         * LegacyJukeboxContainer is being retrieved.
+         * @return The method is returning a LegacyJukeboxContainer object.
+         */
         fun get(plugin: JavaPlugin, player: Player) : LegacyJukeboxContainer {
             val id = player.uniqueId.toString()
 
@@ -164,6 +211,13 @@ class LegacyJukeboxContainer {
             return container
         }
 
+        /**
+         * The function "reload" reads data from a file and populates a HashMap with the loaded data, either in a new
+         * format or a legacy format.
+         *
+         * @param plugin The parameter `plugin` is of type `JavaPlugin`. It is an instance of a Java plugin that is being
+         * reloaded.
+         */
         fun reload(plugin: JavaPlugin) {
             val legacyTypeToken = object: TypeToken<HashMap<String, HashMap<Int, String>>>() {}.type
             val typeToken = object: TypeToken<HashMap<String, HashMap<Int, LegacyJukeboxEntry>>>() {}.type
@@ -199,6 +253,12 @@ class LegacyJukeboxContainer {
             }
         }
 
+        /**
+         * The function saves the loaded data to a file in the plugin's data folder using Gson.
+         *
+         * @param plugin The `plugin` parameter is of type `JavaPlugin`. It represents the plugin instance that is calling
+         * the `save` function.
+         */
         fun save(plugin: JavaPlugin) {
             val file = plugin.dataFolder.resolve(".savedata")
 

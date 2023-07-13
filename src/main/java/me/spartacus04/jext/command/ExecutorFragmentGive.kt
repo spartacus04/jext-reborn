@@ -15,16 +15,42 @@ internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
         addParameter(ParameterDisc(true))
     }
 
+    /**
+     * The function executes a command for a player in Kotlin.
+     *
+     * @param sender The "sender" parameter is of type "Player", which represents the player who executed the command.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return The method is returning a boolean value of true.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function executes a command and returns a boolean value indicating success.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
+     * It could be a player, console, or any other entity that has the ability to execute commands.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return a boolean value of true.
+     */
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function `mergedExecute` takes in a command sender and an array of arguments, checks if the version is
+     * supported, retrieves players based on the first argument, retrieves a disc based on the second argument, adds the
+     * disc to each player's inventory, and sends messages to the sender based on the results.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`, which represents the entity that executed the
+     * command. It could be a player, console, or a command block.
+     * @param args - args[0]: The first argument passed to the function, which represents the players to give the disc to.
+     * @return Nothing is being returned in this code. The function `mergedExecute` is a void function, meaning it does not
+     * return any value.
+     */
     private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         if(VERSION < "1.19") {
             sender.sendJEXTMessage("command-not-supported", hashMapOf(

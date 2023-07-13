@@ -94,6 +94,16 @@ internal class ChestOpenEvent : Listener {
         }
     }
 
+    /**
+     * The function generates items in an inventory based on certain conditions and probabilities.
+     *
+     * @param inventory The `inventory` parameter is an object of type `Inventory`. It represents the inventory where the
+     * items will be generated and stored.
+     * @param key The `key` parameter is a string that represents a specific key or identifier for the inventory. It is
+     * used to determine the maximum amount of discs and fragments that can be generated for that specific inventory. The
+     * `key` is used to look up values in the `CONFIG.DISC_LIMIT` and `
+     * @return Nothing is being returned in this code snippet. It is a void function.
+     */
     private fun generateItems(inventory: Inventory, key: String) {
         if(inventory.any { it != null && it.type.isRecord }) {
             inventory.storageContents = inventory.storageContents.map { itemstack ->
@@ -170,6 +180,14 @@ internal class ChestOpenEvent : Listener {
         }
     }
 
+    /**
+     * The function is called when a player interacts with a chest. It checks if the chest is a loot chest and if it is,
+     * it generates items in the chest.
+     *
+     * @param e The `e` parameter is an object of type `PlayerInteractEvent`. It represents the event that is being
+     * called when a player interacts with a block.
+     * @return Nothing is being returned in this code snippet. It is a void function.
+     */
     @EventHandler(ignoreCancelled = true)
     fun onChestOpen(e : PlayerInteractEvent) {
         if(e.action != Action.RIGHT_CLICK_BLOCK || e.clickedBlock?.type != Material.CHEST) return
@@ -181,6 +199,14 @@ internal class ChestOpenEvent : Listener {
         generateItems(chest.blockInventory, key)
     }
 
+    /**
+     * The function is called when a player breaks a chest. It checks if the chest is a loot chest and if it is, it
+     * generates items in the chest.
+     *
+     * @param e The `e` parameter is an object of type `BlockBreakEvent`. It represents the event that is being called
+     * when a player breaks a block.
+     * @return Nothing is being returned in this code snippet. It is a void function.
+     */
     @EventHandler(ignoreCancelled = true)
     fun onChestBreak(e : BlockBreakEvent) {
         if(e.block.type != Material.CHEST) return
@@ -192,6 +218,14 @@ internal class ChestOpenEvent : Listener {
         generateItems(chest.inventory, key)
     }
 
+    /**
+     * The function is called when a player interacts with a barrel. It checks if the barrel is a loot barrel and if it
+     * is, it generates items in the barrel.
+     *
+     * @param e The `e` parameter is an object of type `PlayerInteractEvent`. It represents the event that is being
+     * called when a player interacts with a block.
+     * @return Nothing is being returned in this code snippet. It is a void function.
+     */
     @EventHandler(ignoreCancelled = true)
     fun onMinecartChestOpen(e : PlayerInteractEntityEvent) {
         if(e.rightClicked !is StorageMinecart) return
@@ -203,6 +237,14 @@ internal class ChestOpenEvent : Listener {
         generateItems(minecart.inventory, key)
     }
 
+    /**
+     * The function is called when a player breaks a barrel. It checks if the barrel is a loot barrel and if it is, it
+     * generates items in the barrel.
+     *
+     * @param e The `e` parameter is an object of type `BlockBreakEvent`. It represents the event that is being called
+     * when a player breaks a block.
+     * @return Nothing is being returned in this code snippet. It is a void function.
+     */
     @EventHandler(ignoreCancelled = true)
     fun onMinecartChestBreak(e : VehicleDestroyEvent) {
         if(e.vehicle.type != EntityType.MINECART_CHEST) return

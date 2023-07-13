@@ -7,6 +7,7 @@ import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscContainer.Companion.SOUND_MAP
 import me.spartacus04.jext.disc.DiscPlayer
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.SoundCategory
 import org.bukkit.block.Block
@@ -14,6 +15,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemFlag
+import org.bukkit.inventory.ItemStack
 import xyz.xenondevs.invui.gui.ScrollGui
 import xyz.xenondevs.invui.gui.structure.Markers
 import xyz.xenondevs.invui.inventory.VirtualInventory
@@ -48,6 +50,15 @@ class JukeboxContainer {
         mergedConstructor()
     }
 
+    /**
+     * The function `playDisc` updates an inventory item, plays a music disc, and schedules a timer to revert the changes
+     * after a certain delay.
+     *
+     * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item in
+     * an inventory is updated.
+     * @return In this code snippet, the function `playDisc` does not have a return type specified. Therefore, it does not
+     * explicitly return any value.
+     */
     private fun playDisc(event: ItemPreUpdateEvent) {
         event.inventory.setItem(UpdateReason.SUPPRESSED, event.slot, event.previousItem!!.clone().apply {
             addUnsafeEnchantment(Enchantment.MENDING, 1)
@@ -99,6 +110,11 @@ class JukeboxContainer {
         }
     }
 
+    /**
+     * The function `stopDisc` cancels a timer, removes an item from an inventory, and stops playing a music disc.
+     *
+     * @param event The parameter "event" is of type ItemPreUpdateEvent.
+     */
     private fun stopDisc(event: ItemPreUpdateEvent) {
         if(timerMap.containsKey(id)) {
             timerMap[id]!!.cancel()
@@ -122,6 +138,10 @@ class JukeboxContainer {
         }
     }
 
+    /**
+     * The function `mergedConstructor` creates and opens a scrollable GUI window for a player, displaying their inventory
+     * and allowing them to scroll through it.
+     */
     private fun mergedConstructor() {
         if(!playingMap.containsKey(id)) {
             playingMap[id] = -1
@@ -156,6 +176,14 @@ class JukeboxContainer {
         window.open()
     }
 
+    /**
+     * The function `itemPreUpdateHandler` handles various events related to updating items in an inventory, including
+     * cancelling certain actions and performing specific actions based on the event type.
+     *
+     * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item is
+     * updated in an inventory.
+     * @return In this code, the function `itemPreUpdateHandler` returns nothing (`Unit` in Kotlin).
+     */
     private fun itemPreUpdateHandler(event: ItemPreUpdateEvent) {
         if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
             event.isCancelled = true
@@ -192,6 +220,12 @@ class JukeboxContainer {
         }
     }
 
+    /**
+     * The function `itemPostUpdateHandler` saves data if an item is added, swapped, or removed.
+     *
+     * @param event The event parameter is of type ItemPostUpdateEvent, which is an event object that contains information
+     * about the item post update event.
+     */
     private fun itemPostUpdateHandler(event: ItemPostUpdateEvent) {
         if(event.isAdd || event.isSwap || event.isRemove) {
             save()
@@ -206,6 +240,13 @@ class JukeboxContainer {
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()
 
+        /**
+         * The function `getInv` returns a `VirtualInventory` object based on the given `id`, creating a new one if it
+         * doesn't exist in the `inventories` map.
+         *
+         * @param id The `id` parameter is a string that represents the identifier of a virtual inventory.
+         * @return The function `getInv` returns a `VirtualInventory` object.
+         */
         fun getInv(id: String): VirtualInventory {
             if(inventories.containsKey(id)) {
                 return inventories[id]!!
@@ -222,6 +263,13 @@ class JukeboxContainer {
             return inv
         }
 
+        /**
+         * The function `loadFromFile()` reads data from a file, converts it into a HashMap, and populates inventories with
+         * the retrieved data.
+         *
+         * @return In the given code, the `loadFromFile()` function does not have a return type specified. Therefore, it is
+         * returning `Unit` by default.
+         */
         fun loadFromFile() {
             val typeToken = object : TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
             val file = PLUGIN.dataFolder.resolve(".savedata")
@@ -253,6 +301,9 @@ class JukeboxContainer {
             }
         }
 
+        /**
+         * The function saves inventory data to a file in JSON format.
+         */
         private fun save() {
             val file = PLUGIN.dataFolder.resolve(".savedata")
 
@@ -278,6 +329,27 @@ class JukeboxContainer {
             }
 
             file.writeText(gson.toJson(data))
+        }
+
+        /**
+         * The function "destroyJukebox" removes a jukebox from a specific location and returns a list of items that were
+         * inside the jukebox.
+         *
+         * @param location The `location` parameter is of type `Location`. It represents the location of the jukebox that
+         * needs to be destroyed.
+         * @return The function `destroyJukebox` returns a list of `ItemStack` objects.
+         */
+        fun destroyJukebox(location: Location): List<ItemStack> {
+            val id = "${location.world!!.name}:${location.blockX}:${location.blockY}:${location.blockZ}"
+
+            playingMap.remove(id)
+            timerMap.remove(id)
+
+            val inv = inventories.remove(id) ?: return emptyList()
+
+            save()
+            return inv.items.filterNotNull()
+
         }
     }
 }

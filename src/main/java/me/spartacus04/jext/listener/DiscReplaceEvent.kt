@@ -14,17 +14,41 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 internal class DiscReplaceEvent : Listener {
+    /**
+     * The function `playerJoinEvent` is an event listener that is called when a player joins the server.
+     *
+     * @param e The `e` parameter is of type `PlayerJoinEvent`. It represents the event that is being listened to.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     @EventHandler(ignoreCancelled = true)
     fun playerJoinEvent(e : PlayerJoinEvent) = updateInventory(e.player.inventory)
 
+    /**
+     * The function `inventoryOpenEvent` is an event listener that is called when a player opens an inventory.
+     *
+     * @param e The `e` parameter is of type `InventoryOpenEvent`. It represents the event that is being listened to.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     @EventHandler(ignoreCancelled = true)
     fun inventoryOpenEvent(e : InventoryOpenEvent) = updateInventory(e.inventory)
 
+    /**
+     * The function `pickUpItemEvent` is an event listener that is called when a player picks up an item.
+     *
+     * @param e The `e` parameter is of type `EntityPickupItemEvent`. It represents the event that is being listened to.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     @EventHandler(ignoreCancelled = true)
     fun pickUpItemEvent(e: EntityPickupItemEvent) {
         e.item.itemStack = updateItem(e.item.itemStack)
     }
 
+    /**
+     * The function `updateInventory` is a helper function that updates the inventory of a player.
+     *
+     * @param inv The `inv` parameter is of type `Inventory`. It represents the inventory that is being updated.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     private fun updateInventory(inv: Inventory) {
         inv.contents.forEachIndexed { i, it ->
             if (it != null) {
@@ -33,6 +57,12 @@ internal class DiscReplaceEvent : Listener {
         }
     }
 
+    /**
+     * The function `updateItem` is a helper function that updates an item.
+     *
+     * @param itemStack The `itemStack` parameter is of type `ItemStack`. It represents the item that is being updated.
+     * @return The function returns an `ItemStack` object.
+     */
     private fun updateItem(itemStack: ItemStack) : ItemStack {
         if (itemStack.type.isRecord) {
             try {

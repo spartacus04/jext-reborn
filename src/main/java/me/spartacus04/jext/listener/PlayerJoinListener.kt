@@ -13,6 +13,12 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 internal class PlayerJoinListener(private val plugin: JavaPlugin) : Listener {
+    /**
+     * The function `onPlayerJoin` is an event listener that is called when a player joins the server.
+     *
+     * @param playerJoinEvent The `playerJoinEvent` parameter is of type `PlayerJoinEvent`. It represents the event that is being listened to.
+     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
+     */
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
         if (playerJoinEvent.player.hasPermission("jext.notifyupdate")) {

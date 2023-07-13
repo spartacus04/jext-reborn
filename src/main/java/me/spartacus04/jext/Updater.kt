@@ -10,6 +10,13 @@ import java.util.function.Consumer
 
 
 class Updater(private val plugin : JavaPlugin) {
+    /**
+     * The function `getVersion` retrieves the latest version of a GitHub repository and passes it to a consumer.
+     *
+     * @param consumer The `consumer` parameter is a functional interface that accepts a single argument of type `String?`
+     * (nullable String) and returns no result. It is used to consume or process the version string obtained from the API
+     * call.
+     */
     fun getVersion(consumer: Consumer<String?>) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, Runnable {
             try {

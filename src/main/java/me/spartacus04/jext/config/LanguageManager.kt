@@ -59,6 +59,15 @@ class LanguageManager(private val plugin: JavaPlugin) {
         }
     }
 
+    /**
+     * The function replaces placeholders in a string with corresponding values from a hashmap.
+     *
+     * @param string The `string` parameter is a string that contains placeholders for parameters. These placeholders are
+     * represented by `%key%`, where `key` is the name of the parameter.
+     * @param params The `params` parameter is a `HashMap` that maps `String` keys to `String` values. It is used to
+     * replace placeholders in the `string` parameter with the corresponding values from the `params` map.
+     * @return The function `replaceParameters` returns a new string with the parameters replaced.
+     */
     fun replaceParameters(string: String, params: HashMap<String, String>) : String {
         var newString = string
 
@@ -69,6 +78,13 @@ class LanguageManager(private val plugin: JavaPlugin) {
         return newString
     }
 
+    /**
+     * The function retrieves a value from the language map and replaces the parameters.
+     *
+     * @param commandSender The command sender to get the locale from.
+     * @param key The key to get the value from.
+     * @param params A hashmap containing the parameters to replace.
+     */
     fun getKey(commandSender: CommandSender, key: String, params: HashMap<String, String> = HashMap()) : String {
         if(commandSender !is Player) {
             return LANG.replaceParameters(languageMap["en_us"]!![key]!!, params)
@@ -86,7 +102,20 @@ class LanguageManager(private val plugin: JavaPlugin) {
         }
     }
 
+    /**
+     * The function checks if a given locale is present in a language map.
+     *
+     * @param locale A string representing the locale or language code.
+     */
     fun hasLanguage(locale: String) = languageMap.containsKey(locale.lowercase())
+    /**
+     * The function retrieves a value from a nested map based on the given locale and key.
+     *
+     * @param locale The `locale` parameter is a string that represents the language or region for which you want to
+     * retrieve a translation. It is used to look up the translation in the `languageMap` map.
+     * @param key The `key` parameter is a string that represents the key of the value you want to retrieve from the
+     * `languageMap`.
+     */
     operator fun get(locale: String, key: String) = languageMap[locale.lowercase()]!![key]!!
 
     companion object {
@@ -100,12 +129,20 @@ class LanguageManager(private val plugin: JavaPlugin) {
         const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
         const val MUSIC_DISC_FORMAT_OLD = "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
 
+        /**
+         * The function "load" initializes a LanguageManager object with the given JavaPlugin.
+         *
+         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to access the plugin's
+         * resources and functionality.
+         */
         fun load(plugin: JavaPlugin) {
             LANG = LanguageManager(plugin)
         }
     }
 }
 
+/* The `sendJEXTMessage` function is an extension function for the `CommandSender` class. It allows a `CommandSender`
+object (which can be a player or the console) to send a formatted message using the JEXT language manager. */
 fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> = HashMap()) {
     if(this !is Player) {
         return sendMessage(

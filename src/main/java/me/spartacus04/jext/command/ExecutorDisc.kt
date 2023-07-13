@@ -11,6 +11,14 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
         addParameter(ParameterDisc(true))
     }
 
+    /**
+     * The function executes a player command in Kotlin, adding a disc item to the player's inventory and sending success
+     * messages.
+     *
+     * @param sender The `sender` parameter is of type `Player`, which represents the player who executed the command.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return a boolean value.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         val disc = ParameterDisc.getDisc(args[0])
 

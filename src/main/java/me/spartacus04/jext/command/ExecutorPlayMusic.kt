@@ -18,16 +18,44 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         addParameter(ParameterNumber(false, 4.0f, 1.0f, 0.5f).setName("volume"))
     }
 
+    /**
+     * The function executes a command for a player in Kotlin.
+     *
+     * @param sender The "sender" parameter is of type "Player", which represents the player who executed the command.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return The method is returning a boolean value of true.
+     */
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function executes a command and returns a boolean value indicating success.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
+     * It could be a player, console, or any other entity that has the ability to execute commands.
+     * @param args An array of strings representing the arguments passed to the command.
+     * @return a boolean value of true.
+     */
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
         mergedExecute(sender, args)
         return true
     }
 
+    /**
+     * The function `mergedExecute` plays a music disc or sound effect to one or multiple players in a Minecraft server,
+     * with options for pitch and volume.
+     *
+     * @param sender The `sender` parameter is of type `CommandSender`, which represents the entity that executed the
+     * command. It could be a player, console, or command block.
+     * @param args args is an array of strings that contains the command arguments. The first element (args[0]) is expected
+     * to be the player name or selector, the second element (args[1]) is expected to be the disc namespace, the third
+     * element (args[2]) is optional and represents the pitch
+     * @return The function does not have a return type, so it does not explicitly return anything. However, it does have
+     * several `return` statements within the function that can be used to exit the function early and return control to
+     * the caller.
+     */
     private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
