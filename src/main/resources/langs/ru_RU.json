@@ -1,10 +1,13 @@
 {
   "now-playing": "§6Проигрывается музыка: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Сейчас слушают: §a%title%",
+  "update-available": "Доступно новое обновление!",
   "resource-pack-decline-kick-message": "Пожалуйста, загрузите ресурспак для музыки!",
   "failed-download-kick-message": "Не удалось загрузить ресурспак, пожалуйста, повторите попытку.",
-  "jukebox": "§bПроигрыватель",
-  "playing": "§9Сейчас играет",
+  "jukebox": "§9Игорь",
+  "scroll-down": "§7Прокрутка вниз",
+  "scroll-up": "§7Прокрутка вверх",
+  "cant-scroll-further": "§cНевозможно прокрутить дальше!",
   "disc-command-success": "§fПолучен диск - §d%disc%§f!",
   "disc-namespace-not-found": "§cДиск с именем - §6%namespace% §cне найден!",
   "disc-received": "§fПолучен диск - §d%disc%§f!",
@@ -24,7 +27,8 @@
   "stopped-music-for": "§fОстановлена музыка для §6%player%§f!",
   "stopped-music-for-no-one": "§fОстановливать музыку не для кого!",
   "reloaded": "§cПерезагружено!",
-  "missing_permission": "§cУ Вас нет прав для использования этой команды!",
-  "invalid_runner": "§cЭта команда может быть выполнена только по §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cУ Вас нет прав для использования этой команды!",
+  "invalid-runner": "§cЭта команда может быть выполнена только по §6%runner%§c.",
+  "command-not-supported": "§cКоманда §6%command% §cне поддерживается: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
