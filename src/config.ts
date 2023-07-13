@@ -9,9 +9,17 @@ export const versions = new Map([
 	// [11, '22w42a - 22w44a'] Why generate for snapshots of older versions?
 	[12, '1.19.3'],
 	[13, '1.19.4'],
+	// [14, '23w14a - 23w16a'] Same as before
+	[15, '1.20 - 1.20.1'],
 ]);
 
 export const dungeons : Dungeon[] = [
+	{
+		source: 'archaeology/trail_ruins_rare',
+		img: 'loottable_icons/Trail_Ruins.webp',
+		name: 'Trail Ruins',
+		minVersion: 15,
+	},
 	{
 		source: 'chests/ancient_city,chests/ancient_city_ice_box',
 		img: 'loottable_icons/Ancient_City.webp',
