@@ -155,7 +155,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
                     lore = (lore ?: ArrayList()).apply {
-                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
+                        add(LANG["en_us", "playing"])
                     }
                 }
             }
