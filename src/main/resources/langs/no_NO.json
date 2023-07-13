@@ -1,13 +1,13 @@
 {
   "now-playing": "§6Nå spiller: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Nå spiller: §a%title%",
-  "update-available": "A new update is available!",
+  "update-available": "En ny oppdatering er tilgjengelig!",
   "resource-pack-decline-kick-message": "Vennligst aktiver ressurspakke for musikken!",
   "failed-download-kick-message": "Nedlasting av ressurspakke mislyktes, vennligst bli med igjen for å prøve på nytt.",
   "jukebox": "§9Jukebox",
   "scroll-down": "§7Scroll down",
-  "scroll-up": "§7Scroll up",
-  "cant-scroll-further": "§cCan't scroll further!",
+  "scroll-up": "§7Scroll opp",
+  "cant-scroll-further": "§cKan ikke bla videre før!",
   "disc-command-success": "§fObservert §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisk med navneområde §6%namespace% §ccoube not be funnet!",
   "disc-received": "§fatt §d%disc% §fdisc!",
@@ -27,8 +27,8 @@
   "stopped-music-for": "§fStoppet musikk for §6%player%§f!",
   "stopped-music-for-no-one": "§fStoppet musikk for ingen spiller, noe gikk galt!",
   "reloaded": "§cOppdatert!",
-  "missing-permission": "§cYou don't have permission to use this command!",
-  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
-  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
+  "missing-permission": "§cDu har ikke tillatelse til å bruke denne kommandoen!",
+  "invalid-runner": "§cDenne kommandoen kan bare kjøres av §6%runner%§c.",
+  "command-not-supported": "§cKommandoen §6%command% §cer ikke støttet: §6%reason%§c.",
   "usage": "[Usage]: §6/%command%"
 }
