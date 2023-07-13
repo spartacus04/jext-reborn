@@ -23,6 +23,7 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 - Allay duplication works with custom music.
 - Parrot will still dance to the music!
 - Discs can be found in dungeons.
+- Discs can be found in trail ruins.
 - A website to generate the required files for the music discs.
 - Disc fragments can be found in dungeons and be crafted back together.
 - Set a max amount of discs that can be found in some loottables.
