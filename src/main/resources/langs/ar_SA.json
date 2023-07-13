@@ -1,10 +1,13 @@
 {
   "now-playing": "القسم 6 الآن يلعب: §a%author% §7- §6%title%",
   "now-playing-no-author": "القسم 6 الآن يلعب: §a%title%",
+  "update-available": "يوجد تحديث جديد!",
   "resource-pack-decline-kick-message": "الرجاء تمكين حزمة الموارد للموسيقى!",
   "failed-download-kick-message": "فشل تنزيل حزمة الموارد، يرجى إعادة الانضمام للمحاولة مرة أخرى.",
-  "jukebox": "§bJukebox",
-  "playing": "المادة 9",
+  "jukebox": "الفقرة 9Jkebox",
+  "scroll-down": "الفقرة 7 التمرير لأسفل",
+  "scroll-up": "الفقرة 7 التمرير لأعلى",
+  "cant-scroll-further": "لا يمكن التمرير أكثر!",
   "disc-command-success": "§fObObd%disc% §fdisc!",
   "disc-namespace-not-found": "§cdisc مع مساحة الاسم §6 لم يتم العثور على%namespace% §ccc!",
   "disc-received": "القسم المستلم%disc% §fdisc!",
@@ -24,7 +27,8 @@
   "stopped-music-for": "§fتوقفت الموسيقى ل §6%player%§f!",
   "stopped-music-for-no-one": "§fStopموسيقى لا لاعب ، حدث خطأ ما!",
   "reloaded": "باسكويلد!",
-  "missing_permission": "§ ليس لديك إذن لاستخدام هذا الأمر!",
-  "invalid_runner": "§cهذا الأمر يمكن تشغيله فقط بواسطة §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§ ليس لديك إذن لاستخدام هذا الأمر!",
+  "invalid-runner": "§cهذا الأمر يمكن تشغيله فقط بواسطة §6%runner%§c.",
+  "command-not-supported": "§cالأمر §6%command% §cis غير مدعوم: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }

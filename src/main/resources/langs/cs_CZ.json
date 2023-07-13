@@ -1,10 +1,13 @@
 {
   "now-playing": "§6Právě hraje: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Právě hraje: §a%title%",
+  "update-available": "Je k dispozici nová aktualizace!",
   "resource-pack-decline-kick-message": "Prosím povolte balíček zdrojů pro hudbu!",
   "failed-download-kick-message": "Stahování balíčku dokumentů se nezdařilo, zkuste to prosím znovu.",
-  "jukebox": "§bJukebox",
-  "playing": "§9Hraje",
+  "jukebox": "§9Hráč",
+  "scroll-down": "§7Posunout dolů",
+  "scroll-up": "§7Posunout nahoru",
+  "cant-scroll-further": "§cNelze posunout dále!",
   "disc-command-success": "§fZískáno §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisk s jmenným prostorem §6%namespace% nebyl nalezen!",
   "disc-received": "§fObdrženo §d%disc% §fdisku!",
@@ -24,7 +27,8 @@
   "stopped-music-for": "§fZastavena hudba pro §6%player%§f!",
   "stopped-music-for-no-one": "§fZastavena hudba pro žádného hráče, něco se pokazilo!",
   "reloaded": "§cZnovu přidáno!",
-  "missing_permission": "§cNemáš oprávnění použít tento příkaz!",
-  "invalid_runner": "§cTento příkaz může být spuštěn pouze podle §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cNemáš oprávnění použít tento příkaz!",
+  "invalid-runner": "§cTento příkaz může být spuštěn pouze podle §6%runner%§c.",
+  "command-not-supported": "§cPříkaz §6%command% §cnení podporován: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }

@@ -1,10 +1,13 @@
 {
   "now-playing": "§6Acum joaca: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Acum joaca: §a%title%",
+  "update-available": "O nouă actualizare este disponibilă!",
   "resource-pack-decline-kick-message": "Vă rugăm să activați pachetul de resurse pentru muzică!",
   "failed-download-kick-message": "Descărcarea pachetului de resurse a eșuat, te rugăm să revii alături pentru a încerca din nou.",
-  "jukebox": "§bJukebox",
-  "playing": "§9Joc",
+  "jukebox": "§9Jukebox",
+  "scroll-down": "§7Deruleaza jos",
+  "scroll-up": "§7Deruleaza sus",
+  "cant-scroll-further": "§cNu se mai poate derula!",
   "disc-command-success": "§fAi obtinut §d%disc% §fdisc!",
   "disc-namespace-not-found": "§cDisc cu spatiul de nume §6%namespace% §cnu a putut fi gasit!",
   "disc-received": "§fReceied §d%disc% §fdisc!",
@@ -24,7 +27,8 @@
   "stopped-music-for": "§fStopat muzica pentru §6%player%§f!",
   "stopped-music-for-no-one": "§fStopa muzica pentru nici un player, ceva nu a mers bine!",
   "reloaded": "§cReincarcat!",
-  "missing_permission": "§cNu ai permisiunea sa folosesti aceasta comanda!",
-  "invalid_runner": "§cAceasta comanda poate fi rulata doar de §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cNu ai permisiunea sa folosesti aceasta comanda!",
+  "invalid-runner": "§cAceasta comanda poate fi rulata doar de §6%runner%§c.",
+  "command-not-supported": "§cComanda §6%command% §ceste suportata: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
