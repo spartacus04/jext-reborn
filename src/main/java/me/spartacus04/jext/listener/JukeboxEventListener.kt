@@ -114,7 +114,6 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
 
         LegacyJukeboxContainer.get(plugin, loc).breakJukebox()
         JukeboxContainer.destroyJukebox(loc)
-        // TODO: drop all items in jukebox
 
         val block = event.block
         val state = block.state as? Jukebox ?: return
