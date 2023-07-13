@@ -1,10 +1,13 @@
 {
   "now-playing": "§6Зараз відтворюється: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Зараз відтворюється: §a%title% §- §6",
+  "update-available": "Вийшло нове оновлення!",
   "resource-pack-decline-kick-message": "Будь ласка, увімкніть пакет ресурсів для музики!",
   "failed-download-kick-message": "Помилка завантаження пакета ресурсів. Будь ласка, приєднайтеся ще раз, щоб спробувати ще раз.",
-  "jukebox": "§bПрогравач",
-  "playing": "§9Відтворюється",
+  "jukebox": "§9Музичний автомат",
+  "scroll-down": "§7Прокрутіть вниз",
+  "scroll-up": "§7Прокрутити вгору",
+  "cant-scroll-further": "§cНе можна прокрутити далі!",
   "disc-command-success": "§fОтримана §d%disc% §fплатівка!",
   "disc-namespace-not-found": "§cПлатівку з простором імен §6%namespace% §cне знайдено!",
   "disc-received": "§fОтримано §d%disc% §fплатівку!",
@@ -24,7 +27,8 @@
   "stopped-music-for": "§fМузику зупинено для §6%player%§f!",
   "stopped-music-for-no-one": "§fМузику не зупинено жодному гравцю, щось пішло не так!",
   "reloaded": "§cПерезавантажено!",
-  "missing_permission": "§cУ вас немає прав для використання цієї команди!",
-  "invalid_runner": "§cцю команду можна запускати лише §6%runner%§c.",
-  "usage": "§6/%command%"
+  "missing-permission": "§cУ вас немає дозволу на використання цієї команди!",
+  "invalid-runner": "§cЦю команду може виконувати лише §6%runner%§c.",
+  "command-not-supported": "§cКоманда §6%command%§c не підтримується: §6%reason%§c.",
+  "usage": "[Usage]: §6/%command%"
 }
