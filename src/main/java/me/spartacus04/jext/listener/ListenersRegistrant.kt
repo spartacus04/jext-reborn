@@ -2,6 +2,7 @@ package me.spartacus04.jext.listener
 
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
+import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.LanguageManager.Companion.VULNERABLE_MESSAGE
 import org.bukkit.Bukkit
@@ -24,7 +25,12 @@ class ListenersRegistrant private constructor() {
             pluginManager.registerEvents(PlayerJoinListener(plugin), plugin)
             pluginManager.registerEvents(ChestOpenEvent(), plugin)
             pluginManager.registerEvents(DiscReplaceEvent(), plugin)
-            pluginManager.registerEvents(JukeboxGuiListener(plugin), plugin)
+
+
+            if(CONFIG.JUKEBOX_BEHAVIOUR == "legacy-gui") {
+                Bukkit.getConsoleSender().sendMessage("[§cJEXT§f] §cLegacy GUI is not supported anymore and will be removed in the next major update, please switch to gui or vanilla")
+                pluginManager.registerEvents(JukeboxGuiListener(plugin), plugin)
+            }
 
             if(VERSION >= "1.19") {
                 pluginManager.registerEvents(PrepareCraftingEvent(), plugin)

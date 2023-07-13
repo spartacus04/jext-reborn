@@ -98,6 +98,7 @@ class LanguageManager(private val plugin: JavaPlugin) {
         const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
         const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
         const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
+        const val MUSIC_DISC_FORMAT_OLD = "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
 
         fun load(plugin: JavaPlugin) {
             LANG = LanguageManager(plugin)

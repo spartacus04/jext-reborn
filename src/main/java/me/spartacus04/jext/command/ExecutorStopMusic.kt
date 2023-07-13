@@ -17,14 +17,16 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
-    private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+    private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
         val namespaces: MutableSet<String>
@@ -39,7 +41,7 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
                     "namespace" to args[1]
                 ))
 
-                return true
+                return
             }
 
             namespaces = HashSet()
@@ -77,7 +79,5 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
         } else {
             sender.sendJEXTMessage("stopped-music-for-no-one")
         }
-
-        return true
     }
 }

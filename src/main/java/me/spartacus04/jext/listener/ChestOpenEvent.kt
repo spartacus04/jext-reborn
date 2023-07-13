@@ -215,7 +215,3 @@ internal class ChestOpenEvent : Listener {
     }
 }
 
-private fun Random.Default.nextInt(from: Int, until: Int, seed: Long): Int {
-    val random = Random(seed)
-    return random.nextInt(until - from)
-}

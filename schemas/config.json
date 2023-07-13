@@ -4,7 +4,32 @@
   "properties": {
     "lang": {
       "type": "string",
-      "enum": ["auto", "custom", "silent"]
+      "enum": [
+        "auto",
+        "custom",
+        "silent",
+        "ar_sa",
+        "cs_cz",
+        "da_dk",
+        "de_de",
+        "el_gr",
+        "en_us",
+        "es_es",
+        "fi_fi",
+        "fr_fr",
+        "it_it",
+        "ja_jp",
+        "nl_nl",
+        "no_no",
+        "pl_pl",
+        "pt_br",
+        "pt_pt",
+        "ro_ro",
+        "ru_ru",
+        "sv_se",
+        "uk_ua",
+        "zh_cn"
+      ]
     },
     "force-resource-pack": {
       "type": "boolean"
@@ -18,8 +43,9 @@
     "allow-metrics": {
       "type": "boolean"
     },
-    "jukebox-gui": {
-      "type": "boolean"
+    "jukebox-behaviour": {
+      "type": "string",
+      "enum": ["vanilla", "legacy-gui", "gui"]
     },
     "discs-random-chance": {
       "type": "number",
@@ -102,7 +128,7 @@
     "ignore-failed-download",
     "allow-music-overlapping",
     "allow-metrics",
-    "jukebox-gui",
+    "jukebox-behaviour",
     "disc-loottables-limit",
     "fragment-loottables-limit"
   ]

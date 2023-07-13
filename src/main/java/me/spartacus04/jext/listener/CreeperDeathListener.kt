@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.loot.LootContext
-import java.util.*
 
 internal class CreeperDeathListener : Listener {
     @EventHandler(ignoreCancelled = true)

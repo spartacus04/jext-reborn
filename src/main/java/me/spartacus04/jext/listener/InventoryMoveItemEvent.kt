@@ -13,20 +13,29 @@ internal class InventoryMoveItemEvent : Listener {
     fun inventoryMoveItemEvent(e: InventoryMoveItemEvent) {
         if(e.isCancelled) return
 
-        if(CONFIG.JUKEBOX_GUI) {
-            if(e.source.type == InventoryType.JUKEBOX || e.destination.type == InventoryType.JUKEBOX) {
-                e.isCancelled = true
+        when(CONFIG.JUKEBOX_BEHAVIOUR) {
+            "legacy-gui" -> {
+                if(e.source.type == InventoryType.PLAYER && e.destination.type == InventoryType.JUKEBOX) {
+                    e.isCancelled = true
+                }
             }
-        } else {
-            if(e.destination.type != InventoryType.JUKEBOX) return
+            "gui" -> {
+                if(e.source.type == InventoryType.PLAYER && e.destination.type == InventoryType.JUKEBOX) {
+                    e.isCancelled = true
+                }
+            }
+            else -> {
+                if (e.destination.type != InventoryType.JUKEBOX) return
 
-            val jukebox = e.destination.location!!.block.state as Jukebox
-            if(jukebox.isPlaying) return
+                val jukebox = e.destination.location!!.block.state as Jukebox
+                if (jukebox.isPlaying) return
 
-            try {
-                val container = DiscContainer(e.item)
-                container.play(e.destination.location!!)
-            } catch (_: IllegalStateException) { }
+                try {
+                    val container = DiscContainer(e.item)
+                    container.play(e.destination.location!!)
+                } catch (_: IllegalStateException) {
+                }
+            }
         }
     }
 }

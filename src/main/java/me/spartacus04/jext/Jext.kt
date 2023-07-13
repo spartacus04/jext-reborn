@@ -8,13 +8,16 @@ import me.spartacus04.jext.config.LanguageManager
 import me.spartacus04.jext.config.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.config.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.config.LanguageManager.Companion.UPDATE_DETECTED
+import me.spartacus04.jext.integrations.IntegrationsRegistrant
 import me.spartacus04.jext.listener.ListenersRegistrant
 import org.bstats.bukkit.Metrics
 import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+@Suppress("unused")
 class Jext : JavaPlugin() {
+
     override fun onEnable() {
         try {
             load()
@@ -35,8 +38,10 @@ class Jext : JavaPlugin() {
         JextNamespace.registerNamespace(this)
         ConfigManager.load(this)
         LanguageManager.load(this)
+        IntegrationsRegistrant.registerIntegrations()
         CommandsRegistrant.registerCommands(this)
         ListenersRegistrant.registerListeners(this)
+
 
         Updater(this).getVersion {
             if(it != description.version) {
@@ -49,10 +54,12 @@ class Jext : JavaPlugin() {
 
         val metrics = Metrics(this, 16571)
 
-        // TODO: update this when reworking juke gui
         metrics.addCustomChart(SimplePie("juke_gui") {
-            if(CONFIG.JUKEBOX_GUI) return@SimplePie "Jukebox GUI"
-            return@SimplePie "Vanilla"
+            when(CONFIG.JUKEBOX_BEHAVIOUR) {
+                "legacy-gui" -> return@SimplePie "Legacy GUI"
+                "gui" -> return@SimplePie "GUI"
+                else -> return@SimplePie "Vanilla"
+            }
         })
     }
 }

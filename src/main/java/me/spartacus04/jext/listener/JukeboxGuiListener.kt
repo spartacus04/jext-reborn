@@ -2,8 +2,8 @@ package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.disc.DiscContainer
-import me.spartacus04.jext.jukebox.JukeboxContainer
-import me.spartacus04.jext.jukebox.JukeboxEntry
+import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxContainer
+import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxEntry
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.enchantments.Enchantment
@@ -15,14 +15,18 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.IllegalStateException
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
 
+@Suppress("deprecation")
+@ScheduledForRemoval(inVersion = "1.3")
+@Deprecated("This is part of the legacy jukebox gui system. It's going to be removed in the next major update.")
 internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
     private fun getJukeboxGui(inv: Inventory): String? {
-        return if(!JukeboxContainer.containers.any {
+        return if(!LegacyJukeboxContainer.containers.any {
                 it.value.inventory == inv
             }) null
         else {
-            val key = JukeboxContainer.containers.filterValues { it.inventory == inv }.keys.first()
+            val key = LegacyJukeboxContainer.containers.filterValues { it.inventory == inv }.keys.first()
             key
         }
     }
@@ -38,27 +42,27 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
                 try {
                     val container = DiscContainer(itemStack)
 
-                    JukeboxContainer.loadedData[jukeId]?.set(index,
-                        JukeboxEntry("jext", container.namespace)
+                    LegacyJukeboxContainer.loadedData[jukeId]?.set(index,
+                        LegacyJukeboxEntry("jext", container.namespace)
                     )
                 } catch (e: IllegalStateException) {
-                    JukeboxContainer.loadedData[jukeId]?.set(index,
-                        JukeboxEntry("minecraft", itemStack.type.name)
+                    LegacyJukeboxContainer.loadedData[jukeId]?.set(index,
+                        LegacyJukeboxEntry("minecraft", itemStack.type.name)
                     )
                 }
             } else {
-                JukeboxContainer.loadedData[jukeId]?.remove(index)
+                LegacyJukeboxContainer.loadedData[jukeId]?.remove(index)
             }
         }
 
-        JukeboxContainer.save(plugin)
+        LegacyJukeboxContainer.save(plugin)
     }
 
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val jukeId = getJukeboxGui(e.inventory) ?: return
 
-        val playingSlot = JukeboxContainer.containers[jukeId]?.playingSlot ?: return
+        val playingSlot = LegacyJukeboxContainer.containers[jukeId]?.playingSlot ?: return
 
         if(e.isRightClick) {
             e.isCancelled = true
@@ -72,10 +76,10 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
                 if(e.clickedInventory == e.whoClicked.inventory || e.clickedInventory!!.contents[e.slot]?.type?.isRecord != true) return
 
                 if(!jukeId.contains(':')) {
-                    JukeboxContainer.containers[jukeId]!!.location = e.whoClicked.location
+                    LegacyJukeboxContainer.containers[jukeId]!!.location = e.whoClicked.location
                 }
 
-                playDisc(jukeId, e.slot, JukeboxContainer.containers[jukeId]!!.location)
+                playDisc(jukeId, e.slot, LegacyJukeboxContainer.containers[jukeId]!!.location)
             }
         }
 
@@ -89,7 +93,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
             e.currentItem?.removeEnchantment(Enchantment.MENDING)
         }
 
-        val oldContents = JukeboxContainer.containers[jukeId]?.createContents()
+        val oldContents = LegacyJukeboxContainer.containers[jukeId]?.createContents()
 
         if(e.currentItem != null && !e.currentItem!!.type.isRecord) {
             e.isCancelled = true
@@ -110,16 +114,16 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
                         try {
                             val container = DiscContainer(newContents[i]!!)
 
-                            JukeboxContainer.loadedData[jukeId]?.set(i,
-                                JukeboxEntry("jext", container.namespace)
+                            LegacyJukeboxContainer.loadedData[jukeId]?.set(i,
+                                LegacyJukeboxEntry("jext", container.namespace)
                             )
                         } catch (e: IllegalStateException) {
-                            JukeboxContainer.loadedData[jukeId]?.set(i,
-                                JukeboxEntry("minecraft", newContents[i]!!.type.name)
+                            LegacyJukeboxContainer.loadedData[jukeId]?.set(i,
+                                LegacyJukeboxEntry("minecraft", newContents[i]!!.type.name)
                             )
                         }
                     } else {
-                        JukeboxContainer.loadedData[jukeId]?.remove(i)
+                        LegacyJukeboxContainer.loadedData[jukeId]?.remove(i)
                     }
                 }
             }
@@ -127,22 +131,22 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
     }
 
     private fun playDisc(id : String, slot: Int, location: Location) {
-        if(!JukeboxContainer.loadedData.containsKey(id)) return
-        if(!JukeboxContainer.loadedData[id]!!.containsKey(slot)) return
+        if(!LegacyJukeboxContainer.loadedData.containsKey(id)) return
+        if(!LegacyJukeboxContainer.loadedData[id]!!.containsKey(slot)) return
 
-        if (JukeboxContainer.containers[id]?.playingSlot != -1) {
+        if (LegacyJukeboxContainer.containers[id]?.playingSlot != -1) {
             stopPlaying(id)
         }
 
-        JukeboxContainer.containers[id]?.playingSlot = slot
-        JukeboxContainer.containers[id]?.playingLocation = location
+        LegacyJukeboxContainer.containers[id]?.playingSlot = slot
+        LegacyJukeboxContainer.containers[id]?.playingLocation = location
 
-        val duration = JukeboxContainer.loadedData[id]!![slot]!!.play(location)
-        JukeboxContainer.containers[id]?.playing = JukeboxContainer.loadedData[id]!![slot]!!
+        val duration = LegacyJukeboxContainer.loadedData[id]!![slot]!!.play(location)
+        LegacyJukeboxContainer.containers[id]?.playing = LegacyJukeboxContainer.loadedData[id]!![slot]!!
 
-        JukeboxContainer.containers[id]?.inventory!!.setItem(
+        LegacyJukeboxContainer.containers[id]?.inventory!!.setItem(
             slot,
-            JukeboxContainer.containers[id]?.inventory!!.getItem(slot).apply {
+            LegacyJukeboxContainer.containers[id]?.inventory!!.getItem(slot).apply {
                 this ?: return
 
                 addUnsafeEnchantment(Enchantment.MENDING, 1)
@@ -163,25 +167,25 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
 
     private fun stopPlaying(id: String) {
         if(
-            JukeboxContainer.containers[id]?.playing == null ||
-            JukeboxContainer.containers[id]?.playingLocation == null
+            LegacyJukeboxContainer.containers[id]?.playing == null ||
+            LegacyJukeboxContainer.containers[id]?.playingLocation == null
         ) return
 
-        val playingSlot = JukeboxContainer.containers[id]!!.playingSlot
+        val playingSlot = LegacyJukeboxContainer.containers[id]!!.playingSlot
 
         if(playingSlot != -1) {
-            JukeboxContainer.containers[id]?.inventory?.setItem(
+            LegacyJukeboxContainer.containers[id]?.inventory?.setItem(
                 playingSlot,
-                JukeboxContainer.containers[id]!!.playing!!.getItemstack()
+                LegacyJukeboxContainer.containers[id]!!.playing!!.getItemstack()
             )
         }
 
-        JukeboxContainer.containers[id]?.playing?.stop(JukeboxContainer.containers[id]?.location!!)
+        LegacyJukeboxContainer.containers[id]?.playing?.stop(LegacyJukeboxContainer.containers[id]?.location!!)
 
-        JukeboxContainer.containers[id]?.playing = null
-        JukeboxContainer.containers[id]?.playingSlot = -1
-        JukeboxContainer.containers[id]?.playingLocation = null
+        LegacyJukeboxContainer.containers[id]?.playing = null
+        LegacyJukeboxContainer.containers[id]?.playingSlot = -1
+        LegacyJukeboxContainer.containers[id]?.playingLocation = null
 
-        JukeboxContainer.containers[id]?.refresh()
+        LegacyJukeboxContainer.containers[id]?.refresh()
     }
 }

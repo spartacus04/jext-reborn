@@ -3,7 +3,6 @@ package me.spartacus04.jext.command
 import me.spartacus04.jext.command.adapter.ExecutorAdapter
 import me.spartacus04.jext.command.adapter.ParameterDisc
 import me.spartacus04.jext.command.adapter.ParameterPlayer
-import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
@@ -17,14 +16,16 @@ internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
-    private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+    private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         if(VERSION < "1.19") {
             sender.sendJEXTMessage("command-not-supported", hashMapOf(
                 "command" to "fragmentgive",
@@ -40,7 +41,7 @@ internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
             sender.sendJEXTMessage("disc-namespace-not-found", hashMapOf(
                 "namespace" to args[1]
             ))
-            return true
+            return
         }
 
         for (player in players) {
@@ -66,6 +67,5 @@ internal class ExecutorFragmentGive : ExecutorAdapter("fragmentgive") {
         } else {
             sender.sendJEXTMessage("no-disc-given")
         }
-        return true
     }
 }

@@ -2,16 +2,12 @@ package me.spartacus04.jext.disc
 
 import me.spartacus04.jext.JextNamespace
 import me.spartacus04.jext.config.ConfigData
-import me.spartacus04.jext.config.ConfigData.Companion.VERSION
-import me.spartacus04.jext.listener.ChestOpenEvent
 import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootContext
 import org.bukkit.loot.LootTable
-import org.bukkit.loot.LootTables
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.asKotlinRandom
 
 class DiscLootTable : LootTable {

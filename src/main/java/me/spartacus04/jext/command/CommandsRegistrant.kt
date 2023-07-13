@@ -1,6 +1,5 @@
 package me.spartacus04.jext.command
 
-import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.plugin.java.JavaPlugin
 
 class CommandsRegistrant private constructor() {
@@ -12,9 +11,11 @@ class CommandsRegistrant private constructor() {
             ExecutorPlayAt().registerTo(plugin)
             ExecutorStopMusic().registerTo(plugin)
             ExecutorReload(plugin).registerTo(plugin)
-            ExecutorJukeboxGui(plugin).registerTo(plugin)
+            ExecutorJukeboxGui().registerTo(plugin)
             ExecutorFragment().registerTo(plugin)
             ExecutorFragmentGive().registerTo(plugin)
+
+            ExecutorLegacyJukeboxGui(plugin).registerTo(plugin)
         }
     }
 }

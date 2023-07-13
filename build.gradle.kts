@@ -8,18 +8,24 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
-    maven { url = uri("https://repo.dmulloy2.net/nexus/repository/public/") }
-    maven { url = uri("https://repo.codemc.io/repository/maven-public/")}
-    maven { url = uri("https://maven.enginehub.org/repo/")}
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://repo.dmulloy2.net/nexus/repository/public/")
+    maven("https://repo.codemc.io/repository/maven-public/")
+    maven("https://maven.enginehub.org/repo/")
+    maven("https://repo.xenondevs.xyz/releases/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
+    compileOnly("org.scala-lang:scala-library:2.13.11")
+    compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.18.6")
+    implementation("xyz.xenondevs.invui:invui:1.12")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.12")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
 }

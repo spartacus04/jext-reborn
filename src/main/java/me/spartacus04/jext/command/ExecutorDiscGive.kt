@@ -15,14 +15,16 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
-    private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+    private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
         val disc = ParameterDisc.getDisc(args[1])
@@ -32,7 +34,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
                 "namespace" to args[1]
             ))
 
-            return true
+            return
         }
 
         for (player in players) {
@@ -58,6 +60,5 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
         } else {
             sender.sendJEXTMessage("no-disc-given")
         }
-        return true
     }
 }

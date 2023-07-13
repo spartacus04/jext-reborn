@@ -7,6 +7,7 @@ import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.Disc
 import org.bukkit.*
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
@@ -14,10 +15,11 @@ class DiscContainer {
     private val title: String
     val author: String
     val namespace: String
-    private val duration: Int
+    val duration: Int
     private val customModelData : Int
     private val lores: ArrayList<String>
     private val material: Material = Material.MUSIC_DISC_11
+
 
     override fun toString() = title
 
@@ -139,6 +141,14 @@ class DiscContainer {
             val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
             NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
         }, 5)
+    }
+
+    fun play(player: Player, volume : Float = 4.0f, pitch : Float = 1.0f) {
+        if (!ConfigData.CONFIG.ALLOW_MUSIC_OVERLAPPING) {
+            DiscPlayer.stop(player, namespace)
+        }
+
+        player.playSound(player.location, namespace, SoundCategory.RECORDS, volume * 500, pitch)
     }
 
     override operator fun equals(other: Any?): Boolean {

@@ -1,19 +1,14 @@
 package me.spartacus04.jext.listener
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter
-import com.sk89q.worldguard.WorldGuard
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin
-import com.sk89q.worldguard.protection.flags.Flags
-import com.sk89q.worldguard.protection.flags.StateFlag
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
+import me.spartacus04.jext.integrations.IntegrationsRegistrant
 import me.spartacus04.jext.jukebox.JukeboxContainer
-import org.bukkit.Bukkit
+import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxContainer
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.Jukebox
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -28,12 +23,15 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
 
         if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
 
-        if(CONFIG.JUKEBOX_GUI) jukeboxGui(event, block)
-        else defaultBehaviour(event, block)
+        when(CONFIG.JUKEBOX_BEHAVIOUR) {
+            "legacy-gui" -> legacyJukeboxGui(event, block)
+            "gui" -> jukeboxGui(event, block)
+            else -> defaultBehaviour(event, block)
+        }
     }
 
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(!canInteract(event.player, block, Flags.INTERACT)) return
+        if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) return
 
         val state = block.state as? Jukebox ?: return
         val location = block.location
@@ -56,19 +54,27 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         }
     }
 
+    private fun legacyJukeboxGui(event: PlayerInteractEvent, block: Block) {
+        event.isCancelled = true
+
+        if(!IntegrationsRegistrant.hasJukeboxGuiAccess(event.player, block)) return
+
+        LegacyJukeboxContainer.get(plugin, block.location).open(event.player)
+    }
+
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
-        if(!canInteract(event.player, block, Flags.CHEST_ACCESS)) return
+        if(!IntegrationsRegistrant.hasJukeboxGuiAccess(event.player, block)) return
 
-        JukeboxContainer.get(plugin, block.location).open(event.player)
+        JukeboxContainer(event.player, block)
     }
 
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
-        JukeboxContainer.get(plugin, loc).breakJukebox()
+        LegacyJukeboxContainer.get(plugin, loc).breakJukebox()
 
         val block = event.block
         val state = block.state as? Jukebox ?: return
@@ -81,15 +87,5 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         } catch (_: IllegalStateException) { }
     }
 
-    private fun canInteract(player: Player, block: Block, flag: StateFlag) : Boolean {
-        if(Bukkit.getServer().pluginManager.getPlugin("WorldGuard") == null) return true
 
-        val wgPlayer = WorldGuardPlugin.inst().wrapPlayer(player)
-
-        if(WorldGuard.getInstance().platform.sessionManager.hasBypass(wgPlayer, wgPlayer.world)) return true
-
-        val containerQuery = WorldGuard.getInstance().platform.regionContainer.createQuery()
-
-        return containerQuery.testState(BukkitAdapter.adapt(block.location), wgPlayer, flag)
-    }
 }

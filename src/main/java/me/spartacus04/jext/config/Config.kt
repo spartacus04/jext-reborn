@@ -18,8 +18,8 @@ data class Config (
     @SerializedName("allow-metrics")
     var ALLOW_METRICS : Boolean,
 
-    @SerializedName("jukebox-gui")
-    var JUKEBOX_GUI : Boolean,
+    @SerializedName("jukebox-behaviour")
+    var JUKEBOX_BEHAVIOUR : String,
 
     @SerializedName("discs-random-chance")
     var DISCS_RANDOM_CHANCE : Int,

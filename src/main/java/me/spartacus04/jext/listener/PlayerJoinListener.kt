@@ -1,6 +1,7 @@
 package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.Updater
+import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.config.LanguageManager.Companion.CROWDIN_LINK
 import me.spartacus04.jext.config.LanguageManager.Companion.CROWDIN_MESSAGE
@@ -20,6 +21,10 @@ internal class PlayerJoinListener(private val plugin: JavaPlugin) : Listener {
                     playerJoinEvent.player.sendJEXTMessage("update-available")
                     playerJoinEvent.player.sendMessage(UPDATE_LINK)
                 }
+            }
+
+            if(CONFIG.JUKEBOX_BEHAVIOUR == "legacy-gui") {
+                playerJoinEvent.player.sendMessage("[§cJEXT§f] §cLegacy GUI is not supported anymore and will be removed in the next major update, please switch to gui or vanilla")
             }
         }
 

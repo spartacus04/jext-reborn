@@ -1,208 +1,283 @@
 package me.spartacus04.jext.jukebox
 
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.entity.HumanEntity
+import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
+import me.spartacus04.jext.disc.DiscContainer
+import me.spartacus04.jext.disc.DiscContainer.Companion.SOUND_MAP
+import me.spartacus04.jext.disc.DiscPlayer
+import org.bukkit.Material
+import org.bukkit.SoundCategory
+import org.bukkit.block.Block
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemFlag
-import org.bukkit.inventory.ItemStack
-import org.bukkit.plugin.java.JavaPlugin
+import xyz.xenondevs.invui.gui.ScrollGui
+import xyz.xenondevs.invui.gui.structure.Markers
+import xyz.xenondevs.invui.inventory.VirtualInventory
+import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
+import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
+import xyz.xenondevs.invui.inventory.event.PlayerUpdateReason
+import xyz.xenondevs.invui.inventory.event.UpdateReason
+import xyz.xenondevs.invui.item.builder.ItemBuilder
+import xyz.xenondevs.invui.item.impl.SimpleItem
+import xyz.xenondevs.invui.window.Window
+import java.util.*
+import kotlin.collections.HashMap
 
 class JukeboxContainer {
+    private val player: Player
     private val id: String
-    var location: Location
-    val plugin: JavaPlugin
-    val inventory = Bukkit.createInventory(null, 54, LANG["en_us", "jukebox"])  // TODO: make this player dependant
+    private val block: Block?
 
-    var playingLocation: Location? = null
-    var playingSlot = -1
-    var playing: JukeboxEntry? = null
-
-    private constructor(plugin: JavaPlugin, loc: Location) {
-        id = "${loc.world!!.name}:${loc.blockX}:${loc.blockY}:${loc.blockZ}"
-        location = loc
-        this.plugin = plugin
+    constructor(player: Player) {
+        this.player = player
+        this.block = null
+        this.id = player.uniqueId.toString()
 
         mergedConstructor()
     }
 
-    private constructor(plugin: JavaPlugin, player: HumanEntity) {
-        id = player.uniqueId.toString()
-        location = player.location
-        this.plugin = plugin
+    constructor(player: Player, block: Block) {
+        this.player = player
+        this.block = block
+        this.id = "${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"
 
         mergedConstructor()
+    }
+
+    private fun playDisc(event: ItemPreUpdateEvent) {
+        event.inventory.setItem(UpdateReason.SUPPRESSED, event.slot, event.previousItem!!.clone().apply {
+            addUnsafeEnchantment(Enchantment.MENDING, 1)
+
+            itemMeta = itemMeta!!.apply {
+                addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            }
+        })
+
+        val delay = try {
+            val disc = DiscContainer(event.previousItem!!)
+
+            if(block != null) {
+                disc.play(block.location)
+            } else {
+                disc.play(player)
+            }
+
+            disc.duration
+        } catch (_: IllegalStateException) {
+            if(block != null) {
+                block.location.world?.playSound(block.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 1f, 1f)
+            } else {
+                player.playSound(player.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 500f, 1f)
+            }
+
+            SOUND_MAP[event.previousItem!!.type]!!.duration
+        }
+
+        if(delay == -1) {
+            return
+        }
+
+        timerMap[id] = Timer().apply {
+            schedule(object : TimerTask() {
+                override fun run() {
+                    event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.previousItem!!.clone().apply {
+                        removeEnchantment(Enchantment.MENDING)
+
+                        itemMeta = itemMeta!!.apply {
+                            removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+                        }
+                    })
+
+                    playingMap[id] = -1
+
+                }
+            }, delay.toLong() * 1000)
+        }
+    }
+
+    private fun stopDisc(event: ItemPreUpdateEvent) {
+        if(timerMap.containsKey(id)) {
+            timerMap[id]!!.cancel()
+            timerMap.remove(id)
+        }
+
+        if(playingMap[id]!! != -1) {
+            event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.previousItem!!.clone().apply {
+                removeEnchantment(Enchantment.MENDING)
+
+                itemMeta = itemMeta!!.apply {
+                    removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+                }
+            })
+        }
+
+        if(block != null) {
+            DiscPlayer.stop(block.location)
+        } else {
+            DiscPlayer.stop(player)
+        }
     }
 
     private fun mergedConstructor() {
-        if(!loadedData.containsKey(id)) {
-            loadedData[id] = HashMap()
+        if(!playingMap.containsKey(id)) {
+            playingMap[id] = -1
         }
 
-        refresh()
+        val inv = getInv(id)
+
+        inv.setPreUpdateHandler(this::itemPreUpdateHandler)
+        inv.setPostUpdateHandler(this::itemPostUpdateHandler)
+
+        val gui = ScrollGui.inventories()
+            .setStructure(
+                "x x x x x x x x u",
+                "x x x x x x x x #",
+                "x x x x x x x x #",
+                "x x x x x x x x #",
+                "x x x x x x x x #",
+                "x x x x x x x x d"
+            )
+            .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+            .addIngredient('u', ScrollUpItem(player))
+            .addIngredient('d', ScrollDownItem(player))
+            .addIngredient('#', border)
+            .setContent(listOf(inv))
+
+        val window = Window.single()
+            .setViewer(player)
+            .setTitle(LANG.getKey(player, "jukebox"))
+            .setGui(gui)
+            .build()
+
+        window.open()
     }
 
-    fun open(player: HumanEntity) {
-        player.openInventory(inventory)
+    private fun itemPreUpdateHandler(event: ItemPreUpdateEvent) {
+        if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
+            event.isCancelled = true
+            return
+        }
 
-        if(playingSlot != -1) {
-            val item = inventory.contents[playingSlot]
+        if(event.updateReason == null || event.updateReason !is PlayerUpdateReason) return
+        val updateReason = event.updateReason as PlayerUpdateReason
 
-            if(item != null) {
-                item.addUnsafeEnchantment(org.bukkit.enchantments.Enchantment.MENDING, 1)
+        if(updateReason.event !is InventoryClickEvent) return
+        val mcevent = updateReason.event as InventoryClickEvent
 
-                item.itemMeta = item.itemMeta?.apply {
-                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
-
-                    lore = (lore ?: ArrayList()).apply {
-                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
-                    }
-                }
-
-                inventory.contents[playingSlot] = item
+        if(mcevent.isLeftClick) {
+            if(event.isRemove && event.slot == playingMap[id]!!) {
+                event.isCancelled = true
+                stopDisc(event)
+                playingMap[id] = -1
             }
+
+            return
+        }
+
+        if(mcevent.isRightClick && !event.isRemove) return
+
+        event.isCancelled = true
+
+        stopDisc(event)
+
+        if(playingMap[id]!! != -1 && playingMap[id]!! == event.slot) {
+            playingMap[id] = -1
+        } else {
+            playingMap[id] = event.slot
+            playDisc(event)
         }
     }
 
-    fun createContents(): Array<ItemStack?> {
-        val contents = arrayOfNulls<ItemStack>(54)
-
-        val data = loadedData[id] ?: HashMap()
-
-        data.forEach {
-            contents[it.key] = it.value.getItemstack()
+    private fun itemPostUpdateHandler(event: ItemPostUpdateEvent) {
+        if(event.isAdd || event.isSwap || event.isRemove) {
+            save()
         }
-
-        if(playingSlot != -1) {
-            val item = contents[playingSlot]
-
-            if(item != null) {
-                item.addUnsafeEnchantment(org.bukkit.enchantments.Enchantment.MENDING, 1)
-
-                item.itemMeta = item.itemMeta?.apply {
-                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
-
-                    lore = (lore ?: ArrayList()).apply {
-                        add(LANG["en_us", "playing"])   // TODO: make this player dependant
-                    }
-                }
-
-                contents[playingSlot] = item
-            }
-        }
-
-        return contents
-    }
-
-    fun refresh() {
-        inventory.contents = createContents()
-    }
-
-    private fun close() {
-        inventory.viewers.forEach {
-            it.closeInventory()
-        }
-    }
-
-    fun breakJukebox() {
-        val contents = createContents().filterNotNull()
-
-        contents.forEach {
-            location.world!!.dropItemNaturally(location, it)
-        }
-
-        close()
     }
 
     companion object {
         private val gson = GsonBuilder().setPrettyPrinting().create()
+        private val border = SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("§r"))
 
-        val loadedData = HashMap<String, HashMap<Int, JukeboxEntry>>()
-        val containers = HashMap<String, JukeboxContainer>()
+        private val inventories = HashMap<String, VirtualInventory>()
+        private val playingMap = HashMap<String, Int>()
+        private val timerMap = HashMap<String, Timer>()
 
-        fun get(plugin: JavaPlugin, loc: Location) : JukeboxContainer {
-            val id = "${loc.world!!.name}:${loc.blockX}:${loc.blockY}:${loc.blockZ}"
-
-            if(containers.containsKey(id)) {
-                return containers[id]!!
+        fun getInv(id: String): VirtualInventory {
+            if(inventories.containsKey(id)) {
+                return inventories[id]!!
+            } else if(inventories.containsKey(id.replace(":", ""))) {
+                // Fixes a bug introduced in older versions where two or more jukeboxes with the same id are loaded
+                inventories[id] = inventories[id.replace(":", "")]!!
+                inventories.remove(id.replace(":", ""))
+                return inventories[id]!!
             }
 
-            // Fixes a bug where two or more jukeboxes with the same id are loaded
-            val oldId = "${loc.world!!.name}${loc.blockX}${loc.blockY}${loc.blockZ}"
+            val inv = VirtualInventory(96)
+            inventories[id] = inv
 
-            if(loadedData.containsKey(oldId)) {
-                loadedData[id] = loadedData[oldId]!!
-                loadedData.remove(oldId)
-
-                save(plugin)
-            }
-
-            val container = JukeboxContainer(plugin, loc)
-            containers[id] = container
-
-            return container
+            return inv
         }
 
-        fun get(plugin: JavaPlugin, player: Player) : JukeboxContainer {
-            val id = player.uniqueId.toString()
+        fun loadFromFile() {
+            val typeToken = object : TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
+            val file = PLUGIN.dataFolder.resolve(".savedata")
 
-            if(containers.containsKey(id)) {
-                return containers[id]!!
+            if (inventories.isNotEmpty()) {
+                save()
             }
 
-            val container = JukeboxContainer(plugin, player)
-            containers[id] = container
-
-            return container
-        }
-
-        fun reload(plugin: JavaPlugin) {
-            val legacyTypeToken = object: TypeToken<HashMap<String, HashMap<Int, String>>>() {}.type
-            val typeToken = object: TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
-            val file = plugin.dataFolder.resolve(".savedata")
-
-            if(loadedData.isNotEmpty()) {
-                save(plugin)
-            }
-
-            if(!file.exists()) {
+            if (!file.exists()) {
                 file.createNewFile()
             } else {
                 val text = file.readText()
 
-                try {
-                    // new format
-                    val data = gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken)
+                val data = gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
 
-                    if(data != null) {
-                        loadedData.putAll(data)
-                    }
-                } catch (_: JsonSyntaxException) {
-                    // legacy format
+                data.forEach { (id, itemMap) ->
+                    val inv = getInv(id)
 
-                    val data = gson.fromJson<HashMap<String, HashMap<Int, String>>>(text, legacyTypeToken)
-
-                    loadedData.putAll(
-                        data.mapValues { entry ->
-                            entry.value.mapValues { JukeboxEntry.fromLegacyString(it.value) }.toMap(HashMap())
+                    itemMap.forEach { (slot, entry) ->
+                        inv.apply {
+                            setItem(UpdateReason.SUPPRESSED, slot, entry.toItemStack())
                         }
-                    )
+                    }
+
+                    inventories[id] = inv
                 }
+
+                save()
             }
         }
 
-        fun save(plugin: JavaPlugin) {
-            val file = plugin.dataFolder.resolve(".savedata")
+        private fun save() {
+            val file = PLUGIN.dataFolder.resolve(".savedata")
 
             if(!file.exists()) {
                 file.createNewFile()
             }
 
-            file.writeText(gson.toJson(loadedData))
+            val data = HashMap<String, HashMap<Int, JukeboxEntry>>()
+
+            inventories.forEach {
+                data[it.key] = HashMap()
+
+                it.value.items.forEachIndexed { index, itemStack ->
+                    if(itemStack == null) return@forEachIndexed
+
+                    try {
+                        val container = DiscContainer(itemStack)
+                        data[it.key]!![index] = JukeboxEntry("jext", container.namespace)
+                    } catch (_: IllegalStateException) {
+                        data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
+                    }
+                }
+            }
+
+            file.writeText(gson.toJson(data))
         }
     }
 }

@@ -31,8 +31,8 @@
     "chests/*": 3
   },
 
-  // Adds a custom gui when clicking on a jukebox (overrides the vanilla behaviour)
-  "jukebox-gui": false,
+  // Sets a custom jukebox behaviour [ vanilla, legacy-gui and gui ]
+  "jukebox-behaviour": "vanilla",
 
   // Allow/Disallow plugin metrics (no personal data is going to be collected)
   "allow-metrics": true

@@ -19,14 +19,16 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
     }
 
     override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
     override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        return mergedExecute(sender, args)
+        mergedExecute(sender, args)
+        return true
     }
 
-    private fun mergedExecute(sender: CommandSender, args: Array<String>): Boolean {
+    private fun mergedExecute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
         val disc = ParameterDisc.getDisc(args[1])
@@ -35,7 +37,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                 "namespace" to args[1]
             ))
 
-            return true
+            return
         }
 
         val discContainer = DiscContainer(disc)
@@ -49,7 +51,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                     "param" to "pitch"
                 ))
 
-                return true
+                return
             }
         }
 
@@ -66,7 +68,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                     "param" to "volume"
                 ))
 
-                return true
+                return
             }
         }
 
@@ -77,7 +79,7 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
                     "name" to disc.TITLE
                 ))
             } else {
-                discContainer.play(player.location, pitch, volume)
+                discContainer.play(player, pitch, volume)
             }
         }
 
@@ -96,7 +98,5 @@ internal class ExecutorPlayMusic : ExecutorAdapter("playmusic") {
         } else {
             sender.sendJEXTMessage("played-music-to-no-one")
         }
-
-        return true
     }
 }

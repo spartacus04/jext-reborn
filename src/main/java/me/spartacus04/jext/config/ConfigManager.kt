@@ -2,8 +2,8 @@ package me.spartacus04.jext.config
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.disc.DiscPlayer
 import me.spartacus04.jext.jukebox.JukeboxContainer
+import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxContainer
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -56,7 +56,8 @@ class ConfigManager {
             ConfigVersionManager.updateDiscs(discsFile)
             ConfigData.DISCS = deserialize(discsFile, discsType)
 
-            JukeboxContainer.reload(plugin)
+            LegacyJukeboxContainer.reload(plugin)
+            JukeboxContainer.loadFromFile()
         }
     }
 }
