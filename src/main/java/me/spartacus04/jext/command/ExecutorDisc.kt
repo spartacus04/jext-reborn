@@ -6,20 +6,23 @@ import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.entity.Player
 
+/**
+ * ExecutorDisc is a class used to register the "disc" command to the plugin.
+ *
+ * @constructor The constructor is empty because the class does not have any properties.
+ */
 internal class ExecutorDisc : ExecutorAdapter("disc") {
     init {
         addParameter(ParameterDisc(true))
     }
 
     /**
-     * The function executes a player command in Kotlin, adding a disc item to the player's inventory and sending success
-     * messages.
+     * The function `executePlayer` gives the sender a disc.
      *
-     * @param sender The `sender` parameter is of type `Player`, which represents the player who executed the command.
-     * @param args An array of strings representing the arguments passed to the command.
-     * @return a boolean value.
+     * @param sender The player who executed the command.
+     * @param args The arguments that were passed to the command.
      */
-    override fun executePlayer(sender: Player, args: Array<String>): Boolean {
+    override fun executePlayer(sender: Player, args: Array<String>) {
         val disc = ParameterDisc.getDisc(args[0])
 
         if (disc == null) {
@@ -27,7 +30,7 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
                 "namespace" to args[0]
             ))
 
-            return true
+            return
         }
 
         sender.inventory.addItem(DiscContainer(disc).discItem)
@@ -36,6 +39,6 @@ internal class ExecutorDisc : ExecutorAdapter("disc") {
             "disc" to disc.TITLE
         ))
 
-        return true
+        return
     }
 }

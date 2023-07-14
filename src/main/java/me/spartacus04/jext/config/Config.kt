@@ -3,29 +3,19 @@ package me.spartacus04.jext.config
 import com.google.gson.annotations.SerializedName
 
 /**
- * The Config data class represents a configuration object with various properties for the plugin.
- * @property {String} LANGUAGE_MODE - The `LANGUAGE_MODE` property represents the language mode for the configuration.
- * @property {Boolean} FORCE_RESOURCE_PACK - A boolean value indicating whether to force the resource pack to be used.
- * @property {Boolean} IGNORE_FAILED_DOWNLOAD - The property IGNORE_FAILED_DOWNLOAD is a boolean value that determines
- * whether to ignore failed downloads or not. If set to true, it means that failed downloads will be ignored and a player
- * will be able to join even if FORCE_RESOURCE_PACK is set to true.
- * @property {Boolean} ALLOW_MUSIC_OVERLAPPING - The property ALLOW_MUSIC_OVERLAPPING is a boolean value that determines
- * whether music tracks can overlap or not. If set to true, music tracks can play simultaneously. If set to false, music
- * tracks will not overlap and will stop playing before a new track starts.
- * @property {Boolean} ALLOW_METRICS - The ALLOW_METRICS property is a boolean value that determines whether or not metrics
- * are allowed. If set to true, metrics are allowed; if set to false, metrics are not allowed.
- * @property {String} JUKEBOX_BEHAVIOUR - The property "JUKEBOX_BEHAVIOUR" represents the behavior of a jukebox.
- * It can either be "vanilla", "legacy-gui", or "gui".
- * @property {Int} DISCS_RANDOM_CHANCE - DISCS_RANDOM_CHANCE is an integer property that represents the chance of obtaining
- * a disc randomly in a chest.
- * @property {Int} FRAGMENTS_RANDOM_CHANCE - FRAGMENTS_RANDOM_CHANCE is an integer property that represents the chance of
- * obtaining a fragment in a chest.
- * @property {HashMap<String, Int>} DISC_LIMIT - DISC_LIMIT is a HashMap that stores the limit for each disc in the loot
- * tables. The keys in the HashMap are the disc names (as strings) and the values are the corresponding limits (as
- * integers).
- * @property {HashMap<String, Int>} FRAGMENT_LIMIT - The `FRAGMENT_LIMIT` property is a HashMap that stores the limit for
- * each fragment loottable. The key of the HashMap is a String representing the loottable name, and the value is an Int
- * representing the limit for that loottable.
+ * Config is a data class used to store the plugin's config.
+ *
+ * @property LANGUAGE_MODE Can be set to `auto`, `custom`, `silent` or a custom locale. If set to auto the plugin will display itself to the player in his language locale (for example if someone is playing in italian, the plugin messages are going to be in italian for him). The console locale is always set to `en_us`. If set to custom the plugin will generate a language file in his config, which can be edited by the user to make custom messages. These custom language is applied to all players regardless of their locale (except for console). If set to silent the plugin won't display any messages in chat. If set to a custom locale each player will see the plugin in that language regardless of their locale
+ * @property FORCE_RESOURCE_PACK If set to true the plugin will kick the player if they reject the server resource pack.
+ * @property IGNORE_FAILED_DOWNLOAD If set to true the plugin will kick the player if the resource pack download fails.
+ * @property ALLOW_MUSIC_OVERLAPPING If set to true and a player tries to play a record near another jukebox that's already playing custom music, the second jukebox won't play any music.
+ * @property ALLOW_METRICS If set to true anonymous stats about your server will be sent to the bstats api. Please don't disable this, as watching how many people use the plugin helps me stay motivated
+ * @property JUKEBOX_BEHAVIOUR When set to gui or legacy-gui it will add a custom jukebox gui when clicking on a jukebox.
+ * @property DISCS_RANDOM_CHANCE Can be set to an integer value from 1 to 1000, sets the chance for custom discs to spawn in a dungeon
+ * @property FRAGMENTS_RANDOM_CHANCE Can be set to an integer value from 1 to 1000, sets the chance for custom fragments to spawn in a dungeon
+ * @property DISC_LIMIT Sets how many discs can be found in a certain loottable. chests/ * sets the chance for all discs. If none is set the default value is 2
+ * @property FRAGMENT_LIMIT Sets how many discs can be found in a certain loottable. chests/ ì* sets the chance for all discs. If none is set the default value is 3
+ * @constructor Creates a new Config object
  */
 data class Config (
     @SerializedName("lang")

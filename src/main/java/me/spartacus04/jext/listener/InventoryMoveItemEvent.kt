@@ -8,6 +8,12 @@ import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 
+/**
+ * The class `InventoryMoveItemEvent` is a listener class that is used to prevent players from moving items into jukeboxes while in gui mode
+ * and to play discs when they are moved into a jukebox.
+ *
+ * @constructor Creates a new inventory move item event listener.
+ */
 internal class InventoryMoveItemEvent : Listener {
     /**
      * The function `inventoryMoveItemEvent` is an event listener that is called when an item is moved from one inventory to another.

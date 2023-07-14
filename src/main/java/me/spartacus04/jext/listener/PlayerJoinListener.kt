@@ -12,12 +12,17 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The class `PlayerJoinListener` is a listener class that is used to handle player join events.
+ *
+ * @property plugin the plugin instance
+ * @constructor Creates a new player join event listener.
+ */
 internal class PlayerJoinListener(private val plugin: JavaPlugin) : Listener {
     /**
      * The function `onPlayerJoin` is an event listener that is called when a player joins the server.
      *
      * @param playerJoinEvent The `playerJoinEvent` parameter is of type `PlayerJoinEvent`. It represents the event that is being listened to.
-     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
      */
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {

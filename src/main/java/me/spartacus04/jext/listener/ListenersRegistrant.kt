@@ -9,7 +9,12 @@ import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.plugin.java.JavaPlugin
 
-class ListenersRegistrant private constructor() {
+/**
+ * The class "ListenersRegistrant" is a registrant class that is used to register various listeners for different events
+ *
+ * @constructor Creates a new listeners' registrant.
+ */
+internal class ListenersRegistrant private constructor() {
     companion object {
         /**
          * The function "registerListeners" registers various listeners for different events in a Kotlin plugin.

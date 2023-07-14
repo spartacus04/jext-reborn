@@ -3,16 +3,20 @@ package me.spartacus04.jext.integrations
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
-class IntegrationsRegistrant {
+/**
+ * This class is used to register and manage the plugin's integrations.
+ *
+ * @constructor The class is a singleton, so the constructor is private.
+ */
+class IntegrationsRegistrant private constructor() {
     companion object {
         private var WORLDGUARD: WorldGuardIntegration? = null
         private var GRIEF_PREVENTION: GriefPreventionIntegration? = null
 
         /**
-         * The function "registerIntegrations" attempts to initialize two integration objects, "WORLDGUARD" and
-         * "GRIEF_PREVENTION", catching any "NoClassDefFoundError" exceptions that may occur.
+         * The function registers the plugin's integrations.
          */
-        fun registerIntegrations() {
+        internal fun registerIntegrations() {
             try {
                 WORLDGUARD = WorldGuardIntegration()
             } catch (_: NoClassDefFoundError) { }

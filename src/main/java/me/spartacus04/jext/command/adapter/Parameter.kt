@@ -3,22 +3,31 @@ package me.spartacus04.jext.command.adapter
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
+/**
+ * The abstract class Parameter is used to represent a parameter of a command.
+ *
+ * @property isRequired The "isRequired" property is a boolean value that represents whether the parameter is required or not.
+ * @constructor Creates a Parameter object.
+ */
 abstract class Parameter(val isRequired: Boolean) {
 
+    /**
+     * The abstract property name represents the name of the parameter.
+     */
     abstract val name: String?
 
     /**
-     * The function onComplete takes a parameter of type String and a sender of type CommandSender, and returns a list of
-     * strings or null.
+     * The abstract method "onComplete" is used to filter a list of strings based on a given parameter and returns the
+     * matching strings, or null if there are no matches.
      *
-     * @param parameter A string parameter that represents some input or data.
-     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
-     * It could be a player, console, or any other entity that has the ability to execute commands.
+     * @param parameter The parameter is a string that represents the input value
+     * @param sender The "sender" parameter is of type CommandSender. It represents the entity that executed the command.
+     * @return A list of possible parameter values or null.
      */
     abstract fun onComplete(parameter: String, sender: CommandSender): List<String>?
 
     /**
-     * The function returns a string representation of an object, with different formatting depending on whether it is
+     * The function returns a string representation of a parameter, with different formatting depending on whether it is
      * required or not.
      *
      * @return The method is returning a string representation of an object. The returned string depends on the value of

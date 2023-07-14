@@ -10,16 +10,26 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.lang.reflect.Type
 
-class ConfigManager {
+/**
+ * Config manager is a class used to load the plugin's config.
+ *
+ * @constructor The class is a singleton, so the constructor is private.
+ */
+internal class ConfigManager private constructor() {
     companion object {
+        /**
+         * The configFile property stores the plugin's config file.
+         */
         private lateinit var configFile: File
+        /**
+         * The discsFile property stores the plugin's discs file.
+         */
         private lateinit var discsFile: File
 
         /**
-         * The function creates a default configuration file for a Java plugin if it doesn't already exist.
+         * The function `createDefaultConfig` creates the default config file.
          *
-         * @param plugin The parameter "plugin" is of type JavaPlugin. It is used to reference the plugin instance that is
-         * calling the createDefaultConfig function.
+         * @param plugin The plugin instance used to create the config file.
          */
         private fun createDefaultConfig(plugin: JavaPlugin) {
             if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
@@ -33,8 +43,13 @@ class ConfigManager {
             }
         }
 
-        /* The `deserialize` function is a generic function that takes a `File` object and a `Type` object as parameters
-        and returns an object of type `T`. */
+        /**
+         * The function `deserialize` deserializes a file.
+         *
+         * @param file The file to deserialize.
+         * @param type The type of the file.
+         * @return The deserialized file.
+         */
         private fun <T> deserialize(file: File, type: Type) : T {
             val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
@@ -45,11 +60,9 @@ class ConfigManager {
         }
 
         /**
-         * The function loads configuration and disc data from files, updates the configuration if necessary, and then
-         * loads the data into the appropriate variables.
+         * The function `load` loads the plugin's config.
          *
-         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to access the plugin's
-         * data folder and to send messages to the console.
+         * @param plugin The plugin instance used to load the config.
          */
         fun load(plugin: JavaPlugin) {
             configFile = plugin.dataFolder.resolve("config.json")

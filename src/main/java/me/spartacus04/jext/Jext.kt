@@ -15,6 +15,12 @@ import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The class `Jext` is the main class of the plugin. It extends the `JavaPlugin` class, which is the main class of all
+ * Bukkit plugins.
+ *
+ * @constructor Creates a new Jext plugin.
+ */
 @Suppress("unused")
 class Jext : JavaPlugin() {
 
@@ -39,8 +45,19 @@ class Jext : JavaPlugin() {
         Bukkit.getConsoleSender().sendMessage(DISABLED_MESSAGE)
     }
 
-    /* The `load()` function is responsible for initializing and setting up various components of the plugin. Here's a
-    breakdown of what it does: */
+    /**
+     * The `load()` function is responsible for initializing and setting up various components of the plugin. Here's a breakdown of what it does:
+     * It sets the `PLUGIN` variable to the current instance of the plugin.
+     * It loads the server version.
+     * It registers the Jext namespace.
+     * It loads the configuration.
+     * It loads the language.
+     * It registers the integrations.
+     * It registers the commands.
+     * It registers the listeners.
+     * It checks for updates.
+     * It starts metrics if allowed.
+     */
     private fun load() {
         PLUGIN = this
         ServerVersion.load(this)

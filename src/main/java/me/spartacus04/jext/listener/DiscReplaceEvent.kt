@@ -13,6 +13,11 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
+/**
+ * The class `DiscReplaceEvent` is a listener class that is used to update discs in inventories.
+ *
+ * @constructor Creates a new disc replace event listener.
+ */
 internal class DiscReplaceEvent : Listener {
     /**
      * The function `playerJoinEvent` is an event listener that is called when a player joins the server.
@@ -58,7 +63,7 @@ internal class DiscReplaceEvent : Listener {
     }
 
     /**
-     * The function `updateItem` is a helper function that updates an item.
+     * The function `updateItem` is a helper function that checks if a disc namespace still exists, and if it doesn't replace the item with a random disc.
      *
      * @param itemStack The `itemStack` parameter is of type `ItemStack`. It represents the item that is being updated.
      * @return The function returns an `ItemStack` object.

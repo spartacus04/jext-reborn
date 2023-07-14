@@ -7,20 +7,23 @@ import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.entity.Player
 
+/**
+ * ExecutorFragment is a class used to register the "fragment" command to the plugin.
+ *
+ * @constructor The constructor is empty because the class does not have any properties.
+ */
 internal class ExecutorFragment : ExecutorAdapter("fragment") {
     init {
         addParameter(ParameterDisc(true))
     }
 
     /**
-     * The function executes a player command in Kotlin, checking the version and adding a disc fragment to the player's
-     * inventory.
+     * The function `executePlayer` gives the sender a disc fragment.
      *
-     * @param sender The `sender` parameter represents the player who executed the command.
-     * @param args An array of strings representing the arguments passed to the command.
-     * @return The function `executePlayer` returns a boolean value.
+     * @param sender The player who executed the command.
+     * @param args The arguments that were passed to the command.
      */
-    override fun executePlayer(sender: Player, args: Array<String>): Boolean {
+    override fun executePlayer(sender: Player, args: Array<String>) {
         if(VERSION < "1.19") {
             sender.sendJEXTMessage("command-not-supported", hashMapOf(
                 "command" to "fragment",
@@ -35,7 +38,7 @@ internal class ExecutorFragment : ExecutorAdapter("fragment") {
                 "namespace" to args[0]
             ))
 
-            return true
+            return
         }
 
         sender.inventory.addItem(DiscContainer(disc).fragmentItem)
@@ -44,6 +47,6 @@ internal class ExecutorFragment : ExecutorAdapter("fragment") {
             "disc" to disc.TITLE
         ))
 
-        return true
+        return
     }
 }

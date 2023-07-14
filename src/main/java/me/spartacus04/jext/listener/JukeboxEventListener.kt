@@ -16,6 +16,12 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The class `JukeboxEventListener` is a listener class that is used to handle player interactions with jukeboxes.
+ *
+ * @property plugin the plugin instance
+ * @constructor Creates a new jukebox event listener.
+ */
 internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     /**
      * The function `onJukeboxInteract` is an event listener that is called when a player interacts with a jukebox.
@@ -40,8 +46,6 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * @param event PlayerInteractEvent - an event that is triggered when a player interacts with an object in the game
      * world.
      * @param block The "block" parameter is the block that the player interacted with. It is of type Block.
-     * @return In this code snippet, the function `defaultBehaviour` does not have a return type specified. Therefore, it
-     * does not explicitly return any value.
      */
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
         if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) return
@@ -74,7 +78,6 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * @param event The event parameter is of type PlayerInteractEvent. This event is triggered when a player interacts
      * with an object in the game, such as right-clicking on a block.
      * @param block The "block" parameter represents the block that the player interacted with.
-     * @return nothing (Unit) as it has a return type of "Unit" or "void".
      */
     private fun legacyJukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
@@ -92,7 +95,6 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * with an object in the game, such as right-clicking on a block.
      * @param block The "block" parameter represents the block that the player interacted with. It is used to determine if
      * the player has access to the jukebox GUI.
-     * @return nothing (Unit).
      */
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
@@ -106,7 +108,6 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * The function `onJukeboxBreak` is an event listener that is called when a player breaks a jukebox.
      *
      * @param event The event parameter is of type BlockBreakEvent. This event is triggered when a player breaks a block.
-     * @return nothing (Unit).
      */
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {

@@ -5,25 +5,45 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
 
+/**
+ * This class represents a location parameter
+ *
+ * @property axis The axis of the location parameter
+ * @constructor Create empty Parameter location
+ *
+ * @param required A boolean value that represents whether the parameter is required or not
+ */
 class ParameterLocation internal constructor(required: Boolean, private val axis: Axis) : Parameter(required) {
+
+    /**
+     * This enum represents the axis of the location parameter
+     *
+     * @constructor Create empty Axis
+     */
     internal enum class Axis {
-        X, Y, Z
+        /**
+         * X
+         *
+         * @constructor
+         */
+        X,
+        /**
+         * Y
+         *
+         * @constructor
+         */
+        Y,
+        /**
+         * Z
+         *
+         * @constructor
+         */
+        Z
     }
 
     override val name: String
         get() = axis.toString().lowercase(Locale.getDefault())
 
-    /**
-     * The function `onComplete` takes a parameter and a sender, and returns a list of suggestions based on the target
-     * block's location.
-     *
-     * @param parameter The `parameter` parameter is a `String` that represents the input parameter for the `onComplete`
-     * function. It is used to provide additional information or context for generating suggestions.
-     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
-     * It can be a player, console, or command block. In this code, it is cast to a `Player` if it is an instance of
-     * `Player`, otherwise it returns `null`.
-     * @return a list of suggestions as strings.
-     */
     override fun onComplete(parameter: String, sender: CommandSender): List<String> {
         val suggestions: MutableList<String> = ArrayList()
 
@@ -53,19 +73,13 @@ class ParameterLocation internal constructor(required: Boolean, private val axis
 
     companion object {
         /**
-         * The function `parseLocation` takes in three string parameters representing coordinates and a `Player` object,
-         * and returns a `Location` object based on the provided coordinates and the player's world.
+         * The function "parseLocation" parses the location parameters and returns a Location object
          *
-         * @param x The parameter `x` is a string representing the x-coordinate of a location. It can either be a numeric
-         * value or the tilde character (~) which represents the current x-coordinate of the `sender` player.
-         * @param y The parameter `y` represents the y-coordinate of a location. It can be either a specific value or the
-         * tilde symbol (~) which represents the current y-coordinate of the `sender` player.
-         * @param z The parameter "z" in the `parseLocation` function represents the z-coordinate of a location. It is a
-         * string that can either be a numeric value or "~" (tilde). If it is "~", it means that the z-coordinate should be
-         * set to the z-coordinate of the sender's
-         * @param sender The `sender` parameter is of type `Player`. It represents the player who is sending the command or
-         * action that requires a location to be parsed.
-         * @return The function `parseLocation` returns a `Location` object.
+         * @param x The x coordinate
+         * @param y The y coordinate
+         * @param z The z coordinate
+         * @param sender The "sender" parameter is of type Player, which represents the player who executed the command.
+         * @return A Location object
          */
         fun parseLocation(x: String, y: String, z: String, sender: Player) : Location {
             val intX: Int = if (x == "~") {

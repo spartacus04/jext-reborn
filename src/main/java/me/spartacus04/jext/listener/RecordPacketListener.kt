@@ -14,6 +14,16 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitRunnable
 
+/**
+ * The class `RecordPacketListener` is a listener class that is used to display an action bar message to a player when a
+ * music disc is playing in a jukebox.
+ *
+ * @constructor Creates a new record packet listener.
+ *
+ * @param plugin The `plugin` parameter is an object of type `Plugin`, which represents a plugin.
+ * @param priority The `priority` parameter is an object of type `ListenerPriority`, which represents the priority of the
+ * listener.
+ */
 internal class RecordPacketListener(plugin: Plugin?, priority: ListenerPriority?) :
     PacketAdapter(plugin, priority, PacketType.Play.Server.WORLD_EVENT) {
 

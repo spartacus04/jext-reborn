@@ -4,16 +4,19 @@ import me.spartacus04.jext.command.adapter.ExecutorAdapter
 import me.spartacus04.jext.jukebox.JukeboxContainer
 import org.bukkit.entity.Player
 
+/**
+ * ExecutorJukeboxGui is a class used to register the "jukeboxgui" command to the plugin.
+ *
+ * @constructor The constructor is empty because the class does not have any properties.
+ */
 internal class ExecutorJukeboxGui : ExecutorAdapter("jukeboxgui") {
     /**
-     * The function "executePlayer" creates a JukeboxContainer object and returns true.
+     * The function `executePlayer` opens the jukebox gui for the sender.
      *
-     * @param sender The "sender" parameter is of type Player, which represents the player who executed the command.
-     * @param args An array of strings that represents the arguments passed to the command.
-     * @return a boolean value of true.
+     * @param sender The player who executed the command.
+     * @param args The arguments that were passed to the command.
      */
-    override fun executePlayer(sender: Player, args: Array<String>): Boolean {
+    override fun executePlayer(sender: Player, args: Array<String>){
         JukeboxContainer(sender)
-        return true
     }
 }

@@ -5,6 +5,13 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
 
+/**
+ * This class is used to store the disc data in the item meta.
+ *
+ * @constructor Creates a new DiscPersistentDataContainer object
+ *
+ * @param meta The item meta
+ */
 class DiscPersistentDataContainer(meta: ItemMeta?) {
     private val id = "JEXT"
     private val container: PersistentDataContainer
@@ -13,6 +20,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
         container = meta!!.persistentDataContainer
     }
 
+    /**
+     * Sets and gets the disc title from the item meta.
+     */
     var title: String?
         get() = container.get(
             JextNamespace.TITLE(),
@@ -26,6 +36,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
             )
         }
 
+    /**
+     * Sets and gets the disc author from the item meta.
+     */
     var author: String?
         get() = container.get(
             JextNamespace.AUTHOR(),
@@ -39,6 +52,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
             )
         }
 
+    /**
+     * Sets and gets the disc namespace from the item meta.
+     */
     var namespaceID: String?
         get() = container.get(
             JextNamespace.NAMESPACE_ID(),
@@ -53,7 +69,7 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
         }
 
     /**
-     * The function sets an identifier value in a container using a specific data type.
+     * Sets a JEXT identifier in the item meta.
      */
     fun setIdentifier() {
         container.set(
@@ -64,7 +80,9 @@ class DiscPersistentDataContainer(meta: ItemMeta?) {
     }
 
     /**
-     * The function checks if the identifier stored in the container matches the given id.
+     * Checks if the item meta contains a JEXT identifier.
+     *
+     * @return A boolean value that represents whether the item meta contains a JEXT identifier or not
      */
     fun checkIdentifier(): Boolean = container.get(
         JextNamespace.IDENTIFIER(),

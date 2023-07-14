@@ -14,7 +14,12 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import kotlin.collections.HashMap
 
-
+/**
+ * Language manager is a class used to load and manage the plugin's languages.
+ *
+ * @property plugin The plugin instance used to load the languages.
+ * @constructor Loads the languages from the jar file and creates the default language file.
+ */
 class LanguageManager(private val plugin: JavaPlugin) {
     private val languageMap = HashMap<String, Map<String, String>>()
     private var gson : Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
@@ -132,17 +137,20 @@ class LanguageManager(private val plugin: JavaPlugin) {
         /**
          * The function "load" initializes a LanguageManager object with the given JavaPlugin.
          *
-         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to access the plugin's
-         * resources and functionality.
+         * @param plugin the plugin instance to load the language manager for.
          */
-        fun load(plugin: JavaPlugin) {
+        internal fun load(plugin: JavaPlugin) {
             LANG = LanguageManager(plugin)
         }
     }
 }
 
-/* The `sendJEXTMessage` function is an extension function for the `CommandSender` class. It allows a `CommandSender`
-object (which can be a player or the console) to send a formatted message using the JEXT language manager. */
+/**
+ * The function gets a value from the language map, replaces the parameters, and sends it to the command sender.
+ *
+ * @param key The language key to get the value from.
+ * @param params A hashmap containing the parameters to replace.
+ */
 fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> = HashMap()) {
     if(this !is Player) {
         return sendMessage(

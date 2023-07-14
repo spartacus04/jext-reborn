@@ -8,8 +8,13 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.util.function.Consumer
 
-
-class Updater(private val plugin : JavaPlugin) {
+/**
+ * The class `Updater` is a utility class that checks for updates on GitHub.
+ *
+ * @property plugin The plugin instance.
+ * @constructor Creates a new updater object.
+ */
+internal class Updater(private val plugin : JavaPlugin) {
     /**
      * The function `getVersion` retrieves the latest version of a GitHub repository and passes it to a consumer.
      *

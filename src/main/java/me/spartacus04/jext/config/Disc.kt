@@ -8,11 +8,8 @@ import com.google.gson.annotations.SerializedName
  * @property {String} TITLE - The title of the disc.
  * @property {String} AUTHOR - The `AUTHOR` property represents the author of the disc.
  * @property {Int} DURATION - The `DURATION` property represents the duration of the disc in seconds.
- * @property {String} DISC_NAMESPACE - The `DISC_NAMESPACE` property represents the namespace of the disc. It is a string
- * value that identifies the category or group to which the disc belongs.
- * @property {Int} MODEL_DATA - The `MODEL_DATA` property is of type `Int` and represents the model data of the disc. Model
- * data is an integer value that can be used to differentiate between different variations or states of an item. It can be
- * used, for example, to change the texture or behavior of an item.
+ * @property {String} DISC_NAMESPACE - The `DISC_NAMESPACE` property represents the namespace of the disc.
+ * @property {Int} MODEL_DATA - The `MODEL_DATA` property is of type `Int` and represents the model data of the disc.
  * @property {Boolean} CREEPER_DROP - The property "CREEPER_DROP" is a boolean value that indicates whether the disc can be
  * dropped by a creeper.
  * @property {List<String>} LORE - LORE is a property of type List<String> which represents the list of lores associated

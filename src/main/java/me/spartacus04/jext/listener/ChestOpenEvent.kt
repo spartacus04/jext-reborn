@@ -21,6 +21,11 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.LootTables
 import kotlin.random.Random
 
+/**
+ * This class is used to generate items in certain loot tables.
+ *
+ * @constructor Creates a new chest open event listener.
+ */
 internal class ChestOpenEvent : Listener {
     data class ChanceStack(val chance: Int, val stack: ItemStack)
 
@@ -101,8 +106,7 @@ internal class ChestOpenEvent : Listener {
      * items will be generated and stored.
      * @param key The `key` parameter is a string that represents a specific key or identifier for the inventory. It is
      * used to determine the maximum amount of discs and fragments that can be generated for that specific inventory. The
-     * `key` is used to look up values in the `CONFIG.DISC_LIMIT` and `
-     * @return Nothing is being returned in this code snippet. It is a void function.
+     * `key` is used to look up values in the `CONFIG.DISC_LIMIT` and `CONFIG.FRAGMENT_LIMIT` maps.
      */
     private fun generateItems(inventory: Inventory, key: String) {
         if(inventory.any { it != null && it.type.isRecord }) {
@@ -219,12 +223,11 @@ internal class ChestOpenEvent : Listener {
     }
 
     /**
-     * The function is called when a player interacts with a barrel. It checks if the barrel is a loot barrel and if it
-     * is, it generates items in the barrel.
+     * The function is called when a player interacts with a minecart with chest. It checks if the minecart is a loot minecart and if it is, it
+     * generates items in the inside.
      *
-     * @param e The `e` parameter is an object of type `PlayerInteractEvent`. It represents the event that is being
-     * called when a player interacts with a block.
-     * @return Nothing is being returned in this code snippet. It is a void function.
+     * @param e The `e` parameter is an object of type `PlayerInteractEntityEvent`. It represents the event that is being
+     * called when a player interacts with an entity.
      */
     @EventHandler(ignoreCancelled = true)
     fun onMinecartChestOpen(e : PlayerInteractEntityEvent) {
@@ -238,12 +241,11 @@ internal class ChestOpenEvent : Listener {
     }
 
     /**
-     * The function is called when a player breaks a barrel. It checks if the barrel is a loot barrel and if it is, it
-     * generates items in the barrel.
+     * The function is called when a player breaks a minecart with chest. It checks if the minecart is a loot minecart and if it is, it
+     * generates items in the inside.
      *
-     * @param e The `e` parameter is an object of type `BlockBreakEvent`. It represents the event that is being called
-     * when a player breaks a block.
-     * @return Nothing is being returned in this code snippet. It is a void function.
+     * @param e The `e` parameter is an object of type `VehicleDestroyEvent`. It represents the event that is being called
+     * when a player breaks a vehicle.
      */
     @EventHandler(ignoreCancelled = true)
     fun onMinecartChestBreak(e : VehicleDestroyEvent) {

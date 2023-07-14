@@ -11,7 +11,12 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import kotlin.random.Random
 
-class BlockBrushEvent : Listener {
+/**
+ * This class is used to listen to block brush events.
+ *
+ * @constructor Creates a new block brush event listener.
+ */
+internal class BlockBrushEvent : Listener {
     private val items = ArrayList<ItemStack>()
 
     init {
@@ -27,10 +32,9 @@ class BlockBrushEvent : Listener {
     }
 
     /**
-     * The function `onBlockBrush` is an event listener that is called when a player right clicks a block with a brush.
+     * The function `onBlockBrush` is an event listener that is called when a player right-clicks a block with a brush.
      *
      * @param event The `event` parameter is of type `PlayerInteractEvent`. It represents the event that is being listened to.
-     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
      */
     @EventHandler
     fun onBlockBrush(event: PlayerInteractEvent) {

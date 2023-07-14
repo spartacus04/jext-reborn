@@ -11,7 +11,11 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-
+/**
+ * Disc container
+ *
+ * @constructor Create empty Disc container
+ */
 class DiscContainer {
     private val title: String
     val author: String
@@ -22,13 +26,15 @@ class DiscContainer {
     private val material: Material = Material.MUSIC_DISC_11
 
     /**
-     * The above code defines a Kotlin class called `DiscContainer` that represents a container for a music disc, with various
-     * properties and methods for manipulating and playing the disc.
-     *
-     * @return The `toString()` function is being overridden to return the `title` property of the `DiscContainer` class.
+     * Returns the disc title
      */
     override fun toString() = title
 
+    /**
+     * Creates a new DiscContainer object
+     *
+     * @param data The disc data
+     */
     constructor(data: Disc) {
         title = data.TITLE
         author = data.AUTHOR
@@ -38,6 +44,11 @@ class DiscContainer {
         duration = data.DURATION
     }
 
+    /**
+     * Creates a new DiscContainer object from an itemStack, if the itemStack is not a disc, an IllegalStateException is thrown
+     *
+     * @param disc The disc itemStack
+     */
     constructor(disc: ItemStack) {
         if (isCustomDisc(disc)) {
             val meta = disc.itemMeta
@@ -55,7 +66,9 @@ class DiscContainer {
         }
     }
 
-    // region items
+    /**
+     * The custom disc itemstack
+     */
     val discItem: ItemStack
         get() {
             val disc = ItemStack(material)
@@ -77,6 +90,9 @@ class DiscContainer {
             return disc
         }
 
+    /**
+     * The custom disc fragment itemstack
+     */
     val fragmentItem: ItemStack
         get() {
             val fragment = ItemStack(Material.DISC_FRAGMENT_5)
@@ -100,6 +116,11 @@ class DiscContainer {
         }
     //endregion
 
+    /**
+     * Combines disc data to get itemstack lores
+     *
+     * @return The processed lores
+     */
     private fun getProcessedLores(): ArrayList<String> {
         val lores = ArrayList<String>()
         lores.add("${ChatColor.GRAY}$author - $title")
@@ -108,38 +129,13 @@ class DiscContainer {
         return lores
     }
 
-    private fun isCustomDisc(disc: ItemStack): Boolean {
-        if (!disc.hasItemMeta()) {
-            return false
-        }
-
-        val meta = disc.itemMeta
-        val helper = DiscPersistentDataContainer(meta)
-
-        try {
-            if (!helper.checkIdentifier()) {
-                return false
-            }
-        } catch (e: Exception) {
-            return false
-        }
-
-        return true
-    }
-
 
     /**
-     * The function "play" plays a sound at a given location with optional volume and pitch parameters, and also handles
-     * stopping any overlapping music and updating the tick count for jukeboxes.
+     * Plays the custom disc at the specified location
      *
-     * @param location The `location` parameter represents the location where the sound will be played. It is of type
-     * `Location`, which typically includes the world, x, y, and z coordinates.
-     * @param volume The "volume" parameter is used to control the volume of the sound being played. It is a float value
-     * ranging from 0.0 to 1.0, where 0.0 is silent and 1.0 is the maximum volume. The default value is 4.0f
-     * @param pitch The "pitch" parameter in the "play" function is used to control the pitch of the sound being played. A
-     * pitch value of 1.0 represents the original pitch, while higher values increase the pitch and lower values decrease
-     * the pitch.
-     * @return The code does not explicitly return any value.
+     * @param location The location
+     * @param volume The volume of the disc (A.K.A. the distance at which the disc can be heard)
+     * @param pitch The pitch of the disc
      */
     fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
         if (!ConfigData.CONFIG.ALLOW_MUSIC_OVERLAPPING) {
@@ -164,14 +160,11 @@ class DiscContainer {
     }
 
     /**
-     * The function "play" plays a sound for a player with optional volume and pitch parameters, and stops any currently
-     * playing sound if music overlapping is not allowed.
+     * Plays the custom disc for the specified player
      *
-     * @param player The "player" parameter represents the player who will be playing the sound.
-     * @param volume The volume parameter determines the volume of the sound being played. It is a float value ranging from
-     * 0.0 to 1.0, where 0.0 is silent and 1.0 is the maximum volume. The default value is 4.0f, which means the sound
-     * @param pitch The pitch parameter determines the pitch of the sound being played. A pitch of 1.0f represents the
-     * original pitch, while a higher value increases the pitch and a lower value decreases it.
+     * @param player The player
+     * @param volume The volume of the disc (A.K.A. the distance at which the disc can be heard)
+     * @param pitch The pitch of the disc
      */
     fun play(player: Player, volume : Float = 4.0f, pitch : Float = 1.0f) {
         if (!ConfigData.CONFIG.ALLOW_MUSIC_OVERLAPPING) {
@@ -181,24 +174,12 @@ class DiscContainer {
         player.playSound(player.location, namespace, SoundCategory.RECORDS, volume * 500, pitch)
     }
 
-    /**
-     * The function checks if two objects of type DiscContainer are equal by comparing their hash codes.
-     *
-     * @param other The "other" parameter is of type "Any?", which means it can be any type of object or null.
-     * @return The code is returning a boolean value indicating whether the hash codes of the two objects are equal.
-     */
     override operator fun equals(other: Any?): Boolean {
         if(other !is DiscContainer) return false
 
         return hashCode() == other.hashCode()
     }
 
-    /**
-     * The function calculates the hash code of an object based on its title, author, namespace, duration, customModelData,
-     * lores, and material.
-     *
-     * @return The result of the hashCode calculation is being returned.
-     */
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + author.hashCode()
@@ -210,8 +191,10 @@ class DiscContainer {
         return result
     }
 
-
     companion object {
+        /**
+         * A map that maps materials to their respective Sound and duration
+         */
         val SOUND_MAP = HashMap<Material, SoundData>()
 
         init {
@@ -245,10 +228,46 @@ class DiscContainer {
             }
         }
 
+        /**
+         * Checks if the itemstack is a custom disc
+         *
+         * @param disc The itemstack
+         * @return True if the itemstack is a custom disc
+         */
+        fun isCustomDisc(disc: ItemStack): Boolean {
+            if (!disc.hasItemMeta()) {
+                return false
+            }
+
+            val meta = disc.itemMeta
+            val helper = DiscPersistentDataContainer(meta)
+
+            try {
+                if (!helper.checkIdentifier()) {
+                    return false
+                }
+            } catch (e: Exception) {
+                return false
+            }
+
+            return true
+        }
+
+
+        /**
+         * A data class that holds a Sound and a duration
+         *
+         * @property sound The sound
+         * @property duration The duration
+         * @constructor Creates a SoundData
+         */
         data class SoundData(val sound: Sound, val duration: Int)
     }
 }
 
+/**
+ * Checks if the material is a record fragment
+ */
 val Material.isRecordFragment: Boolean
     get() {
         if(VERSION < "1.19") return false

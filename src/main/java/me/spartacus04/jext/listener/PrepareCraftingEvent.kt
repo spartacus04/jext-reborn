@@ -7,13 +7,17 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.PrepareItemCraftEvent
 
+/**
+ * The class `PrepareCraftingEvent` is a listener class that is used to craft fragments into discs.
+ *
+ * @constructor Creates a new disc replace event listener.
+ */
 internal class PrepareCraftingEvent : Listener {
 
     /**
      * The function `prepareCraftingEvent` is an event listener that is called when a player crafts an item.
      *
      * @param e The `e` parameter is of type `PrepareItemCraftEvent`. It represents the event that is being listened to.
-     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
      */
     @EventHandler
     fun prepareCraftingEvent(e: PrepareItemCraftEvent) {

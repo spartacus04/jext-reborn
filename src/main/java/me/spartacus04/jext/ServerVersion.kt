@@ -4,6 +4,13 @@ import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The class `ServerVersion` is a utility class that represents the version of a server.
+ *
+ * @param versionString The `versionString` parameter is a `String` representing the version of a server.
+ * @property serverType The `serverType` parameter is a `String` representing the type of server.
+ * @constructor Creates a new server version object.
+ */
 class ServerVersion(versionString: String, val serverType: String = "unknown") {
     private val majorVersion = versionString.split(".")[0].toInt()
     private val minorVersion = versionString.split(".")[1].toInt()

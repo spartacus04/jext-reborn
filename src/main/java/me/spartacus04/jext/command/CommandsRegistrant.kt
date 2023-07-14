@@ -2,13 +2,18 @@ package me.spartacus04.jext.command
 
 import org.bukkit.plugin.java.JavaPlugin
 
-class CommandsRegistrant private constructor() {
+
+/**
+ * The `CommandsRegistrant` class is a utility class used to register commands.
+ *
+ * @constructor Class is singleton, so the constructor is private.
+ */
+internal class CommandsRegistrant private constructor() {
     companion object {
         /**
-         * The function registers various commands to a JavaPlugin in Kotlin.
+         * The function `registerCommands` registers all commands to the plugin.
          *
-         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It is used to register the commands
-         * to the plugin, allowing them to be executed within the plugin's context.
+         * @param plugin The plugin instance that you want to register the commands to.
          */
         fun registerCommands(plugin: JavaPlugin) {
             ExecutorDisc().registerTo(plugin)

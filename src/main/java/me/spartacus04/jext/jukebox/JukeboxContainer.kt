@@ -29,11 +29,19 @@ import xyz.xenondevs.invui.window.Window
 import java.util.*
 import kotlin.collections.HashMap
 
+/**
+ * The class `JukeboxContainer` is a container class that is used to store and manage a jukebox gui.
+ *
+ * @constructor Create a new jukebox container.
+ */
 class JukeboxContainer {
     private val player: Player
     private val id: String
     private val block: Block?
 
+    /**
+     * Create a new jukebox container for a player
+     */
     constructor(player: Player) {
         this.player = player
         this.block = null
@@ -42,6 +50,9 @@ class JukeboxContainer {
         mergedConstructor()
     }
 
+    /**
+     * Create a new jukebox container for a block
+     */
     constructor(player: Player, block: Block) {
         this.player = player
         this.block = block
@@ -51,13 +62,10 @@ class JukeboxContainer {
     }
 
     /**
-     * The function `playDisc` updates an inventory item, plays a music disc, and schedules a timer to revert the changes
-     * after a certain delay.
+     * The function `playDisc` plays a music disc, sets the itemstack as playing, and sets a timer to revert the changes
      *
      * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item in
      * an inventory is updated.
-     * @return In this code snippet, the function `playDisc` does not have a return type specified. Therefore, it does not
-     * explicitly return any value.
      */
     private fun playDisc(event: ItemPreUpdateEvent) {
         event.inventory.setItem(UpdateReason.SUPPRESSED, event.slot, event.previousItem!!.clone().apply {
@@ -111,7 +119,7 @@ class JukeboxContainer {
     }
 
     /**
-     * The function `stopDisc` cancels a timer, removes an item from an inventory, and stops playing a music disc.
+     * The function `stopDisc` cancels the timer for a disc, sets the itemstack as not playing, and stops the disc.
      *
      * @param event The parameter "event" is of type ItemPreUpdateEvent.
      */
@@ -177,12 +185,11 @@ class JukeboxContainer {
     }
 
     /**
-     * The function `itemPreUpdateHandler` handles various events related to updating items in an inventory, including
+     * The function `itemPreUpdateHandler` handles various events related to updating the jukebox gui, including
      * cancelling certain actions and performing specific actions based on the event type.
      *
      * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item is
      * updated in an inventory.
-     * @return In this code, the function `itemPreUpdateHandler` returns nothing (`Unit` in Kotlin).
      */
     private fun itemPreUpdateHandler(event: ItemPreUpdateEvent) {
         if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
@@ -221,7 +228,7 @@ class JukeboxContainer {
     }
 
     /**
-     * The function `itemPostUpdateHandler` saves data if an item is added, swapped, or removed.
+     * The function `itemPostUpdateHandler` saves the gui if an item is added, swapped, or removed.
      *
      * @param event The event parameter is of type ItemPostUpdateEvent, which is an event object that contains information
      * about the item post update event.
@@ -270,7 +277,7 @@ class JukeboxContainer {
          * @return In the given code, the `loadFromFile()` function does not have a return type specified. Therefore, it is
          * returning `Unit` by default.
          */
-        fun loadFromFile() {
+        internal fun loadFromFile() {
             val typeToken = object : TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
             val file = PLUGIN.dataFolder.resolve(".savedata")
 

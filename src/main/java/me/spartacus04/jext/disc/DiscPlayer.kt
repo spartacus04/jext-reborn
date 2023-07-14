@@ -4,6 +4,11 @@ import io.github.bananapuncher714.nbteditor.NBTEditor
 import org.bukkit.*
 import org.bukkit.entity.Player
 
+/**
+ * The disc player class is used to stop a sound being played by a player.
+ *
+ * @constructor The constructor is private because it's a singleton
+ */
 class DiscPlayer private constructor() {
     companion object {
         /**

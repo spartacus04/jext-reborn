@@ -10,8 +10,16 @@ import org.bukkit.loot.LootTable
 import java.util.*
 import kotlin.random.asKotlinRandom
 
+/**
+ * The discs creeper loottable
+ *
+ * @constructor Create empty Disc loottable
+ */
 class DiscLootTable : LootTable {
     companion object {
+        /**
+         * All the discs that can be dropped by creepers
+         */
         private val creeperDroppableDiscs: MutableList<ItemStack> = arrayListOf(
             ItemStack(Material.MUSIC_DISC_11),
             ItemStack(Material.MUSIC_DISC_13),

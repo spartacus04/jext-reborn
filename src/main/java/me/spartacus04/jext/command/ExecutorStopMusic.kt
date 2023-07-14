@@ -8,8 +8,12 @@ import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
 import org.bukkit.*
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
+/**
+ * ExecutorStopMusic is a class used to register the "stopmusic" command to the plugin.
+ *
+ * @constructor The constructor is empty because the class does not have any properties.
+ */
 internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
     init {
         addParameter(ParameterPlayer(true))
@@ -17,40 +21,12 @@ internal class ExecutorStopMusic : ExecutorAdapter("stopmusic") {
     }
 
     /**
-     * The function executes a command for a player in Kotlin.
+     * The function `execute` stops the music for the specified players.
      *
-     * @param sender The "sender" parameter is of type "Player", which represents the player who executed the command.
-     * @param args An array of strings representing the arguments passed to the command.
-     * @return The method is returning a boolean value of true.
+     * @param sender The sender who executed the command.
+     * @param args The arguments that were passed to the command.
      */
-    override fun executePlayer(sender: Player, args: Array<String>): Boolean {
-        mergedExecute(sender, args)
-        return true
-    }
-
-    /**
-     * The function executes a command and returns a boolean value indicating success.
-     *
-     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
-     * It could be a player, console, or any other entity that has the ability to execute commands.
-     * @param args An array of strings representing the arguments passed to the command.
-     * @return a boolean value of true.
-     */
-    override fun executeCommand(sender: CommandSender, args: Array<String>): Boolean {
-        mergedExecute(sender, args)
-        return true
-    }
-
-    /**
-     * The function `mergedExecute` stops music for specified players and namespaces, and sends messages to the sender
-     * based on the number of players affected.
-     *
-     * @param sender The `sender` parameter is of type `CommandSender`. It represents the entity that executed the command.
-     * It could be a player, console, or command block.
-     * @param args An array of strings representing the command arguments.
-     * @return Nothing is being returned. The function is of type `Unit`, which means it does not return any value.
-     */
-    private fun mergedExecute(sender: CommandSender, args: Array<String>) {
+    override fun execute(sender: CommandSender, args: Array<String>) {
         val players = ParameterPlayer.getPlayers(args[0], sender)
 
         val namespaces: MutableSet<String>

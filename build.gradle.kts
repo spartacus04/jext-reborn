@@ -90,7 +90,7 @@ tasks.dokkaHtml {
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customStyleSheets = listOf(file("docsAssets/logo-styles.css"))
         customAssets = listOf(file("icon.png"))
-        footerMessage = "[spartacus04]: Jukebox Extended Reborn is licensed under the MIT License."
+        footerMessage = "Jukebox Extended Reborn is licensed under the <a href=\"https://github.com/spartacus04/jext-reborn/blob/master/LICENSE.MD\">MIT</a> License."
     }
 }
 
