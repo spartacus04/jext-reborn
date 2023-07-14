@@ -35,7 +35,9 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 ## Integrations
 
-[JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.
+- [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.
+- [WorldGuard](https://dev.bukkit.org/projects/worldguard): WorldGuard lets you and players guard areas of land against griefers and undesirables as well as tweak and disable various gameplay features of Minecraft.
+- [GriefPrevention](https://www.spigotmc.org/resources/griefprevention.1884/): PREVENTS all forms of grief - build/break, theft, spam, spawn camping, and more without a database.
 
 ## Known Incompatibilities
 
