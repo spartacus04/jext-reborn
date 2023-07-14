@@ -1,8 +1,22 @@
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+
 plugins {
     java
     kotlin("jvm") version "1.9.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+
+    id("org.jetbrains.dokka") version "1.8.20"
+
     `maven-publish`
+    id("io.papermc.hangar-publish-plugin") version "0.0.5"
+    id("com.modrinth.minotaur") version "2.8.1"
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:1.8.20")
+    }
 }
 
 repositories {
@@ -31,10 +45,16 @@ dependencies {
 }
 
 group = "me.spartacus04.jext"
+
+version = if (property("version_patch") == "0") {
+    "${property("version_major")}.${property("version_minor")}"
+} else {
+    "${property("version_major")}.${property("version_minor")}.${property("version_patch")}"
+}
+
 description = "jukebox-extended-reborn"
 java.targetCompatibility = JavaVersion.VERSION_1_8
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-version = "1.1.3"
 
 tasks {
     shadowJar {
@@ -59,8 +79,16 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     }
 }
 
-artifacts {
-    archives(tasks.shadowJar)
+artifacts.archives(tasks.shadowJar)
+
+// publish
+
+tasks.dokkaHtml {
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        customStyleSheets = listOf(file("docsAssets/logo-styles.css"))
+        customAssets = listOf(file("icon.png"))
+        footerMessage = "[spartacus04]: Jukebox Extended Reborn is licensed under the MIT License."
+    }
 }
 
 publishing {
@@ -68,8 +96,51 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = rootProject.group.toString()
             artifactId = rootProject.name.lowercase()
-            version = rootProject.version.toString()
+            version = "${rootProject.version}"
+
             from(components["java"])
         }
     }
+}
+
+hangarPublish {
+    val hangarApiKey = System.getenv("hangarApiKey")
+    val hangarChangelog = System.getenv("hangarChangelog")
+
+    publications.register("plugin") {
+        version.set("${project.version}")
+        namespace(
+            "${property("hangar_username")}",
+            "${property("hangar_slug")}"
+        )
+        channel.set("${property("hangar_channel")}")
+        changelog.set(hangarChangelog)
+
+        apiKey.set(hangarApiKey)
+
+        platforms {
+            register(io.papermc.hangarpublishplugin.model.Platforms.PAPER) {
+                jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                platformVersions.set("${property("minecraft_versions")}".split(","))
+            }
+        }
+    }
+}
+
+
+modrinth {
+    val modrinthApiKey = System.getenv("modrinthApiKey")
+    val modrinthChangelog = System.getenv("modrinthChangelog")
+
+    token.set(modrinthApiKey)
+    projectId.set("${property("modrinth_projectId")}")
+    versionNumber.set(rootProject.version.toString())
+    versionType.set("${property("modrinth_channel")}")
+    uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile })
+    gameVersions.set("${property("minecraft_versions")}".split(","))
+    loaders.set("${property("modrinth_loaders")}".split(","))
+
+    changelog.set(modrinthChangelog)
+
+    syncBodyFrom.set(rootProject.file("README.md").readText())
 }
