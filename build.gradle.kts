@@ -87,6 +87,12 @@ artifacts.archives(tasks.shadowJar)
 // publish
 
 tasks.dokkaHtml {
+    val githubTag = System.getenv("githubTag")
+
+    if(githubTag != null) {
+        version = "$version - $githubTag"
+    }
+
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customStyleSheets = listOf(file("docsAssets/logo-styles.css"))
         customAssets = listOf(file("icon.png"))
