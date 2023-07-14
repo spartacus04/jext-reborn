@@ -40,7 +40,7 @@ body:
       description: Select the server version
       options:
         - 1.20.1
-        - 1.20
+        - '1.20'
         - 1.19.4
         - 1.19.3
         - 1.19.2
@@ -92,6 +92,16 @@ body:
       description: >-
         If you want to, you can upload your resource pack file for further
         detail
+  - type: dropdown
+    id: JukeboxMode
+    attributes:
+      label: Jukebox Behaviour
+      description: Which jukebox behaviour are you using? (legacy-gui is not supported, just switch to gui)
+      options:
+        - Vanilla
+        - Gui
+    validations:
+      required: true
   - type: checkboxes
     id: Checkboxes
     attributes:
