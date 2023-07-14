@@ -60,6 +60,7 @@ tasks {
     shadowJar {
         archiveFileName.set("${rootProject.name}_${project.version}.jar")
         val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.lowercase()}"
+        from(subprojects.map { it.sourceSets.main.get().output })
 
         relocate("kotlin", "${dependencyPackage}.kotlin")
         relocate("com/google/gson", "${dependencyPackage}.gson")
@@ -67,9 +68,11 @@ tasks {
         relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
         relocate("org/bstats", "${dependencyPackage}.bstats")
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
+        relocate("xyz/xenondevs/invui", "${dependencyPackage}.invui")
+        relocate("xyz/xenondevs/inventoryaccess", "${dependencyPackage}.inventoryaccess")
+        exclude("colors.bin")
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
-        exclude("META-INF/**")
     }
 }
 
