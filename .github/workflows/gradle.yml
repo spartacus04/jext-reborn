@@ -42,4 +42,4 @@ jobs:
       - name: Build docs with Gradle
         run: ./gradlew dokkaHtml
         env:
-          githubTag: ${{ github.ref ) }}
+          githubTag: ${{ github.ref }}
