@@ -8,7 +8,7 @@ import me.spartacus04.jext.config.LanguageManager
 import me.spartacus04.jext.config.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.config.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.config.LanguageManager.Companion.UPDATE_DETECTED
-import me.spartacus04.jext.integrations.IntegrationsRegistrant
+import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.listener.ListenersRegistrant
 import org.bstats.bukkit.Metrics
 import org.bstats.charts.SimplePie
@@ -64,7 +64,7 @@ class Jext : JavaPlugin() {
         JextNamespace.registerNamespace(this)
         ConfigManager.load(this)
         LanguageManager.load(this)
-        IntegrationsRegistrant.registerIntegrations(this)
+        IntegrationsManager.registerIntegrations(this)
         CommandsRegistrant.registerCommands(this)
         ListenersRegistrant.registerListeners(this)
 

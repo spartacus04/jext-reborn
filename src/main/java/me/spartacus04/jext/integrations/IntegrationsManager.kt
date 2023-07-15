@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin
  *
  * @constructor The class is a singleton, so the constructor is private.
  */
-class IntegrationsRegistrant private constructor() {
+class IntegrationsManager private constructor() {
     companion object {
         private var WORLDGUARD: WorldGuardIntegration? = null
         private var GRIEF_PREVENTION: GriefPreventionIntegration? = null
@@ -58,6 +58,12 @@ class IntegrationsRegistrant private constructor() {
             return GRIEF_PREVENTION?.canInteractWithJukeboxGui(player, block) != false
         }
 
+        /**
+         * The function checks if a player is a Bedrock player.
+         *
+         * @param player The player parameter represents the player who is being checked.
+         * @return a boolean value.
+         */
         fun isBedrockPlayer(player: Player) : Boolean {
             return GEYSER?.isBedrockPlayer(player) != false
         }

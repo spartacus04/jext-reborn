@@ -3,7 +3,7 @@ package me.spartacus04.jext.listener
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscPlayer
-import me.spartacus04.jext.integrations.IntegrationsRegistrant
+import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.jukebox.JukeboxContainer
 import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxContainer
 import org.bukkit.Material
@@ -48,7 +48,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * @param block The "block" parameter is the block that the player interacted with. It is of type Block.
      */
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) {
+        if(!IntegrationsManager.hasJukeboxAccess(event.player, block)) {
             event.isCancelled = true
             return
         }
@@ -85,7 +85,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     private fun legacyJukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
-        if(!IntegrationsRegistrant.hasJukeboxGuiAccess(event.player, block)) return
+        if(!IntegrationsManager.hasJukeboxGuiAccess(event.player, block)) return
 
         LegacyJukeboxContainer.get(plugin, block.location).open(event.player)
     }
@@ -102,7 +102,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
-        if(!IntegrationsRegistrant.hasJukeboxGuiAccess(event.player, block)) return
+        if(!IntegrationsManager.hasJukeboxGuiAccess(event.player, block)) return
 
         JukeboxContainer(event.player, block)
     }

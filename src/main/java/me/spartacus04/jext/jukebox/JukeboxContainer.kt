@@ -8,7 +8,7 @@ import me.spartacus04.jext.config.LanguageManager.Companion.BEDROCK_NOT_SUPPORTE
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscContainer.Companion.SOUND_MAP
 import me.spartacus04.jext.disc.DiscPlayer
-import me.spartacus04.jext.integrations.IntegrationsRegistrant
+import me.spartacus04.jext.integrations.IntegrationsManager
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.SoundCategory
@@ -153,7 +153,7 @@ class JukeboxContainer {
      * and allowing them to scroll through it.
      */
     private fun mergedConstructor() {
-        if(IntegrationsRegistrant.isBedrockPlayer(player)) {
+        if(IntegrationsManager.isBedrockPlayer(player)) {
             player.sendMessage(BEDROCK_NOT_SUPPORTED)
             return
         }
