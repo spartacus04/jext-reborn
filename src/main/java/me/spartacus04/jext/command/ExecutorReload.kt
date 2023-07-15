@@ -25,7 +25,7 @@ internal class ExecutorReload(private val plugin: JavaPlugin) : ExecutorAdapter(
     override fun execute(sender: CommandSender, args: Array<String>) {
         ConfigManager.load(plugin)
         LanguageManager.load(plugin)
-        IntegrationsRegistrant.registerIntegrations()
+        IntegrationsRegistrant.registerIntegrations(plugin)
 
         sender.sendJEXTMessage("reloaded")
     }

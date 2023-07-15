@@ -2,6 +2,7 @@ package me.spartacus04.jext.integrations
 
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * This class is used to register and manage the plugin's integrations.
@@ -12,17 +13,24 @@ class IntegrationsRegistrant private constructor() {
     companion object {
         private var WORLDGUARD: WorldGuardIntegration? = null
         private var GRIEF_PREVENTION: GriefPreventionIntegration? = null
+        private var GEYSER: GeyserIntegration? = null
 
         /**
          * The function registers the plugin's integrations.
          */
-        internal fun registerIntegrations() {
+        internal fun registerIntegrations(plugin: JavaPlugin) {
             try {
                 WORLDGUARD = WorldGuardIntegration()
             } catch (_: NoClassDefFoundError) { }
 
             try {
                 GRIEF_PREVENTION = GriefPreventionIntegration()
+            } catch (_: NoClassDefFoundError) { }
+
+            try {
+                if(GEYSER == null) {
+                    GEYSER = GeyserIntegration(plugin)
+                }
             } catch (_: NoClassDefFoundError) { }
         }
 
@@ -48,6 +56,10 @@ class IntegrationsRegistrant private constructor() {
         fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean {
             if(WORLDGUARD?.canInteractWithJukeboxGui(player, block) == false) return false
             return GRIEF_PREVENTION?.canInteractWithJukeboxGui(player, block) != false
+        }
+
+        fun isBedrockPlayer(player: Player) : Boolean {
+            return GEYSER?.isBedrockPlayer(player) != false
         }
     }
 }

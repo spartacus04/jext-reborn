@@ -64,7 +64,7 @@ class Jext : JavaPlugin() {
         JextNamespace.registerNamespace(this)
         ConfigManager.load(this)
         LanguageManager.load(this)
-        IntegrationsRegistrant.registerIntegrations()
+        IntegrationsRegistrant.registerIntegrations(this)
         CommandsRegistrant.registerCommands(this)
         ListenersRegistrant.registerListeners(this)
 

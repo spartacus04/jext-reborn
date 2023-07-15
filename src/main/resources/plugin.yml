@@ -4,7 +4,7 @@ authors: [Tajam, Spartacus04]
 version: 1.2.1
 api-version: 1.14
 depend: [ProtocolLib]
-softdepent: [WorldGuard, GriefPrevention]
+softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot]
 prefix: JEXT
 folia-supported: false
 

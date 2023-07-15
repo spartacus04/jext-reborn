@@ -4,9 +4,11 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
 import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
+import me.spartacus04.jext.config.LanguageManager.Companion.BEDROCK_NOT_SUPPORTED
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.disc.DiscContainer.Companion.SOUND_MAP
 import me.spartacus04.jext.disc.DiscPlayer
+import me.spartacus04.jext.integrations.IntegrationsRegistrant
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.SoundCategory
@@ -151,6 +153,11 @@ class JukeboxContainer {
      * and allowing them to scroll through it.
      */
     private fun mergedConstructor() {
+        if(IntegrationsRegistrant.isBedrockPlayer(player)) {
+            player.sendMessage(BEDROCK_NOT_SUPPORTED)
+            return
+        }
+
         if(!playingMap.containsKey(id)) {
             playingMap[id] = -1
         }

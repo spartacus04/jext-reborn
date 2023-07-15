@@ -28,6 +28,7 @@ repositories {
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.xenondevs.xyz/releases/")
     maven("https://jitpack.io")
+    maven("https://repo.opencollab.dev/main/")
 }
 
 dependencies {
@@ -36,6 +37,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.11")
     compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
+    compileOnly("org.geysermc.geyser:api:2.1.2-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.18.6")
     implementation("xyz.xenondevs.invui:invui:1.12")
