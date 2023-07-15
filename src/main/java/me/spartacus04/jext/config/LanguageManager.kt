@@ -96,10 +96,13 @@ class LanguageManager(private val plugin: JavaPlugin) {
         }
 
         return when(CONFIG.LANGUAGE_MODE.lowercase()) {
-            "auto" -> LANG.replaceParameters(languageMap[commandSender.locale]!![key]!!, params)
+            "auto" -> {
+                if(hasLanguage(commandSender.locale.lowercase())) LANG.replaceParameters(languageMap[commandSender.locale.lowercase()]!![key]!!, params)
+                else LANG.replaceParameters(languageMap["en_us"]!![key]!!, params)
+            }
             "custom" -> LANG.replaceParameters(languageMap["custom"]!![key]!!, params)
             else -> {
-                val lang = if(hasLanguage(commandSender.locale)) commandSender.locale
+                val lang = if(hasLanguage(commandSender.locale.lowercase())) commandSender.locale.lowercase()
                 else "en_us"
 
                 return LANG.replaceParameters(languageMap[lang]!![key]!!, params)
@@ -161,14 +164,14 @@ fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> =
 
     when(CONFIG.LANGUAGE_MODE.lowercase()) {
         "auto" -> sendMessage(
-            LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale, key]}", params)
+            LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale.lowercase(), key]}", params)
         )
         "custom" -> sendMessage(
             LANG.replaceParameters("[§aJEXT§f] ${LANG["custom", key]}", params)
         )
         "silent" -> {}
         else -> {
-            val lang = if(LANG.hasLanguage(this.locale)) this.locale
+            val lang = if(LANG.hasLanguage(this.locale.lowercase())) this.locale.lowercase()
             else "en_us"
 
             sendMessage(
