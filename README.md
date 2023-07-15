@@ -41,6 +41,4 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 ## Known Incompatibilities
 
-### GeyserMC
-
-Due to some parity issues Bedrock Edition doesn't support custom sounds, and as such working on a GeyserMC integration would be useless.
+### GeyserMC (for now)
