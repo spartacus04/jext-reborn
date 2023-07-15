@@ -33,9 +33,10 @@ class IntegrationsRegistrant private constructor() {
          * @param player The player parameter represents the player who is trying to access the jukebox.
          * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
          */
-        fun hasJukeboxAccess(player: Player, block: Block) =
-            (WORLDGUARD == null || WORLDGUARD!!.canInteractWithJukebox(player, block)) &&
-            (GRIEF_PREVENTION == null || GRIEF_PREVENTION!!.canInteractWithJukebox(player, block))
+        fun hasJukeboxAccess(player: Player, block: Block): Boolean {
+            if(WORLDGUARD?.canInteractWithJukebox(player, block) == false) return false
+            return GRIEF_PREVENTION?.canInteractWithJukebox(player, block) != false
+        }
 
         /**
          * The function checks if a player has access to interact with a jukebox GUI, taking into account WorldGuard and
@@ -44,8 +45,9 @@ class IntegrationsRegistrant private constructor() {
          * @param player The player parameter represents the player who is trying to access the jukebox GUI.
          * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
          */
-        fun hasJukeboxGuiAccess(player: Player, block: Block) =
-            (WORLDGUARD == null || WORLDGUARD!!.canInteractWithJukeboxGui(player, block)) &&
-            (GRIEF_PREVENTION == null || GRIEF_PREVENTION!!.canInteractWithJukeboxGui(player, block))
+        fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean {
+            if(WORLDGUARD?.canInteractWithJukeboxGui(player, block) == false) return false
+            return GRIEF_PREVENTION?.canInteractWithJukeboxGui(player, block) != false
+        }
     }
 }

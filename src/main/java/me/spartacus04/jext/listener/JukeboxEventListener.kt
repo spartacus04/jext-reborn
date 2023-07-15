@@ -48,7 +48,10 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
      * @param block The "block" parameter is the block that the player interacted with. It is of type Block.
      */
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) return
+        if(!IntegrationsRegistrant.hasJukeboxAccess(event.player, block)) {
+            event.isCancelled = true
+            return
+        }
 
         val state = block.state as? Jukebox ?: return
         val location = block.location
