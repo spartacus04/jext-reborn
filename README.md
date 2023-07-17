@@ -41,4 +41,5 @@ Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more d
 
 ## Known Incompatibilities
 
-### GeyserMC (for now)
+- #### GeyserMC (still working on an integration)
+- #### Musicbox (Discs don't stop, has to be fixed on their end)
