@@ -26,7 +26,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     /**
      * The function `onJukeboxInteract` is an event listener that is called when a player interacts with a jukebox.
      */
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
 
