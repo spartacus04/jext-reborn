@@ -105,7 +105,7 @@ body:
   - type: checkboxes
     id: Checkboxes
     attributes:
-      label: This issue is unique
+      label: Before submitting the issue
       options:
         - label: >-
             I have searched the issue tracker and did not find an issue
@@ -114,4 +114,8 @@ body:
         - label: >-
             I agree to the fact that if this issue becomes inactive it will be
             closed.
+          required: true
+        - label: >-
+            I agree to the fact that if most fields in this issue are not filled correctly
+            the issue will be marked as invalid and closed.
           required: true
