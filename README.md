@@ -56,4 +56,6 @@ Jext Reborn seamlessly integrates with the following plugins to further enhance 
 
 - GeyserMC (integration still in progress ([#138](https://github.com/spartacus04/jext-reborn/pull/138)))
 
+---
+
 >Jext Reborn is the ultimate choice for Minecraft server owners seeking to elevate their music experience by adding custom music discs seamlessly. Explore its vast array of features to create an engaging and unique musical atmosphere on your server.
