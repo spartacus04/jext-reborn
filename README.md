@@ -14,7 +14,7 @@
 
 Jext Reborn is a Spigot plugin that enhances the music experience in Minecraft servers. It allows servers to add custom music discs without replacing the original ones, utilizing the power of a resource pack and the Spigot API.
 
-For more details and guides, please visit the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki).
+For more details and guides on how to setup the plugin, please visit the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki).
 
 ## Dependencies
 
