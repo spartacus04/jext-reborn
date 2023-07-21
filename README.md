@@ -4,42 +4,56 @@
 [![Build](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml/badge.svg?branch=master&event=push)](https://github.com/spartacus04/jext-reborn/actions/workflows/gradle.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/spartacus04/jext-reborn/badge)](https://www.codefactor.io/repository/github/spartacus04/jext-reborn)
 
-A [Spigot](https://www.spigotmc.org/) plugin that allows server to add custom music disc without removing the originals through the power of a resource pack and the Spigot API!
+![bStats Players](https://img.shields.io/bstats/players/16571)
+![bStats Servers](https://img.shields.io/bstats/servers/16571)
 
-Read the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki) for more details and guides.
+![Spigot Downloads](https://img.shields.io/spiget/downloads/103219?label=Spigot%20Downloads)
+![Static Badge](https://img.shields.io/badge/Hangar%20Downloads-Not%20available-red?link=https%3A%2F%2Fhangar.papermc.io%2Fspartacus04%2FJukeboxExtendedReborn)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/LRzd464N?label=Modrinth%20downloads&color=00cc00)
+![GitHub all releases](https://img.shields.io/github/downloads/spartacus04/jext-reborn/total?label=Github%20downloads)
+
+Jext Reborn is a Spigot plugin that enhances the music experience in Minecraft servers. It allows servers to add custom music discs without replacing the original ones, utilizing the power of a resource pack and the Spigot API.
+
+For more details and guides, please visit the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki).
 
 ## Dependencies
 
-[ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) to make jukebox play custom music disc like vanilla.
+- ProtocolLib ([Spigot](https://www.spigotmc.org/resources/protocollib.1997/)-[Hangar](https://hangar.papermc.io/dmulloy2/ProtocolLib)-[Github](https://github.com/dmulloy2/ProtocolLib))
 
-## Core features
+## Features
 
-- Adding and playing custom music disc without replacing the original music disc.
-- Customizable disc title, author and lore texts.
-- The plugin supports most common languages
-- Allow/Disallow custom discs drop from Creepers.
-- Supports custom model data, allow customized disc texture.
-- Auto kick players who rejected the server resource pack.
-- Allay duplication works with custom music.
-- Parrot will still dance to the music!
-- Discs can be found in dungeons.
-- Discs can be found in trail ruins.
-- A website to generate the required files for the music discs.
-- Disc fragments can be found in dungeons and be crafted back together.
-- Set a max amount of discs that can be found in some loottables.
-- Set custom chance for discs to be found.
+Jext Reborn offers a wide range of features to create a customized and immersive music disc experience, sorted by use:
 
-## Other features
+### Core Features
 
-- Optionally replace the vanilla jukebox behavior with a custom one.
+- Adding and playing custom music discs without replacing the original music discs.
+- Customizable disc titles, authors, and lore texts.
+- Multi-language support for broad accessibility.
+- Ability to enable or disable custom disc drops from Creepers.
+- Automatic kick for players who reject the server resource pack.
+- Allay duplication will still work.
+- Parrots will dance to the custom music!
+- Custom music discs can be found in dungeons and trail ruins.
+- Disc fragments can be discovered in dungeons and crafted back together.
+- A website to generate the necessary files for custom music discs.
+- Set a maximum number of discs that can be found in specific loottables.
+- Define custom chances for discovering music discs.
+- Optional replacement of the vanilla jukebox click behavior with a GUI.
 
-## Integrations
+### Languages
 
-- [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin to loop music, setup playlists and change songs.
-- [WorldGuard](https://dev.bukkit.org/projects/worldguard): WorldGuard lets you and players guard areas of land against griefers and undesirables as well as tweak and disable various gameplay features of Minecraft.
-- [GriefPrevention](https://www.spigotmc.org/resources/griefprevention.1884/): PREVENTS all forms of grief - build/break, theft, spam, spawn camping, and more without a database.
+Jext Reborn supports multiple languages, making it easy for players around the world to enjoy custom music discs in their preferred language. If your language is not fully translated, you can help by contributing to the translation at https://crowdin.com/project/jext-reborn. 
+
+### Integrations
+
+Jext Reborn seamlessly integrates with the following plugins to further enhance the server's capabilities:
+
+- [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/) (Only < 1.19.4): A simple plugin for music looping, playlist setup, and song changes.
+- [WorldGuard](https://dev.bukkit.org/projects/worldguard): Allows you and players to protect areas of land against griefers and unwanted activities while providing various gameplay tweaks for Minecraft.
+- [GriefPrevention](https://www.spigotmc.org/resources/griefprevention.1884/): Prevents all forms of grief, including building/breaking, theft, spam, spawn camping, and more, without requiring a database.
 
 ## Known Incompatibilities
 
-- #### GeyserMC (still working on an integration)
-- #### Musicbox (Discs don't stop, has to be fixed on their end)
+- GeyserMC (integration still in progress ([#138](https://github.com/spartacus04/jext-reborn/pull/138)))
+
+>Jext Reborn is the ultimate choice for Minecraft server owners seeking to elevate their music experience by adding custom music discs seamlessly. Explore its vast array of features to create an engaging and unique musical atmosphere on your server.
