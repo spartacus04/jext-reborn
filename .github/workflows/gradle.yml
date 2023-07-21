@@ -22,6 +22,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew shadowJar
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: JEXT-Reborn_${{ github.sha }}
+        path: build/libs/*.jar
 
   publishDocs:
     needs: build
