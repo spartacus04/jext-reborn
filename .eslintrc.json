@@ -97,6 +97,7 @@
         "space-unary-ops": "error",
         "spaced-comment": "error",
         "svelte/no-at-html-tags": "off",
+        "svelte/valid-compile": "off",
         "yoda": "error"
     },
     "settings": {

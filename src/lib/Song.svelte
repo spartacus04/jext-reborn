@@ -45,11 +45,11 @@
 
 		regenNamespace();
 
-		song.oggFile = await convertToOgg(song.uploadedFile);
+		if(!song.oggFile) song.oggFile = await convertToOgg(song.uploadedFile);
 
-		song.fragmentTexture = await (await fetch(default_fragment)).blob();
+		if(!song.fragmentTexture) song.fragmentTexture = await (await fetch(default_fragment)).blob();
 
-		song.texture = await (await fetch(default_disc)).blob();
+		if(!song.texture) song.texture = await (await fetch(default_disc)).blob();
 	};
 
 	const prepareDiscPromise = prepareDisc();

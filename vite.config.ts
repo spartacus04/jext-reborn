@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import autoprefixer from 'autoprefixer';
 import path from 'node:path';
+import fs from 'node:fs';
 
 export default defineConfig({
 	build: {
@@ -9,7 +10,13 @@ export default defineConfig({
 	},
 	base: '/jext-reborn/',
 
-	plugins: [svelte()],
+	plugins: [svelte({
+		onwarn: (warning, handler) => {
+			// disable a11y warnings
+			if (warning.code.startsWith("a11y-")) return;
+			handler(warning);
+		}
+	})],
 	css: {
 		postcss: {
 			plugins: [
