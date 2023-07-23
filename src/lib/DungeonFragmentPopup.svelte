@@ -8,7 +8,7 @@
 	import { dungeons } from '@/config';
 	import { versionStore } from '@/store';
 
-	import { default_fragment, dirt } from '@assets';
+	import { dirt } from '@assets';
 	import Tooltip from './Tooltip.svelte';
 
 
@@ -50,7 +50,7 @@
 		<div id="out">
 			<div>
 				<Tooltip text="Selects a texture for the disc fragment">
-					<img use:outline src={default_fragment} alt="fragment icon"
+					<img use:outline src={URL.createObjectURL(texture)} alt="fragment icon"
 						id="fragment_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: setTexture }}
 						use:dropFile={{ accept: 'image/png', cb: setTexture }}
 						on:keypress={null}
