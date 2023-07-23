@@ -2,6 +2,7 @@ package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.disc.DiscContainer
+import me.spartacus04.jext.disc.DiscPlayer
 import org.bukkit.block.Jukebox
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -37,15 +38,21 @@ internal class InventoryMoveItemEvent : Listener {
                 }
             }
             else -> {
-                if (e.destination.type != InventoryType.JUKEBOX) return
+                if(e.destination.type == InventoryType.JUKEBOX) {
+                    val jukebox = e.destination.location!!.block.state as Jukebox
+                    if (jukebox.isPlaying) return
 
-                val jukebox = e.destination.location!!.block.state as Jukebox
-                if (jukebox.isPlaying) return
-
-                try {
-                    val container = DiscContainer(e.item)
-                    container.play(e.destination.location!!)
-                } catch (_: IllegalStateException) {
+                    try {
+                        val container = DiscContainer(e.item)
+                        container.play(e.destination.location!!)
+                    } catch (_: IllegalStateException) {
+                    }
+                } else if(e.source.type == InventoryType.JUKEBOX) {
+                    try {
+                        val container = DiscContainer(e.item)
+                        DiscPlayer.stop(e.source.location!!, container.namespace)
+                    } catch (_: IllegalStateException) {
+                    }
                 }
             }
         }
