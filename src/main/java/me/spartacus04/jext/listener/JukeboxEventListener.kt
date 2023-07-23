@@ -32,6 +32,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         val block = event.clickedBlock ?: return
 
         if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
+        if (event.player.isSneaking) return
 
         when(CONFIG.JUKEBOX_BEHAVIOUR) {
             "legacy-gui" -> legacyJukeboxGui(event, block)
