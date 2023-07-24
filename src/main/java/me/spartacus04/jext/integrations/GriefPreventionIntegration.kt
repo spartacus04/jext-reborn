@@ -4,6 +4,7 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission
 import me.ryanhamshire.GriefPrevention.GriefPrevention
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import java.lang.NullPointerException
 
 /**
  * This class is used to integrate with the GriefPrevention plugin.
@@ -40,8 +41,12 @@ internal class GriefPreventionIntegration {
      * @return a boolean value.
      */
     private fun canInteract(player: Player, block: Block, permission: ClaimPermission) : Boolean {
-        val claim = GriefPrevention.instance.dataStore.getClaimAt(block.location, false, null)
+        return try {
+            val claim = GriefPrevention.instance.dataStore.getClaimAt(block.location, false, null)
 
-        return claim.checkPermission(player, permission, null) == null
+            claim.checkPermission(player, permission, null) == null
+        } catch (e: NullPointerException) {
+            true
+        }
     }
 }
