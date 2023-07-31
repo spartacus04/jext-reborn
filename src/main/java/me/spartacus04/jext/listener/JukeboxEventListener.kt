@@ -61,6 +61,7 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
         if(state.record.type == Material.AIR) {
             try {
                 val disc = event.item ?: return
+                if(!disc.type.isRecord) return
                 val discContainer = DiscContainer(disc)
 
                 discContainer.play(location)

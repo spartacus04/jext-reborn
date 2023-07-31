@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
  * @param required A boolean value that represents whether the parameter is required or not
  * @param suggestedValues A list of suggested values
  */
-class ParameterNumber internal constructor(required: Boolean, vararg suggestedValues: Float) : Parameter(required) {
+class ParameterNumber internal constructor(required: Boolean, vararg suggestedValues: Number) : Parameter(required) {
     private val stringValues: MutableList<String>
     override var name: String? = null
         get() {

@@ -2,6 +2,7 @@ package me.spartacus04.jext.command
 
 import me.spartacus04.jext.command.adapter.ExecutorAdapter
 import me.spartacus04.jext.command.adapter.ParameterDisc
+import me.spartacus04.jext.command.adapter.ParameterNumber
 import me.spartacus04.jext.command.adapter.ParameterPlayer
 import me.spartacus04.jext.config.sendJEXTMessage
 import me.spartacus04.jext.disc.DiscContainer
@@ -17,6 +18,7 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
     init {
         addParameter(ParameterPlayer(true))
         addParameter(ParameterDisc(true))
+        addParameter(ParameterNumber(false, 1).setName("amount"))
     }
 
     /**
@@ -38,8 +40,22 @@ internal class ExecutorDiscGive : ExecutorAdapter("discgive") {
             return
         }
 
+        var amount = 1
+        if(args.size >= 3) {
+            try {
+                amount = args[2].toInt()
+            } catch (e: NumberFormatException) {
+                sender.sendJEXTMessage("wrong-number-format", hashMapOf(
+                    "param" to "amount"
+                ))
+                return
+            }
+        }
+
         for (player in players) {
-            player.inventory.addItem(DiscContainer(disc).discItem)
+            for(i in 1..amount) {
+                player.inventory.addItem(DiscContainer(disc).discItem)
+            }
 
             sender.sendJEXTMessage("disc-received", hashMapOf(
                 "disc" to disc.TITLE
