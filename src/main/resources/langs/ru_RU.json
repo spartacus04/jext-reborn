@@ -4,7 +4,7 @@
   "update-available": "Доступно новое обновление!",
   "resource-pack-decline-kick-message": "Пожалуйста, загрузите ресурспак для музыки!",
   "failed-download-kick-message": "Не удалось загрузить ресурспак, пожалуйста, повторите попытку.",
-  "jukebox": "§9Игорь",
+  "jukebox": "§9Проигрыватель",
   "scroll-down": "§7Прокрутка вниз",
   "scroll-up": "§7Прокрутка вверх",
   "cant-scroll-further": "§cНевозможно прокрутить дальше!",
@@ -17,7 +17,7 @@
   "invalid-location": "§cНеправильное место!",
   "wrong-number-format": "§cНеверный формат числа для параметра %param%!",
   "cannot-find-player": "§cНевозможно найти игрока: §6%player%§c.",
-  "music-now-playing": "§fТрек $d%name% §fсейчас играет!",
+  "music-now-playing": "§fСейчас играет трек: $d%name% §f!",
   "played-music-to-multiple": "§fИграла музыку - §6%name% §fдля §6%playercount% §fигроков!",
   "played-music-to": "§fПроиграна музыка - §6%name% §fдля §6%player%§f!",
   "played-music-to-no-one": "§fИграли музыку без проигрывателя, что-то пошло не так!",
@@ -30,5 +30,5 @@
   "missing-permission": "§cУ Вас нет прав для использования этой команды!",
   "invalid-runner": "§cЭта команда может быть выполнена только по §6%runner%§c.",
   "command-not-supported": "§cКоманда §6%command% §cне поддерживается: §6%reason%§c.",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "Использование: §6/%command%"
 }
