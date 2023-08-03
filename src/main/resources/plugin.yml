@@ -1,7 +1,7 @@
 main: me.spartacus04.jext.Jext
 name: JukeboxExtendedReborn
 authors: [Tajam, Spartacus04]
-version: 1.2.5
+version: 1.2.6
 api-version: 1.14
 depend: [ProtocolLib]
 softdepent: [WorldGuard, GriefPrevention]
