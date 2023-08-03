@@ -1,6 +1,10 @@
 package me.spartacus04.jext.disc
 
+import com.comphenix.protocol.PacketType
+import com.comphenix.protocol.ProtocolLibrary
+import com.comphenix.protocol.events.PacketContainer
 import io.github.bananapuncher714.nbteditor.NBTEditor
+import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.*
 import org.bukkit.entity.Player
 
@@ -29,7 +33,15 @@ class DiscPlayer private constructor() {
          * @param player The "player" parameter is of type "Player".
          */
         fun stop(player: Player) {
-            player.stopSound(SoundCategory.RECORDS)
+            if(VERSION < "1.19") {
+                val packet = PacketContainer(PacketType.Play.Server.STOP_SOUND)
+
+                packet.soundCategories.write(0, com.comphenix.protocol.wrappers.EnumWrappers.SoundCategory.RECORDS)
+
+                ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet)
+            } else {
+                player.stopSound(SoundCategory.RECORDS)
+            }
         }
 
         /**
@@ -64,7 +76,15 @@ class DiscPlayer private constructor() {
         fun stop(location: Location) {
             for (player in location.world!!.players) {
                 if (player.location.distance(location) <= 64) {
-                    player.stopSound(SoundCategory.RECORDS)
+                    if(VERSION < "1.19") {
+                        val packet = PacketContainer(PacketType.Play.Server.STOP_SOUND)
+
+                        packet.soundCategories.write(0, com.comphenix.protocol.wrappers.EnumWrappers.SoundCategory.RECORDS)
+
+                        ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet)
+                    } else {
+                        player.stopSound(SoundCategory.RECORDS)
+                    }
                 }
             }
 
@@ -74,3 +94,4 @@ class DiscPlayer private constructor() {
         }
     }
 }
+
