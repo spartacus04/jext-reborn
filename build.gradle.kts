@@ -84,6 +84,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 artifacts.archives(tasks.shadowJar)
 
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand("version" to project.rootProject.version)
+    }
+}
+
 // publish
 
 tasks.dokkaHtml {
