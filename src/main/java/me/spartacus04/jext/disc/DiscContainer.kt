@@ -2,6 +2,7 @@ package me.spartacus04.jext.disc
 
 import io.github.bananapuncher714.nbteditor.NBTEditor
 import me.spartacus04.jext.config.ConfigData
+import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
@@ -138,11 +139,13 @@ class DiscContainer {
      * @param pitch The pitch of the disc
      */
     fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
-        if (!ConfigData.CONFIG.ALLOW_MUSIC_OVERLAPPING) {
+        if (!CONFIG.ALLOW_MUSIC_OVERLAPPING) {
             DiscPlayer.stop(location, namespace)
         }
 
-        location.world!!.playSound(location, namespace, SoundCategory.RECORDS, volume, pitch)
+        location.world!!.players.forEach {
+            it.playSound(location, namespace, SoundCategory.RECORDS, volume, pitch)
+        }
 
         if(location.block.type != Material.JUKEBOX) return
 
