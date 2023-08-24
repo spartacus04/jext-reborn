@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.11")
     compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
