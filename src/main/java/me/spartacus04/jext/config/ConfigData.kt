@@ -1,5 +1,6 @@
 package me.spartacus04.jext.config
 
+import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler
 import me.spartacus04.jext.ServerVersion
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -30,5 +31,9 @@ class ConfigData private constructor() {
          * The PLUGIN property stores the plugin's instance.
          */
         lateinit var PLUGIN: JavaPlugin
+        /**
+         * The SCHEDULER property stores the plugin's universal scheduler.
+         */
+        lateinit var SCHEDULER: TaskScheduler
     }
 }

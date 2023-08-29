@@ -1,8 +1,10 @@
 package me.spartacus04.jext
 
+import com.github.Anon8281.universalScheduler.UniversalScheduler
 import me.spartacus04.jext.command.CommandsRegistrant
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
+import me.spartacus04.jext.config.ConfigData.Companion.SCHEDULER
 import me.spartacus04.jext.config.ConfigManager
 import me.spartacus04.jext.config.LanguageManager
 import me.spartacus04.jext.config.LanguageManager.Companion.DISABLED_MESSAGE
@@ -67,6 +69,8 @@ class Jext : JavaPlugin() {
         IntegrationsRegistrant.registerIntegrations()
         CommandsRegistrant.registerCommands(this)
         ListenersRegistrant.registerListeners(this)
+
+        SCHEDULER = UniversalScheduler.getScheduler(this)
 
 
         Updater(this).getVersion {

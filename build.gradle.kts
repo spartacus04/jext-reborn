@@ -42,6 +42,7 @@ dependencies {
     implementation("xyz.xenondevs.invui:invui-kotlin:1.14")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 }
 
 group = "me.spartacus04.jext"
@@ -70,6 +71,7 @@ tasks {
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
         relocate("xyz/xenondevs/invui", "${dependencyPackage}.invui")
         relocate("xyz/xenondevs/inventoryaccess", "${dependencyPackage}.inventoryaccess")
+        relocate("com/github/Anon8281/universalScheduler", "${dependencyPackage}.universalScheduler")
         exclude("colors.bin")
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")

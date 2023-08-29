@@ -6,7 +6,7 @@ api-version: 1.14
 depend: [ProtocolLib]
 softdepent: [WorldGuard, GriefPrevention]
 prefix: JEXT
-folia-supported: false
+folia-supported: true
 
 commands:
   disc:

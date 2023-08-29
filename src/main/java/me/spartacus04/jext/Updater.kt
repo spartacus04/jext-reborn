@@ -1,6 +1,6 @@
 package me.spartacus04.jext
 
-import org.bukkit.Bukkit
+import me.spartacus04.jext.config.ConfigData.Companion.SCHEDULER
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.BufferedReader
 import java.io.IOException
@@ -23,7 +23,7 @@ internal class Updater(private val plugin : JavaPlugin) {
      * call.
      */
     fun getVersion(consumer: Consumer<String?>) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, Runnable {
+        SCHEDULER.runTaskAsynchronously {
             try {
                 val reader = BufferedReader(InputStreamReader(URL("https://api.github.com/repos/spartacus04/jext-reborn/releases/latest").openStream()))
                 val text = reader.use {
@@ -35,6 +35,6 @@ internal class Updater(private val plugin : JavaPlugin) {
             } catch (exception: IOException) {
                 plugin.logger.info("Unable to check for updates: " + exception.message)
             }
-        })
+        }
     }
 }

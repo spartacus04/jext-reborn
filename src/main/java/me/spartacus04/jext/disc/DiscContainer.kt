@@ -5,6 +5,7 @@ import me.spartacus04.jext.config.ConfigData
 import me.spartacus04.jext.config.ConfigData.Companion.CONFIG
 import me.spartacus04.jext.config.ConfigData.Companion.DISCS
 import me.spartacus04.jext.config.ConfigData.Companion.PLUGIN
+import me.spartacus04.jext.config.ConfigData.Companion.SCHEDULER
 import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import me.spartacus04.jext.config.Disc
 import org.bukkit.*
@@ -149,7 +150,7 @@ class DiscContainer {
 
         if(location.block.type != Material.JUKEBOX) return
 
-        Bukkit.getScheduler().runTaskLater(PLUGIN, Runnable {
+        SCHEDULER.runTaskLater({
             location.world!!.players.forEach {
                 it.stopSound(
                     SOUND_MAP[material]!!.sound,

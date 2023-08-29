@@ -1,10 +1,10 @@
 package me.spartacus04.jext.listener
 
 import me.spartacus04.jext.config.ConfigData.Companion.LANG
+import me.spartacus04.jext.config.ConfigData.Companion.SCHEDULER
 import me.spartacus04.jext.disc.DiscContainer
 import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxContainer
 import me.spartacus04.jext.jukebox.legacy.LegacyJukeboxEntry
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
@@ -119,7 +119,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
             return
         }
 
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+        SCHEDULER.runTaskLater(Runnable {
             val newContents = e.view.topInventory.contents
 
             if(e.currentItem != null && !e.currentItem!!.type.isRecord) {
@@ -193,7 +193,7 @@ internal class JukeboxGuiListener(private val plugin: JavaPlugin) : Listener {
         )
 
         if(duration.toInt() == 0) return
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable { stopPlaying(id) }, duration * 20)
+        SCHEDULER.runTaskLater({ stopPlaying(id) }, duration * 20)
     }
 
     /**
