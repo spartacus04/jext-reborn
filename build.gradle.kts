@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.8.20"
 
     `maven-publish`
-    id("io.papermc.hangar-publish-plugin") version "0.0.5"
+    id("io.papermc.hangar-publish-plugin") version "0.1.0"
     id("com.modrinth.minotaur") version "2.8.3"
 }
 
