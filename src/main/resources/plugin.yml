@@ -1,5 +1,5 @@
 main: me.spartacus04.jext.Jext
-name: jext
+name: JukeboxExtendedReborn
 authors: [Tajam, Spartacus04]
 version: ${version}
 api-version: 1.14
