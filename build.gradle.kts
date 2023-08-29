@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.8.20"
 
     `maven-publish`
-    id("io.papermc.hangar-publish-plugin") version "0.0.5"
+    id("io.papermc.hangar-publish-plugin") version "0.1.0"
     id("com.modrinth.minotaur") version "2.8.3"
 }
 
@@ -124,10 +124,7 @@ hangarPublish {
 
     publications.register("plugin") {
         version.set("${project.version}")
-        namespace(
-            "${property("hangar_username")}",
-            "${property("hangar_slug")}"
-        )
+        id.set("${property("hangar_slug")}")
         channel.set("${property("hangar_channel")}")
         changelog.set(hangarChangelog)
 
@@ -139,7 +136,7 @@ hangarPublish {
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 this.dependencies {
-                    hangar("dmulloy2", "ProtocolLib") {
+                    hangar("ProtocolLib") {
                         required.set(true)
                     }
                 }
