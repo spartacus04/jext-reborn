@@ -15,7 +15,7 @@ plugins {
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.8.20")
+        classpath("org.jetbrains.dokka:dokka-base:1.9.0")
     }
 }
 
