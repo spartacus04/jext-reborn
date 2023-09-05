@@ -1,37 +1,42 @@
 {
-  "name": "jext-tool",
+  "name": "jext-reborn",
+  "version": "1.3",
+  "description": "The website companion for Jext-Reborn, a minecraft music plugin.",
   "private": true,
-  "version": "2.1",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint src --ext .ts,.svelte",
-    "lint:fix": "npm run lint -- --fix"
+  "keywords": [
+    "automation",
+    "music-player",
+    "spigot",
+    "minecraft-server",
+    "spigotmc",
+    "spigot-api",
+    "minecraft-plugin",
+    "spigot-resource"
+  ],
+  "homepage": "https://github.com/spartacus04/jext-reborn/",
+  "bugs": {
+    "url": "https://github.com/spartacus04/jext-reborn/issues"
   },
-  "dependencies": {
-    "ajv": "^8.12.0",
-    "jszip": "^3.10.1"
+  "license": "MIT",
+  "author": {
+    "name": "spartacus04",
+    "url": "https://github.com/spartacus04"
+  },
+  "contributors": [
+    {
+      "name": "Tajam",
+      "url": "https://github.com/Tajam"
+    }
+  ],
+  "funding": {
+    "type": "github sponsors",
+    "url": "https://github.com/sponsors/spartacus04"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spartacus04/jext-reborn.git"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.4.2",
-    "@tsconfig/svelte": "^5.0.0",
-    "@types/node": "^20.4.2",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-svelte": "^2.32.2",
-    "postcss": "^8.4.26",
-    "sass": "^1.63.6",
-    "svelte": "^4.0.5",
-    "svelte-check": "^3.4.6",
-    "svelte-preprocess": "^5.0.4",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.3"
+    "@types/node": "^20.5.9"
   }
 }
