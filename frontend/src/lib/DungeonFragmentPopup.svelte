@@ -1,0 +1,164 @@
+<script lang="ts">
+	import { fade } from 'svelte/transition';
+
+	import { DungeonElement } from '@lib';
+
+	import { outline, inputFile, dropFile } from '@ui';
+
+	import { dungeons } from '@/config';
+	import { versionStore } from '@/store';
+
+	import { dirt } from '@assets';
+	import Tooltip from './Tooltip.svelte';
+
+
+	export let selectedDungeons : string[];
+	export let texture: Blob;
+	export let active = true;
+
+
+	const selectItem = (value : string) => {
+		if(selectedDungeons.includes(value)) selectedDungeons = selectedDungeons.filter(e => e != value);
+		else selectedDungeons = [...selectedDungeons, value];
+	};
+
+	const setTexture = (files: File[]) => {
+		const file = files![0];
+
+		if (file) {
+			texture = file;
+		}
+	};
+
+	const close = () => active = false;
+</script>
+
+{#if active}
+	<div class="popupbackground" style:background-image="url({dirt})" transition:fade on:click={close} on:keydown={null}></div>
+{/if}
+
+{#if active}
+	<div class="popup">
+		<div class="popupcontainer">
+			{#each dungeons as dungeon}
+				{#if dungeon.minVersion && dungeon.minVersion <= $versionStore}
+					<DungeonElement image={dungeon.img} name={dungeon.name} value={selectedDungeons.includes(dungeon.source)} onClick={() => selectItem(dungeon.source)}/>
+				{/if}
+			{/each}
+		</div>
+
+		<div id="out">
+			<div>
+				<Tooltip text="Selects a texture for the disc fragment">
+					<img use:outline src={URL.createObjectURL(texture)} alt="fragment icon"
+						id="fragment_icon" class="noselect" use:inputFile={{ accept: 'image/png', cb: setTexture }}
+						use:dropFile={{ accept: 'image/png', cb: setTexture }}
+						on:keypress={null}
+					>
+				</Tooltip>
+			</div>
+
+			<div id="messagepopupconfirm" class="popupconfirm" on:click={close} on:keydown={null}>
+				<div id="content">
+					<p id="generate_text" class="noselect">OK</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
+
+<style lang="scss">
+	@import '../styles/crisp.scss';
+
+	.popup {
+		z-index: 101;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		background-color: #202020;
+		padding: 1.5em;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		.popupcontainer {
+			display: flex;
+			flex-flow: row wrap;
+			align-items: flex-start;
+			padding: 0;
+			width: 816px;
+			max-width: 816px;
+			max-height: 420px;
+			overflow-y: scroll;
+
+			padding: 0.5em;
+			background-color: #303030;
+			border: 1px solid black;
+			color: white;
+		}
+
+		.popupconfirm {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			cursor: pointer;
+			width: min-content;
+			font-size: 1vw;
+			border: 1px solid white;
+			color: white;
+			height: min-content;
+			padding: 0.5em 1em 0.5em 1em;
+
+			transition: ease-in-out all 0.4s;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.popupconfirm:hover,
+		.popupconfirm:hover>#content>#generate_text {
+			color: black;
+			background-color: white;
+		}
+	}
+
+	.popupbackground {
+		z-index: 100;
+		background-repeat: repeat;
+		background-size: 10% auto;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+
+		transition: ease-in-out all 0.2s;
+
+		@extend %crisp;
+	}
+
+	#fragment_icon {
+		height: 96px;
+		width: 96px;
+		margin: 0.5em;
+		cursor: pointer;
+
+		background-color: #181818;
+		margin-top: 1em;
+		justify-self: flex-start;
+	}
+
+	#out {
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+</style>

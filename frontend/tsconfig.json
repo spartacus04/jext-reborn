@@ -1,0 +1,22 @@
+{
+	"extends": "@tsconfig/svelte/tsconfig.json",
+	"compilerOptions": {
+	  "target": "ESNext",
+	  "useDefineForClassFields": true,
+	  "module": "ESNext",
+	  "resolveJsonModule": true,
+	  "allowJs": true,
+	  "checkJs": true,
+	  "isolatedModules": true,
+		"paths": {
+			"@/*": ["./src/*"],
+			"@assets": ["./src/assets"],
+			"@styles/*": ["./src/styles/*"],
+			"@lib": ["./src/lib"],
+			"@ui": ["./src/ui"]
+		}
+	},
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+	"references": [{ "path": "./tsconfig.node.json" }]
+  }
+  
