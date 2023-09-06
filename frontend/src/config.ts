@@ -1,3 +1,5 @@
+export const ENDPOINT = import.meta.env.DEV ? 'http://localhost:3000' : '';
+
 export const versions = new Map([
 	[4, '1.14 - 1.14.4'],
 	[5, '1.15 - 1.16.1'],

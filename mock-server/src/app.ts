@@ -10,7 +10,7 @@ export const createApp = async () : Promise<Express> => {
 
 	await Promise.all(
 		fs.readdirSync(`${__dirname}/routes`).map(async (file) => {
-			const route = await import(`./routes/${file}`);
+			const route = (await import(`./routes/${file}`)).default;
 			app.use(route);
 		})
 	);

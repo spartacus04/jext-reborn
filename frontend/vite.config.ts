@@ -12,7 +12,7 @@ export default defineConfig({
 	plugins: [svelte({
 		onwarn: (warning, handler) => {
 			// disable a11y warnings
-			if (warning.code.startsWith("a11y-")) return;
+			if (warning.code.toLowerCase().startsWith("a11y-")) return;
 			handler(warning);
 		}
 	})],

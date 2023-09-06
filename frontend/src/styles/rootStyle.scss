@@ -22,8 +22,13 @@ img {
 }
 
 @font-face {
-	font-family: 'Minecraft';
+	font-family: 'minecraft_ten';
 	src: url('/minecraft_ten.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'minecraft_regular';
+	src: url('/MinecraftRegular-Bmg3.otf') format('opentype');
 }
 
 * {
@@ -43,4 +48,8 @@ img {
 	background-color: #ffffff;
 	border-radius: 10px;
 	border: 0px dotted #ffffff;
+}
+
+* {
+	font-family: './';
 }

@@ -1,109 +1,64 @@
 <script lang="ts">
-	import { Content, Popup, CSelect, Header } from '@lib';
-	import { generate_btn, spinner } from '@assets';
+	import { fade } from 'svelte/transition';
+    import { ENDPOINT } from './config';
+	import TabContainer from './lib/TabContainer.svelte';
+	import DiscTab from './lib/DiscTab.svelte';
+	import ConfigTab from './lib/configtab/ConfigTab.svelte';
+	import DocsTab from './lib/docsTab.svelte';
 
-	import { currentCount, generatePack, totalCount } from '@/generator';
-	import { discStore } from '@/store';
+	const isServed = async () => {
+		try {
+			const response = await fetch(`${ENDPOINT}/api/health`);
+			const data = await response.json();
 
-
-	let popup_active = false;
-	let type = 'Generate';
-
-	let can_generate = false;
-
-	let is_generating = false;
-
-
-	discStore.subscribe(discs => {
-		can_generate = discs.every(disc => disc.texture != null) && discs.length > 0;
-	});
-
-	const generate = async () => {
-		if(is_generating) return;
-
-		is_generating = true;
-		await generatePack(type == 'Merge');
-		is_generating = false;
+			return data.status === 'ok';
+		}
+		catch (error) {
+			return false;
+		}
 	};
 </script>
 
 <main>
-	<Popup text={$discStore.length > 0 ? 'Can\'t generate discs while adding one' : 'Add at least a disc'} bind:active={popup_active}></Popup>
-
-	<Header canEdit={!is_generating}/>
-
-	<Content />
-
-	<div id="footer">
-		{#if is_generating}
-			<div id="generate_button" style="background-image: url({generate_btn});">
-				<img src={spinner} alt="loading" height="28" width="28">
-				<div id="progressbar">
-					<div id="progress" style:width="calc(100% / {$totalCount} * {$currentCount})"></div>
-				</div>
-			</div>
+	{#await isServed()}
+		<div class="blackbox" out:fade />
+	{:then isLocal}
+		{#if isLocal}
+			<TabContainer items={[
+				{
+					name: 'Discs',
+					component: DiscTab,
+				},
+				{
+					name: 'Config',
+					component: ConfigTab,
+				},
+				{
+					name: 'API documentation',
+					component: DocsTab,
+				},
+			]} />
 		{:else}
-			<div id="generate_button" style:background-image="url({generate_btn})" class={can_generate ? '' : 'grayscale'} on:click={can_generate ? generate : () => popup_active = true} on:keydown={null} />
-			<CSelect options={['Generate', 'Merge']} bind:selected={type} />
+			<DiscTab />
 		{/if}
-
-	</div>
+	{/await}
 </main>
 
 <style lang="scss">
 	@import 'styles/crisp.scss';
 
+	.blackbox {
+		background-color: black;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
 	main {
 		height: 100%;
 		width: 100%;
 		background-color: #303030;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-
-		#footer {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 1em;
-			background-color: #202020;
-			padding: 0.5em;
-
-			#generate_button {
-
-				width: 256px;
-				height: 64px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-
-				cursor: pointer;
-				background-repeat: no-repeat;
-				background-position: center;
-				background-size: cover;
-
-				@extend %crisp;
-
-				&:hover:not(.grayscale) {
-					filter: drop-shadow(1px 1px 5px green) contrast(130%);
-				}
-			}
-		}
-	}
-
-	#progressbar {
-		width: 100px;
-		height: 2px;
-		margin: 2px 0px 2px 0px;
-		background-color: #303030;
-		padding: 0;
-	}
-
-	#progress {
-		height: 100%;
-		background-color: white;
-		margin: 0;
 	}
 </style>

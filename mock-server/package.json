@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev --transpile-only --clear src/index.ts",
     "lint": "eslint src --ext .ts,.svelte",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -25,6 +26,7 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-svelte": "^2.33.0",
     "prettier": "^3.0.3",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }
