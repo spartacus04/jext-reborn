@@ -5,12 +5,12 @@
 	export let highlight = false;
 </script>
 
-<div class="clickable" style:border-image-source="url({generate_btn})" class:grayscale={!enabled} class:highlight={highlight} on:click>
+<div class="clickable" style:border-image-source="url({generate_btn})" class:grayscale={!enabled} class:highlight on:click class:tooltip={true} >
 	<slot />
 </div>
 
 <style lang="scss">
-	@import '../../styles/crisp.scss';
+	@import "../../styles/crisp.scss";
 
 	.clickable {
 		@extend %crisp;

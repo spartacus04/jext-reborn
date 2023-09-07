@@ -1,4 +1,4 @@
-import { ENDPOINT } from '@/config';
+import { ENDPOINT } from '@/constants';
 import { writable, get } from 'svelte/store';
 
 export interface ConfigNode<T> {

@@ -3,7 +3,7 @@
 	import ConfigElement from './ConfigElement.svelte';
 	import { configStore, fetchConfigData, saveConfigData } from './config';
 
-	import { spinner } from '@/assets';
+	import { spinner, dark_dirt_background } from '@/assets';
 
 	let reload = fetchConfigData();
 
@@ -20,7 +20,7 @@
 	<h1>Plugin configuration</h1>
 	<h4>Here you can configure the plugin to your likings</h4>
 </div>
-<div class="configOptionsContainer">
+<div class="configOptionsContainer" style:background-image="url({dark_dirt_background})">
 	{#await reload}
 		<img src={spinner} alt="Loading...">
 	{:then _}
@@ -41,6 +41,8 @@
 </div>
 
 <style lang="scss">
+	@import '../../styles/crisp.scss';
+
 	.header {
 		display: flex;
 		flex-direction: column;
@@ -49,12 +51,15 @@
 		background-color: #202020;
 		width: calc(100% - 1em);
 		padding: 0.5em;
-		height: min-content;
 
 		* {
-			margin: 0.5em 0 0.5em 1em;
+			margin: 0.5em 0.5em 0.5em 0.5em;
 			font-family: 'minecraft_regular';
 			text-shadow: 1px 1px 3px black;
+
+			height: min-content;
+			width: clamp(2em, auto, 20em);
+
 		}
 
 		h1 {
@@ -67,14 +72,21 @@
 	}
 
 	.configOptionsContainer {
+		@extend %crisp;
+
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		background-size: 64px 64px;
 
 		overflow-y: scroll;
 
 		padding: 0 2em 2em 2em;
+
+		@media screen and (max-width: 375px) {
+			padding: 0 1em 2em 1em;
+		}
 
 		img {
 			width: 2em;

@@ -19,3 +19,4 @@ export { default as button_highlight } from './button_highlight.png';
 export { default as button_disabled } from './button_disabled.png';
 export { default as checkbox_off } from './checkbox_off.png';
 export { default as checkbox_on } from './checkbox_on.png';
+export { default as dark_dirt_background } from './dark_dirt_background.png';

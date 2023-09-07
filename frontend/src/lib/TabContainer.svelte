@@ -7,8 +7,7 @@
 	}
 
 	export let items : Tab[] = [];
-
-	let activeTab = items[0].name;
+	export let activeTab = items[0].name;
 
 	const setActiveTab = (tabName: string) => {
 		activeTab = tabName;
@@ -39,6 +38,13 @@
 		height: 3em;
 
 		padding-left: 2em;
+		overflow-x: auto;
+		overflow-y: hidden;
+
+		@media screen and (max-width: 425px) {
+			padding-left: 0;
+			justify-content: center;
+		}
 
 		.tabheader {
 			display: flex;

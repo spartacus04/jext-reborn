@@ -2,7 +2,7 @@
 	import type { ConfigNode } from './config';
 	import SecondaryButton from '../utils/SecondaryButton.svelte';
 	import CheckboxButton from '../utils/CheckboxButton.svelte';
-	import SecondaryCombobox from '../utils/SecondaryCombobox.svelte';
+	import SecondaryCombobox from '../utils/GameCombobox.svelte';
 
 	export let configNode: ConfigNode<boolean|number|string|{[key : string] : boolean}>;
 
@@ -70,7 +70,7 @@
 		align-items: center;
 		height: min-content;
 
-		@media (max-width: 769px) {
+		@media (max-width: 768px) {
 			justify-content: space-between;
 		}
 
@@ -84,6 +84,10 @@
 			align-items: center;
 			justify-content: center;
 			margin: 0 1em 0 1em;
+
+			@media screen and (max-width: 375px) {
+				min-width: 100px;
+			}
 		}
 	}
 </style>

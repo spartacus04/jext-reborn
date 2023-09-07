@@ -4,19 +4,34 @@
 	onMount(() => {
 		const { contentWindow } = document.querySelector('iframe');
 
-		contentWindow.addEventListener('click', e => {
-			const target = e.target as HTMLAnchorElement;
-			const parent = target.parentElement as HTMLAnchorElement;
+		const watchLoad = () => {
+			const interval = setInterval(() => {
+				const elements = contentWindow.document.querySelectorAll('a');
 
-			if (target.tagName === 'A' && target.href.includes('github.com')) {
-				e.preventDefault();
-				window.open(target.href, '_blank');
-			}
-			else if(parent && parent.tagName === 'A' && parent.href.includes('github.com')) {
-				e.preventDefault();
-				window.open(parent.href, '_blank');
-			}
-		});
+				if(elements.length <= 0) return;
+
+				clearInterval(interval);
+
+				elements.forEach(a => {
+					if(a.href.includes('github.com') || a.href.includes('kotlinlang.org')) {
+						a.target = '_blank';
+					}
+					else {
+						a.onclick = (e) => {
+							e.preventDefault();
+							contentWindow.location.replace(a.href);
+						};
+					}
+				});
+			}, 100);
+		};
+
+		contentWindow.addEventListener('load', watchLoad);
+
+		contentWindow.onbeforeunload = () => {
+			contentWindow.removeEventListener('load', watchLoad);
+			watchLoad();
+		};
 	});
 </script>
 
