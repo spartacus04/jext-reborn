@@ -5,7 +5,7 @@ import path from 'node:path';
 
 export default defineConfig({
 	build: {
-		outDir: 'docs',
+		outDir: 'dist',
 	},
 	base: '/jext-reborn/',
 

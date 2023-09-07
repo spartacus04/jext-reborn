@@ -5,25 +5,6 @@
 	import DiscTab from './lib/discstab/DiscTab.svelte';
 	import ConfigTab from './lib/configtab/ConfigTab.svelte';
 	import DocsTab from './lib/docsTab.svelte';
-	import { writable } from 'svelte/store';
-
-	const readFromUrl = () => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const pageId = urlParams.get('pageId') || 'Discs';
-
-		pageStore.set(decodeURIComponent(pageId));
-	};
-
-	const pageStore = writable(null);
-	readFromUrl();
-
-	window.addEventListener('popstate', readFromUrl);
-	pageStore.subscribe((value) => {
-		const urlParams = new URLSearchParams(window.location.search);
-		if(urlParams.get('pageId') == encodeURIComponent(value)) return;
-
-		window.history.pushState(null, '', `?pageId=${encodeURIComponent(value)}`);
-	});
 
 	const isServed = async () => {
 		try {
@@ -56,7 +37,7 @@
 					name: 'API documentation',
 					component: DocsTab,
 				},
-			]} bind:activeTab={$pageStore} />
+			]} />
 		{:else}
 			<DiscTab />
 		{/if}

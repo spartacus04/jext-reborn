@@ -7,7 +7,7 @@
 	}
 
 	export let items : Tab[] = [];
-	export let activeTab = items[0].name;
+	let activeTab = items[0].name;
 
 	const setActiveTab = (tabName: string) => {
 		activeTab = tabName;
