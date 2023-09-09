@@ -1,11 +1,9 @@
 <script lang="ts">
-	import ClickableImage from '../utils/ClickableImage.svelte';
+	import { ClickableImage, Textbox, LauncherCombobox } from '@lib';
 	import { pack_icon } from '@assets';
-	import Textbox from '../utils/Textbox.svelte';
 	import { resourcePackStore } from './discs';
-	import LauncherCombobox from '../utils/LauncherCombobox.svelte';
 	import { versions } from '@/constants';
-	import { inputFile } from '@/ui/inputfile';
+	import { dropFile } from '@ui';
 
 </script>
 
@@ -21,8 +19,8 @@
 
 	</div>
 	<hr class="hidden">
-	<div class="addsongsbtn" use:inputFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: null, multiple: true, drag: true }}>
-		<h1 class="noselect">+</h1>
+	<div class="addsongsbtn" use:dropFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: null, multiple: true }}>
+		<h1>+</h1>
 	</div>
 </div>
 
@@ -69,6 +67,7 @@
 
 			h1 {
 				color: #d3d3d3;
+				user-select: none;
 			}
 
 			&:hover {

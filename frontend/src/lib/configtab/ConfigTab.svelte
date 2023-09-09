@@ -1,9 +1,7 @@
 <script lang="ts">
-	import PrimaryButton from '../utils/PrimaryButton.svelte';
-	import ConfigElement from './ConfigElement.svelte';
 	import { configStore, fetchConfigData, saveConfigData } from './config';
-
-	import { spinner, dark_dirt_background } from '@/assets';
+	import { PrimaryButton, ConfigElement } from '@lib';
+	import { spinner, dark_dirt_background } from '@assets';
 
 	let reload = fetchConfigData();
 

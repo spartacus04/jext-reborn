@@ -43,7 +43,7 @@
 		width: 100%;
 
 		&:hover {
-			border-image-source: url({@/assets/button_highlight.png});
+			border-image-source: url({@assets/button_highlight.png});
 		}
 	}
 

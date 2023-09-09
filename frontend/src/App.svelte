@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
     import { ENDPOINT } from './constants';
-	import TabContainer from './lib/TabContainer.svelte';
-	import DiscTab from './lib/discstab/DiscTab.svelte';
-	import ConfigTab from './lib/configtab/ConfigTab.svelte';
-	import DocsTab from './lib/docsTab.svelte';
+	import { TabContainer, DiscTab, ConfigTab, DocsTab } from '@lib';
 
 	const isServed = async () => {
 		try {
@@ -39,7 +36,16 @@
 				},
 			]} />
 		{:else}
-			<DiscTab />
+			<TabContainer items={[
+				{
+					name: 'Discs',
+					component: DiscTab,
+				},
+				{
+					name: 'API documentation',
+					component: DocsTab,
+				},
+			]} />
 		{/if}
 	{/await}
 </main>

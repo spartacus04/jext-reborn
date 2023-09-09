@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { inputFile } from '@/ui/inputfile';
-	import { spinner } from '@/assets';
+	import { inputFile } from '@ui';
+	import { spinner } from '@assets';
 	import { onDestroy } from 'svelte';
 
 	export let imageUrl: string = null;

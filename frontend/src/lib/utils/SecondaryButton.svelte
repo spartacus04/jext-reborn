@@ -45,7 +45,7 @@
 		user-select: none;
 
 		&:hover {
-			border-image-source: url({@/assets/button_highlight.png});
+			border-image-source: url({@assets/button_highlight.png});
 		}
 
 		&.disabled {

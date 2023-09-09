@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { checkbox_off, checkbox_on } from '@/assets';
+	import { checkbox_off, checkbox_on } from '@assets';
 
 	export let value: boolean;
 

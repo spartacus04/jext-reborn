@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { ConfigNode } from './config';
-	import SecondaryButton from '../utils/SecondaryButton.svelte';
-	import CheckboxButton from '../utils/CheckboxButton.svelte';
-	import SecondaryCombobox from '../utils/GameCombobox.svelte';
+
+	import { SecondaryButton, CheckboxButton, GameCombobox } from '@lib';
 
 	export let configNode: ConfigNode<boolean|number|string|{[key : string] : boolean}>;
 
@@ -20,7 +19,7 @@
 				<CheckboxButton bind:value={configNode.value} />
 			{:else if typeof configNode.defaultValue == 'string' && typeof configNode.value == 'string'}
 				{#if configNode.enumValues && configNode.enumValues.length > 0}
-					<SecondaryCombobox bind:selected={configNode.value} options={configNode.enumValues} />
+					<GameCombobox bind:selected={configNode.value} options={configNode.enumValues} />
 				{/if}
 			{/if}
 		</div>
