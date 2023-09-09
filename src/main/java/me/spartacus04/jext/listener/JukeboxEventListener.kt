@@ -119,8 +119,15 @@ internal class JukeboxEventListener(private val plugin: JavaPlugin) : Listener {
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
-        LegacyJukeboxContainer.get(plugin, loc).breakJukebox()
-        JukeboxContainer.destroyJukebox(loc)
+        if(CONFIG.JUKEBOX_BEHAVIOUR == "legacy-gui") {
+            LegacyJukeboxContainer.get(plugin, loc).breakJukebox()
+        } else {
+            JukeboxContainer.destroyJukebox(loc).forEach {
+                loc.world!!.dropItemNaturally(loc, it)
+            }
+        }
+
+
 
         val block = event.block
         val state = block.state as? Jukebox ?: return
