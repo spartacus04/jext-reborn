@@ -130,7 +130,7 @@ class JukeboxContainer {
         }
 
         if(playingMap[id]!! != -1) {
-            event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.previousItem!!.clone().apply {
+            event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.inventory.getItem(playingMap[id]!!)!!.clone().apply {
                 removeEnchantment(Enchantment.MENDING)
 
                 itemMeta = itemMeta!!.apply {
