@@ -2,7 +2,9 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		const { contentWindow } = document.querySelector('iframe');
+		const { contentWindow } = document.querySelector('iframe')!!;
+
+		if(!contentWindow) return;
 
 		const watchLoad = () => {
 			const interval = setInterval(() => {

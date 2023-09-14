@@ -1,11 +1,18 @@
 <script lang="ts">
-	import { ClickableImage, Textbox, LauncherCombobox } from '@lib';
+	import { ClickableImage, Textbox, LauncherCombobox, AddDiscPopup } from '@lib';
 	import { pack_icon } from '@assets';
 	import { resourcePackStore } from './discs';
 	import { versions } from '@/constants';
 	import { dropFile } from '@ui';
 
+	export let discPopupOpen = false;
+
+	const addDiscs = (files: File[]) => {
+		console.log(files);
+	};
 </script>
+
+<AddDiscPopup bind:open={discPopupOpen} cb={addDiscs} />
 
 <div class="header">
 	<ClickableImage imageUrl={pack_icon} bind:image={$resourcePackStore.icon} />
@@ -19,7 +26,7 @@
 
 	</div>
 	<hr class="hidden">
-	<div class="addsongsbtn" use:dropFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: null, multiple: true }}>
+	<div class="addsongsbtn" use:dropFile={{ accept: import.meta.env.PROD ? 'audio/*' : '.ogg', cb: null, multiple: true }} on:click={() => discPopupOpen = true}>
 		<h1>+</h1>
 	</div>
 </div>

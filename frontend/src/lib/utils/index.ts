@@ -5,3 +5,4 @@ export { default as LauncherCombobox } from './LauncherCombobox.svelte';
 export { default as PrimaryButton } from './PrimaryButton.svelte';
 export { default as SecondaryButton } from './SecondaryButton.svelte';
 export { default as Textbox } from './Textbox.svelte';
+export { default as Popup } from './Popup.svelte';

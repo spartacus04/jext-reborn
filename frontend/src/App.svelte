@@ -2,13 +2,15 @@
 	import { fade } from 'svelte/transition';
     import { ENDPOINT } from './constants';
 	import { TabContainer, DiscTab, ConfigTab, DocsTab } from '@lib';
+	import { isServed } from './state';
 
-	const isServed = async () => {
+	const isServedFn = async () => {
 		try {
 			const response = await fetch(`${ENDPOINT}/api/health`);
 			const data = await response.json();
 
-			return data.status === 'ok';
+			isServed.set(data.status === 'ok');
+			return $isServed;
 		}
 		catch (error) {
 			return false;
@@ -17,7 +19,7 @@
 </script>
 
 <main>
-	{#await isServed()}
+	{#await isServedFn()}
 		<div class="blackbox" out:fade />
 	{:then isLocal}
 		{#if isLocal}

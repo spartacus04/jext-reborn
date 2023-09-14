@@ -7,6 +7,7 @@
 	}
 
 	export let items : Tab[] = [];
+	export let data: any = {};
 	let activeTab = items[0].name;
 
 	const setActiveTab = (tabName: string) => {
@@ -22,7 +23,7 @@
 <div class="contentcontainer">
 	{#each items as item}
 		{#if activeTab == item.name}
-			<svelte:component this={item.component} />
+			<svelte:component this={item.component} bind:data />
 		{/if}
 	{/each}
 </div>
