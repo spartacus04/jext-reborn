@@ -37,7 +37,7 @@ dependencies {
     compileOnly("org.scala-lang:scala-library:2.13.12")
     compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("io.github.bananapuncher714:nbteditor:7.18.6")
+    implementation("io.github.bananapuncher714:nbteditor:7.18.7")
     implementation("xyz.xenondevs.invui:invui:1.15")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.15")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
