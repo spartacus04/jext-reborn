@@ -38,7 +38,7 @@ dependencies {
     compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.0")
-    implementation("xyz.xenondevs.invui:invui:1.17")
+    implementation("xyz.xenondevs.invui:invui:1.19")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.18")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.code.gson:gson:2.10.1")
