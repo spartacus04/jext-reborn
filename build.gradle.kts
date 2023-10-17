@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.10"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
-    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.0"
