@@ -1,10 +1,10 @@
 import JSZip from 'jszip';
 import { writable } from 'svelte/store';
 
-import { stereoToMono, normalize } from '@/ffmpeg';
+import { encodeDisc } from '@/ffmpeg';
 import { saveAs, resizeImageBlob, getDuration, mergeJson } from '@/utils';
 import type { Disc, SongData } from '@/config';
-import { versionStore, iconStore, nameStore, discStore } from '@/store';
+import { versionStore, iconStore, nameStore, discStore, qPresetStore } from '@/store';
 import { isMinecraftRP } from '@/importer';
 
 import { pack_icon, readme } from '@assets';
@@ -15,14 +15,16 @@ export const currentCount = writable(0);
 
 
 let discs : SongData[] = [];
-let version = 12;
+let version = 15;
 let icon = pack_icon;
 let name = 'your_pack_name';
+let qPreset : string = 'none';
 
 versionStore.subscribe(v => version = v);
 iconStore.subscribe(i => icon = i);
 nameStore.subscribe(n => name = n);
 discStore.subscribe(d => discs = d);
+qPresetStore.subscribe(qp => qPreset = qp);
 
 
 const generateDiscsJson = async () : Promise<string> => {
@@ -47,9 +49,7 @@ const generateResourcePack = async () : Promise<JSZip> => {
 	const rp = new JSZip();
 
 	// Pack meta
-	const packmcmeta = `
-			{"pack": {"pack_format": ${version},"description": "Adds custom musics discs"}}
-		`;
+	const packmcmeta = `{"pack": {"pack_format": ${version},"description": "Adds custom musics discs"}}`;
 
 	rp.file('pack.mcmeta', packmcmeta);
 
@@ -61,13 +61,13 @@ const generateResourcePack = async () : Promise<JSZip> => {
 
 	// sounds.json
 	const soundsjson : {
-			[key: string]: {
-				sounds: {
-					name: string,
-					stream: boolean
-				}[]
-			}
-		} = {};
+		[key: string]: {
+			sounds: {
+				name: string,
+				stream: boolean
+			}[]
+		}
+	} = {};
 
 	discs.forEach(disc => {
 		soundsjson[`music_disc.${disc.namespace}`] = {
@@ -123,18 +123,28 @@ const generateResourcePack = async () : Promise<JSZip> => {
 	models.file('music_disc_11.json', JSON.stringify(m11, null, 2));
 	models.file('disc_fragment_5.json', JSON.stringify(mfragment, null, 2));
 
-	// converts stereo to mono
-
-	// run foreach into chunks of 4 to avoid too many ffmpeg processes
-
+	// encode files with ffmpeg
 	for(let i = 0; i < discs.length; i += 4) {
 		const chunk = discs.slice(i, i + 4);
 
 		await chunk.forEachParallel(async (disc) => {
-			if(disc.isMono && !disc.monoFile) {
-				disc.monoFile = await stereoToMono(disc.oggFile);
+			// disc.oggFile was already passed through convertToOgg (prepareDisc() in Song.svelte)
+			// so we don't need to run it through ffmpeg a 2nd time if we don't have to
+			if (!disc.normalize && !disc.isMono && qPreset === 'none') {
 				currentCount.update(n => n + 1);
+				return;
 			}
+
+			const ffmpegArgs = { 'normalize': disc.normalize, 'mono': disc.isMono, 'preset': qPreset };
+
+			if(disc.isMono && !disc.monoFile) {
+				disc.monoFile = await encodeDisc(disc.uploadedFile, ffmpegArgs);
+			}
+			else {
+				disc.oggFile = await encodeDisc(disc.uploadedFile, ffmpegArgs);
+			}
+
+			currentCount.update(n => n + 1);
 		});
 
 		discs.splice(i, 4, ...chunk);
@@ -152,9 +162,7 @@ const generateResourcePack = async () : Promise<JSZip> => {
 
 		const sound = disc.isMono ? disc.monoFile : disc.oggFile;
 
-		const normalized = disc.normalize ? await normalize(sound) : sound;
-
-		const soundbuffer = await normalized.arrayBuffer();
+		const soundbuffer = await sound.arrayBuffer();
 
 		sounds.file(`${disc.namespace}.ogg`, soundbuffer);
 
