@@ -124,9 +124,9 @@ export const dungeons : Dungeon[] = [
 export const maxNormalizedVolume = 0;
 
 export const qualityPresets = new Map([
-	['none', 'no quality preset'],
-	['hq', 'high quality'],
-	['mq', 'medium quality'],
+	['none', 'no audio preset'],
+	['hq', 'high quality audio'],
+	['mq', 'medium quality audio'],
 ]);
 
 
