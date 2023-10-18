@@ -6,11 +6,14 @@ export const versions = new Map([
 	[8, '1.18 - 1.18.2'],
 	[9, '1.19 - 1.19.2'],
 	// skipped 10 because Mojang is weird
-	// [11, '22w42a - 22w44a'] Why generate for snapshots of older versions?
+	// [11, '22w42a - 22w44a'], // Why generate for snapshots of older versions?
 	[12, '1.19.3'],
 	[13, '1.19.4'],
-	// [14, '23w14a - 23w16a'] Same as before
+	// [14, '23w14a - 23w16a'], // Same as before
 	[15, '1.20 - 1.20.1'],
+	// [16, '23w31a'], // the madlads have done it again
+	// [17, '23w32a – 1.20.2-pre1'],
+	[18, '1.20.2'],
 ]);
 
 export const dungeons : Dungeon[] = [
@@ -119,6 +122,12 @@ export const dungeons : Dungeon[] = [
 ];
 
 export const maxNormalizedVolume = 0;
+
+export const qualityPresets = new Map([
+	['none', 'no quality preset'],
+	['hq', 'high quality'],
+	['mq', 'medium quality'],
+]);
 
 
 interface Dungeon {

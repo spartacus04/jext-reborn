@@ -2,8 +2,8 @@
 	import { Tooltip, ImportPopup } from '@lib';
 	import { outline, inputFile, dropFile } from '@ui';
 
-	import { versions } from '@/config';
-	import { versionStore, nameStore, iconStore } from '@/store';
+	import { versions, qualityPresets } from '@/config';
+	import { versionStore, nameStore, iconStore, qPresetStore } from '@/store';
 
 
 	let import_popup_active = false;
@@ -73,6 +73,20 @@
 				<option value={key}>{value}</option>
 			{:else}
 				{#if key === $versionStore}
+					<option value={key}>{value}</option>
+				{:else}
+					<option value={key} disabled>{value}</option>
+				{/if}
+			{/if}
+		{/each}
+	</select>
+
+	<select name="qPreset" id="qpreset_input" bind:value={$qPresetStore}>
+		{#each [...qualityPresets] as [key, value]}
+			{#if canEdit}
+				<option value={key}>{value}</option>
+			{:else}
+				{#if key === $qPresetStore}
 					<option value={key}>{value}</option>
 				{:else}
 					<option value={key} disabled>{value}</option>
