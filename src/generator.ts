@@ -138,10 +138,10 @@ const generateResourcePack = async () : Promise<JSZip> => {
 			const ffmpegArgs = { 'normalize': disc.normalize, 'mono': disc.isMono, 'preset': qPreset };
 
 			if(disc.isMono && !disc.monoFile) {
-				disc.monoFile = await encodeDisc(disc.oggFile, ffmpegArgs);
+				disc.monoFile = await encodeDisc(disc.uploadedFile, ffmpegArgs);
 			}
 			else {
-				disc.oggFile = await encodeDisc(disc.oggFile, ffmpegArgs);
+				disc.oggFile = await encodeDisc(disc.uploadedFile, ffmpegArgs);
 			}
 
 			currentCount.update(n => n + 1);

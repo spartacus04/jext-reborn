@@ -1,7 +1,7 @@
 import Worker from '@/worker?worker';
 
-export const encodeDisc = async (blob: Blob, params = { 'normalize': false, 'mono': true, 'preset': 'none' }) : Promise<Blob> => {
-	if(import.meta.env.DEV) return blob;
+export const encodeDisc = async (file: File, params = { 'normalize': false, 'mono': true, 'preset': 'none' }) : Promise<Blob> => {
+	if(import.meta.env.DEV) return file;
 
 	const args: Array<string|number> = ['-vn', '-acodec', 'libvorbis'];
 	const qPresets: {[id: string]: Array<string>} = {};
@@ -36,7 +36,7 @@ export const encodeDisc = async (blob: Blob, params = { 'normalize': false, 'mon
 	return await new Promise((resolve) => {
 		const reader = new FileReader();
 
-		reader.readAsArrayBuffer(blob);
+		reader.readAsArrayBuffer(file);
 
 		reader.onload = async () => {
 			const arrayBuffer = <ArrayBuffer>reader.result;
