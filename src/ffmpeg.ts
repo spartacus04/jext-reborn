@@ -10,12 +10,12 @@ export const encodeDisc = async (blob: Blob, params = { 'normalize': false, 'mon
 	* pigstep, and relic: sample rate of 48kHz, quality preset 7
 	* (VBR between 224kbits/s and 256kbits/s)
 	*/
-	qPresets['hq'] = ['-ar', '48000', '-q', '7' ];
+	qPresets['hq'] = ['-ar', '48000', '-qscale:a', '7' ];
 	/* mq uses settings similar to those used to encode the original 13
 	* music discs: sample rate of 48kHz, quality preset 7 (VBR between
 	* 224kbits/s and 256kbits/s)
 	*/
-	qPresets['mq'] = ['-ar', '44100', '-q', '1' ];
+	qPresets['mq'] = ['-ar', '44100', '-qscale:a', '1' ];
 
 	if (params['normalize']) {
 		args.push('-af');
