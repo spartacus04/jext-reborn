@@ -2,38 +2,33 @@
   // Schema (do not change, it adds autocompletion to this file)
   "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json",
 
-
-  // Language mode [ auto, custom, silent or a language code ]
   "lang": "auto",
 
-  // Kick players who decline server resource pack
-  "force-resource-pack": true,
-
-  // Ignore if player somehow failed to download the resource pack
-  "ignore-failed-download": false,
-
-  // Allow/Disallow overlapping music (two jukeboxes playing at the same time)
-  "allow-music-overlapping": false,
-
-  // Sets custom discs random chance (0 to 1000)
-  "discs-random-chance": 200,
-
-  // Sets disc limit per loottable
-  "disc-loottables-limit": {
-    "chests/*": 2
-  },
-
-  // Sets custom fragments random chance (0 to 1000)
-  "fragments-random-chance": 200,
-
-  // Sets fragment limit per loottable
-  "fragment-loottables-limit": {
-    "chests/*": 3
-  },
-
-  // Sets a custom jukebox behaviour [ vanilla, legacy-gui and gui ]
   "jukebox-behaviour": "vanilla",
 
-  // Allow/Disallow plugin metrics (no personal data is going to be collected)
-  "allow-metrics": true
+  "jukebox-gui-size": 96,
+
+  "disable-music-overlap": true,
+
+  "disc-loottables-limit": {},
+
+  "fragment-loottables-limit": {},
+
+  "check-for-updates": true,
+
+  "allow-metrics": true,
+
+  "force-resource-pack": false,
+
+  "enable-resource-pack-host": true,
+
+  "resource-pack-sha1": "",
+
+  "web-interface-port": 8080,
+
+  "web-interface-api-enabled": true,
+
+  "web-interface-password": "",
+
+  "discs-data-loading": "resource-pack"
 }
