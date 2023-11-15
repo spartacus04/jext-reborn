@@ -1,6 +1,7 @@
 {
-  "now-playing": "§6Now playing: §a%author% §7- §6%title%",
-  "now-playing-no-author": "§6Now playing: §a%title%",
+  "now-playing": "§6Now playing: §a%name%",
+  "disc-name": "§a%author% §7- §a%title%",
+  "disc-name-simple": "§a%title%",
   "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Please enable resource pack for the music!",
   "failed-download-kick-message": "Resource pack download failed, please re-join to try again.",

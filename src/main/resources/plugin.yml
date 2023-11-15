@@ -1,10 +1,10 @@
 main: me.spartacus04.jext.Jext
 name: JukeboxExtendedReborn
-authors: [Tajam, Spartacus04]
+authors: [ Spartacus04 ]
 version: ${version}
 api-version: 1.14
 depend: [ProtocolLib]
-softdepent: [WorldGuard, GriefPrevention]
+softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot]
 prefix: JEXT
 folia-supported: true
 
@@ -31,10 +31,6 @@ commands:
     usage: /stopmusic [selector] <name>
   jukeboxgui:
     description: Opens a player specific jukebox gui
-    permission: jext.jukeboxgui
-    usage: /jukeboxgui
-  legacyjukeboxgui:
-    description: Opens a player specific legacy jukebox gui (scheduled for removal)
     permission: jext.jukeboxgui
     usage: /jukeboxgui
   fragment:

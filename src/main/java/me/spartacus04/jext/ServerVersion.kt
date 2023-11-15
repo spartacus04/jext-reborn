@@ -1,6 +1,5 @@
 package me.spartacus04.jext
 
-import me.spartacus04.jext.config.ConfigData.Companion.VERSION
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -8,10 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin
  * The class `ServerVersion` is a utility class that represents the version of a server.
  *
  * @param versionString The `versionString` parameter is a `String` representing the version of a server.
- * @property serverType The `serverType` parameter is a `String` representing the type of server.
  * @constructor Creates a new server version object.
  */
-class ServerVersion(versionString: String, val serverType: String = "unknown") {
+class ServerVersion(versionString: String) {
     private val majorVersion = versionString.split(".")[0].toInt()
     private val minorVersion = versionString.split(".")[1].toInt()
     private val patchVersion = try {
@@ -45,16 +43,4 @@ class ServerVersion(versionString: String, val serverType: String = "unknown") {
      * @param version The `version` parameter is a `String` representing a version number.
      */
     operator fun compareTo(version: String): Int = compareTo(ServerVersion(version))
-
-    companion object {
-        /**
-         * The function "load" sets the VERSION variable to the server version and server name.
-         *
-         * @param plugin The "plugin" parameter is an instance of the JavaPlugin class. It represents a plugin that is
-         * loaded on a Bukkit server.
-         */
-        fun load(plugin: JavaPlugin) {
-            VERSION = ServerVersion(plugin.server.bukkitVersion.split("-")[0], Bukkit.getServer().name)
-        }
-    }
 }
