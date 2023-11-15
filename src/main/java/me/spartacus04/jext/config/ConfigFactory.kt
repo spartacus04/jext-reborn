@@ -9,8 +9,7 @@ import me.spartacus04.jext.config.legacy.V2Config
 import me.spartacus04.jext.config.legacy.V3Config
 import me.spartacus04.jext.utils.FileBind
 
-internal class ConfigFactory private constructor() {
-    companion object {
+object ConfigFactory {
         private fun updateOldConfig() {
             val text = PLUGIN.dataFolder.resolve("config.json").readText()
 

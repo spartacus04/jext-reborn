@@ -1,5 +1,6 @@
 package me.spartacus04.jext
 
+import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.State.LANG
@@ -44,10 +45,12 @@ internal class Jext : JavaPlugin() {
 
         Bukkit.getConsoleSender().sendMessage(ENABLED_MESSAGE)
 
-        Updater().getVersion {
-            if(it != description.version) {
-                Bukkit.getConsoleSender().sendMessage(LANG["en_us", "update-detected"])
-                Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
+        if(CONFIG.CHECK_FOR_UPDATES) {
+            Updater().getVersion {
+                if(it != description.version) {
+                    Bukkit.getConsoleSender().sendMessage(LANG["en_us", "update-detected"])
+                    Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
+                }
             }
         }
 

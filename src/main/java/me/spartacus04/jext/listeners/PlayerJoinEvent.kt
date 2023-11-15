@@ -1,5 +1,6 @@
 package me.spartacus04.jext.listeners
 
+import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.language.LanguageManager.Companion.CROWDIN_LINK
@@ -14,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 internal class PlayerJoinEvent : JextListener() {
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
-        if (playerJoinEvent.player.hasPermission("jext.notifyupdate")) {
+        if (playerJoinEvent.player.hasPermission("jext.notifyupdate") && CONFIG.CHECK_FOR_UPDATES) {
             Updater().getVersion {
                 if(it != PLUGIN.description.version) {
                     playerJoinEvent.player.sendJEXTMessage("update-available")

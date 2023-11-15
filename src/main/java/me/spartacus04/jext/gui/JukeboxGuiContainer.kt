@@ -2,6 +2,7 @@ package me.spartacus04.jext.gui
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.discs.Disc
@@ -73,8 +74,6 @@ class JukeboxGuiContainer {
                 addItemFlags(ItemFlag.HIDE_ENCHANTS)
             }
         })
-
-
 
         val delay = if(Disc.isCustomDisc(event.previousItem!!)) {
             val disc = Disc.fromItemstack(event.previousItem!!)!!
@@ -165,20 +164,7 @@ class JukeboxGuiContainer {
         inv.setPreUpdateHandler(this::itemPreUpdateHandler)
         inv.setPostUpdateHandler(this::itemPostUpdateHandler)
 
-        val gui = ScrollGui.inventories()
-            .setStructure(
-                "x x x x x x x x u",
-                "x x x x x x x x #",
-                "x x x x x x x x #",
-                "x x x x x x x x #",
-                "x x x x x x x x #",
-                "x x x x x x x x d"
-            )
-            .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-            .addIngredient('u', ScrollUpItem(player))
-            .addIngredient('d', ScrollDownItem(player))
-            .addIngredient('#', border)
-            .setContent(listOf(inv))
+        val gui = GuiBuilder().buildGui(player, inv)
 
         val window = Window.single()
             .setViewer(player)
@@ -246,7 +232,6 @@ class JukeboxGuiContainer {
 
     companion object {
         private val gson = GsonBuilder().setPrettyPrinting().create()
-        private val border = SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("§r"))
 
         private val inventories = HashMap<String, VirtualInventory>()
         private val playingMap = HashMap<String, Int>()
@@ -269,7 +254,7 @@ class JukeboxGuiContainer {
                 return inventories[id]!!
             }
 
-            val inv = VirtualInventory(96)
+            val inv = VirtualInventory(CONFIG.GUI_SIZE)
             inventories[id] = inv
 
             return inv

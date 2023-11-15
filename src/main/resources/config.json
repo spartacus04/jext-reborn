@@ -6,6 +6,8 @@
 
   "jukebox-behaviour": "vanilla",
 
+  "jukebox-gui-style": "scroll-vertical",
+
   "jukebox-gui-size": 96,
 
   "disable-music-overlap": true,
