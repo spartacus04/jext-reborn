@@ -3,7 +3,7 @@ import org.jetbrains.dokka.base.DokkaBaseConfiguration
 
 plugins {
     java
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     id("org.jetbrains.dokka") version "1.9.10"
