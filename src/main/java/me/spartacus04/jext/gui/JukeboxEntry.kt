@@ -25,8 +25,6 @@ data class JukeboxEntry(
         return if(type == "jext") {
             val disc = DISCS[value]
 
-            // TODO: implement disc replacement
-
             disc!!.discItemStack
         } else {
             val material = Material.matchMaterial(value)

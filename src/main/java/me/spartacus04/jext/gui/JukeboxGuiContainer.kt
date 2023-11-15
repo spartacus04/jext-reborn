@@ -165,7 +165,6 @@ class JukeboxGuiContainer {
         inv.setPreUpdateHandler(this::itemPreUpdateHandler)
         inv.setPostUpdateHandler(this::itemPostUpdateHandler)
 
-        // TODO: implement different Gui Types
         val gui = ScrollGui.inventories()
             .setStructure(
                 "x x x x x x x x u",

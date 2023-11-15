@@ -5,6 +5,7 @@ import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
+import me.spartacus04.jext.gui.JukeboxGuiContainer
 import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
@@ -49,5 +50,7 @@ internal class Jext : JavaPlugin() {
                 Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
             }
         }
+
+        JukeboxGuiContainer.loadFromFile()
     }
 }
