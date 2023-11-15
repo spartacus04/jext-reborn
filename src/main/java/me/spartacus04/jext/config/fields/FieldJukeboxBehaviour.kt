@@ -6,20 +6,11 @@ enum class FieldJukeboxBehaviour {
     @SerializedName("vanilla")
     VANILLA,
 
-    @SerializedName("gui-scroll-vertical", alternate = ["gui"])
-    SCROLL_VERTICAL,
+    @SerializedName("gui")
+    GUI,
 
-    @SerializedName("gui-scroll-horizontal")
-    SCROLL_HORIZONTAL,
-
-    @SerializedName("gui-page-horizontal")
-    PAGE_HORIZONTAL,
-
-    @SerializedName("gui-tab-vertical")
-    TAB_VERTICAL,
-
-    @SerializedName("gui-tab-horizontal")
-    TAB_HORIZONTAL;
+    @SerializedName("gui-advanced")
+    GUI_ADVANCED;
 
     companion object {
         fun fromString(name: String): FieldJukeboxBehaviour {

@@ -3,6 +3,7 @@ package me.spartacus04.jext.config
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 
@@ -16,6 +17,7 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
                 "lang" -> config.LANGUAGE_MODE = FieldLanguageMode.fromString(reader.nextString())
                 "jukebox-behaviour" -> config.JUKEBOX_BEHAVIOUR = FieldJukeboxBehaviour.fromString(reader.nextString())
                 "jukebox-gui-size" -> config.GUI_SIZE = reader.nextInt()
+                "jukebox-gui-style" -> config.GUI_STYLE = FieldGuiStyle.fromString(reader.nextString())
                 "disable-music-overlap" -> config.DISABLE_MUSIC_OVERLAP = reader.nextBoolean()
                 "disc-loottables-limit" -> {
                     reader.beginObject()
@@ -51,6 +53,7 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
 
         writer.name("lang").value(value.LANGUAGE_MODE.name)
         writer.name("jukebox-behaviour").value(value.JUKEBOX_BEHAVIOUR.name)
+        writer.name("jukebox-gui-style").value(value.GUI_STYLE.name)
         writer.name("jukebox-gui-size").value(value.GUI_SIZE)
         writer.name("disable-music-overlap").value(value.DISABLE_MUSIC_OVERLAP)
 

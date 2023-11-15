@@ -2,6 +2,7 @@ package me.spartacus04.jext.config
 
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import me.spartacus04.jext.utils.FileBind
@@ -14,6 +15,9 @@ data class Config(
 
     @SerializedName("jukebox-behaviour")
     var JUKEBOX_BEHAVIOUR : FieldJukeboxBehaviour = FieldJukeboxBehaviour.VANILLA,
+
+    @SerializedName("jukebox-gui-style")
+    var GUI_STYLE : FieldGuiStyle = FieldGuiStyle.SCROLL_VERTICAL,
 
     @SerializedName("jukebox-gui-size")
     var GUI_SIZE : Int = 96,
