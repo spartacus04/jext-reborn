@@ -1,5 +1,5 @@
 {
-  "now-playing": "§6Now playing: §a%author% §7- §6%title%",
+  "now-playing": "§6Şimdi çalıyor: §a%author% §7- §6%title%",
   "now-playing-no-author": "§6Now playing: §a%title%",
   "update-available": "A new update is available!",
   "resource-pack-decline-kick-message": "Please enable resource pack for the music!",

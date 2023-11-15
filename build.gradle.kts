@@ -8,7 +8,7 @@ plugins {
     kotlin("jvm") version "1.9.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
-    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.0"
@@ -20,7 +20,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.0")
+        classpath("org.jetbrains.dokka:dokka-base:1.9.10")
         classpath("com.guardsquare:proguard-gradle:7.4.0") {
             exclude("com.android.tools.build")
         }
@@ -47,7 +47,7 @@ dependencies {
     compileOnly("com.github.techFortress:GriefPrevention:16.18.1")
     compileOnly("org.geysermc.geyser:api:2.2.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("io.github.bananapuncher714:nbteditor:7.18.7")
+    implementation("io.github.bananapuncher714:nbteditor:7.19.0")
     implementation("xyz.xenondevs.invui:invui:1.23")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.23")
     implementation("com.google.code.gson:gson:2.10.1")
