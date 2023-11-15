@@ -6,13 +6,10 @@ import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.gui.items.ScrollDownItem
-import me.spartacus04.jext.gui.items.ScrollUpItem
 import me.spartacus04.jext.integrations.unique.GeyserIntegration.Companion.GEYSER
 import me.spartacus04.jext.language.LanguageManager.Companion.BEDROCK_NOT_SUPPORTED
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.SoundCategory
 import org.bukkit.block.Block
 import org.bukkit.enchantments.Enchantment
@@ -20,15 +17,11 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import xyz.xenondevs.invui.gui.ScrollGui
-import xyz.xenondevs.invui.gui.structure.Markers
 import xyz.xenondevs.invui.inventory.VirtualInventory
 import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
 import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
 import xyz.xenondevs.invui.inventory.event.PlayerUpdateReason
 import xyz.xenondevs.invui.inventory.event.UpdateReason
-import xyz.xenondevs.invui.item.builder.ItemBuilder
-import xyz.xenondevs.invui.item.impl.SimpleItem
 import xyz.xenondevs.invui.window.Window
 import java.util.*
 import kotlin.collections.HashMap
@@ -150,10 +143,12 @@ class JukeboxGuiContainer {
      * and allowing them to scroll through it.
      */
     private fun mergedConstructor() {
-        if(GEYSER?.isBedrockPlayer(player) == true) {
-            player.sendMessage(BEDROCK_NOT_SUPPORTED)
-            return
-        }
+        try {
+            if(GEYSER?.isBedrockPlayer(player) == true) {
+                player.sendMessage(BEDROCK_NOT_SUPPORTED)
+                return
+            }
+        } catch (_: NoClassDefFoundError) { }
 
         if(!playingMap.containsKey(id)) {
             playingMap[id] = -1

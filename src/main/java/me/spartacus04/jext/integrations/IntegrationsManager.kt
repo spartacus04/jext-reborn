@@ -1,6 +1,5 @@
 package me.spartacus04.jext.integrations
 
-import me.spartacus04.jext.State
 import me.spartacus04.jext.integrations.unique.GeyserIntegration
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
