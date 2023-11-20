@@ -12,7 +12,7 @@ plugins {
 
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.0"
-    id("com.modrinth.minotaur") version "2.8.5"
+    id("com.modrinth.minotaur") version "2.8.6"
 }
 
 buildscript {
