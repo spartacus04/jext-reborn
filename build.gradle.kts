@@ -5,7 +5,7 @@ import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
     java
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.21"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     id("org.jetbrains.dokka") version "1.9.10"
