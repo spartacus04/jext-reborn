@@ -37,21 +37,21 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew proguardJar
         env:
-          version: ${{ env.VERSION }}
+          jextVersion: ${{ env.VERSION }}
 
       - name: Publish to Modrinth
         run: ./gradlew modrinth
         env:
           modrinthApiKey: ${{ secrets.MODRINTH_TOKEN }}
           modrinthChangelog: ${{ github.event.release.body }}
-          version: ${{ env.VERSION }}
+          jextVersion: ${{ env.VERSION }}
 
       - name: Publish to Hangar
         run: ./gradlew publishPluginPublicationToHangar
         env:
           hangarApiKey: ${{ secrets.HANGAR_TOKEN }}
           hangarChangelog: ${{ github.event.release.body }}
-          version: ${{ env.VERSION }}
+          jextVersion: ${{ env.VERSION }}
 
       - name: Attach artifact to release
         id: upload-release-asset
