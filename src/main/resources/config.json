@@ -30,7 +30,5 @@
 
   "web-interface-api-enabled": true,
 
-  "web-interface-password": "",
-
-  "discs-data-loading": "resource-pack"
+  "web-interface-password": ""
 }

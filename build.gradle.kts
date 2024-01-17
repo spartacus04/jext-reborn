@@ -6,6 +6,7 @@ import io.papermc.hangarpublishplugin.model.Platforms
 plugins {
     java
     kotlin("jvm") version "1.9.22"
+    id("io.ktor.plugin") version "2.3.7"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     id("org.jetbrains.dokka") version "1.9.10"
@@ -53,8 +54,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
+    implementation("io.ktor:ktor-server-core-jvm")
+    implementation("io.ktor:ktor-server-cors-jvm")
+    implementation("io.ktor:ktor-server-netty-jvm")
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }
 
 group = "me.spartacus04.jext"
@@ -64,6 +68,8 @@ version = System.getenv("jextVersion") ?: "dev"
 description = "jukebox-extended-reborn"
 java.targetCompatibility = JavaVersion.VERSION_1_8
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+application.mainClass.set("me.spartacus04.jext.Jext")
 
 tasks {
     shadowJar {
@@ -81,11 +87,18 @@ tasks {
         relocate("xyz/xenondevs/inventoryaccess", "${dependencyPackage}.inventoryaccess")
         relocate("com/github/Anon8281/universalScheduler", "${dependencyPackage}.universalScheduler")
         relocate("_COROUTINE", "${dependencyPackage}._COROUTINE")
+        relocate("io/netty", "${dependencyPackage}.netty")
+        relocate("io/ktor", "${dependencyPackage}.ktor")
 
         exclude("colors.bin")
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
-
+        exclude("META-INF/**")
+        exclude("custom.config.yaml")
+        exclude("custom.config.conf")
+        exclude("org/eclipse/jetty")
+        exclude("org/fusesource/jansi")
+        exclude("org/slf4j")
 
         minimize{
             exclude(dependency("xyz.xenondevs.invui:.*:.*"))

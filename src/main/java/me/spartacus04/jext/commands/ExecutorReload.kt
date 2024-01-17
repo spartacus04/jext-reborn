@@ -3,6 +3,7 @@ package me.spartacus04.jext.commands
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS
+import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.JextMetrics
 import me.spartacus04.jext.utils.JextMetrics.Companion.METRICS
@@ -25,6 +26,7 @@ internal class ExecutorReload : ExecutorAdapter("jext") {
         DISCS.reloadDiscs()
         INTEGRATIONS.reloadDefaultIntegrations()
         JextMetrics.reloadMetrics()
+        WEBSERVER.reload()
 
         sender.sendJEXTMessage("reloaded")
     }

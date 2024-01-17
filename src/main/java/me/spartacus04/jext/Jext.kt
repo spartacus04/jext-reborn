@@ -4,6 +4,7 @@ import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
 import me.spartacus04.jext.gui.JukeboxGuiContainer
@@ -33,6 +34,7 @@ internal class Jext : JavaPlugin() {
     }
 
     override fun onDisable() {
+        WEBSERVER.stop()
         Bukkit.getConsoleSender().sendMessage(DISABLED_MESSAGE)
     }
 

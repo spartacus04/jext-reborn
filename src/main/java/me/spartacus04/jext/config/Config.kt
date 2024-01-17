@@ -31,6 +31,9 @@ data class Config(
     @SerializedName("fragment-loottables-limit")
     var FRAGMENT_LIMIT : HashMap<String, Int> = HashMap(),
 
+    @SerializedName("force-resource-pack")
+    var FORCE_RESOURCE_PACK : Boolean = false,
+
     // metrics & updates
 
     @SerializedName("check-for-updates")
@@ -40,9 +43,6 @@ data class Config(
     var ALLOW_METRICS : Boolean = true,
 
     // web-api
-
-    @SerializedName("force-resource-pack")
-    var FORCE_RESOURCE_PACK : Boolean = false,
 
     @SerializedName("enable-resource-pack-host")
     var RESOURCE_PACK_HOST : Boolean = true,

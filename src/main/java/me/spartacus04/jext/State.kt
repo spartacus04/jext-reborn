@@ -2,13 +2,12 @@ package me.spartacus04.jext
 
 import com.github.Anon8281.universalScheduler.UniversalScheduler
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler
-import com.google.gson.GsonBuilder
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.ConfigFactory
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
-import me.spartacus04.jext.utils.FileBind
+import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
 object State {
@@ -19,4 +18,5 @@ object State {
     val DISCS = DiscManager()
     val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     val INTEGRATIONS = IntegrationsManager()
+    val WEBSERVER = JextWebServer()
 }
