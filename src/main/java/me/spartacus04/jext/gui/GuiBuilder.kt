@@ -81,7 +81,5 @@ class GuiBuilder {
                 .addIngredient('#', border)
                 .setContent(listOf(inventory))
         }
-
-
     }
 }

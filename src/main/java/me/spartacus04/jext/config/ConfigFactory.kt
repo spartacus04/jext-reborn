@@ -180,6 +180,7 @@ object ConfigFactory {
         if(PLUGIN.dataFolder.resolve("config.json").exists()) {
             updateOldConfig()
         }
+
         return FileBind.create(Config::class.java)
     }
 }

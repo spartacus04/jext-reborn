@@ -50,8 +50,9 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
--keepclassmembers,allowobfuscation class * {
+-keepclassmembers class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
+-keepattributes *Annotation*,EventHandler
 -keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken

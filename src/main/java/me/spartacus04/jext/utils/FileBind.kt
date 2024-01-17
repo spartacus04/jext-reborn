@@ -30,7 +30,13 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
             }
         }
 
-        gson.fromJson(file.readText(), typeToken)
+        val obj = gson.fromJson(file.readText(), typeToken)
+
+        obj.javaClass.declaredFields.forEach { field ->
+            field.isAccessible = true
+
+            field.set(this, field.get(obj))
+        }
     }
 
     fun save() {
