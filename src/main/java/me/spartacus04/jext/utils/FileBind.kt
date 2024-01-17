@@ -42,8 +42,6 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
     fun save() {
         val text = gson.toJson(this)
 
-        println(text)
-
         PLUGIN.dataFolder.resolve(filePath).writeText(text)
     }
 

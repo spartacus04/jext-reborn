@@ -16,8 +16,6 @@ class DiscManager : Iterable<Disc> {
                 discs.addAll(it.getDiscs())
             }
         }
-
-        discs.forEach { println(it.namespace) }
     }
 
     fun registerDiscSource(vararg discSources: DiscSource) {

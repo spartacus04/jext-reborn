@@ -12,7 +12,7 @@ internal class ScrollUpItem(private val player: Player, private val horizontal: 
     override fun getItemProvider(gui: ScrollGui<*>): ItemProvider {
         val builder = ItemBuilder(Material.GREEN_STAINED_GLASS_PANE)
 
-        builder.setDisplayName(LANG.getKey(player, if(horizontal) "scroll-right" else "scroll-up"))
+        builder.setDisplayName(LANG.getKey(player, if(horizontal) "scroll-left" else "scroll-up"))
 
         if (!gui.canScroll(-1))
             builder.addLoreLines(LANG.getKey(player, "cant-scroll-further"))

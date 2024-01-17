@@ -7,10 +7,7 @@ enum class FieldJukeboxBehaviour {
     VANILLA,
 
     @SerializedName("gui")
-    GUI,
-
-    @SerializedName("gui-advanced")
-    GUI_ADVANCED;
+    GUI;
 
     companion object {
         fun fromString(name: String): FieldJukeboxBehaviour {

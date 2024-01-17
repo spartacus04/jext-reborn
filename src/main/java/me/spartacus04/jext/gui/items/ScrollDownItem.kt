@@ -12,7 +12,7 @@ internal class ScrollDownItem(private val player: Player, private val horizontal
     override fun getItemProvider(gui: ScrollGui<*>): ItemProvider {
         val builder = ItemBuilder(Material.RED_STAINED_GLASS_PANE)
 
-        builder.setDisplayName(LANG.getKey(player, if(horizontal) "scroll-left" else "scroll-down"))
+        builder.setDisplayName(LANG.getKey(player, if(horizontal) "scroll-right" else "scroll-down"))
 
         if (!gui.canScroll(1))
             builder.addLoreLines(LANG.getKey(player, "cant-scroll-further"))

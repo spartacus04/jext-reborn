@@ -3,16 +3,16 @@ package me.spartacus04.jext.config.fields
 import com.google.gson.annotations.SerializedName
 
 enum class FieldGuiStyle {
-    @SerializedName("gui-scroll-vertical")
+    @SerializedName("scroll-vertical")
     SCROLL_VERTICAL,
 
-    @SerializedName("gui-scroll-horizontal")
+    @SerializedName("scroll-horizontal")
     SCROLL_HORIZONTAL,
 
-    @SerializedName("gui-page-horizontal")
+    @SerializedName("page-horizontal")
     PAGE_HORIZONTAL,
 
-    @SerializedName("gui-page-vertical")
+    @SerializedName("page-vertical")
     PAGE_VERTICAL;
 
     companion object {

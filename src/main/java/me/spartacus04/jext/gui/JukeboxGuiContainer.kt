@@ -168,6 +168,8 @@ class JukeboxGuiContainer {
             .build()
 
         window.open()
+
+        inv.notifyWindows()
     }
 
     /**

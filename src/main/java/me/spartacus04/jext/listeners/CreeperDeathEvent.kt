@@ -11,8 +11,6 @@ import org.bukkit.inventory.ItemStack
 internal class CreeperDeathEvent : JextListener() {
     @EventHandler(ignoreCancelled = true)
     fun onCreeperDeath(event: EntityDeathEvent) {
-        println("test")
-
         if(event.entity !is Creeper) return
 
         val disc = event.drops.find {
