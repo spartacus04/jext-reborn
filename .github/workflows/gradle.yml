@@ -37,7 +37,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: "JEXT-Reborn_${{ github.sha }}.jar"
-          path: build/libs/JEXT-Reborn-${{ github.sha }}.jar
+          path: ./build/libs/JEXT-Reborn_${{ github.sha }}.jar
 
   publishDocs:
     needs: build
