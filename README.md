@@ -8,7 +8,7 @@
 ![bStats Servers](https://img.shields.io/bstats/servers/16571)
 
 ![Spigot Downloads](https://img.shields.io/spiget/downloads/103219?label=Spigot%20Downloads)
-![Static Badge](https://img.shields.io/badge/Hangar%20Downloads-Not%20available-red?link=https%3A%2F%2Fhangar.papermc.io%2Fspartacus04%2FJukeboxExtendedReborn)
+![Hangar Downloads](https://img.shields.io/hangar/dt/JukeboxExtendedReborn)
 ![Modrinth Downloads](https://img.shields.io/modrinth/dt/LRzd464N?label=Modrinth%20downloads&color=00cc00)
 ![GitHub all releases](https://img.shields.io/github/downloads/spartacus04/jext-reborn/total?label=Github%20downloads)
 
