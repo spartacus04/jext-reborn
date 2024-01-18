@@ -156,5 +156,7 @@ class LanguageManager {
         const val MUSIC_DISC_FORMAT_OLD = "[§aJEXT§f] music disc format is old, you can update it by importing and re-exporting the resource pack in the generator\n§6[§2https://spartacus04.github.io/jext-reborn/§6]"
         const val BEDROCK_NOT_SUPPORTED = "[§cJEXT§f] §cJukebox GUI is not supported on bedrock edition!"
         const val WEBAPI_RESOURCEPACK_NOT_FOUND = "[§cJEXT§f] §cresource-pack.zip not found, please provide it in the plugin directory"
+        const val WEBSERVER_STARTED = "[§aJEXT§f] §aWebserver started on port %port%"
+        const val WEBSERVER_STOPPED = "[§aJEXT§f] §aWebserver stopped"
     }
 }

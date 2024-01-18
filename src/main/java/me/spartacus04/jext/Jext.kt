@@ -1,5 +1,7 @@
 package me.spartacus04.jext
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS

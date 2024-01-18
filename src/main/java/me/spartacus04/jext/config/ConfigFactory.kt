@@ -12,6 +12,7 @@ import me.spartacus04.jext.utils.FileBind
 object ConfigFactory {
     private fun updateOldConfig() {
         val text = PLUGIN.dataFolder.resolve("config.json").readText()
+        val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
 
         if(LegacyConfig<V1Config> (
             listOf(
@@ -104,8 +105,6 @@ object ConfigFactory {
             ),
             null
         ) { newConfig, oldConfigData ->
-            val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
-
             return@LegacyConfig newConfig.replace(
                 "\"force-resource-pack\": false",
                 "\"force-resource-pack\": ${oldConfigData.FORCE_RESOURCE_PACK}"
@@ -147,8 +146,6 @@ object ConfigFactory {
                 "\"fragments-random-chance\"",
             )
         ) { newConfig, oldConfigData ->
-            val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
-
             return@LegacyConfig newConfig.replace(
                 "\"force-resource-pack\": false",
                 "\"force-resource-pack\": ${oldConfigData.FORCE_RESOURCE_PACK}"
@@ -177,10 +174,11 @@ object ConfigFactory {
     fun createConfigObject() : Config {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
 
-        if(PLUGIN.dataFolder.resolve("config.json").exists()) {
+        return try {
+            FileBind.create(Config::class.java)
+        } catch(e: Exception) {
             updateOldConfig()
+            FileBind.create(Config::class.java)
         }
-
-        return FileBind.create(Config::class.java)
     }
 }

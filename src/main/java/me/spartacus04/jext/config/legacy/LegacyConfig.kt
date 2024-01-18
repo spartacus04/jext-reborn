@@ -4,15 +4,12 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.config.Config
 
 open class LegacyConfig <T>(
     private val addList: List<String>? = null,
     private val removeList: List<String>? = null,
     private val replaceTokens: (defaultConfig: String, legacyConfig: T) -> String
 ) {
-    val gson: Gson = GsonBuilder().setPrettyPrinting().setLenient().create()
-
     private fun canUpdate(legacyConfigText: String) : Boolean {
         val addListOK = addList?.all { !legacyConfigText.contains(it) } ?: false
         val removeListOK = removeList?.all { legacyConfigText.contains(it) } ?: false
@@ -34,5 +31,9 @@ open class LegacyConfig <T>(
         }
 
         return true
+    }
+
+    companion object {
+        private val gson: Gson = GsonBuilder().setPrettyPrinting().setLenient().create()
     }
 }
