@@ -24,8 +24,6 @@
 
   "enable-resource-pack-host": true,
 
-  "resource-pack-sha1": "",
-
   "web-interface-port": 8080,
 
   "web-interface-api-enabled": true,

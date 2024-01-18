@@ -14,6 +14,27 @@ object ConfigFactory {
         val text = PLUGIN.dataFolder.resolve("config.json").readText()
         val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
 
+        val currentConfigParams = listOf(
+            "\"lang\"",
+            "\"jukebox-behaviour\"",
+            "\"jukebox-gui-style\"",
+            "\"jukebox-gui-size\"",
+            "\"disable-music-overlap\"",
+            "\"disc-loottables-limit\"",
+            "\"fragment-loottables-limit\"",
+            "\"check-for-updates\"",
+            "\"allow-metrics\"",
+            "\"force-resource-pack\"",
+            "\"enable-resource-pack-host\"",
+            "\"web-interface-port\"",
+            "\"web-interface-api-enabled\"",
+            "\"web-interface-password\""
+        )
+
+        if(currentConfigParams.all { text.contains(it) }) return
+
+
+
         if(LegacyConfig<V1Config> (
             listOf(
                 "\"lang\""
@@ -131,13 +152,13 @@ object ConfigFactory {
 
         if(LegacyConfig<V6Config> (
             listOf(
+                "\"jukebox-gui-style\"",
                 "\"jukebox-gui-size\"",
                 "\"check-for-updates\"",
-                "\"resource-pack-host\"",
-                "\"resource-pack-sha1\"",
-                "\"discs-data-loading\"",
-                "\"web-api-enabled\"",
-                "\"web-api-port\"",
+                "\"enable-resource-pack-host\"",
+                "\"web-interface-api-enabled\"",
+                "\"web-interface-port\"",
+                "\"web-interface-password\""
             ),
             listOf(
                 "\"allow-music-overlapping\"",
@@ -174,11 +195,10 @@ object ConfigFactory {
     fun createConfigObject() : Config {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
 
-        return try {
-            FileBind.create(Config::class.java)
-        } catch(e: Exception) {
+        if(PLUGIN.dataFolder.resolve("config.json").exists()) {
             updateOldConfig()
-            FileBind.create(Config::class.java)
         }
+
+        return FileBind.create(Config::class.java)
     }
 }
