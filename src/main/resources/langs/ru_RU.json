@@ -9,11 +9,11 @@
   "scroll-down": "§7Прокрутка вниз",
   "scroll-up": "§7Прокрутка вверх",
   "scroll-left": "§7Промотать влево",
-  "scroll-right": "§7Промотрать вправо",
+  "scroll-right": "§7Промотать вправо",
   "next-page": "§7Следующая страница",
   "prev-page": "§7Предыдущая страница",
   "no-page": "§cБольше страниц нет!",
-  "cant-scroll-further": "§cНевозможно прокрутить дальше!",
+  "cant-scroll-further": "§cПрокрутить дальше нельзя!",
   "disc-command-success": "§fПолучен диск - §d%disc%§f!",
   "disc-namespace-not-found": "§cДиск с именем - §6%namespace% §cне найден!",
   "disc-received": "§fПолучен диск - §d%disc%§f!",
@@ -34,7 +34,7 @@
   "stopped-music-for-no-one": "§fОстановливать музыку не для кого!",
   "reloaded": "§cПерезагружено!",
   "missing-permission": "§cУ Вас нет прав для использования этой команды!",
-  "invalid-runner": "§cЭта команда может быть выполнена только по §6%runner%§c.",
+  "invalid-runner": "§cЭта команда может быть выполнена только §6%runner%§c.",
   "command-not-supported": "§cКоманда §6%command% §cне поддерживается: §6%reason%§c.",
-  "usage": "Использование: §6/%command%"
+  "usage": "[Использование]: §6/%command%"
 }
