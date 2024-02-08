@@ -11,7 +11,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.10"
 
     `maven-publish`
-    id("io.papermc.hangar-publish-plugin") version "0.1.1"
+    id("io.papermc.hangar-publish-plugin") version "0.1.2"
     id("com.modrinth.minotaur") version "2.8.7"
 }
 
