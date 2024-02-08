@@ -1,7 +1,5 @@
 package me.spartacus04.jext
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS
@@ -41,7 +39,9 @@ internal class Jext : JavaPlugin() {
     }
 
     private fun load() {
-        DISCS.registerDiscSource(FileSource())
+        DISCS.registerDiscSource(FileSource()) {
+            JukeboxGuiContainer.loadFromFile()
+        }
         ListenerRegistrant.registerListeners()
         INTEGRATIONS.reloadDefaultIntegrations()
 
@@ -57,7 +57,5 @@ internal class Jext : JavaPlugin() {
                 }
             }
         }
-
-        JukeboxGuiContainer.loadFromFile()
     }
 }

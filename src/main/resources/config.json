@@ -24,7 +24,7 @@
 
   "enable-resource-pack-host": true,
 
-  "web-interface-port": 8080,
+  "web-interface-port": 9871,
 
   "web-interface-api-enabled": true,
 

@@ -33,11 +33,9 @@ internal class RecordPacketEvent : JextPacketListener(packetType = PacketType.Pl
     fun actionBarDisplay(player: Player, container: Disc) {
         player.spigot().sendMessage(
             ChatMessageType.ACTION_BAR,
-            *TextComponent.fromLegacyText(
-                LANG.getKey(player, "now-playing", mapOf(
-                    "name" to container.displayName
-                ))
-            )
+            TextComponent(LANG.getKey(player, "now-playing", mapOf(
+                "name" to container.displayName
+            )))
         )
     }
 }

@@ -11,23 +11,24 @@ class DiscManager : Iterable<Disc> {
     private val discSources = arrayListOf<DiscSource>()
     private var discs: ArrayList<Disc> = arrayListOf()
 
-    fun reloadDiscs() {
+    fun reloadDiscs(onReload: (() -> Unit)? = null) {
         discs.clear()
 
         SCHEDULER.runTaskAsynchronously {
-            CoroutineScope(Dispatchers.Default).launch {
+            val discs = CoroutineScope(Dispatchers.Default).launch {
                 discSources.forEach {
                     discs.addAll(it.getDiscs())
                 }
             }
 
+            discs.invokeOnCompletion { onReload?.invoke() }
         }
     }
 
-    fun registerDiscSource(vararg discSources: DiscSource) {
+    fun registerDiscSource(vararg discSources: DiscSource, onReload: (() -> Unit)? = null) {
         this.discSources.addAll(discSources)
 
-        reloadDiscs()
+        reloadDiscs(onReload)
     }
 
     override fun iterator(): Iterator<Disc> {

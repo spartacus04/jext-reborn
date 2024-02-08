@@ -9,6 +9,11 @@ import me.spartacus04.jext.State.SCHEDULER
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBAPI_RESOURCEPACK_NOT_FOUND
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STARTED
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STOPPED
+import me.spartacus04.jext.webapi.auth.ConnectHandler
+import me.spartacus04.jext.webapi.auth.DisconnectHandler
+import me.spartacus04.jext.webapi.auth.HealthHandler
+import me.spartacus04.jext.webapi.config.ConfigApplyHandler
+import me.spartacus04.jext.webapi.config.ConfigReadHandler
 import org.bukkit.Bukkit
 import java.net.InetSocketAddress
 
@@ -49,6 +54,15 @@ class JextWebServer {
                         Bukkit.getConsoleSender().sendMessage(WEBAPI_RESOURCEPACK_NOT_FOUND)
                     }
                 }
+
+                if(apiEnabled) {
+                    server!!.createContext("/connect", ConnectHandler())
+                    server!!.createContext("/disconnect", DisconnectHandler())
+                    server!!.createContext("/health", HealthHandler())
+
+                    server!!.createContext("/config/read", ConfigReadHandler())
+                    server!!.createContext("/config/apply", ConfigApplyHandler())
+                }
             }
         }
     }
@@ -78,6 +92,22 @@ class JextWebServer {
                     }
                 } else {
                     server!!.removeContext("/resource-pack.zip")
+                }
+
+                if(apiEnabled) {
+                    server!!.createContext("/connect", ConnectHandler())
+                    server!!.createContext("/disconnect", DisconnectHandler())
+                    server!!.createContext("/health", HealthHandler())
+
+                    server!!.createContext("/config/read", ConfigReadHandler())
+                    server!!.createContext("/config/apply", ConfigApplyHandler())
+                } else {
+                    server!!.removeContext("/connect")
+                    server!!.removeContext("/disconnect")
+                    server!!.removeContext("/health")
+
+                    server!!.removeContext("/config/read")
+                    server!!.removeContext("/config/apply")
                 }
             }
         } else {

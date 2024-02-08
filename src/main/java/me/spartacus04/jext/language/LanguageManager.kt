@@ -157,6 +157,6 @@ class LanguageManager {
         const val BEDROCK_NOT_SUPPORTED = "[§cJEXT§f] §cJukebox GUI is not supported on bedrock edition!"
         const val WEBAPI_RESOURCEPACK_NOT_FOUND = "[§cJEXT§f] §cresource-pack.zip not found, please provide it in the plugin directory"
         const val WEBSERVER_STARTED = "[§aJEXT§f] §aWebserver started on port %port%"
-        const val WEBSERVER_STOPPED = "[§aJEXT§f] §aWebserver stopped"
+        const val WEBSERVER_STOPPED = "[§eJEXT§f] §eWebserver stopped"
     }
 }
