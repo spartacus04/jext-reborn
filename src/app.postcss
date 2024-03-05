@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+html, body { @apply h-full overflow-hidden; }
+
+img,div {
+    image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: pixelated;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
+}
+
+a {
+	@apply text-blue-500 hover:text-blue-600;
+}
+
+@layer base {
+	@font-face {
+		font-family: 'Cascadia Code';
+		font-weight: 400;
+		src: url('/fonts/CascadiaCode.ttf') format('truetype')
+	}
+	@font-face {
+		font-family: 'Minecraft Regular';
+		font-weight: 400;
+		src: url('/fonts/MinecraftRegular.ttf') format('truetype')
+	}
+}

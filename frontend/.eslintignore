@@ -1,7 +1,0 @@
-node_modules
-dist
-typings
-vite.config.ts
-svelte.config.js
-public
-docs
