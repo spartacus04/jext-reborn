@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { randomDiscTexture } from "$lib/resourcepack/discs";
 	import type { Disc } from "$lib/types";
-	import { FileDropzone, ProgressRadial } from "@skeletonlabs/skeleton";
+	import { FileDropzone, ProgressRadial, getModalStore } from "@skeletonlabs/skeleton";
 
     let files: FileList;
     let discs: Promise<Disc>[] = [];
 
-    const onFilesChange = () => {
-        console.log(files);
+    const modalStore = getModalStore();
 
+    const onFilesChange = async () => {
         for(let i = 0; i < files.length; i++) {
             const file = files[i];
 
@@ -23,8 +23,6 @@
             discs.push((async () => {
                 const discTexture = await randomDiscTexture();
                 const fragmentTexture = await randomDiscTexture();
-
-                console.log(discTexture, fragmentTexture);
 
                 const disc : Disc = {
                     name,
@@ -59,12 +57,15 @@
                     packData: null,
                 };
 
-                console.log(disc);
-
-                console.log(URL.createObjectURL(disc.uploadData.uploadedTexture));
-
                 return disc;
             })())
+
+        }
+
+        if($modalStore[0]) {
+            $modalStore[0]!.response!({ discs: await Promise.all(discs) });
+
+            modalStore.close();
         }
     }
 </script>
@@ -88,7 +89,9 @@
                 </div>
             {:then disc}
                 <div class="flex items-center justify-center">
-                    <img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="Disc texture" class="w-10 h-10" />
+                    {#if disc.uploadData}
+                        <img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="Disc texture" class="w-10 h-10" />
+                    {/if}
                     <p>{disc.name} - {disc.author}</p>
                 </div>
             {/await}

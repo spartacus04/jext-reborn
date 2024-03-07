@@ -1,6 +1,17 @@
+import { localFFmpegStore } from "$lib/ffmpeg";
 import type { LayoutLoad } from "./$types";
+import { invoke } from '@tauri-apps/api/tauri';
+
+export const ssr = false;
+export const prerender = true;
 
 export const load: LayoutLoad = async ({ url }) => {
+    if(window.__TAURI__) {
+        const downloaded = await invoke<boolean>("download_ffmpeg")
+        
+        localFFmpegStore.set(downloaded);
+    }
+ 
     // fetch url parameters
     const params = new URLSearchParams(url.search);
 

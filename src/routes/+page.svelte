@@ -2,7 +2,7 @@
 	import { LoginStore, healthCheck, isLoggedIn, login, logout } from "$lib/login";
 	import type { PageData } from "./$types";
 	import { onMount } from "svelte";
-	import { AppBar, AppShell, ProgressRadial, getModalStore, type ModalComponent } from "@skeletonlabs/skeleton"; 
+	import { AppBar, AppShell, ProgressRadial, getModalStore, type ModalComponent, Accordion, AccordionItem } from "@skeletonlabs/skeleton"; 
 	import type { Disc } from "$lib/types";
 	import { writable } from "svelte/store";
 	import MinecraftButton from "$lib/components/MinecraftButton.svelte";
@@ -55,7 +55,7 @@
 
             window.location.reload()
         }
-	})
+	});
 
 	let reload: Promise<void>;
 
@@ -91,7 +91,7 @@
 	const addDisc = async () => {
 		const modalComponent: ModalComponent = { ref: CreateDiscModal };
 
-		const disc = await new Promise<Disc|null>((resolve) => {
+		const discs = await new Promise<Disc[]|null>((resolve) => {
 			modalStore.trigger({
 				type: 'component',
 				component: modalComponent,
@@ -99,11 +99,25 @@
 				response(r) {
 					if(!r) return resolve(null);
 
-					resolve(r);
+					resolve(r.discs);
 				},
 			})
 		})
+
+		if(!discs) return;
+
+		discsStore.update(discsStore => [...discsStore, ...discs!]);
 	}
+
+	const group: {
+		uploaded: Disc[],
+		saved: Disc[],
+	} = {
+		uploaded: [],
+		saved: [],
+	};
+
+	$: (group.uploaded = $discsStore.filter(disc => disc.uploadData)) && (group.saved = $discsStore.filter(disc => disc.packData));
 </script>
 
 <AppShell>
@@ -143,15 +157,41 @@
 				</div>
 			</div>
 		{:else}
-
+			<Accordion>
+				<AccordionItem open={group.uploaded.length > 0}>
+					<svelte:fragment slot="summary">
+						<h2 class="h2 font-minecraft">New discs</h2>
+					</svelte:fragment>
+					<svelte:fragment slot="content">
+						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+							{#each group.uploaded as disc}
+								<div class="bg-gray-100 p-4 rounded-lg">
+									<h3 class="h3 font-minecraft">{disc.name}</h3>
+									<p class="p">{disc["disc-namespace"]}</p>
+								</div>
+							{/each}
+						</div>
+					</svelte:fragment>
+				</AccordionItem>
+				<AccordionItem open={group.saved.length > 0}>
+					<svelte:fragment slot="summary">
+						<h2 class="h2 font-minecraft">Saved discs</h2>
+					</svelte:fragment>
+					<svelte:fragment slot="content">
+						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+							{#each group.saved as disc}
+								<div class="bg-gray-100 p-4 rounded-lg">
+									<h3 class="h3 font-minecraft">{disc.name}</h3>
+									<p class="p">{disc["disc-namespace"]}</p>
+								</div>
+							{/each}
+						</div>
+					</svelte:fragment>
+				</AccordionItem>
+			</Accordion>
 		{/if}
 	{/await}
 
-	<svelte:fragment slot="pageHeader">
-		{#if $discsStore.length > 0}
-			page header
-		{/if}
-	</svelte:fragment>
 	<svelte:fragment slot="footer">
 		{#if $discsStore.length > 0}
 			footer

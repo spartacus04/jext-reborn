@@ -35,3 +35,9 @@ export interface UploadData {
 	normalize: boolean,
 	quality: 'none' | 'low' | 'medium' | 'high',
 }
+
+export interface FFmpegData {
+	mono: boolean,
+	normalize: boolean,
+	quality: 'none' | 'low' | 'medium' | 'high',
+}

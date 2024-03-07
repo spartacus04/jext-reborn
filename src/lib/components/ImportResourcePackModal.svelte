@@ -12,8 +12,6 @@
 	$: (async () => resourcePackStatus = (files && files.length > 0 && files[0] !== null) ? await RPChecker(files[0]) : "NotValid")()
 	$: (async () => discsStatus = (discFileOverride && discFileOverride.length > 0 && discFileOverride[0] !== null) ? await JextFileChecker(discFileOverride[0]) : "NotValid")()
 
-	$: console.log(resourcePackStatus, discsStatus)
-
 	const onBack = () => {
 		if($modalStore[0]) {
 			modalStore.close();
