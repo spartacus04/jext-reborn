@@ -50,6 +50,7 @@
     "ajv": "^8.12.0",
     "highlight.js": "11.9.0",
     "jszip": "^3.10.1",
-    "marked": "latest"
+    "marked": "latest",
+    "svelte-gestures": "^4.0.0"
   }
 }

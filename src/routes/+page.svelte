@@ -10,6 +10,7 @@
 	import { JextReader } from "$lib/resourcepack/utils";
 	import { importRP } from "$lib/resourcepack/importer";
 	import CreateDiscModal from "$lib/components/CreateDiscModal.svelte";
+	import { press } from "svelte-gestures";
 
 	export let data: PageData;
 	const modalStore = getModalStore();
@@ -117,7 +118,32 @@
 		saved: [],
 	};
 
+	const selected: string[] = [];
+	let selectionMode = false;
+
+	const select = (id: string) => {
+		console.log(id);
+
+		if(selected.includes(id)) {
+			selected.splice(selected.indexOf(id), 1);
+		} else {
+			selected.push(id);
+		}
+		
+		console.log(selected.includes(id));
+		
+	}
+
+	const tap = (id: string) => {
+		if(selectionMode) {
+			select(id);
+		} else {
+			// TODO: implement disc editor
+		}
+	}
+
 	$: (group.uploaded = $discsStore.filter(disc => disc.uploadData)) && (group.saved = $discsStore.filter(disc => disc.packData));
+	$: selectionMode = selected.length > 0;
 </script>
 
 <AppShell>
@@ -163,13 +189,25 @@
 						<h2 class="h2 font-minecraft">New discs</h2>
 					</svelte:fragment>
 					<svelte:fragment slot="content">
-						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-7 gap-4 text-ellipsis">
 							{#each group.uploaded as disc}
-								<div class="bg-gray-100 p-4 rounded-lg">
-									<h3 class="h3 font-minecraft">{disc.name}</h3>
-									<p class="p">{disc["disc-namespace"]}</p>
-								</div>
+								{#if !selected.includes(disc["disc-namespace"])}
+									<div class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])}>
+										<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
+										<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
+										<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-[#d3d3d3]">{disc["disc-namespace"]}</p>
+									</div>
+								{:else}
+									<div class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none variant-filled-tertiary" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])}>
+										<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
+										<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
+										<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-[#d3d3d3]">{disc["disc-namespace"]}</p>
+									</div>
+								{/if}
 							{/each}
+							<button class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer" on:click={addDisc}>
+								<svg xmlns="http://www.w3.org/2000/svg" class="w-[50%] aspect-square text-[d3d3d3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+							</button>
 						</div>
 					</svelte:fragment>
 				</AccordionItem>
@@ -178,7 +216,7 @@
 						<h2 class="h2 font-minecraft">Saved discs</h2>
 					</svelte:fragment>
 					<svelte:fragment slot="content">
-						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-7 gap-4">
 							{#each group.saved as disc}
 								<div class="bg-gray-100 p-4 rounded-lg">
 									<h3 class="h3 font-minecraft">{disc.name}</h3>
@@ -189,6 +227,11 @@
 					</svelte:fragment>
 				</AccordionItem>
 			</Accordion>
+
+			<div class="flex justify-center gap-4">
+				<MinecraftButton on:click={importPack}>Import a JEXT resource pack</MinecraftButton>
+				<MinecraftButton on:click={addDisc}>Create a new disc</MinecraftButton>
+			</div>
 		{/if}
 	{/await}
 

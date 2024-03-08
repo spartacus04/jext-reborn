@@ -26,6 +26,7 @@ export const randomDiscTexture = async () : Promise<Blob|null> => {
     
         const replaceInner = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
         const replaceOuter = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
+        const replaceFill = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
     
         const img = new Image();
         img.src = disc_template;
@@ -49,10 +50,9 @@ export const randomDiscTexture = async () : Promise<Blob|null> => {
                     data[i + 2] = parseInt(replaceInner.slice(5, 7), 16);
                 }
                 if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) {
-                    const replace = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
-                    data[i] = parseInt(replace.slice(1, 3), 16);
-                    data[i + 1] = parseInt(replace.slice(3, 5), 16);
-                    data[i + 2] = parseInt(replace.slice(5, 7), 16);
+                    data[i] = parseInt(replaceFill.slice(1, 3), 16);
+                    data[i + 1] = parseInt(replaceFill.slice(3, 5), 16);
+                    data[i + 2] = parseInt(replaceFill.slice(5, 7), 16);
                 }
             }
     
@@ -72,6 +72,7 @@ export const randomFrameTexture = async () : Promise<Blob|null> => {
     
         const replaceInner = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
         const replaceOuter = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
+        const replaceFill = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
     
         const img = new Image();
         img.src = fragment_template;
@@ -95,10 +96,9 @@ export const randomFrameTexture = async () : Promise<Blob|null> => {
                     data[i + 2] = parseInt(replaceInner.slice(5, 7), 16);
                 }
                 if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) {
-                    const replace = "#000000".replace(/0/g, () => (~~(Math.random() * 16)).toString(16));
-                    data[i] = parseInt(replace.slice(1, 3), 16);
-                    data[i + 1] = parseInt(replace.slice(3, 5), 16);
-                    data[i + 2] = parseInt(replace.slice(5, 7), 16);
+                    data[i] = parseInt(replaceFill.slice(1, 3), 16);
+                    data[i + 1] = parseInt(replaceFill.slice(3, 5), 16);
+                    data[i + 2] = parseInt(replaceFill.slice(5, 7), 16);
                 }
             }
     

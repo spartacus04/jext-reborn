@@ -7,3 +7,5 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+/// <reference types="svelte-gestures" />
