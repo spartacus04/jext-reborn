@@ -4,6 +4,9 @@ import { arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer } from "./ut
 import { invoke } from '@tauri-apps/api/tauri'
 import { get, writable } from "svelte/store";
 
+const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
+const baseMTURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm';
+
 const qualityArgs = {
     none: [],
     low: ['-ar', '22050', '-qscale:a', '9' ],
@@ -33,31 +36,31 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
 
         return new Blob([base64ToArrayBuffer(result)], { type: 'audio/ogg' });
     } else {
-        console.log("test2");
-
         const ffmpeg = new FFmpeg();
+        
+        // import file from node modules
 
-        if(!ffmpeg.loaded) await ffmpeg.load({
-            coreURL: 'node'
+        if(!ffmpeg.loaded) await ffmpeg.load(crossOriginIsolated ? {
+            coreURL: `${baseMTURL}/ffmpeg-core.js`,
+            wasmURL: `${baseMTURL}/ffmpeg-core.wasm`,
+            workerURL: `${baseMTURL}/ffmpeg-core.worker.js`
+        } : {
+            coreURL: `${baseURL}/ffmpeg-core.js`,
+            wasmURL: `${baseURL}/ffmpeg-core.wasm`,
+            workerURL: `${baseURL}/ffmpeg-core.worker.js`
         });
-    
+        
         await ffmpeg.writeFile('input.ogg', new Uint8Array(await blobToArraBuffer(blob)));
-    
-        const randomName = Math.random().toString(36).substring(10);
-
-        ffmpeg.on('log', (message) => console.log(message));
-    
+        
         ffmpeg.on('progress', (event) => onProgress?.(event.progress * 100));
         
-        await ffmpeg.exec([ '-i', `${randomName}.ogg`, ...args, `out-${randomName}.ogg` ]);
+        await ffmpeg.exec([ '-i', `input.ogg`, ...args, `output.ogg` ]);
     
-        const result = await ffmpeg.readFile(`out-${randomName}.ogg`);
+        const result = await ffmpeg.readFile(`output.ogg`);
     
-        ffmpeg.deleteFile(`${randomName}.ogg`);
-        ffmpeg.deleteFile(`out-${randomName}.ogg`);
+        ffmpeg.deleteFile(`input.ogg`);
+        ffmpeg.deleteFile(`output.ogg`);
     
         return new Blob([result], { type: 'audio/ogg' });
-
-        return new Blob([]);
     }
 }

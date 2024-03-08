@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { prepareAudio } from "$lib/ffmpeg";
 	import { randomDiscTexture } from "$lib/resourcepack/discs";
 	import type { Disc } from "$lib/types";
 	import { FileDropzone, ProgressRadial, getModalStore } from "@skeletonlabs/skeleton";
