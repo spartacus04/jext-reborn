@@ -60,6 +60,13 @@
                                 </div>
                             </a>
                         </Accordion>
+                        <Accordion>
+                            <a href="/documentation/config" class="[&>*]:pointer-events-none">
+                                <div id="AccordionAnchor" class="px-4 py-2">
+                                    <p class="ml-10 color text-white">Config documentation</p>
+                                </div>
+                            </a>
+                        </Accordion>
                     </svelte:fragment>
                 </AccordionItem>
                 <AccordionItem>

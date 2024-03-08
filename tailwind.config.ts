@@ -11,6 +11,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
+				'mc-light-gray': '#d3d3d3',
 				'mc-light-green': '#55ff55'
 			}
 		},

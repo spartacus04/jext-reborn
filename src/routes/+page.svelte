@@ -118,20 +118,15 @@
 		saved: [],
 	};
 
-	const selected: string[] = [];
+	let selected: string[] = [];
 	let selectionMode = false;
 
 	const select = (id: string) => {
-		console.log(id);
-
 		if(selected.includes(id)) {
-			selected.splice(selected.indexOf(id), 1);
+			selected = selected.filter(e => e != id);
 		} else {
-			selected.push(id);
+			selected = [...selected, id]
 		}
-		
-		console.log(selected.includes(id));
-		
 	}
 
 	const tap = (id: string) => {
@@ -190,21 +185,26 @@
 					</svelte:fragment>
 					<svelte:fragment slot="content">
 						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-7 gap-4 text-ellipsis">
-							{#each group.uploaded as disc}
-								{#if !selected.includes(disc["disc-namespace"])}
-									<div class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])}>
-										<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
-										<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
-										<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-[#d3d3d3]">{disc["disc-namespace"]}</p>
-									</div>
-								{:else}
-									<div class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none variant-filled-tertiary" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])}>
-										<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
-										<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
-										<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-[#d3d3d3]">{disc["disc-namespace"]}</p>
-									</div>
-								{/if}
-							{/each}
+							{#key selected}
+								{#each group.uploaded as disc}
+									{#if disc.uploadData}
+										{#if selected.includes(disc["disc-namespace"])}
+											<button class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none variant-filled-tertiary" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])} on:click={() => tap(disc["disc-namespace"])}>
+												<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
+												<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
+												<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray">{disc["disc-namespace"]}</p>
+											</button>
+										{:else}
+											<button class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none" use:press={{ timeframe: 500, triggerBeforeFinished: true }} on:press={() => select(disc["disc-namespace"])} on:click={() => tap(disc["disc-namespace"])}>
+												<img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="" class="w-full aspect-square">
+												<h3 class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden">{disc.name}</h3>
+												<p class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray">{disc["disc-namespace"]}</p>
+											</button>
+										{/if}
+									{/if}
+
+								{/each}
+							{/key}
 							<button class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer" on:click={addDisc}>
 								<svg xmlns="http://www.w3.org/2000/svg" class="w-[50%] aspect-square text-[d3d3d3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
 							</button>

@@ -7,7 +7,7 @@
 	import warning from '$lib/assets/warning.svg';
 	import workflow from '$lib/assets/workflow.svg';
 	import wrench from '$lib/assets/wrench.svg';
-
+	import hand_helping from '$lib/assets/hand_helping.svg';
 </script>
 
 <div class="mb-10"/>
@@ -20,7 +20,7 @@
 				<span class="h-full"><img src={spigotmc} alt="github" srcset="" class="h-full"></span>
 				<span>Spigot MC</span>
 			</a>
-			<a class="logo-item" href="https://modrinth.com/plugin/jukebox-extended-reborn" target="_blank">
+			<a class="logo-item border-cyan-500 border-4" href="https://modrinth.com/plugin/jukebox-extended-reborn" target="_blank">
 				<span class="h-full"><img src={modrinth} alt="github" srcset="" class="h-full"></span>
 				<span>Modrinth</span>
 			</a>
@@ -32,6 +32,21 @@
 				<span class="h-full"><img src={github} alt="github" srcset="" class="h-full"></span>
 				<span>Github</span>
 			</a>
+		</div>
+
+		<div class="bg-cyan-500 rounded-lg">
+			<Accordion>
+				<AccordionItem>
+					<svelte:fragment slot="lead">
+						<img src={hand_helping} alt="warning">
+					</svelte:fragment>
+					<svelte:fragment slot="summary">Sources highlighted in this color help the developer!</svelte:fragment>
+					<svelte:fragment slot="content">
+						<p>Did you know that Modrinth runs a monetization program? That means that for each free download from modrinth the developer gets paid a few cents!</p>
+						<p>That's not a lot, but it can help me improve the plugin faster and be a bit more motivated.</p>
+					</svelte:fragment>
+				</AccordionItem>
+			</Accordion>
 		</div>
 
 		You also need to download Protocollib as it's one of the <b class="underline">required</b> dependencies, you can download it from any of these sources:
@@ -90,7 +105,7 @@
 
 					<p>The server should output a hyperlink like this one</p>
 
-					<blockquote class="bg-black p-2 flex font-cascadia">[<p class="text-mc-light-green">JEXT</p>] &#160<p class="text-mc-light-green">Web UI available at https://spartacus04.github.io/jext-reborn/config?connectTo=127.0.0.0&port=8080</p></blockquote>
+					<blockquote class="bg-black p-2 flex font-cascadia">[<p class="text-mc-light-green">JEXT</p>] &#160<p class="text-mc-light-green">Web UI available at https://spartacus04.github.io/jext-reborn/config?c=c&ip=127.0.0.0&port=8080</p></blockquote>
 
 					<p>Click on it and you should be greeted with the web UI, if you previously configured a web UI password, you will be prompted to enter it.</p>
 					<p>Occasionally the web UI could also require the ip address of the server and port of the jext web interface api.</p>
