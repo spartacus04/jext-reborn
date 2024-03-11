@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { prepareAudio } from "$lib/ffmpeg";
-	import { randomDiscTexture } from "$lib/resourcepack/discs";
+	import { randomTextures } from "$lib/resourcepack/discs";
 	import type { Disc } from "$lib/types";
 	import { FileDropzone, ProgressRadial, getModalStore } from "@skeletonlabs/skeleton";
 
@@ -22,8 +21,7 @@
             if(splitName.length >= 1) author = splitName.join(' - ');
 
             discs.push((async () => {
-                const discTexture = await randomDiscTexture();
-                const fragmentTexture = await randomDiscTexture();
+                const { discTexture, fragmentTexture } = await randomTextures();
 
                 const disc : Disc = {
                     name,
@@ -72,7 +70,7 @@
 </script>
 
 <main class="bg-surface-500 rounded-md p-2 h-[50%] overflow-y-auto w-[90%] sm:w-[80%] lg:w-[50%]">
-	<h3 class="h3 mb-2">Upload one or more music file</h3>
+	<h3 class="h3 mb-2">Upload one or more music files</h3>
     <FileDropzone name="discs" accept="audio/*" bind:files on:change={onFilesChange}>
         <svelte:fragment slot="message">
             Upload one or more music files or drag and drop

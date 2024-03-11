@@ -13,7 +13,7 @@ export default defineConfig({
 		}),
 	],
 	optimizeDeps: {
-		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "@ffmpeg/core"],
+		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "@ffmpeg/core", "svelte-slate"],
 	},
 	base: "/jext-reborn/",
 });

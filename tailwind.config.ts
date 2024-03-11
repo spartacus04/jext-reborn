@@ -12,7 +12,8 @@ export default {
 		extend: {
 			colors: {
 				'mc-light-gray': '#d3d3d3',
-				'mc-light-green': '#55ff55'
+				'mc-light-green': '#55ff55',
+				'mc-aqua': '#55ffff'
 			}
 		},
 		fontFamily: {
