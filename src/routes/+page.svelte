@@ -142,6 +142,8 @@
 		} else {
 			selected = [...selected, id];
 		}
+
+		console.log(selected, id);
 	};
 
 	const tap = async (id: string) => {
@@ -164,6 +166,27 @@
 			});
 		}
 	};
+
+	const editMultiple = async () => {
+		const modalComponent: ModalComponent = { ref: EditDiscModal, props: { discNamespaces: selected } };
+
+		await new Promise<Disc[] | null>((resolve) => {
+			modalStore.trigger({
+				type: 'component',
+				component: modalComponent,
+				title: 'Edit one or more discs',
+				response(r) {
+					if (!r) return resolve(null);
+
+					resolve(r.discs);
+				}
+			});
+		});
+
+		selected = [];
+
+		console.log(selected);
+	}
 
 	discsStore.subscribe((discs) => {
 		discs.forEach((disc, i) => {
@@ -246,7 +269,7 @@
 			</div>
 		{:else}
 			<Accordion>
-				<AccordionItem open={group.uploaded.length > 0}>
+				<AccordionItem>
 					<svelte:fragment slot="summary">
 						<h2 class="h2 font-minecraft">New discs</h2>
 					</svelte:fragment>
@@ -307,6 +330,16 @@
 									{/if}
 								{/each}
 							{/key}
+
+							{#if selectionMode}
+								<button
+									class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer"
+									on:click={editMultiple}
+								>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[50%] lucide lucide-pencil-ruler"><path d="m15 5 4 4"/><path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/></svg>
+								</button>
+							{/if}
+
 							<button
 								class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer"
 								on:click={addDisc}
@@ -331,23 +364,65 @@
 					</svelte:fragment>
 					<svelte:fragment slot="content">
 						<div
-							class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-7 gap-4"
+							class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-7 gap-4 text-ellipsis"
 						>
-							{#each group.saved as disc}
-								<div class="bg-gray-100 p-4 rounded-lg">
-									<h3 class="h3 font-minecraft">{disc.name}</h3>
-									<p class="p">{disc['disc-namespace']}</p>
-								</div>
-							{/each}
+							{#key selected}
+								{#each group.saved as disc}
+									{#if disc.packData}
+										{#if selected.includes(disc['disc-namespace'])}
+											<button
+												class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none variant-filled-tertiary"
+												use:press={{ timeframe: 500, triggerBeforeFinished: true }}
+												on:press={() => select(disc['disc-namespace'])}
+												on:click={() => tap(disc['disc-namespace'])}
+											>
+												<img
+													src={URL.createObjectURL(disc.packData.texture)}
+													alt=""
+													class="w-full aspect-square"
+												/>
+												<h3
+													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
+												>
+													{disc.name}
+												</h3>
+												<p
+													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"
+												>
+													{disc['disc-namespace']}
+												</p>
+											</button>
+										{:else}
+											<button
+												class="card p-4 rounded-lg card-hover cursor-pointer [&>*]:pointer-events-none"
+												use:press={{ timeframe: 500, triggerBeforeFinished: true }}
+												on:press={() => select(disc['disc-namespace'])}
+												on:click={() => tap(disc['disc-namespace'])}
+											>
+												<img
+													src={URL.createObjectURL(disc.packData.texture)}
+													alt=""
+													class="w-full aspect-square"
+												/>
+												<h3
+													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
+												>
+													{disc.name}
+												</h3>
+												<p
+													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"
+												>
+													{disc['disc-namespace']}
+												</p>
+											</button>
+										{/if}
+									{/if}
+								{/each}
+							{/key}
 						</div>
 					</svelte:fragment>
 				</AccordionItem>
 			</Accordion>
-
-			<div class="flex justify-center gap-4">
-				<MinecraftButton on:click={importPack}>Import a JEXT resource pack</MinecraftButton>
-				<MinecraftButton on:click={addDisc}>Create a new disc</MinecraftButton>
-			</div>
 		{/if}
 	{/await}
 
@@ -357,12 +432,3 @@
 		{/if}
 	</svelte:fragment>
 </AppShell>
-
-<!--
-	se non sono connesso mostrare tasto di connessione in alto, permettere di importare un file zip (e eventualmente il discs.json) o di creare un progetto vuoto, e infine permettere il download
-	se sono connesso al server i dischi sono caricati automaticamente e il tasto di connessione diventa di logout. il tasto di scaricamento diventa un tasto di applicazione.render
-
-	nello scaricamento aggiungo rp di geyser, mentre nell'applicazione prima verifico se geyser è presente e in caso applico una nuova rp per geyser
-
-	aggiungo un tasto per mescolare piu pacchetti di risorse in ordine di priorità (e un tasto per rimuovere i pacchetti di risorse aggiuntivi)
--->

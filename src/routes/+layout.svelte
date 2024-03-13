@@ -5,12 +5,20 @@
 	import knowledge_book from '$lib/assets/knowledge_book.png';
 	import github from '$lib/assets/github.svg';
 	import github_sponsors from '$lib/assets/githubsponsors.svg';
-
-	// Highlight JS
-	import { AppShell, AppRail, AppRailAnchor, popup, storePopup, initializeStores, Modal } from '@skeletonlabs/skeleton';
+	import hljs from 'highlight.js';
+	import json from 'highlight.js/lib/languages/json';
+	import plaintext from 'highlight.js/lib/languages/plaintext'
+	import 'highlight.js/styles/github-dark-dimmed.min.css';
+	import { AppShell, AppRail, AppRailAnchor, popup, storePopup, initializeStores, Modal, storeHighlightJs } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+	hljs.registerLanguage('json', json);
+	hljs.registerLanguage('plaintext', plaintext);
 	initializeStores();
+
+	storeHighlightJs.set(hljs);
+
+
 </script>
 
 <Modal />

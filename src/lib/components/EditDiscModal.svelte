@@ -6,15 +6,21 @@
     import FormatEditor from "$lib/components/FormatEditor.svelte";
     import MinecraftCheckbox from "$lib/components/MinecraftCheckbox.svelte";
 	import MinecraftButton from "./MinecraftButton.svelte";
-
+	import { getModalStore, type ModalComponent } from "@skeletonlabs/skeleton";
+    import DungeonSelectModal from "./DungeonSelectModal.svelte";
+	import MinecraftComboBox from "./MinecraftComboBox.svelte";
+    import { inputFile, dropFile } from "$lib/directives";
+    
     export let discNamespaces: string[];
     let multiple: boolean;
-    const discs = $discsStore.filter(disc => disc["disc-namespace"] === $discsStore[0]["disc-namespace"])
+    const discs = $discsStore.filter(disc => discNamespaces.includes(disc["disc-namespace"]))
+    
     const uploadedDiscs = discs.filter(disc => disc.uploadData);
+    const modalStore = getModalStore();
 
     $: multiple = discNamespaces.length > 1;
 
-    let tempDisc : {
+    export let tempDisc : {
         name: { value: string, edited: boolean },
         author: { value: string, edited: boolean },
         "creeper-drop": { value: boolean, edited: boolean },
@@ -22,15 +28,23 @@
         "loot-tables": { value: { [key: string]: number }, edited: boolean },
         "fragment-loot-tables": { value: { [key: string]: number }, edited: boolean },
 
-        mono: { value: boolean, edited: boolean },
-        normalize: { value: boolean, edited: boolean },
-        quality: { value: 'none' | 'low' | 'medium' | 'high', edited: boolean },
+        mono?: { value: boolean, edited: boolean },
+        normalize?: { value: boolean, edited: boolean },
+        quality?: { value: 'none' | 'low' | 'medium' | 'high', edited: boolean },
 
         texture: { value: Blob, edited: boolean },
         fragment_texture: { value: Blob, edited: boolean },
-    } 
+    }
+
+    let initalText: string;
 
     const load = (async () => {
+        // Warning: state is not preserved between modals, this is a shitty workaround but it works
+        if($modalStore[0].meta) {
+            tempDisc = $modalStore[0].meta;
+            return;
+        }
+
         tempDisc = {
             name: { value: discs.every(disc => disc.name === discs[0].name) ? discs[0].name : "", edited: false },
             author: { value: discs.every(disc => disc.author === discs[0].author) ? discs[0].author : "", edited: false },
@@ -39,9 +53,9 @@
             "loot-tables": { value: discs.every(disc => disc["loot-tables"] === discs[0]["loot-tables"]) ? discs[0]["loot-tables"] : {}, edited: false },
             "fragment-loot-tables": { value: discs.every(disc => disc["fragment-loot-tables"] === discs[0]["fragment-loot-tables"]) ? discs[0]["fragment-loot-tables"] : {}, edited: false },
 
-            mono: { value: uploadedDiscs.every(disc => disc.uploadData!.mono === uploadedDiscs[0].uploadData!.mono) ? uploadedDiscs[0].uploadData!.mono : true, edited: false },
-            normalize: { value: uploadedDiscs.every(disc => disc.uploadData!.normalize === uploadedDiscs[0].uploadData!.normalize) ? uploadedDiscs[0].uploadData!.normalize : true, edited: false },
-            quality: { value: uploadedDiscs.every(disc => disc.uploadData!.quality === uploadedDiscs[0].uploadData!.quality) ? uploadedDiscs[0].uploadData!.quality : "high", edited: false },
+            mono: uploadedDiscs.length != 0 ? { value: uploadedDiscs.every(disc => disc.uploadData!.mono === uploadedDiscs[0].uploadData!.mono) ? uploadedDiscs[0].uploadData!.mono : true, edited: false } : undefined,
+            normalize: uploadedDiscs.length != 0 ? { value: uploadedDiscs.every(disc => disc.uploadData!.normalize === uploadedDiscs[0].uploadData!.normalize) ? uploadedDiscs[0].uploadData!.normalize : true, edited: false } : undefined,
+            quality: uploadedDiscs.length != 0 ? { value: uploadedDiscs.every(disc => disc.uploadData!.quality === uploadedDiscs[0].uploadData!.quality) ? uploadedDiscs[0].uploadData!.quality : "high", edited: false } : undefined,
 
             texture: {
                 value: multiple ? await (await fetch(default_disc)).blob() : discs[0].packData ? discs[0].packData.texture : discs[0].uploadData!.uploadedTexture,
@@ -53,39 +67,134 @@
                 edited: false,
             }
         }
+
+        initalText = tempDisc.lores.value.join('\n');
     })();
 
-    const apply = () => {
-        discsStore.update(discs => {
-            discs.forEach(disc => {
-                if(discNamespaces.includes(disc["disc-namespace"])) {
-                    if(tempDisc.name.edited) disc.name = tempDisc.name.value
-                    if(tempDisc.author.edited) disc.author = tempDisc.author.value
-                    if(tempDisc["creeper-drop"].edited) disc["creeper-drop"] = tempDisc["creeper-drop"].value
-                    if(tempDisc.lores.edited) disc.lores = tempDisc.lores.value
-                    if(tempDisc["loot-tables"].edited) disc["loot-tables"] = tempDisc["loot-tables"].value
-                    if(tempDisc["fragment-loot-tables"].edited) disc["fragment-loot-tables"] = tempDisc["fragment-loot-tables"].value
-                }
-            })
-
-            return discs;
-        })
-    }
-
-    const setTexture = (files: File[]) => {
-        if(files.length > 0 && files[0]) {
+    const setTexture = (files?: File[]) => {
+        if(files && files.length > 0 && files[0]) {
             tempDisc.texture.value = files[0];
             tempDisc.texture.edited = true;
         }
     }
 
-    const setFragmentTexture = (files: File[]) => {
-        if(files.length > 0 && files[0]) {
+    const setFragmentTexture = (files?: File[]) => {
+        if(files && files.length > 0 && files[0]) {
             tempDisc.fragment_texture.value = files[0];
             tempDisc.fragment_texture.edited = true
         }
     }
 
+    const openDungeonModal = (isFragment: Boolean) => {
+        $modalStore[0].meta = tempDisc;
+
+		const modalComponent: ModalComponent = { 
+            ref: DungeonSelectModal, 
+            props: { 
+                source: 'chests/*', 
+                defaultValue: 0, 
+                value: isFragment ? tempDisc["fragment-loot-tables"].value : tempDisc["loot-tables"].value,
+                isChance: true,
+            }
+        };
+
+        // not using modalStore.trigger because i need to show this modal on top of the current one
+        modalStore.update(modals => {
+            modals.unshift({
+                type: 'component',
+                component: modalComponent,
+                title: isFragment ? 'Edit fragment loot tables' : 'Edit disc loot tables',
+                response(r) {
+                    if(!r || Object.keys(r).length == 0) return;
+
+                    tempDisc[isFragment ? "fragment-loot-tables" : "loot-tables"].value = r;
+                    tempDisc[isFragment ? "fragment-loot-tables" : "loot-tables"].edited = true;
+                },
+            })
+            return modals;
+        })
+	}
+
+    const openArchaeologyModal = (isFragment: boolean) => {
+        $modalStore[0].meta = tempDisc;
+
+        const modalComponent: ModalComponent = { 
+            ref: DungeonSelectModal, 
+            props: { 
+                source: 'archaeology/*', 
+                defaultValue: 0, 
+                value: isFragment ? tempDisc["fragment-loot-tables"].value : tempDisc["loot-tables"].value,
+                isBoolean: true,
+            }
+        };
+
+        // not using modalStore.trigger because i need to show this modal on top of the current one
+        modalStore.update(modals => {
+            modals.unshift({
+                type: 'component',
+                component: modalComponent,
+                title: isFragment ? 'Edit fragment loot tables' : 'Edit disc loot tables',
+                response(r) {
+                    if(!r || Object.keys(r).length == 0) return;
+
+                    tempDisc[isFragment ? "fragment-loot-tables" : "loot-tables"].value = r;
+                    tempDisc[isFragment ? "fragment-loot-tables" : "loot-tables"].edited = true;
+                },
+            })
+            return modals;
+        })
+    }
+
+    const setUpdatedPropery = (property: string) => {
+        (tempDisc as any)[property].edited = true;
+        console.log(tempDisc);
+    }
+
+    const exit = () => {
+        // apply tempDisc to namespaces
+        discsStore.update((discs) => {
+            discs.forEach(disc => {
+                if(discNamespaces.includes(disc["disc-namespace"])) {
+                    for(const [key, value] of Object.entries(tempDisc)) {
+                        if(value.edited) {
+                            switch(key) {
+                                case 'mono':
+                                case 'normalize':
+                                case 'quality':
+                                    if(!disc.uploadData) break;
+                                    (disc.uploadData as any)[key] = value.value;
+                                    break;
+                                case 'texture':
+                                    if(disc.packData) {
+                                        disc.packData.texture = value.value as Blob;
+                                    } else {
+                                        disc.uploadData!.uploadedTexture = value.value as Blob;
+                                    }
+                                    break;
+                                case 'fragment_texture':
+                                    if(disc.packData) {
+                                        disc.packData.fragmentTexture = value.value as Blob;
+                                    } else {
+                                        disc.uploadData!.uploadedFragmentTexture = value.value as Blob;
+                                    }
+                                    break;
+                                default:
+                                    (disc as any)[key] = value.value;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            })
+
+            return discs;
+        })
+
+        if($modalStore[0]) {
+            $modalStore[0].response!!(true);
+            modalStore.close();
+        }
+    }
 </script>
 
 <main class="bg-surface-500 rounded-md p-2 h-[50%] overflow-y-auto w-[90%] sm:w-[80%] lg:w-[50%]">
@@ -96,30 +205,73 @@
         <!-- Icons, author, name -->
         <div class="flex flex-col justify-between gap-4 sm:flex-row">
             <div class="flex gap-2 justify-around">
-                <img class="bg-[#202020] p-3 cursor-pointer h-28 sm:h-32 h-max-32 aspect-square border border-transparent hover:border-white" src={URL.createObjectURL(tempDisc.texture.value)} alt="disc icon">
-                <img class="bg-[#202020] p-3 cursor-pointer h-28 sm:h-32 aspect-square border border-transparent hover:border-white" src={URL.createObjectURL(tempDisc.fragment_texture.value)} alt="disc icon">
+                <img class="bg-[#202020] p-3 cursor-pointer h-28 sm:h-32 h-max-32 aspect-square border border-transparent hover:border-white" src={URL.createObjectURL(tempDisc.texture.value)} alt="disc icon" use:inputFile={{
+                    accept: 'image/*',
+                    cb: setTexture
+                }} use:dropFile={{
+                    accept: 'image/*',
+                    cb: setTexture
+                }} />
+                <img class="bg-[#202020] p-3 cursor-pointer h-28 sm:h-32 aspect-square border border-transparent hover:border-white" src={URL.createObjectURL(tempDisc.fragment_texture.value)} alt="disc icon" use:inputFile={{
+                    accept: 'image/*',
+                    cb: setFragmentTexture
+                }} use:dropFile={{
+                    accept: 'image/*',
+                    cb: setFragmentTexture
+                }} />
             </div>
             <div class="flex flex-col flex-1 justify-around gap-2">
-                <MinecraftTextbox placeholder="Name"></MinecraftTextbox>
-                <MinecraftTextbox placeholder="Author"></MinecraftTextbox>
+                <MinecraftTextbox placeholder="Name" bind:value={tempDisc.name.value} on:input={() => setUpdatedPropery('name')} />
+                <MinecraftTextbox placeholder="Author" bind:value={tempDisc.author.value} on:input={() => setUpdatedPropery('author')}/>
             </div>
         </div>
         
         <div class="h-2 border-b-2 border-[#232323] mb-2" />
 
-        <FormatEditor text="test" firstline={tempDisc.author.value != '' ? `${tempDisc.name.value} - ${tempDisc.author.value}` : tempDisc.name.value} />
+        <FormatEditor on:input={() => setUpdatedPropery('lores')} bind:split={tempDisc.lores.value} text={initalText} firstline={tempDisc.author.value != '' ? `${tempDisc.name.value} - ${tempDisc.author.value}` : tempDisc.name.value} />
 
         <div class="h-2 border-b-2 border-[#232323] mb-2" />
 
-        <div class="flex flex-col justify-between gap-4 sm:flex-row items-center">
+        <div class="flex flex-col justify-around gap-4 sm:flex-row items-center mt-4">
             <div class="flex justify-start gap-4 flex-row items-center">
-                <MinecraftCheckbox value={true} size="0px"/>
+                <MinecraftCheckbox onClick={() => setUpdatedPropery('creeper-drop')} bind:value={tempDisc["creeper-drop"].value} size="0px"/>
                 <h5 class="h5 font-minecraft h-min">Enable as Creeper drop</h5>
             </div>
-
-            <MinecraftButton>Disc loot table</MinecraftButton>
-            <MinecraftButton>Fragment loot table</MinecraftButton>
         </div>
+
+        <div class="flex flex-col justify-around gap-4 sm:flex-row items-center mt-4">
+            <MinecraftButton on:click={() => openDungeonModal(false)}>Disc loot table</MinecraftButton>
+            <MinecraftButton on:click={() => openDungeonModal(true)}>Fragment loot table</MinecraftButton>
+        </div>
+
+        <div class="flex flex-col justify-around gap-4 sm:flex-row items-center mt-4">
+            <MinecraftButton on:click={() => openArchaeologyModal(false)}>Disc archaeology loot table</MinecraftButton>
+            <MinecraftButton on:click={() => openArchaeologyModal(true)}>Fragment archaeology loot table</MinecraftButton>
+        </div>
+
+        {#if tempDisc.mono && tempDisc.normalize && tempDisc.quality}
+            <div class="h-2 border-b-2 border-[#232323] mb-2" />
+
+            <div class="flex flex-col justify-around gap-4 items-center mt-4 w-full">
+                <div class="flex justify-start gap-4 flex-row items-center">
+                    <MinecraftCheckbox bind:value={tempDisc.mono.value} size="0px" onClick={() => setUpdatedPropery('mono')}/>
+                    <h5 class="h5 font-minecraft h-min">Convert to mono</h5>
+                </div>
+                <div class="flex justify-start gap-4 flex-row items-center">
+                    <MinecraftCheckbox bind:value={tempDisc.normalize.value} size="0px" onClick={() => setUpdatedPropery('normalize')}/>
+                    <h5 class="h5 font-minecraft h-min">Normalize audio</h5>
+                </div>
+                <div class="flex justify-start gap-4 flex-row items-center w-[30%]">
+                    <h5 class="h5 font-minecraft h-min">Quality preset</h5>
+                    <MinecraftComboBox values={['none', 'low', 'medium', 'high']} bind:value={tempDisc.quality.value} on:input={() => setUpdatedPropery('quality')}/>
+                </div>
+            </div>
+        {/if}
+
+        <div class="flex w-full items-center justify-center mt-4">
+            <button class="btn variant-filled-secondary text-white" on:click={exit}>Save</button>
+        </div>
+
     {/await}
     
 </main>

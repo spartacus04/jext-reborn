@@ -66,7 +66,7 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 mb-2">
-        <div class="h-full bg-transparent resize-none border-0 shadow-none outline-none border-none m-1 p-2 before:empty:content-[attr(placeholder)] before:empty:focus:content-[''] text-mc-light-gray" contenteditable="true" bind:innerHTML={text} on:paste={pasteHandler} placeholder="Add your description here" />
+        <div class="h-full bg-transparent resize-none border-0 shadow-none outline-none border-none m-1 p-2 before:empty:content-[attr(placeholder)] before:empty:focus:content-[''] text-mc-light-gray" contenteditable="true" bind:innerHTML={text} on:paste={pasteHandler} on:input placeholder="Add your description here" />
         <div bind:this={previewDiv} class="font-minecraft p-2 bg-[#0f0110] -mb-2 rounded-b-md sm:rounded-bl-none">
             <p class="text-mc-aqua h5 font-minecraft">Music disc</p>
             {#if firstline != ''}

@@ -11,7 +11,10 @@
 </script>
 
 <div class="mb-10"/>
-<Stepper >
+<Stepper on:complete={() => {
+	alert('You have completed the quickstart guide!');
+	window.location.href = window.location.href.split('/').slice(0, -2).join('/');
+}} >
 	<Step>
 		<svelte:fragment slot="header">Downloading and installing the plugin</svelte:fragment>
 		<p>You can download the plugin from any of these sources:</p>
@@ -139,11 +142,11 @@
 
 					<p>The server should output a hyperlink like this one</p>
 
-					<blockquote class="bg-black p-2 flex font-cascadia">[<p class="text-mc-light-green">JEXT</p>] &#160<p class="text-mc-light-green">Web UI available at https://spartacus04.github.io/jext-reborn/?connectTo=127.0.0.0&port=8080</p></blockquote>
+					<blockquote class="bg-black p-2 flex font-cascadia">[<p class="text-mc-light-green">JEXT</p>] &#160<p class="text-mc-light-green">Web UI available at https://spartacus04.github.io/jext-reborn?c=c&ip=127.0.0.0&port=8080</p></blockquote>
 
 					<p>Click on it and you should be greeted with the web UI, if you previously configured a web UI password, you will be prompted to enter it.</p>
 					<p>Occasionally the web UI could also require the ip address of the server and port of the jext web interface api.</p>
-					<h1 class="h1">TODO: continue creating documentation</h1>
+					<p>You can now edit the custom discs for a comfortable ui designed to make the process as easy as possible!</p>
 				</svelte:fragment>
 			</AccordionItem>
 			<AccordionItem>
@@ -152,8 +155,7 @@
 				</svelte:fragment>
 				<svelte:fragment slot="summary">Configuring manually</svelte:fragment>
 				<svelte:fragment slot="content">
-					The plugin comes with a default configuration file that you can use as a base, you can find it in the <code>plugins/JukeboxExtendedReborn</code> folder.
-					You can edit it with any text editor, and you can check out the <a href="/documentation/config">config documentation</a> for more information on how to configure the plugin.
+					Altought it's not recommended you can also add custom discs manually by using a jext.json file inside a resource pack, you can check out the <a href="/documentation/resourcepack">resourcepack documentation</a> for more information on how to manage discs.
 				</svelte:fragment>
 			</AccordionItem>
 		</Accordion>

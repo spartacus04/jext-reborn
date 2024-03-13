@@ -67,6 +67,13 @@
                                 </div>
                             </a>
                         </Accordion>
+                        <Accordion>
+                            <a href="/documentation/resourcepack" class="[&>*]:pointer-events-none">
+                                <div id="AccordionAnchor" class="px-4 py-2">
+                                    <p class="ml-10 color text-white">Manual resourcepack config</p>
+                                </div>
+                            </a>
+                        </Accordion>
                     </svelte:fragment>
                 </AccordionItem>
                 <AccordionItem>

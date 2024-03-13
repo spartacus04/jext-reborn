@@ -4,9 +4,11 @@
 
 	export let value: unknown;
 	export let size: string = '24px';
+	export let onClick: () => unknown = () => {};
 
 	const toggle = () => {
 		value = !value;
+		onClick();
 	};
 </script>
 

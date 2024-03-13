@@ -6,7 +6,7 @@
 	const plc = (placeholder as string) ?? '';
 </script>
 
-<input class="w-full text-white p-2 h-min font-minecraft bg-[#303030] hover:bg-[#404040] border-[3px] border-black appearance-none" type="text" bind:value={value} placeholder={plc} style:font-size={fontsize}>
+<input class="w-full text-white p-2 h-min font-minecraft bg-[#303030] hover:bg-[#404040] border-[3px] border-black appearance-none" type="text" bind:value={value} placeholder={plc} style:font-size={fontsize} on:input>
 
 <style>
 	input {
