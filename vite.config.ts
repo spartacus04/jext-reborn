@@ -10,7 +10,8 @@ export default defineConfig({
 				// any selectors that begin with "hljs-" will not be purged
 				greedy: [/^hljs-/],
 			},
-		}),
+		})
+
 	],
 	optimizeDeps: {
 		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "@ffmpeg/core", "svelte-slate"],
