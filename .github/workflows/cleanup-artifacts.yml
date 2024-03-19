@@ -3,7 +3,7 @@ name: Cleanup Artifacts
 
 on:
  workflow_run:
-    workflows: ["build-tauri.yml"]
+    workflows: ["build-tauri"]
     types:
       - completed
 
