@@ -1,4 +1,5 @@
 name: 'build-tauri'
+# This workflow build a Tauri app for all platforms and upload the binaries as artifacts
 
 on:
   push:
