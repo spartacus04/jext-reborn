@@ -9,8 +9,11 @@
 	import json from 'highlight.js/lib/languages/json';
 	import plaintext from 'highlight.js/lib/languages/plaintext'
 	import 'highlight.js/styles/github-dark-dimmed.min.css';
+	import { listen } from '@tauri-apps/api/event';
 	import { AppShell, AppRail, AppRailAnchor, popup, storePopup, initializeStores, Modal, storeHighlightJs } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { onMount } from 'svelte';
+	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	hljs.registerLanguage('json', json);
 	hljs.registerLanguage('plaintext', plaintext);
@@ -18,6 +21,20 @@
 
 	storeHighlightJs.set(hljs);
 
+	if(window.__TAURI__) {
+		listen('scheme-request-received', (event) => {
+			window.location.href = (event.payload as string).replace('jext://open', '');
+			appWindow.requestUserAttention(UserAttentionType.Critical);
+			appWindow.setFocus();
+		});
+
+		onMount(async () => {
+			if(!navigator.userAgent.toLowerCase().includes('linux')) {
+				if(!window.location.href.includes('?')) return window.location.href = 'jext://open';
+				window.location.href = `jext://open?${window.location.href.split('?')[1]}`
+			}
+		})
+	}
 
 </script>
 

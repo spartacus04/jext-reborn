@@ -269,7 +269,7 @@
 			</div>
 		{:else}
 			<Accordion>
-				<AccordionItem>
+				<AccordionItem open={true}>
 					<svelte:fragment slot="summary">
 						<h2 class="h2 font-minecraft">New discs</h2>
 					</svelte:fragment>

@@ -20,6 +20,7 @@ fn download_ffmpeg(app_handle: tauri::AppHandle) -> bool {
                     app_handle.exit(1);
                 }
             });
+
             return false;
         }
     }
@@ -116,7 +117,25 @@ fn ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle) -> Str
 }
 
 fn main() {
+    tauri_plugin_deep_link::prepare("com.spartacus04.jext-tool");
+
     tauri::Builder::default()
+        .setup(|app| {
+            let app_handle = app.handle();
+            let _ = tauri_plugin_deep_link::register(
+                "jext", 
+                move |request| {
+                    app_handle.emit_all("scheme-request-received", request).unwrap();
+                }
+            );
+
+            #[cfg(not(target_os = "macos"))] // on macos the plugin handles this (macos doesn't use cli args for the url)
+            if let Some(url) = std::env::args().nth(1) {
+                app.emit_all("scheme-request-received", url).unwrap();
+            }
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             download_ffmpeg,
             ffmpeg
@@ -124,5 +143,3 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application")
 }
-
-// add a ffmpeg function that receives a arraybuffer and a string array, and returns a arraybuffer

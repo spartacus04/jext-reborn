@@ -70,6 +70,8 @@
         
         configSnapshot = [];
 
+        if(get(configStore) == null) return get(configStore);
+
         get(configStore)!.forEach((node) => {
             configSnapshot.push({
                 id: node.id,
@@ -130,7 +132,7 @@
     <div class="h-full w-full flex items-center justify-center">
         <ProgressRadial />
     </div>
-{:then _} 
+{:then _}
     {#if $configStore == null}
         <div class="flex flex-col items-center justify-center h-screen">
             <h1 class="text-4xl font-bold">You are not connected to the plugin</h1>

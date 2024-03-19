@@ -12,15 +12,19 @@
   },
   "tauri": {
     "allowlist": {
+      "window": {
+        "requestUserAttention": true,
+        "setFocus": true
+      },
       "dialog": {
-        "message": true
+        "confirm": true
       },
       "all": false
     },
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "",
+      "copyright": "MIT",
       "deb": {
         "depends": []
       },
@@ -41,7 +45,9 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": [
+        "assets/*"
+      ],
       "shortDescription": "",
       "targets": "all",
       "windows": {
