@@ -3,6 +3,8 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer } from "./utils";
 import { invoke } from '@tauri-apps/api/tauri'
 import { get, writable } from "svelte/store";
+import { listen } from "@tauri-apps/api/event";
+import { getDuration } from "./resourcepack/utils";
 
 const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
 const baseMTURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm';
@@ -17,7 +19,6 @@ const qualityArgs = {
 export const localFFmpegStore = writable(false);
 
 export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (percent: number) => unknown) : Promise<Blob|null> => {
-
     const args = ['-vn', '-acodec', 'libvorbis'];
 
     if (data.mono) args.push('-ac', '1');
@@ -27,10 +28,20 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
     args.push(...qualityArgs[data.quality]);
 
     if (window.__TAURI__ && get(localFFmpegStore)) {
+        const duration = await getDuration(blob);
+
+        const unregister = await listen<string>('ffmpeg-progress', async event => {
+            const [hours, minutes, seconds] = event.payload.split(':').map(Number);
+
+            onProgress?.((hours * 3600 + minutes * 60 + seconds) / duration * 100);
+        })
+
         const result = <string>(await invoke('ffmpeg', {
             input: arrayBufferToBase64(await blob.arrayBuffer()),
             args
         }))
+
+        unregister();
 
         if(result === "") return null;
 
@@ -38,8 +49,6 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
     } else {
         const ffmpeg = new FFmpeg();
         
-        // import file from node modules
-
         if(!ffmpeg.loaded) await ffmpeg.load(crossOriginIsolated ? {
             coreURL: `${baseMTURL}/ffmpeg-core.js`,
             wasmURL: `${baseMTURL}/ffmpeg-core.wasm`,

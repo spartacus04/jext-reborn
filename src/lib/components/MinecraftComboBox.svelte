@@ -1,14 +1,13 @@
-<script lang="ts">
-	export let value: unknown = '';
-    export let values: unknown = [];
+<script lang="ts" generics="T">
+	export let value: T;
+    export let values: T[] = [];
+	export let labels: string[] = [];
 	export let fontsize: string = '1em';
-
-    const vals = (values as string[]).map((v) => v.toString());
 </script>
 
 <select class="w-full text-white p-2 h-min font-minecraft bg-[#303030] hover:bg-[#404040] border-[3px] border-black appearance-none hover:border-white" bind:value={value} style:font-size={fontsize} on:input>
-    {#each vals as option}
-        <option value={option}>{option}</option>
+    {#each values as option, i}
+        <option value={option}>{labels.length > i ? labels[i] : option}</option>
     {/each}
 </select>
 

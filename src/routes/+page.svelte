@@ -21,6 +21,9 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { discsStore } from '$lib/config';
 	import EditDiscModal from '$lib/components/EditDiscModal.svelte';
+	import ResourcePackManager from '$lib/components/ResourcePackManager.svelte';
+	import MinecraftLaunchButton from '$lib/components/MinecraftLaunchButton.svelte';
+	import OutputModal from '$lib/components/OutputModal.svelte';
 
 	export let data: PageData;
 	const modalStore = getModalStore();
@@ -208,18 +211,19 @@
 		});
 	});
 
-	beforeNavigate(({ cancel }) => {
-		if ($discsStore.length > 0) {
-			if (!confirm('Are you sure you want to leave this page? You have unsaved changes that will be lost.')
-			) {
-				cancel();
-			}
-		}
-	});
-
 	$: (group.uploaded = $discsStore.filter((disc) => disc.uploadData)) &&
 		(group.saved = $discsStore.filter((disc) => disc.packData));
 	$: selectionMode = selected.length > 0;
+
+	const generateResourcePack = async () => {
+		const modalComponent: ModalComponent = { ref: OutputModal };
+
+		modalStore.trigger({
+			type: 'component',
+			component: modalComponent,
+			title: 'Output discs'
+		});
+	}
 </script>
 
 <AppShell>
@@ -227,6 +231,7 @@
 		<AppBar
 			regionRowMain="grid-cols-[1fr] sm:grid-cols-[auto_1fr_auto]"
 			slotTrail="-mt-6  justify-self-center"
+			background="bg-[#202020]"
 		>
 			<svelte:fragment slot="lead">
 				<div>
@@ -422,13 +427,25 @@
 						</div>
 					</svelte:fragment>
 				</AccordionItem>
+				<AccordionItem open={true}>
+					<svelte:fragment slot="summary">
+						<h2 class="h2 font-minecraft">Resourcepack settings</h2>
+					</svelte:fragment>
+					<svelte:fragment slot="content">
+						<ResourcePackManager />
+					</svelte:fragment>
+				</AccordionItem>
 			</Accordion>
 		{/if}
 	{/await}
 
 	<svelte:fragment slot="footer">
 		{#if $discsStore.length > 0}
-			footer
+			<div class="flex w-full items-center justify-center p-4 bg-[#151515]">
+				<MinecraftLaunchButton highlight={true} on:click={generateResourcePack}>
+					<b class="font-minecraft-launcher text-4xl p-0 m-0 ease-in-out duration-500 select-none">GENERATE</b>
+				</MinecraftLaunchButton>
+			</div>
 		{/if}
 	</svelte:fragment>
 </AppShell>

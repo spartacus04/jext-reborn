@@ -10,6 +10,7 @@
     import DungeonSelectModal from "./DungeonSelectModal.svelte";
 	import MinecraftComboBox from "./MinecraftComboBox.svelte";
     import { inputFile, dropFile } from "$lib/directives";
+	import { processImage } from "$lib/resourcepack/utils";
     
     export let discNamespaces: string[];
     let multiple: boolean;
@@ -71,7 +72,7 @@
         initalText = tempDisc.lores.value.join('\n');
     })();
 
-    const setTexture = (files?: File[]) => {
+    const setTexture = async (files?: File[]) => {
         if(files && files.length > 0 && files[0]) {
             tempDisc.texture.value = files[0];
             tempDisc.texture.edited = true;
@@ -153,10 +154,10 @@
     const exit = () => {
         // apply tempDisc to namespaces
         discsStore.update((discs) => {
-            discs.forEach(disc => {
+            discs.forEach(async disc => {
                 if(discNamespaces.includes(disc["disc-namespace"])) {
                     for(const [key, value] of Object.entries(tempDisc)) {
-                        if(value.edited) {
+                        if(value != undefined && value.edited) {
                             switch(key) {
                                 case 'mono':
                                 case 'normalize':
@@ -166,14 +167,14 @@
                                     break;
                                 case 'texture':
                                     if(disc.packData) {
-                                        disc.packData.texture = value.value as Blob;
+                                        disc.packData.texture = await processImage(value.value as Blob);
                                     } else {
                                         disc.uploadData!.uploadedTexture = value.value as Blob;
                                     }
                                     break;
                                 case 'fragment_texture':
                                     if(disc.packData) {
-                                        disc.packData.fragmentTexture = value.value as Blob;
+                                        disc.packData.fragmentTexture = await processImage(value.value as Blob);
                                     } else {
                                         disc.uploadData!.uploadedFragmentTexture = value.value as Blob;
                                     }

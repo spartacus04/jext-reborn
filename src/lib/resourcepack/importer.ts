@@ -1,8 +1,9 @@
 import type { Disc } from "$lib/types";
 import JSZip from "jszip";
-import type { Writable } from "svelte/store";
+import { get, type Writable } from "svelte/store";
 import default_disc from "$lib/assets/default_disc.png";
 import default_fragment from "$lib/assets/default_fragment.png";
+import { resourcePackStore } from "$lib/config";
 
 export const importRP = async (discStore: Writable<Disc[]>, rp: Blob, discsJson: Disc[]) => {
     const zip = await JSZip.loadAsync(rp)
@@ -29,4 +30,15 @@ export const importRP = async (discStore: Writable<Disc[]>, rp: Blob, discsJson:
             }
         }
     })))
+
+    resourcePackStore.set({
+        icon: await zip.file('pack.png')?.async('blob') ?? get(resourcePackStore).icon,
+        description: JSON.parse(await zip.file('pack.mcmeta')!.async('text')).pack.description as string,
+        version: JSON.parse(await zip.file('pack.mcmeta')!.async('text')).pack.pack_format as number,
+        packs: [{
+            name: 'Imported Pack',
+            icon: await zip.file('pack.png')?.async('blob') ?? get(resourcePackStore).icon,
+            value: rp
+        }],
+    })
 }

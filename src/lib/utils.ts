@@ -23,3 +23,27 @@ export const base64ToArrayBuffer = (base64: string) => {
     }
     return bytes.buffer;
 }
+
+export const saveAs = (blob: Blob|undefined, filename: string) => {
+	const link = document.createElement('a');
+	link.href = URL.createObjectURL(blob!);
+	link.download = filename;
+	link.click();
+};
+
+export const getVersionFromTime = () => {
+    const now = new Date();
+    const oneDay = 1000 * 60 * 60 * 24;
+    
+    // day of year
+    const startDay = new Date(now.getFullYear(), 0, 0);
+    const diffDay = now.getTime() - startDay.getTime() + (startDay.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+    const day = Math.floor(diffDay / oneDay);
+
+    // seconds of day
+    const startSeconds = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+    const diffSeconds = now.getTime() - startSeconds.getTime();
+    const seconds = Math.floor(diffSeconds / 1000);
+
+    return [now.getFullYear(), day, seconds];
+}

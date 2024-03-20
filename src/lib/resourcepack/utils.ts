@@ -157,3 +157,39 @@ export const JextReader = async (blob: Blob) : Promise<Disc[]>=> {
 
     return obj
 }
+
+export const processImage = async (blob: Blob) => {
+    return await new Promise<Blob>((resolve) => {
+        const img = new Image()
+        img.src = URL.createObjectURL(blob)
+
+        const canvas = document.createElement("canvas")
+        const ctx = canvas.getContext('2d')!
+
+        img.onload = () => {
+            const size = Math.min(img.width, img.height)
+
+            canvas.width = size
+            canvas.height = size
+
+            ctx.drawImage(img, 0, 0, size, size, 0, 0, size, size)
+
+            canvas.toBlob((blob) => {
+                resolve(blob!)
+            }, "image/png")
+        }
+    });
+}
+
+export const getDuration = async (blob: Blob) : Promise<number> => {
+	return new Promise(resolve => {
+		const audio = document.createElement('audio');
+
+		audio.src = URL.createObjectURL(blob);
+
+		audio.onloadedmetadata = () => {
+			URL.revokeObjectURL(audio.src);
+			resolve(Math.ceil(audio.duration));
+		};
+	});
+};

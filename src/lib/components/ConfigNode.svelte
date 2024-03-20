@@ -42,6 +42,9 @@
 	}
 
     $: can_reset = type === 'enumSource' ? JSON.stringify(node.value) !== JSON.stringify(node.defaultValue) : node.value !== node.defaultValue;
+
+	// I hate this, but it's the only way to make the compiler happy
+	const notypecheck = (x : any) => x;
 </script>
 
 <div class="flex-col flex mx-3 justify-between sm:flex-row">
@@ -62,7 +65,7 @@
 			{:else if type == 'string'}
 				<MinecraftTextbox bind:value={node.value} placeholder={node.defaultValue} />
 			{:else if type == 'enum'}
-				<MinecraftComboBox bind:value={node.value} values={node.enumValues} />
+				<MinecraftComboBox bind:value={node.value} values={notypecheck(node.enumValues)} />
 			{:else if type == 'enumSource'}
 				<MinecraftButton on:click={open} flex={true}>Open editor</MinecraftButton>
 			{/if}

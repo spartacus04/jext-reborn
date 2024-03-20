@@ -136,15 +136,6 @@ export const loottables : Loottables = {
         },
     },
     "archaeology/*": {
-        /*
-            "archaeology/trail_ruins_rare" to 12,
-            "archaeology/trail_ruins_common" to 45,
-            "archaeology/ocean_ruin_cold" to 15,
-            "archaeology/ocean_ruin_warm" to 15,
-            "archaeology/desert_pyramid" to 8,
-            "archaeology/desert_well" to 8,
-        */
-
         "Trail ruins": {
             version: 15,
             img: 'loottable_icons/Trail_Ruins.webp',

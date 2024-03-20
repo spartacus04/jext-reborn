@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use base64::{engine::general_purpose::{self, STANDARD}, Engine};
-use ffmpeg_sidecar::event::{FfmpegEvent, FfmpegProgress};
+use ffmpeg_sidecar::event::FfmpegEvent;
 use tauri::{api::dialog, Manager};
 use std::{fs, io::{Read, Write}};
 
@@ -26,7 +26,7 @@ fn download_ffmpeg(app_handle: tauri::AppHandle) -> bool {
     }
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 fn ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle) -> String {
     let binary = STANDARD.decode(input).unwrap();
 
@@ -62,9 +62,8 @@ fn ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle) -> Str
             return String::from("");
         }
     }
-
+    
     // run the ffmpeg command with the args and the temporary file
-
     let mut ffmpeg = ffmpeg_sidecar::command::FfmpegCommand::new()
         .input(input_file_path)
         .args(args)
@@ -75,10 +74,21 @@ fn ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle) -> Str
     ffmpeg.iter().unwrap()
         .for_each(|e| {
         match e {
-            FfmpegEvent::Progress(FfmpegProgress { frame, .. }) =>
-            println!("Current frame: {frame}"),
-            FfmpegEvent::Log(_level, msg) =>
-            println!("[ffmpeg] {msg}"),
+            FfmpegEvent::Log(_level, msg) => {
+                println!("[ffmpeg] {msg}");
+
+                if !msg.contains("time=") || !msg.contains("speed=") {
+                    return;
+                }
+
+                let time = msg.split("time=").collect::<Vec<&str>>()[1].split(" ").collect::<Vec<&str>>()[0];
+
+                if time.starts_with("-") {
+                    return;
+                }
+
+                app_handle.emit_all("ffmpeg-progress", time).unwrap();
+            }
             _ => {}
         }
         });

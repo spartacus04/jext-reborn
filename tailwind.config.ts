@@ -19,6 +19,7 @@ export default {
 		fontFamily: {
 			'cascadia': 'Cascadia Code',
 			'minecraft': 'Minecraft Regular',
+			'minecraft-launcher': 'Minecraft Launcher',
 		}
 	},
 	plugins: [
