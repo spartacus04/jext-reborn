@@ -1,17 +1,21 @@
 import { discsStore, resourcePackStore } from "$lib/config"
 import { get } from "svelte/store"
 import { getDuration, processImage } from "./utils";
-import { prepareAudio } from "$lib/ffmpeg";
+import { loadFFmpeg, prepareAudio } from "$lib/ffmpeg";
 import JSZip from "jszip";
 import { getVersionFromTime } from "$lib/utils";
 
-export const processResources = async (onError: (err : string) => unknown, onProgress: (progress: number) => unknown) => {
+export const processResources = async (onError: (err : string) => unknown, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) => {
     const discs = get(discsStore);
     
     let current = 0;
-    
+
+    const total = discs.filter(disc => disc.uploadData).length
+
     for (const [i, disc] of discs.entries()) {
         if(disc.uploadData) {
+            onProgress(total, current, `Processing ${disc["disc-namespace"]}`, 1)
+            onProgress(undefined, undefined, undefined, 2);
             const usedModelDatas = discs.map(disc => disc["model-data"]).filter(model => model != -1);
 
             // first available counting from 1
@@ -27,10 +31,7 @@ export const processResources = async (onError: (err : string) => unknown, onPro
                 mono: disc.uploadData.mono,
                 normalize: disc.uploadData.normalize,
                 quality: disc.uploadData.quality
-            }, percent => {
-                onProgress((current * 100 + Math.floor(percent)))
-            });
-
+            }, onProgress);
             
             if(!track) onError(`Failed to process track for ${disc["disc-namespace"]}`)
             else {
@@ -300,24 +301,23 @@ export const mergeResourcePacks = async (base: Blob) : Promise<Blob> => {
     return await rp.generateAsync({type: "blob"});
 }
 
-export const outputEverything = async (onJavaRp: (rp: Blob) => unknown, onProgress?: (total: number, done: number) => unknown, onBedrockRp?: (rp: Blob) => unknown) => {
-    const discs = get(discsStore);
+export const outputEverything = async (onJavaRp: (rp: Blob) => unknown, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown, onBedrockRp: (rp: Blob) => unknown) => {
+    await loadFFmpeg(onProgress);
 
-    const totalTasks = discs.filter(disc => disc.uploadData).length * 100 + 20;
-    
+    onProgress(3, 1, "Constructing discs", 0);
+
     await processResources(err => {
         alert(err);
-    }, progress => {
-        onProgress?.(totalTasks, progress);
-    })
+    }, onProgress);
+
+    onProgress(undefined, undefined, undefined, 1);
+
+    onProgress(3, 2, "Building ResourcePack", 0);
 
     const generatedRp = await generateResourcePack();
-    onProgress?.(totalTasks, totalTasks - 10);
     const mergedRp = await mergeResourcePacks(generatedRp);
-    onProgress?.(totalTasks, totalTasks);
+    onProgress(3, 3, "Done!", 0);
     
     onJavaRp(mergedRp);
-
-    // if(bedrock)
-        onBedrockRp?.(await generateGeyserResourcePack());
+    onBedrockRp(await generateGeyserResourcePack());
 }

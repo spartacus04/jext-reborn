@@ -20,6 +20,7 @@ export default {
 			'cascadia': 'Cascadia Code',
 			'minecraft': 'Minecraft Regular',
 			'minecraft-launcher': 'Minecraft Launcher',
+			'minecraft-title': 'Minecraft Title',
 		}
 	},
 	plugins: [

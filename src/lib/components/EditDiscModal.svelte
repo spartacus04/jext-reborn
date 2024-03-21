@@ -196,6 +196,17 @@
             modalStore.close();
         }
     }
+
+    const deleteDisc = () => {
+        discsStore.update(discs => {
+            return discs.filter(disc => !discNamespaces.includes(disc["disc-namespace"]));
+        })
+
+        if($modalStore[0]) {
+            $modalStore[0].response!!(true);
+            modalStore.close();
+        }
+    }
 </script>
 
 <main class="bg-surface-500 rounded-md p-2 h-[50%] overflow-y-auto w-[90%] sm:w-[80%] lg:w-[50%]">
@@ -269,8 +280,9 @@
             </div>
         {/if}
 
-        <div class="flex w-full items-center justify-center mt-4">
+        <div class="flex w-full items-center justify-center mt-4 gap-4">
             <button class="btn variant-filled-secondary text-white" on:click={exit}>Save</button>
+            <button class="btn variant-filled-error text-white" on:click={deleteDisc}>Delete disc{multiple ? 's' : ''}</button>
         </div>
 
     {/await}

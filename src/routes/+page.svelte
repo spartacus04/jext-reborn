@@ -187,8 +187,6 @@
 		});
 
 		selected = [];
-
-		console.log(selected);
 	}
 
 	discsStore.subscribe((discs) => {
@@ -221,16 +219,24 @@
 		modalStore.trigger({
 			type: 'component',
 			component: modalComponent,
-			title: 'Output discs'
+			title: 'Output discs',
+			backdropClasses: 'p-[0px!important]'
 		});
 	}
+
+	beforeNavigate(({from, to, cancel}) => {
+    	if(!confirm('Leave without saving?')) {
+    	  	return cancel();
+    	}
+		$discsStore = [];
+	});
 </script>
 
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar
 			regionRowMain="grid-cols-[1fr] sm:grid-cols-[auto_1fr_auto]"
-			slotTrail="-mt-6  justify-self-center"
+			slotTrail="-mt-6 justify-self-center"
 			background="bg-[#202020]"
 		>
 			<svelte:fragment slot="lead">
@@ -424,6 +430,15 @@
 									{/if}
 								{/each}
 							{/key}
+
+							{#if selectionMode}
+								<button
+									class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer"
+									on:click={editMultiple}
+								>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[50%] lucide lucide-pencil-ruler"><path d="m15 5 4 4"/><path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/></svg>
+								</button>
+							{/if}
 						</div>
 					</svelte:fragment>
 				</AccordionItem>

@@ -1,6 +1,6 @@
 import type { FFmpegData } from "./types"
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer } from "./utils";
+import { arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer, downloadWithProgress } from "./utils";
 import { invoke } from '@tauri-apps/api/tauri'
 import { get, writable } from "svelte/store";
 import { listen } from "@tauri-apps/api/event";
@@ -18,7 +18,7 @@ const qualityArgs = {
 
 export const localFFmpegStore = writable(false);
 
-export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (percent: number) => unknown) : Promise<Blob|null> => {
+export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) : Promise<Blob|null> => {
     const args = ['-vn', '-acodec', 'libvorbis'];
 
     if (data.mono) args.push('-ac', '1');
@@ -33,7 +33,7 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
         const unregister = await listen<string>('ffmpeg-progress', async event => {
             const [hours, minutes, seconds] = event.payload.split(':').map(Number);
 
-            onProgress?.((hours * 3600 + minutes * 60 + seconds) / duration * 100);
+            onProgress(duration, Math.ceil(hours * 3600 + minutes * 60 + seconds), 'Converting audio file', 2);
         })
 
         const result = <string>(await invoke('ffmpeg', {
@@ -43,6 +43,8 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
 
         unregister();
 
+        onProgress(undefined, undefined, undefined, 2);
+
         if(result === "") return null;
 
         return new Blob([base64ToArrayBuffer(result)], { type: 'audio/ogg' });
@@ -51,17 +53,15 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
         
         if(!ffmpeg.loaded) await ffmpeg.load(crossOriginIsolated ? {
             coreURL: `${baseMTURL}/ffmpeg-core.js`,
-            wasmURL: `${baseMTURL}/ffmpeg-core.wasm`,
-            workerURL: `${baseMTURL}/ffmpeg-core.worker.js`
+            wasmURL: `${baseMTURL}/ffmpeg-core.wasm`
         } : {
             coreURL: `${baseURL}/ffmpeg-core.js`,
-            wasmURL: `${baseURL}/ffmpeg-core.wasm`,
-            workerURL: `${baseURL}/ffmpeg-core.worker.js`
+            wasmURL: `${baseURL}/ffmpeg-core.wasm`
         });
         
         await ffmpeg.writeFile('input.ogg', new Uint8Array(await blobToArraBuffer(blob)));
         
-        ffmpeg.on('progress', (event) => onProgress?.(event.progress * 100));
+        ffmpeg.on('progress', (event) => onProgress(100, Math.ceil(event.progress * 100), 'Converting audio file', 2));
         
         await ffmpeg.exec([ '-i', `input.ogg`, ...args, `output.ogg` ]);
     
@@ -69,7 +69,45 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress?: (p
     
         ffmpeg.deleteFile(`input.ogg`);
         ffmpeg.deleteFile(`output.ogg`);
+
+        onProgress(undefined, undefined, undefined, 2)
     
         return new Blob([result], { type: 'audio/ogg' });
     }
+}
+
+export const loadFFmpeg = async (onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) => {
+    const ffmpeg = new FFmpeg();
+
+    if(window.__TAURI__ || ffmpeg.loaded) return;
+
+    onProgress(2, 0, 'Downloading ffmpeg-core.js', 1);
+
+    await ffmpeg.load(crossOriginIsolated ? {
+        coreURL: await fetchData(`${baseMTURL}/ffmpeg-core.js`, (done) => {
+            if(done) onProgress(2, 1, 'Downloading ffmpeg-core.wasm', 1);
+        }),
+        wasmURL: await fetchData(`${baseMTURL}/ffmpeg-core.wasm`, (done) => {
+            if(done) onProgress(2, 2, 'Finished downloading', 1);
+        })
+    } : {
+        coreURL: await fetchData(`${baseURL}/ffmpeg-core.js`, (done) => {
+            if(done) onProgress(2, 1, 'Downloading ffmpeg-core.wasm', 1);
+        }),
+        wasmURL: await fetchData(`${baseURL}/ffmpeg-core.wasm`, (done) => {
+            if(done) onProgress(2, 2, 'Finished downloading', 1);
+        })
+    });
+
+    onProgress(undefined, undefined, undefined, 1);
+}
+
+const fetchData = async (url: string, progress: (done: boolean) => unknown) => {
+    const arraybuffer = await downloadWithProgress(url, (e) => {
+        progress(e.done);
+    });
+
+    return URL.createObjectURL(new Blob([arraybuffer], {
+        type: url.endsWith('.wasm') ? 'application/wasm' : 'application/javascript' 
+    }));
 }

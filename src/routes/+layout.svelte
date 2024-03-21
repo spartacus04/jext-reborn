@@ -27,14 +27,14 @@
 			appWindow.requestUserAttention(UserAttentionType.Critical);
 			appWindow.setFocus();
 		});
-
-		onMount(async () => {
-			if(!navigator.userAgent.toLowerCase().includes('linux')) {
-				if(!window.location.href.includes('?')) return window.location.href = 'jext://open';
-				window.location.href = `jext://open?${window.location.href.split('?')[1]}`
-			}
-		})
 	}
+
+	onMount(async () => {
+		if(!navigator.userAgent.toLowerCase().includes('linux')) {
+			if(!window.location.href.includes('?')) return window.location.href = 'jext://open';
+			window.location.href = `jext://open?${window.location.href.split('?')[1]}`
+		}
+	})
 
 </script>
 
