@@ -4,8 +4,9 @@ import { getDuration, processImage } from "./utils";
 import { loadFFmpeg, prepareAudio } from "$lib/ffmpeg";
 import JSZip from "jszip";
 import { getVersionFromTime } from "$lib/utils";
+import type { FFmpeg } from "@ffmpeg/ffmpeg";
 
-export const processResources = async (onError: (err : string) => unknown, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) => {
+export const processResources = async (ffmpeg: FFmpeg|null, onError: (err : string) => unknown, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) => {
     const discs = get(discsStore);
     
     let current = 0;
@@ -31,7 +32,7 @@ export const processResources = async (onError: (err : string) => unknown, onPro
                 mono: disc.uploadData.mono,
                 normalize: disc.uploadData.normalize,
                 quality: disc.uploadData.quality
-            }, onProgress);
+            }, onProgress, ffmpeg);
             
             if(!track) onError(`Failed to process track for ${disc["disc-namespace"]}`)
             else {
@@ -77,7 +78,7 @@ export const generateResourcePack = async () : Promise<Blob> => {
     // pack.mcmeta
     rp.file('pack.mcmeta', JSON.stringify({
         pack: {
-            version: resourcePackData.version,
+            pack_format: resourcePackData.version,
             description: resourcePackData.description
         }
     }, null, 2));
@@ -302,11 +303,11 @@ export const mergeResourcePacks = async (base: Blob) : Promise<Blob> => {
 }
 
 export const outputEverything = async (onJavaRp: (rp: Blob) => unknown, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown, onBedrockRp: (rp: Blob) => unknown) => {
-    await loadFFmpeg(onProgress);
+    const ffmpeg = await loadFFmpeg(onProgress);
 
     onProgress(3, 1, "Constructing discs", 0);
 
-    await processResources(err => {
+    await processResources(ffmpeg, err => {
         alert(err);
     }, onProgress);
 

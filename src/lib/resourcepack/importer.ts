@@ -34,7 +34,7 @@ export const importRP = async (discStore: Writable<Disc[]>, rp: Blob, discsJson:
     resourcePackStore.set({
         icon: await zip.file('pack.png')?.async('blob') ?? get(resourcePackStore).icon,
         description: JSON.parse(await zip.file('pack.mcmeta')!.async('text')).pack.description as string,
-        version: JSON.parse(await zip.file('pack.mcmeta')!.async('text')).pack.version as number,
+        version: JSON.parse(await zip.file('pack.mcmeta')!.async('text')).pack.pack_format as number,
         packs: [{
             name: 'Imported Pack',
             icon: await zip.file('pack.png')?.async('blob') ?? get(resourcePackStore).icon,

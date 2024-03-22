@@ -18,7 +18,7 @@ const qualityArgs = {
 
 export const localFFmpegStore = writable(false);
 
-export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) : Promise<Blob|null> => {
+export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown, ffmpeg: FFmpeg|null) : Promise<Blob|null> => {
     const args = ['-vn', '-acodec', 'libvorbis'];
 
     if (data.mono) args.push('-ac', '1');
@@ -49,8 +49,8 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress: (to
 
         return new Blob([base64ToArrayBuffer(result)], { type: 'audio/ogg' });
     } else {
-        const ffmpeg = new FFmpeg();
-        
+        if(ffmpeg === null) return null;
+
         if(!ffmpeg.loaded) await ffmpeg.load(crossOriginIsolated ? {
             coreURL: `${baseMTURL}/ffmpeg-core.js`,
             wasmURL: `${baseMTURL}/ffmpeg-core.wasm`
@@ -76,10 +76,10 @@ export const prepareAudio = async (blob: Blob, data: FFmpegData, onProgress: (to
     }
 }
 
-export const loadFFmpeg = async (onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) => {
+export const loadFFmpeg = async (onProgress: (total: number|undefined, done: number|undefined, status: string|undefined, index: number) => unknown) : Promise<FFmpeg | null> => {
     const ffmpeg = new FFmpeg();
 
-    if(window.__TAURI__ || ffmpeg.loaded) return;
+    if(window.__TAURI__ || ffmpeg.loaded) return null;
 
     onProgress(2, 0, 'Downloading ffmpeg-core.js', 1);
 
@@ -100,6 +100,8 @@ export const loadFFmpeg = async (onProgress: (total: number|undefined, done: num
     });
 
     onProgress(undefined, undefined, undefined, 1);
+
+    return ffmpeg;
 }
 
 const fetchData = async (url: string, progress: (done: boolean) => unknown) => {
