@@ -1,4 +1,4 @@
-package me.spartacus04.jext.commands
+package me.spartacus04.jext.commands.executors
 
 import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.State.PLUGIN
@@ -9,7 +9,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
-class MainCommand : ExecutorAdapter("jext") {
+class ExecutorMain : ExecutorAdapter("jext") {
     override fun execute(sender: CommandSender, args: Array<String>) {
         if(args.isEmpty()) {
             sender.sendMessage(LANG.replaceParameters(JEXT_VERSION, hashMapOf(
@@ -23,7 +23,7 @@ class MainCommand : ExecutorAdapter("jext") {
 
         val subcommand = commandRegistry.find { it.subCommandString == args[0] } ?: return
 
-        Bukkit.dispatchCommand(sender, "${subcommand.commandString} ${subArgs.joinToString { " " }}")
+        Bukkit.dispatchCommand(sender, "${subcommand.commandString} ${subArgs.joinToString(separator = " ")}")
     }
 
     override fun onTabComplete(
@@ -37,9 +37,8 @@ class MainCommand : ExecutorAdapter("jext") {
         }
 
         val commandExecutor = commandRegistry.find {
-            it.subCommandString == args[1]
+            it.subCommandString == args[0]
         } ?: return null
-
 
         val subArgs = args.copyOfRange(1, args.size)
         return commandExecutor.onTabComplete(sender, command, commandExecutor.commandString, subArgs)

@@ -4,7 +4,7 @@ import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.gui.JukeboxGuiContainer
+import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.listeners.utils.JextListener
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -57,14 +57,14 @@ internal class JukeboxClickEvent : JextListener() {
 
         if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) return
 
-        JukeboxGuiContainer(event.player, block)
+        JukeboxGui(event.player, block)
     }
 
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
-        JukeboxGuiContainer.destroyJukebox(loc).forEach {
+        JukeboxGui.destroyJukebox(loc).forEach {
             loc.world!!.dropItemNaturally(loc, it)
         }
 

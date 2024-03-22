@@ -85,7 +85,6 @@ open class ExecutorAdapter(val commandString: String, subCommandString: String? 
             return true
         }
 
-        if (args.size > parameters.size && commandString != "jext") return false
         if (args.size < parameters.size) {
             if (args.isEmpty() || parameters[args.size - 1].isRequired) {
                 if (parameters[args.size].isRequired) return false

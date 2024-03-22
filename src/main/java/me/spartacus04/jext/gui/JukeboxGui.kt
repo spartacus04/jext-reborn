@@ -26,7 +26,7 @@ import xyz.xenondevs.invui.window.Window
 import java.util.*
 import kotlin.collections.HashMap
 
-class JukeboxGuiContainer {
+class JukeboxGui {
     private val player: Player
     private val id: String
     private val block: Block?

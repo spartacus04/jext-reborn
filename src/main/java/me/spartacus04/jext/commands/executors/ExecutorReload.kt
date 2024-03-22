@@ -1,4 +1,4 @@
-package me.spartacus04.jext.commands
+package me.spartacus04.jext.commands.executors
 
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
