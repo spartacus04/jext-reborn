@@ -44,7 +44,7 @@ export const processResources = async (onError: (err : string) => unknown, onPro
                     track: track
                 }
 
-                disc['disc-namespace'] = `${disc.name}${disc.author}${disc["model-data"]}`
+                disc['disc-namespace'] = `${disc.title}${disc.author}${disc["model-data"]}`
 					.replace(/[^a-zA-Z0-9]/g, '')
 					.replaceAll('1', 'one')
 					.replaceAll('2', 'two')

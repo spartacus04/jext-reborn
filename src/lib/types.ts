@@ -8,7 +8,7 @@ export interface ConfigNode<T> {
 }
 
 export interface Disc {
-	name: string,
+	title: string,
 	author: string,
 	duration: number,
 	"disc-namespace": string,

@@ -24,7 +24,7 @@
                 const { discTexture, fragmentTexture } = await randomTextures();
 
                 const disc : Disc = {
-                    name,
+                    title: name,
                     author,
                     "creeper-drop": true,
                     "model-data": -1,
@@ -91,7 +91,7 @@
                     {#if disc.uploadData}
                         <img src={URL.createObjectURL(disc.uploadData.uploadedTexture)} alt="Disc texture" class="w-10 h-10" />
                     {/if}
-                    <p>{disc.name} - {disc.author}</p>
+                    <p>{disc.title} - {disc.author}</p>
                 </div>
             {/await}
             

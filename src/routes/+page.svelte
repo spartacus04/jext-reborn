@@ -192,7 +192,7 @@
 	discsStore.subscribe((discs) => {
 		discs.forEach((disc, i) => {
 			if (disc.uploadData) {
-				disc['disc-namespace'] = `${disc.name}${disc.author}${i}`
+				disc['disc-namespace'] = `${disc.title}${disc.author}${i}`
 					.replace(/[^a-zA-Z0-9]/g, '')
 					.replaceAll('1', 'one')
 					.replaceAll('2', 'two')
@@ -306,7 +306,7 @@
 												<h3
 													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
 												>
-													{disc.name}
+													{disc.title}
 												</h3>
 												<p
 													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"
@@ -329,7 +329,7 @@
 												<h3
 													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
 												>
-													{disc.name}
+													{disc.title}
 												</h3>
 												<p
 													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"
@@ -395,7 +395,7 @@
 												<h3
 													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
 												>
-													{disc.name}
+													{disc.title}
 												</h3>
 												<p
 													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"
@@ -418,7 +418,7 @@
 												<h3
 													class="h3 font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden"
 												>
-													{disc.name}
+													{disc.title}
 												</h3>
 												<p
 													class="p font-minecraft text-ellipsis w-[calc(100%)] whitespace-nowrap overflow-hidden text-mc-light-gray"

@@ -2,7 +2,7 @@ import type { Disc } from "$lib/types";
 import disc_template from "$lib/assets/disc_template.png";
 import fragment_template from "$lib/assets/fragment_template.png";
 
-export const namespace = (disc: Disc) => `${disc.name}${disc.author}${disc["model-data"]}`
+export const namespace = (disc: Disc) => `${disc.title}${disc.author}${disc["model-data"]}`
     .replace(/[^a-zA-Z0-9]/g, '')
     .replaceAll('1', 'one')
     .replaceAll('2', 'two')

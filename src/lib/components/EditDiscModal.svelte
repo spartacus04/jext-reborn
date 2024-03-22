@@ -22,7 +22,7 @@
     $: multiple = discNamespaces.length > 1;
 
     export let tempDisc : {
-        name: { value: string, edited: boolean },
+        title: { value: string, edited: boolean },
         author: { value: string, edited: boolean },
         "creeper-drop": { value: boolean, edited: boolean },
         lores: { value: string[], edited: boolean },
@@ -47,7 +47,7 @@
         }
 
         tempDisc = {
-            name: { value: discs.every(disc => disc.name === discs[0].name) ? discs[0].name : "", edited: false },
+            title: { value: discs.every(disc => disc.title === discs[0].title) ? discs[0].title : "", edited: false },
             author: { value: discs.every(disc => disc.author === discs[0].author) ? discs[0].author : "", edited: false },
             "creeper-drop": { value: discs.every(disc => disc["creeper-drop"] === discs[0]["creeper-drop"]) ? discs[0]["creeper-drop"] : false, edited: false },
             lores: { value: discs.every(disc => disc.lores === discs[0].lores) ? discs[0].lores : [], edited: false },
@@ -233,14 +233,14 @@
                 }} />
             </div>
             <div class="flex flex-col flex-1 justify-around gap-2">
-                <MinecraftTextbox placeholder="Name" bind:value={tempDisc.name.value} on:input={() => setUpdatedPropery('name')} />
+                <MinecraftTextbox placeholder="Name" bind:value={tempDisc.title.value} on:input={() => setUpdatedPropery('name')} />
                 <MinecraftTextbox placeholder="Author" bind:value={tempDisc.author.value} on:input={() => setUpdatedPropery('author')}/>
             </div>
         </div>
         
         <div class="h-2 border-b-2 border-[#232323] mb-2" />
 
-        <FormatEditor on:input={() => setUpdatedPropery('lores')} bind:split={tempDisc.lores.value} text={initalText} firstline={tempDisc.author.value != '' ? `${tempDisc.name.value} - ${tempDisc.author.value}` : tempDisc.name.value} />
+        <FormatEditor on:input={() => setUpdatedPropery('lores')} bind:split={tempDisc.lores.value} text={initalText} firstline={tempDisc.author.value != '' ? `${tempDisc.title.value} - ${tempDisc.author.value}` : tempDisc.title.value} />
 
         <div class="h-2 border-b-2 border-[#232323] mb-2" />
 
