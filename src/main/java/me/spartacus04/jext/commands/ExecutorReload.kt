@@ -6,7 +6,6 @@ import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.JextMetrics
-import me.spartacus04.jext.utils.JextMetrics.Companion.METRICS
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.command.CommandSender
 
@@ -14,7 +13,7 @@ import org.bukkit.command.CommandSender
  * ExecutorReload is a class used to register the "jext" command to the plugin.
  *
  */
-internal class ExecutorReload : ExecutorAdapter("jext") {
+internal class ExecutorReload : ExecutorAdapter("jextreload", "reload") {
     /**
      * The function `execute` reloads the plugin.
      *

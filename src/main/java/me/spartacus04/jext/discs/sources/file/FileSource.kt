@@ -15,7 +15,7 @@ import java.io.File
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.math.BigInteger
-import java.net.URL
+import java.net.URI
 import java.security.MessageDigest
 import java.util.zip.ZipFile
 import javax.net.ssl.HttpsURLConnection
@@ -68,7 +68,7 @@ class FileSource : DiscSource {
         if(rpUrl.isNotEmpty()) {
             // fetch resource pack from url
 
-            val url = URL(rpUrl)
+            val url = URI(rpUrl).toURL()
             val connection = withContext(Dispatchers.IO) {
                 url.openConnection()
             } as HttpsURLConnection
