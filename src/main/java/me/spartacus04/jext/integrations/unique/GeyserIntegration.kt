@@ -8,62 +8,51 @@ import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.GeyserApi
 import org.geysermc.geyser.api.event.EventRegistrar
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomItemsEvent
-import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent
-import org.geysermc.geyser.api.extension.Extension
 import org.geysermc.geyser.api.item.custom.CustomItemData
 import org.geysermc.geyser.api.item.custom.CustomItemOptions
 
 
 internal class GeyserIntegration : EventRegistrar {
-    private var discs : List<CustomItemData>
-    private var fragments : List<CustomItemData>? = null
 
     init {
         GeyserApi.api().eventBus().register(this, PLUGIN)
-
-        discs = DISCS.map {
-            val itemOptions = CustomItemOptions.builder()
-                .customModelData(it.discItemStack.itemMeta?.customModelData ?: 0)
-                .build()
-
-            CustomItemData.builder()
-                .icon(it.namespace)
-                .name(it.namespace)
-                .customItemOptions(itemOptions)
-                .build()
-        }
-
-        if(VERSION >= "1.19") {
-            fragments = DISCS.map {
-                val itemOptions = CustomItemOptions.builder()
-                    .customModelData(it.fragmentItemStack?.itemMeta?.customModelData ?: 0)
-                    .build()
-
-                CustomItemData.builder()
-                    .icon(it.namespace)
-                    .name(it.namespace)
-                    .customItemOptions(itemOptions)
-                    .build()
-
-            }
-        }
+        GeyserApi.api().eventBus().subscribe(this, GeyserDefineCustomItemsEvent::class.java, this::onGeyserInit)
     }
 
     @Suppress("unused")
     @Subscribe
     private fun onGeyserInit(event : GeyserDefineCustomItemsEvent) {
-        discs.forEach {
+        DISCS.map {
+            val itemOptions = CustomItemOptions.builder()
+                .customModelData(it.discItemStack.itemMeta!!.customModelData)
+                .build()
+
+            CustomItemData.builder()
+                .icon("music_disc_${it.namespace}")
+                .name(it.namespace)
+                .displayName("Music Disc")
+                .customItemOptions(itemOptions)
+                .build()
+        }.forEach {
             event.register("minecraft:music_disc_11", it)
         }
-        fragments?.forEach {
-            event.register("minecraft:disc_fragment_5", it)
-        }
-    }
 
-    @Subscribe
-    private fun onPostInitialize(event: GeyserPostInitializeEvent?) {
-        // example: show that your extension is loading.
-        println("Loading example extension...")
+        if(VERSION >= "1.19") {
+            DISCS.map {
+                val itemOptions = CustomItemOptions.builder()
+                    .customModelData(it.fragmentItemStack?.itemMeta?.customModelData ?: 0)
+                    .build()
+
+                CustomItemData.builder()
+                    .icon("fragment_${it.namespace}")
+                    .name(it.namespace)
+                    .displayName("Disc Fragment")
+                    .customItemOptions(itemOptions)
+                    .build()
+            }.forEach {
+                event.register("minecraft:disc_fragment_5", it)
+            }
+        }
     }
 
     fun isBedrockPlayer(player: Player) : Boolean {

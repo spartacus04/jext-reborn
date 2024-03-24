@@ -40,10 +40,11 @@ internal class Jext : JavaPlugin() {
 
     private fun load() {
         DISCS.registerDiscSource(FileSource()) {
+            INTEGRATIONS.reloadDefaultIntegrations()
             JukeboxGui.loadFromFile()
         }
+
         ListenerRegistrant.registerListeners()
-        INTEGRATIONS.reloadDefaultIntegrations()
 
         CommandRegistrant.registerCommands()
 

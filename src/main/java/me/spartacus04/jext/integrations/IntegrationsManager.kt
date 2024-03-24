@@ -1,6 +1,8 @@
 package me.spartacus04.jext.integrations
 
 import me.spartacus04.jext.integrations.unique.GeyserIntegration
+import me.spartacus04.jext.language.LanguageManager.Companion.GEYSER_RELOAD
+import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
@@ -33,9 +35,11 @@ class IntegrationsManager {
         } catch (_: NoClassDefFoundError) { }
 
         try {
-            if(GeyserIntegration.GEYSER == null) {
+            if(GeyserIntegration.GEYSER == null)
                 GeyserIntegration.GEYSER = GeyserIntegration()
-            }
+            else
+                Bukkit.getConsoleSender().sendMessage(GEYSER_RELOAD)
+
         } catch (_ : NoClassDefFoundError) { }
     }
 }
