@@ -25,7 +25,6 @@ class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
         else
             "https://spartacus04.github.io/jext.reborn/${page}?c=c&port=${CONFIG.WEB_INTERFACE_PORT}"
 
-
         sender.sendJEXTMessage("webui", hashMapOf(
             "url" to url
         ))
