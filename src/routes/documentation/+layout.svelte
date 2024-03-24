@@ -119,7 +119,12 @@
         {/if}
     </button>
 </div> 
-    
+
+<svelte:head>
+	<title>JEXT Documentation</title>
+	<meta name="description" content="Web GUI for the Jext Reborn Minecraft plugin. Here you can check the documentation with ease">
+</svelte:head>
+
 <main class="p-5" bind:this={main}>
     <slot />
 </main>

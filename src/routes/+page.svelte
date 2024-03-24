@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LoginStore, healthCheck, isLoggedIn, login, logout } from '$lib/login';
+	import { LoginStore, fetchAuthed, healthCheck, isLoggedIn, login, logout } from '$lib/login';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 	import {
@@ -14,7 +14,7 @@
 	import type { Disc } from '$lib/types';
 	import MinecraftButton from '$lib/components/MinecraftButton.svelte';
 	import ImportResourcePackModal from '$lib/components/ImportResourcePackModal.svelte';
-	import { JextReader } from '$lib/resourcepack/utils';
+	import { JextReader, RPChecker } from '$lib/resourcepack/utils';
 	import { importRP } from '$lib/resourcepack/importer';
 	import CreateDiscModal from '$lib/components/CreateDiscModal.svelte';
 	import { press } from 'svelte-gestures';
@@ -27,7 +27,6 @@
 
 	export let data: PageData;
 	const modalStore = getModalStore();
-
 
 	onMount(async () => {
 		if (isLoggedIn()) {
@@ -102,10 +101,35 @@
 			const discsObj = discs ? JSON.parse(discs) : await JextReader(resourcePack);
 
 			await importRP(discsStore, resourcePack, discsObj);
-
-			console.log($discsStore);
 		})();
 	};
+
+	const importFromPlugin = async () => {
+		if(!isLoggedIn()) {
+
+			const connected = await login(modalStore, {
+				ip: data.server.ip,
+				port: data.server.port,
+			})
+
+			if(!connected) return;
+		}
+
+		reload = (async () => {
+			const response = await fetchAuthed('discs/read');
+			
+			const rp = await response.blob();
+			
+			if(await RPChecker(rp) != 'JextRP') {
+				alert('The resourcepack is not a JEXT Resourcepack, please import it manually');
+				return;
+			}
+
+			const discs = await JextReader(rp);
+		
+			await importRP(discsStore, rp, discs);
+		})();
+	}
 
 	const addDisc = async () => {
 		const modalComponent: ModalComponent = { ref: CreateDiscModal };
@@ -224,13 +248,21 @@
 		});
 	}
 
-	beforeNavigate(({from, to, cancel}) => {
+	beforeNavigate(({ cancel }) => {
+		if($discsStore.length == 0) return;
+
     	if(!confirm('Leave without saving?')) {
     	  	return cancel();
     	}
+
 		$discsStore = [];
 	});
 </script>
+
+<svelte:head>
+	<title>JEXT Resourcepack Manager</title>
+	<meta name="description" content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the resourcepack and music discs with ease!">
+</svelte:head>
 
 <AppShell>
 	<svelte:fragment slot="header">
@@ -274,6 +306,8 @@
 				<h1 class="h1 font-minecraft">Wow, so empty!</h1>
 				<div class="flex flex-col sm:flex-row items-center gap-2">
 					<MinecraftButton on:click={importPack}>Import a JEXT resource pack</MinecraftButton>
+					<p class="p font-minecraft">or</p>
+					<MinecraftButton on:click={importFromPlugin}>Import from plugin API</MinecraftButton>
 					<p class="p font-minecraft">or</p>
 					<MinecraftButton on:click={addDisc}>Create a new disc</MinecraftButton>
 				</div>

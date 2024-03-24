@@ -14,6 +14,7 @@
     import { fade } from 'svelte/transition';
     import default_icon from '$lib/assets/default_icon.png';
 	import ForgeProgressBar from "./ForgeProgressBar.svelte";
+	import { fetchAuthed, isLoggedIn } from "$lib/login";
 
     const modalStore = getModalStore();
 
@@ -91,6 +92,27 @@
         bedrockRp = rp;
     });
 
+    const applyToServer = async () => {
+        try {
+            const javaResponse = await fetchAuthed('discs/apply', {
+                method: 'POST',
+                body: await javaRp?.arrayBuffer()
+            });
+
+            if(javaResponse.status != 200) {
+                throw new Error('Could not apply resourcepack');
+            }
+
+            const bedrockResponse = await fetchAuthed('discs/applygeyser', {
+                method: 'POST',
+                body: await bedrockRp?.arrayBuffer()
+            })
+
+        } catch(e) {
+            alert(e);
+        }
+    }
+
     window.onresize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -108,6 +130,9 @@
             -3px -3px 0 #000,
             3px -3px 0 #000;">Your resourcepack is ready</h1>
             <div class="flex gap-4 flex-col w-[75%] sm:w-[50%]">
+                {#if isLoggedIn()}
+                    <MinecraftButton on:click={applyToServer}>Apply to your JEXT server!</MinecraftButton>
+                {/if}
                 <MinecraftButton on:click={() => saveAs(javaRp, 'resourcepack.zip')}>Download Resource Pack for Minecraft: Java Edition</MinecraftButton>
                 <MinecraftButton enabled={bedrockRp != undefined} on:click={() => saveAs(bedrockRp, 'resourcepack-geysermc.mcpack')}>
                     {#if bedrockRp == undefined}

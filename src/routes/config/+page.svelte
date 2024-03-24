@@ -127,6 +127,10 @@
     })
 </script>
 
+<svelte:head>
+	<title>JEXT Config Manager</title>
+	<meta name="description" content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the plugin configuration remotely with ease!">
+</svelte:head>
 
 {#await fetchPageSettings()}
     <div class="h-full w-full flex items-center justify-center">

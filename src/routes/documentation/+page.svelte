@@ -4,5 +4,4 @@
     export let data: PageData;
 </script>
 
-
 {@html data.props?.html}
