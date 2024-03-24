@@ -25,7 +25,11 @@ data class JukeboxEntry(
         return if(type == "jext") {
             val disc = DISCS[value]
 
-            disc!!.discItemStack
+            disc?.discItemStack
+                ?: arrayListOf(
+                    SOUND_MAP.keys.map { mat -> ItemStack(mat) },
+                    DISCS.map { discm -> discm.discItemStack }
+                ).flatten().random()
         } else {
             val material = Material.matchMaterial(value)
 

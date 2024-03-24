@@ -117,6 +117,10 @@ tasks.processResources {
     filesMatching("plugin.yml") {
         expand("version" to project.rootProject.version)
     }
+
+    filesMatching("extension.yml") {
+        expand("version" to project.rootProject.version)
+    }
 }
 
 // publish

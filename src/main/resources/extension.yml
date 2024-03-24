@@ -1,0 +1,6 @@
+id: jext
+name: JukeboxExtendedReborn
+main: me.spartacus04.jext.integrations.unique.GeyserIntegration
+api: 1.0.0
+version: ${version}
+authors: [ Spartacus04 ]
