@@ -46,4 +46,6 @@ class DiscManager : Iterable<Disc> {
     operator fun get(itemMeta: ItemMeta): Disc? {
         return discs.find { it.namespace == DiscPersistentDataContainer(itemMeta).namespaceID }
     }
+
+    fun size() = discs.size
 }

@@ -7,7 +7,7 @@ import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
-import me.spartacus04.jext.gui.JukeboxGuiContainer
+import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
@@ -40,7 +40,7 @@ internal class Jext : JavaPlugin() {
 
     private fun load() {
         DISCS.registerDiscSource(FileSource()) {
-            JukeboxGuiContainer.loadFromFile()
+            JukeboxGui.loadFromFile()
         }
         ListenerRegistrant.registerListeners()
         INTEGRATIONS.reloadDefaultIntegrations()

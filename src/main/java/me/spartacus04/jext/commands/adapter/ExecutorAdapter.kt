@@ -17,22 +17,17 @@ import org.bukkit.entity.Player
  *
  * @param commandString The `commandString` parameter is a string representing the command name.
  */
-open class ExecutorAdapter(commandString: String) : CommandExecutor, TabCompleter {
+open class ExecutorAdapter(val commandString: String, subCommandString: String? = null) : CommandExecutor, TabCompleter {
 
     /**
-     * The `commandString` property is a string representing the command name.
+     * The `subcommandString` property is a string representing the subcommand name.
      */
-    private val commandString: String
+    val subCommandString = subCommandString ?: commandString
 
     /**
      * The `parameters` property is a mutable list of parameters.
      */
-    private val parameters: MutableList<Parameter>
-
-    init {
-        parameters = ArrayList()
-        this.commandString = commandString
-    }
+    private val parameters: MutableList<Parameter> = ArrayList()
 
     /**
      * Adds a parameter to the command.
@@ -90,7 +85,6 @@ open class ExecutorAdapter(commandString: String) : CommandExecutor, TabComplete
             return true
         }
 
-        if (args.size > parameters.size) return false
         if (args.size < parameters.size) {
             if (args.isEmpty() || parameters[args.size - 1].isRequired) {
                 if (parameters[args.size].isRequired) return false

@@ -5,10 +5,10 @@ import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
     java
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
-    id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jetbrains.dokka") version "1.9.20"
 
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
@@ -20,7 +20,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.10")
+        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
         classpath("com.guardsquare:proguard-gradle:7.4.2") {
             exclude("com.android.tools.build")
         }
@@ -43,18 +43,18 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
-    compileOnly("org.scala-lang:scala-library:2.13.12")
+    compileOnly("org.scala-lang:scala-library:2.13.13")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
     compileOnly("org.geysermc.geyser:api:2.2.2-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.2")
-    implementation("xyz.xenondevs.invui:invui:1.25")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.25")
+    implementation("xyz.xenondevs.invui:invui:1.26")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.26")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 }
 
 group = "me.spartacus04.jext"

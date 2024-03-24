@@ -7,6 +7,7 @@ import me.spartacus04.jext.webapi.auth.ConnectHandler
 open class JextHttpHandler(private val requireAuth: Boolean) : HttpHandler {
     override fun handle(exchange: HttpExchange) {
         val origin = exchange.requestHeaders["Origin"]?.firstOrNull() ?: "*"
+
         exchange.responseHeaders.add("Access-Control-Allow-Origin", origin)
         exchange.responseHeaders.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         exchange.responseHeaders.add("Access-Control-Allow-Headers", "Authorization, *")

@@ -22,7 +22,6 @@ class IntegrationsManager {
     fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean = integrations.all { it.hasJukeboxGuiAccess(player, block) }
 
     fun reloadDefaultIntegrations() {
-        // remove "worldguard" and "griefprevention"
         integrations.removeIf { it.id == "worldguard" || it.id == "griefprevention" }
 
         try {

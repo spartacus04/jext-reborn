@@ -42,9 +42,20 @@ commands:
     permission: jext.fragment.give
     usage: /fragmentgive [selector] [name]
   jext:
+    description: Accesses the sub-menu commands
+    usage: /jext [subcommand] ...
+  jextreload:
     description: Reloads the plugin
     permission: jext.reload
-    usage: /jext
+    usage: /jextreload
+  jextwebui:
+    description: Opens the webui
+    permission: jext.webui
+    usage: /jextwebui
+  jextadmingui:
+    description: Opens the admin gui
+    permission: jext.admingui
+    usage: /jextadmingui
 
 permissions:
   jext.*:
@@ -60,6 +71,8 @@ permissions:
       jext.fragment: true
       jext.fragment.give: true
       jext.notifyupdate: true
+      jext.webui: true
+      jext.admingui: true
   jext.disc:
     description: Allows player to access all custom disc.
     default: op
@@ -90,3 +103,8 @@ permissions:
   jext.fragment.give:
     description: Allows player to give others custom fragments
     default: op
+  jext.webui:
+    description: Allows player to access webui
+    default: op
+  jext.admingui:
+    description: Allows player to access admin gui

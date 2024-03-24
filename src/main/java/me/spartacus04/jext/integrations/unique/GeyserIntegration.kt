@@ -46,6 +46,7 @@ internal class GeyserIntegration : EventRegistrar {
         }
     }
 
+    @Suppress("unused")
     @Subscribe
     private fun onGeyserInit(event : GeyserDefineCustomItemsEvent) {
         discs.forEach {

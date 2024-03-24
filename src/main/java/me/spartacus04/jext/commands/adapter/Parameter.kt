@@ -37,9 +37,9 @@ abstract class Parameter(val isRequired: Boolean) {
      */
     override fun toString(): String {
         return if (isRequired) {
-            "[${ChatColor.RESET}${ChatColor.LIGHT_PURPLE}${name}${ChatColor.RESET}]"
+            "${ChatColor.RESET}[${ChatColor.LIGHT_PURPLE}${name}${ChatColor.RESET}]"
         } else {
-            "<${ChatColor.RESET}${ChatColor.DARK_PURPLE}${name}${ChatColor.RESET}>"
+            "${ChatColor.RESET}<${ChatColor.DARK_PURPLE}${name}${ChatColor.RESET}>"
         }
     }
 }

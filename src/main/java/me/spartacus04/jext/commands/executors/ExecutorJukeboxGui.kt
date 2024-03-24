@@ -1,7 +1,7 @@
-package me.spartacus04.jext.commands
+package me.spartacus04.jext.commands.executors
 
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
-import me.spartacus04.jext.gui.JukeboxGuiContainer
+import me.spartacus04.jext.gui.JukeboxGui
 import org.bukkit.entity.Player
 
 /**
@@ -17,6 +17,6 @@ internal class ExecutorJukeboxGui : ExecutorAdapter("jukeboxgui") {
      * @param args The arguments that were passed to the command.
      */
     override fun executePlayer(sender: Player, args: Array<String>){
-        JukeboxGuiContainer(sender)
+        JukeboxGui(sender)
     }
 }

@@ -14,6 +14,9 @@ import me.spartacus04.jext.webapi.auth.DisconnectHandler
 import me.spartacus04.jext.webapi.auth.HealthHandler
 import me.spartacus04.jext.webapi.config.ConfigApplyHandler
 import me.spartacus04.jext.webapi.config.ConfigReadHandler
+import me.spartacus04.jext.webapi.discs.DiscsApplyHandler
+import me.spartacus04.jext.webapi.discs.DiscsReadHandler
+import me.spartacus04.jext.webapi.discs.DiscsApplyGeyserHandler
 import org.bukkit.Bukkit
 import java.net.InetSocketAddress
 
@@ -62,6 +65,11 @@ class JextWebServer {
 
                     server!!.createContext("/config/read", ConfigReadHandler())
                     server!!.createContext("/config/apply", ConfigApplyHandler())
+
+                    server!!.createContext("/discs/read", DiscsReadHandler())
+                    server!!.createContext("/discs/apply", DiscsApplyHandler())
+
+                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
                 }
             }
         }
@@ -101,6 +109,11 @@ class JextWebServer {
 
                     server!!.createContext("/config/read", ConfigReadHandler())
                     server!!.createContext("/config/apply", ConfigApplyHandler())
+
+                    server!!.createContext("/discs/read", DiscsReadHandler())
+                    server!!.createContext("/discs/apply", DiscsApplyHandler())
+
+                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
                 } else {
                     server!!.removeContext("/connect")
                     server!!.removeContext("/disconnect")
@@ -108,6 +121,11 @@ class JextWebServer {
 
                     server!!.removeContext("/config/read")
                     server!!.removeContext("/config/apply")
+
+                    server!!.removeContext("/discs/read")
+                    server!!.removeContext("/discs/apply")
+
+                    server!!.removeContext("/discs/applygeyser")
                 }
             }
         } else {
