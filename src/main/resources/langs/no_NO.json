@@ -36,5 +36,7 @@
   "missing-permission": "§cDu har ikke tillatelse til å bruke denne kommandoen!",
   "invalid-runner": "§cDenne kommandoen kan bare kjøres av §6%runner%§c.",
   "command-not-supported": "§cKommandoen §6%command% §cer ikke støttet: §6%reason%§c.",
+  "webui": "§aWeb UI available at §2%url%",
+  "webui-disabled": "§cThe webui is currently disabled!",
   "usage": "[Usage]: §6/%command%"
 }
