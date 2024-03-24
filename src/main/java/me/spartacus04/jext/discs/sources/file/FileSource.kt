@@ -93,6 +93,8 @@ class FileSource : DiscSource {
 
             // Write content to a file named with the SHA-1 hash
             val writer = withContext(Dispatchers.IO) {
+                if(!PLUGIN.dataFolder.resolve("caches").exists())
+                    PLUGIN.dataFolder.resolve("caches").mkdir()
                 PrintWriter(PLUGIN.dataFolder.resolve("caches").resolve("$hashText.zip").absolutePath, "UTF-8")
             }
 

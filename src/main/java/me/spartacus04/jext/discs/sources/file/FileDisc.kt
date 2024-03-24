@@ -91,6 +91,7 @@ data class FileDisc(
 
     fun toJextDisc() : Disc {
         return Disc(
+            "JEXT_FILE_SOURCE",
             getDiscItemStack(),
             if(VERSION > "1.19") getFragmentItemStack() else null,
             DISC_NAMESPACE,

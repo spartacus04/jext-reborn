@@ -3,7 +3,6 @@ package me.spartacus04.jext.discs
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.PacketContainer
-import com.google.gson.annotations.SerializedName
 import io.github.bananapuncher714.nbteditor.NBTEditor
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
@@ -12,15 +11,14 @@ import me.spartacus04.jext.State.VERSION
 import me.spartacus04.jext.discs.sources.file.FileDisc
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
-import net.md_5.bungee.api.ChatColor
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
 data class Disc(
+    val sourceId: String,
     val discItemStack: ItemStack,
     val fragmentItemStack: ItemStack? = null,
     val namespace: String,
