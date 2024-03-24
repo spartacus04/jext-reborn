@@ -252,7 +252,7 @@ export const generateGeyserResourcePack = async () : Promise<Blob> => {
     } = {};
 
     for(const disc of discs) {
-        soundDefinitions[`music_disc.${disc["disc-namespace"]}`] = {
+        soundDefinitions[disc["disc-namespace"]] = {
             "__use_legacy_max_distance": true,
             category: "record",
             max_distance: 64.0,
