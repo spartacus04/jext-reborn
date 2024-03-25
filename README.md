@@ -14,7 +14,7 @@
 
 Jext Reborn is a Spigot plugin that enhances the music experience in Minecraft servers. It allows servers to add custom music discs without replacing the original ones, utilizing the power of a resource pack and the Spigot API.
 
-For more details and guides on how to setup the plugin, please visit the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki).
+For more details and guides on how to set up the plugin, please visit the [Wiki page](https://github.com/spartacus04/jext-reborn/wiki).
 
 ## Dependencies
 
@@ -36,7 +36,7 @@ Jext Reborn offers a wide range of features to create a customized and immersive
 - Custom music discs can be found in dungeons and trail ruins.
 - Disc fragments can be discovered in dungeons and crafted back together.
 - A website to generate the necessary files for custom music discs, that integrates with the plugin automatically.
-- Set a maximum number of discs that can be found in specific loottables.
+- Set a maximum number of discs that can be found in specific loot tables.
 - Define custom chances for discovering music discs.
 - Optional replacement of the vanilla jukebox click behavior with a GUI.
 - Resource Pack host
