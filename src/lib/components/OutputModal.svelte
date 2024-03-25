@@ -156,7 +156,7 @@
 
 		const json = await response.json();
 
-		console.log(json)
+		console.log(json);
 
 		if (json.total_count == 0) return;
 
@@ -228,9 +228,9 @@
 					the desktop app
 					{#await getDesktopAppDownload}
 						<p></p>
-					{:then url} 
+					{:then url}
 						{#if url != null}
-							(<a href="{url}" target="_blank" rel="noopener noreferrer" class="underline">Here</a>)
+							(<a href={url} target="_blank" rel="noopener noreferrer" class="underline">Here</a>)
 						{/if}
 					{/await}
 				</h4>
