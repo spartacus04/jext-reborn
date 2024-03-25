@@ -45,7 +45,7 @@ jobs:
           githubTag: ${{ env.releasetag }}
 
       - name: Upload docs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: stabledocs
           path: build/dokka/html/
@@ -85,7 +85,7 @@ jobs:
           githubTag: ${{ steps.latestcommit.outputs.commitsha }}
 
       - name: Upload docs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: devdocs
           path: build/dokka/html/
