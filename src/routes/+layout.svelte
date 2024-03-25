@@ -8,6 +8,11 @@
 	import hljs from 'highlight.js';
 	import json from 'highlight.js/lib/languages/json';
 	import plaintext from 'highlight.js/lib/languages/plaintext';
+	import kotlin from 'highlight.js/lib/languages/kotlin';
+	import java from 'highlight.js/lib/languages/java';
+	import gradle from 'highlight.js/lib/languages/gradle';
+	import http from 'highlight.js/lib/languages/http';
+	import xml from 'highlight.js/lib/languages/xml';
 	import 'highlight.js/styles/github-dark-dimmed.min.css';
 	import { listen } from '@tauri-apps/api/event';
 	import {
@@ -26,6 +31,10 @@
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	hljs.registerLanguage('json', json);
 	hljs.registerLanguage('plaintext', plaintext);
+	hljs.registerLanguage('kotlin', kotlin);
+	hljs.registerLanguage('java', java);
+	hljs.registerLanguage('gradle', gradle);
+	hljs.registerLanguage('xml', xml);
 	initializeStores();
 
 	storeHighlightJs.set(hljs);

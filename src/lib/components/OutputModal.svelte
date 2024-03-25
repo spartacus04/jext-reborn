@@ -130,6 +130,12 @@
 				method: 'POST',
 				body: await bedrockRp?.arrayBuffer()
 			});
+
+			if (![200, 404].includes(bedrockResponse.status)) {
+				throw new Error('Could not apply resourcepack');
+			}
+
+			alert('Resourcepack applied!');
 		} catch (e) {
 			alert(e);
 		}
@@ -140,6 +146,23 @@
 		camera.updateProjectionMatrix();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 	};
+
+	const getDesktopAppDownload = (async () => {
+		// fetch latest successful workflow run for https://github.com/spartacus04/jext-reborn/actions/workflows/build-tauri.yml
+
+		const response = await fetch(
+			'https://api.github.com/repos/spartacus04/jext-reborn/actions/workflows/build-tauri.yml/runs?status=success&per_page=1'
+		);
+
+		const json = await response.json();
+
+		console.log(json)
+
+		if (json.total_count == 0) return;
+
+		// return html url
+		return json.workflow_runs[0].html_url;
+	})();
 </script>
 
 <main
@@ -203,6 +226,13 @@
 				<h4 class="h4 bg-red-800 p-2 rounded-lg font-minecraft">
 					Warning! The website may take a while to generate the resourcepack!<br />Consider using
 					the desktop app
+					{#await getDesktopAppDownload}
+						<p></p>
+					{:then url} 
+						{#if url != null}
+							(<a href="{url}" target="_blank" rel="noopener noreferrer" class="underline">Here</a>)
+						{/if}
+					{/await}
 				</h4>
 			{/if}
 

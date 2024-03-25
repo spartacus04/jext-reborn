@@ -73,6 +73,13 @@
 							</a>
 						</Accordion>
 						<Accordion>
+							<a href="/documentation/commands" class="[&>*]:pointer-events-none">
+								<div id="AccordionAnchor" class="px-4 py-2">
+									<p class="ml-10 color text-white">Commands & Permissions</p>
+								</div>
+							</a>
+						</Accordion>
+						<Accordion>
 							<a href="/documentation/resourcepack" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Manual resourcepack config</p>
@@ -87,6 +94,27 @@
 					</svelte:fragment>
 					<svelte:fragment slot="summary">For developers</svelte:fragment>
 					<svelte:fragment slot="content">
+						<Accordion>
+							<a href="/documentation/integrations" class="[&>*]:pointer-events-none">
+								<div id="AccordionAnchor" class="px-4 py-2">
+									<p class="ml-10 color text-white">Permission integrations</p>
+								</div>
+							</a>
+						</Accordion>
+						<Accordion>
+							<a href="/documentation/discsources" class="[&>*]:pointer-events-none">
+								<div id="AccordionAnchor" class="px-4 py-2">
+									<p class="ml-10 color text-white">Discs sources</p>
+								</div>
+							</a>
+						</Accordion>
+						<Accordion>
+							<a href="/documentation/api" class="[&>*]:pointer-events-none">
+								<div id="AccordionAnchor" class="px-4 py-2">
+									<p class="ml-10 color text-white">REST Api</p>
+								</div>
+							</a>
+						</Accordion>
 						<Accordion>
 							<AccordionItem>
 								<svelte:fragment slot="lead"><p class="w-6" /></svelte:fragment>
