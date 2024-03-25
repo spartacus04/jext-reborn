@@ -35,10 +35,12 @@ Jext Reborn offers a wide range of features to create a customized and immersive
 - Parrots will dance to the custom music!
 - Custom music discs can be found in dungeons and trail ruins.
 - Disc fragments can be discovered in dungeons and crafted back together.
-- A website to generate the necessary files for custom music discs.
+- A website to generate the necessary files for custom music discs, that integrates with the plugin automatically.
 - Set a maximum number of discs that can be found in specific loottables.
 - Define custom chances for discovering music discs.
 - Optional replacement of the vanilla jukebox click behavior with a GUI.
+- Resource Pack host
+- Admin GUI for managing custom music discs easily
 
 ### Languages
 
@@ -48,13 +50,10 @@ Jext Reborn supports multiple languages, making it easy for players around the w
 
 Jext Reborn seamlessly integrates with the following plugins to further enhance the server's capabilities:
 
-- [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/) (Only < 1.19.4): A simple plugin for music looping, playlist setup, and song changes.
+- [JukeLooper](https://www.spigotmc.org/resources/jukelooper.72895/): A simple plugin for music looping, playlist setup, and song changes. (waiting for [#3](https://gitlab.com/ranull/minecraft/jukelooper/-/merge_requests/3))
 - [WorldGuard](https://dev.bukkit.org/projects/worldguard): Allows you and players to protect areas of land against griefers and unwanted activities while providing various gameplay tweaks for Minecraft.
 - [GriefPrevention](https://www.spigotmc.org/resources/griefprevention.1884/): Prevents all forms of grief, including building/breaking, theft, spam, spawn camping, and more, without requiring a database.
-
-## Known Incompatibilities
-
-- GeyserMC (integration still in progress ([#138](https://github.com/spartacus04/jext-reborn/pull/138)))
+- [GeyserMC](https://geysermc.org/): A proxy that allows Minecraft: Bedrock Edition clients to connect to Minecraft: Java Edition servers.
 
 ---
 
