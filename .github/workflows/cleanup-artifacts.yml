@@ -2,13 +2,13 @@ name: Cleanup Artifacts
 # This workflow removes the artifacts from the previous builds of build-tauri
 
 on:
- workflow_run:
-    workflows: ["build-tauri"]
+  workflow_run:
+    workflows: ['build-tauri']
     types:
       - completed
 
 jobs:
- cleanup:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,8 +18,8 @@ jobs:
 
       - name: Run script
         run: |
-            cd scripts/cleanup-artifacts
-            bun install
-            bun run index.ts
+          cd scripts/cleanup-artifacts
+          bun install
+          bun run index.ts
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

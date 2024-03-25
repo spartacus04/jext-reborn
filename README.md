@@ -1,6 +1,6 @@
 # Jukebox Extended Reborn | Web UI
 
->The webui allows the user to configure the plugin in the browser with ease
+> The webui allows the user to configure the plugin in the browser with ease
 
 ### Features
 
@@ -33,4 +33,3 @@ bun install
 You can run a live preview by running `bun run dev` or you can build the website by running `bun run build`
 
 You can run a live preview of the desktop app by running `bun run tauri dev` (note: this requires rust), or you can build it by running `bun run tauri build`
-

@@ -64,7 +64,7 @@ jobs:
         with:
           name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
           path: src-tauri/target/release/bundle/msi/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
-        
+
       - name: Upload .exe installer
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v2

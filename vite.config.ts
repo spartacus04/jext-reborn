@@ -4,17 +4,16 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [
-		sveltekit(), 
+		sveltekit(),
 		purgeCss({
 			safelist: {
 				// any selectors that begin with "hljs-" will not be purged
-				greedy: [/^hljs-/],
-			},
+				greedy: [/^hljs-/]
+			}
 		})
-
 	],
 	optimizeDeps: {
-		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "@ffmpeg/core"],
+		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core']
 	},
-	base: "/jext-reborn/",
+	base: '/jext-reborn/'
 });

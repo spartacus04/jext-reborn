@@ -105,31 +105,30 @@
 	};
 
 	const importFromPlugin = async () => {
-		if(!isLoggedIn()) {
-
+		if (!isLoggedIn()) {
 			const connected = await login(modalStore, {
 				ip: data.server.ip,
-				port: data.server.port,
-			})
+				port: data.server.port
+			});
 
-			if(!connected) return;
+			if (!connected) return;
 		}
 
 		reload = (async () => {
 			const response = await fetchAuthed('discs/read');
-			
+
 			const rp = await response.blob();
-			
-			if(await RPChecker(rp) != 'JextRP') {
+
+			if ((await RPChecker(rp)) != 'JextRP') {
 				alert('The resourcepack is not a JEXT Resourcepack, please import it manually');
 				return;
 			}
 
 			const discs = await JextReader(rp);
-		
+
 			await importRP(discsStore, rp, discs);
 		})();
-	}
+	};
 
 	const addDisc = async () => {
 		const modalComponent: ModalComponent = { ref: CreateDiscModal };
@@ -177,7 +176,10 @@
 		if (selectionMode) {
 			select(id);
 		} else {
-			const modalComponent: ModalComponent = { ref: EditDiscModal, props: { discNamespaces: [id] } };
+			const modalComponent: ModalComponent = {
+				ref: EditDiscModal,
+				props: { discNamespaces: [id] }
+			};
 
 			await new Promise<Disc[] | null>((resolve) => {
 				modalStore.trigger({
@@ -195,7 +197,10 @@
 	};
 
 	const editMultiple = async () => {
-		const modalComponent: ModalComponent = { ref: EditDiscModal, props: { discNamespaces: selected } };
+		const modalComponent: ModalComponent = {
+			ref: EditDiscModal,
+			props: { discNamespaces: selected }
+		};
 
 		await new Promise<Disc[] | null>((resolve) => {
 			modalStore.trigger({
@@ -211,7 +216,7 @@
 		});
 
 		selected = [];
-	}
+	};
 
 	discsStore.subscribe((discs) => {
 		discs.forEach((disc, i) => {
@@ -246,14 +251,14 @@
 			title: 'Output discs',
 			backdropClasses: 'p-[0px!important]'
 		});
-	}
+	};
 
 	beforeNavigate(({ cancel }) => {
-		if($discsStore.length == 0) return;
+		if ($discsStore.length == 0) return;
 
-    	if(!confirm('Leave without saving?')) {
-    	  	return cancel();
-    	}
+		if (!confirm('Leave without saving?')) {
+			return cancel();
+		}
 
 		$discsStore = [];
 	});
@@ -261,7 +266,10 @@
 
 <svelte:head>
 	<title>JEXT Resourcepack Manager</title>
-	<meta name="description" content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the resourcepack and music discs with ease!">
+	<meta
+		name="description"
+		content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the resourcepack and music discs with ease!"
+	/>
 </svelte:head>
 
 <AppShell>
@@ -381,7 +389,23 @@
 									class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer"
 									on:click={editMultiple}
 								>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[50%] lucide lucide-pencil-ruler"><path d="m15 5 4 4"/><path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/></svg>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="w-[50%] lucide lucide-pencil-ruler"
+										><path d="m15 5 4 4" /><path
+											d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"
+										/><path d="m8 6 2-2" /><path
+											d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"
+										/><path d="m18 16 2-2" /><path
+											d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"
+										/></svg
+									>
 								</button>
 							{/if}
 
@@ -470,7 +494,23 @@
 									class="card p-4 rounded-lg flex items-center justify-center card-hover cursor-pointer"
 									on:click={editMultiple}
 								>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[50%] lucide lucide-pencil-ruler"><path d="m15 5 4 4"/><path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/></svg>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="w-[50%] lucide lucide-pencil-ruler"
+										><path d="m15 5 4 4" /><path
+											d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"
+										/><path d="m8 6 2-2" /><path
+											d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z"
+										/><path d="m18 16 2-2" /><path
+											d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"
+										/></svg
+									>
 								</button>
 							{/if}
 						</div>
@@ -492,7 +532,9 @@
 		{#if $discsStore.length > 0}
 			<div class="flex w-full items-center justify-center p-4 bg-[#151515]">
 				<MinecraftLaunchButton highlight={true} on:click={generateResourcePack}>
-					<b class="font-minecraft-launcher text-4xl p-0 m-0 ease-in-out duration-500 select-none">GENERATE</b>
+					<b class="font-minecraft-launcher text-4xl p-0 m-0 ease-in-out duration-500 select-none"
+						>GENERATE</b
+					>
 				</MinecraftLaunchButton>
 			</div>
 		{/if}

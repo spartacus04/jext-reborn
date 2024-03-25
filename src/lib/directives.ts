@@ -1,4 +1,11 @@
-export const dropFile = (e: HTMLElement, params : { accept: string, cb: ((files ?: File[]) => void)|null, multiple? : boolean } = { accept: '', cb: null, multiple: false }) => {
+export const dropFile = (
+	e: HTMLElement,
+	params: { accept: string; cb: ((files?: File[]) => void) | null; multiple?: boolean } = {
+		accept: '',
+		cb: null,
+		multiple: false
+	}
+) => {
 	const { accept, cb, multiple } = params;
 
 	const backgroundColor = e.style.backgroundColor;
@@ -15,58 +22,52 @@ export const dropFile = (e: HTMLElement, params : { accept: string, cb: ((files 
 		e.style.backgroundColor = backgroundColor;
 	};
 
-	const dragover = (ev : DragEvent) => {
+	const dragover = (ev: DragEvent) => {
 		ev.preventDefault();
 	};
 
-	const drag = (ev : DragEvent) => {
-		const list : File[] = [];
+	const drag = (ev: DragEvent) => {
+		const list: File[] = [];
 
 		ev.preventDefault();
 
-		if(ev.dataTransfer!.items && ev.dataTransfer!.items.length > 0) {
+		if (ev.dataTransfer!.items && ev.dataTransfer!.items.length > 0) {
 			[...ev.dataTransfer!.items].forEach((item) => {
 				if (item.kind === 'file') {
 					const file = item.getAsFile()!;
 
-					if(accept.startsWith('.')) {
-						if(file.name.endsWith(accept)) {
+					if (accept.startsWith('.')) {
+						if (file.name.endsWith(accept)) {
 							list.push(file);
 						}
-					}
-					else if (file.type.match(accept)) {
+					} else if (file.type.match(accept)) {
 						list.push(file);
 					}
 				}
 			});
-		}
-		else {
+		} else {
 			[...ev.dataTransfer!.files].forEach((file) => {
-				if(accept.startsWith('.')) {
-					if(file.name.endsWith(accept)) {
+				if (accept.startsWith('.')) {
+					if (file.name.endsWith(accept)) {
 						list.push(file);
 					}
-				}
-				else if (file.type.match(accept)) {
+				} else if (file.type.match(accept)) {
 					list.push(file);
 				}
 			});
 		}
 
 		if (multiple) {
-			cb ? cb (list) : null;
-		}
-		else {
+			cb ? cb(list) : null;
+		} else {
 			cb ? cb([list[0]]) : null;
 		}
 	};
-
 
 	e.addEventListener('dragenter', mouseEnter);
 	e.addEventListener('dragleave', mouseLeave);
 	e.addEventListener('dragover', dragover);
 	e.addEventListener('drop', drag);
-
 
 	return {
 		destroy() {
@@ -74,11 +75,18 @@ export const dropFile = (e: HTMLElement, params : { accept: string, cb: ((files 
 			e.removeEventListener('mouseleave', mouseLeave);
 			e.removeEventListener('dragover', dragover);
 			e.removeEventListener('drop', drag);
-		},
+		}
 	};
 };
 
-export const inputFile = (e: HTMLElement, params : { accept: string, cb: ((files ?: File[]) => void)|null, multiple? : boolean } = { accept: '', cb: null, multiple: false }) => {
+export const inputFile = (
+	e: HTMLElement,
+	params: { accept: string; cb: ((files?: File[]) => void) | null; multiple?: boolean } = {
+		accept: '',
+		cb: null,
+		multiple: false
+	}
+) => {
 	const { accept, cb, multiple } = params;
 
 	const click = () => {
@@ -94,13 +102,11 @@ export const inputFile = (e: HTMLElement, params : { accept: string, cb: ((files
 		input.click();
 	};
 
-
 	e.addEventListener('click', click);
-
 
 	return {
 		destroy() {
 			e.removeEventListener('click', click);
-		},
+		}
 	};
 };

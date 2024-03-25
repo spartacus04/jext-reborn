@@ -5,7 +5,15 @@
 	export let highlight = false;
 </script>
 
-<button id="clickable" class="cursor-pointer border-[10px] border-transparent p-2 select-none" style:border-image-source="url({generate_btn})" class:grayscale={!enabled} class:highlight disabled={!enabled} on:click >
+<button
+	id="clickable"
+	class="cursor-pointer border-[10px] border-transparent p-2 select-none"
+	style:border-image-source="url({generate_btn})"
+	class:grayscale={!enabled}
+	class:highlight
+	disabled={!enabled}
+	on:click
+>
 	<slot />
 </button>
 
