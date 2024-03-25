@@ -1,4 +1,4 @@
-name: build & publish
+name: Build & publish
 
 on:
   push:
@@ -15,11 +15,12 @@ jobs:
       - name: Get latest release with tag
         id: latestrelease
         run: |
-          echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/<OWNER>/<REPO>/releases/latest | jq '.tag_name' | sed 's/\"//g')"
+          echo "releasetag=$(curl -s https://api.github.com/repos/spartacus04/jext-reborn/releases/latest | jq '.tag_name' | sed 's/\"//g')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          ref: ${{ steps.latestrelease.outputs.releasetag }}
+          ref: ${{ env.releasetag }}
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3.11.0
@@ -41,7 +42,7 @@ jobs:
       - name: Build docs with Gradle
         run: ./gradlew dokkaHtml
         env:
-          githubTag: ${{ steps.latestrelease.outputs.releasetag }}
+          githubTag: ${{ env.releasetag }}
 
       - name: Upload docs
         uses: actions/upload-artifact@v2
@@ -55,7 +56,7 @@ jobs:
       - name: Get latest commit hash
         id: latestcommit
         run: |
-          echo "::set-output name=commitsha::$(curl -s https://api.github.com/repos/spartacus04/jext-reborn/branches/master | jq -r '.commit.sha' | cut -c1-7)"
+          echo "commitsha=$(curl -s https://api.github.com/repos/spartacus04/jext-reborn/branches/master | jq -r '.commit.sha' | cut -c1-7)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
         with:
@@ -98,6 +99,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
 
       - name: Download stable docs
         uses: actions/download-artifact@v4

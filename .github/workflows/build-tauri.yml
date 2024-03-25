@@ -1,11 +1,10 @@
-name: 'build-tauri'
+name: 'Build Tauri'
 # This workflow build a Tauri app for all platforms and upload the binaries as artifacts
 
 on:
   push:
     branches:
       - gh-pages
-      - dev/generator-rework
 
 jobs:
   publish-tauri:
