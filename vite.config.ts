@@ -1,37 +1,19 @@
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
+import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import autoprefixer from 'autoprefixer';
-import path from 'node:path';
-import fs from 'node:fs';
 
 export default defineConfig({
-	build: {
-		outDir: 'docs',
+	plugins: [
+		sveltekit(),
+		purgeCss({
+			safelist: {
+				// any selectors that begin with "hljs-" will not be purged
+				greedy: [/^hljs-/]
+			}
+		})
+	],
+	optimizeDeps: {
+		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core']
 	},
-	base: '/jext-reborn/',
-
-	plugins: [svelte({
-		onwarn: (warning, handler) => {
-			// disable a11y warnings
-			if (warning.code.startsWith("a11y-")) return;
-			handler(warning);
-		}
-	})],
-	css: {
-		postcss: {
-			plugins: [
-				autoprefixer,
-			],
-		},
-	},
-
-	resolve: {
-		alias: [
-			{ find: '@', replacement: path.resolve(__dirname, './src') },
-			{ find: '@assets', replacement: path.resolve(__dirname, './src/assets') },
-			{ find: '@styles', replacement: path.resolve(__dirname, './src/styles') },
-			{ find: '@lib', replacement: path.resolve(__dirname, './src/lib') },
-			{ find: '@ui', replacement: path.resolve(__dirname, './src/ui') }
-		]
-	}
+	base: '/jext-reborn/'
 });
