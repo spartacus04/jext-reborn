@@ -50,11 +50,7 @@ jobs:
           name: stabledocs
           path: build/dokka/html/
 
-  build-docs-latest:
-    permissions: 
-      pages: write
-      id-token: write
-    
+  build-docs-latest: 
     runs-on: ubuntu-latest
     steps:
       - name: Get latest commit hash
@@ -95,6 +91,10 @@ jobs:
           path: build/dokka/html/
 
   build-publish:
+    permissions: 
+      pages: write
+      id-token: write
+
     needs:
       - build-docs-stable
       - build-docs-latest
