@@ -2,7 +2,6 @@ package me.spartacus04.jext
 
 import me.spartacus04.jext.State.PLUGIN
 import org.bukkit.NamespacedKey
-import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * The above class is an enum class that represents different namespaces and assigns a NamespacedKey to each namespace value.

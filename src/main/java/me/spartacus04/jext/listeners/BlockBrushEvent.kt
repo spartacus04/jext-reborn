@@ -3,13 +3,13 @@ package me.spartacus04.jext.listeners
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.BRUSH_LOOT_TABLE_ITEMS
+import me.spartacus04.jext.utils.Constants.ChanceStack
 import org.bukkit.Material
 import org.bukkit.block.BrushableBlock
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import kotlin.random.Random
-import me.spartacus04.jext.utils.Constants.ChanceStack
 
 internal class BlockBrushEvent : JextListener("1.20") {
     @EventHandler

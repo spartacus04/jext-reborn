@@ -4,7 +4,9 @@ import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.VERSION
 import me.spartacus04.jext.listeners.utils.JextListener
+import me.spartacus04.jext.utils.Constants.ChanceStack
 import me.spartacus04.jext.utils.Constants.DEFAULT_DISCS_LOOT_TABLE
+import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
 import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.Material
 import org.bukkit.block.Chest
@@ -19,8 +21,6 @@ import org.bukkit.event.vehicle.VehicleDestroyEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import kotlin.random.Random
-import me.spartacus04.jext.utils.Constants.ChanceStack
-import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
 
 internal class ChestOpenEvent : JextListener() {
 

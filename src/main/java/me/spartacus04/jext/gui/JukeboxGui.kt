@@ -24,7 +24,6 @@ import xyz.xenondevs.invui.inventory.event.PlayerUpdateReason
 import xyz.xenondevs.invui.inventory.event.UpdateReason
 import xyz.xenondevs.invui.window.Window
 import java.util.*
-import kotlin.collections.HashMap
 
 class JukeboxGui {
     private val player: Player

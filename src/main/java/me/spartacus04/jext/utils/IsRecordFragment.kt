@@ -1,6 +1,5 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.State.VERSION
 import me.spartacus04.jext.utils.Constants.FRAGMENT_LIST
 import org.bukkit.Material
 

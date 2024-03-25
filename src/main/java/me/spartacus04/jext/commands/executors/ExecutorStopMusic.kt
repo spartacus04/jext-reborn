@@ -5,7 +5,7 @@ import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.commands.adapter.ParameterDisc
 import me.spartacus04.jext.commands.adapter.ParameterPlayer
 import me.spartacus04.jext.utils.sendJEXTMessage
-import org.bukkit.*
+import org.bukkit.SoundCategory
 import org.bukkit.command.CommandSender
 
 /**

@@ -1,8 +1,6 @@
 package me.spartacus04.jext.config.legacy
 
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import org.bukkit.plugin.java.JavaPlugin
 
 internal data class V5Config (
     @SerializedName("lang")

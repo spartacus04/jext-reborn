@@ -1,8 +1,5 @@
 package me.spartacus04.jext
 
-import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
-
 /**
  * The class `ServerVersion` is a utility class that represents the version of a server.
  *

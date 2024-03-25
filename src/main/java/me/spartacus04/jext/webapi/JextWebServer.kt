@@ -14,9 +14,9 @@ import me.spartacus04.jext.webapi.auth.DisconnectHandler
 import me.spartacus04.jext.webapi.auth.HealthHandler
 import me.spartacus04.jext.webapi.config.ConfigApplyHandler
 import me.spartacus04.jext.webapi.config.ConfigReadHandler
+import me.spartacus04.jext.webapi.discs.DiscsApplyGeyserHandler
 import me.spartacus04.jext.webapi.discs.DiscsApplyHandler
 import me.spartacus04.jext.webapi.discs.DiscsReadHandler
-import me.spartacus04.jext.webapi.discs.DiscsApplyGeyserHandler
 import org.bukkit.Bukkit
 import java.net.InetSocketAddress
 

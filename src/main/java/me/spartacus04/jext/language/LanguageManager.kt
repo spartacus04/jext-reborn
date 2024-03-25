@@ -12,7 +12,6 @@ import java.io.File
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
-import kotlin.collections.HashMap
 
 /**
  * Language manager is a class used to load and manage the plugin's languages.

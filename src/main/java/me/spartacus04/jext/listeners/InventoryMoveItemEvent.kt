@@ -8,8 +8,8 @@ import me.spartacus04.jext.listeners.utils.JextListener
 import org.bukkit.Bukkit
 import org.bukkit.block.Jukebox
 import org.bukkit.event.EventHandler
-import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.inventory.InventoryMoveItemEvent
+import org.bukkit.event.inventory.InventoryType
 
 internal class InventoryMoveItemEvent : JextListener("1.19.4") {
     override fun register() {

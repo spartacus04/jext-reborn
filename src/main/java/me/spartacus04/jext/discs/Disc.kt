@@ -57,7 +57,7 @@ data class Disc(
      * @param volume The volume of the disc (A.K.A. the distance at which the disc can be heard)
      * @param pitch The pitch of the disc
      */
-    fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
+    open fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
         if (CONFIG.DISABLE_MUSIC_OVERLAP) {
             stop(location, namespace)
         }
@@ -88,7 +88,7 @@ data class Disc(
      * @param volume The volume of the disc (A.K.A. the distance at which the disc can be heard)
      * @param pitch The pitch of the disc
      */
-    fun play(player: Player, volume : Float = 4.0f, pitch : Float = 1.0f) {
+    open fun play(player: Player, volume : Float = 4.0f, pitch : Float = 1.0f) {
         if (CONFIG.DISABLE_MUSIC_OVERLAP) {
             stop(player, namespace)
         }
