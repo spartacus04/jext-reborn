@@ -29,7 +29,7 @@ internal class GeyserIntegration : EventRegistrar {
 
             CustomItemData.builder()
                 .icon("music_disc_${it.namespace}")
-                .name(it.namespace)
+                .name("music_disc_${it.namespace}")
                 .displayName("Music Disc")
                 .customItemOptions(itemOptions)
                 .build()
@@ -45,7 +45,7 @@ internal class GeyserIntegration : EventRegistrar {
 
                 CustomItemData.builder()
                     .icon("fragment_${it.namespace}")
-                    .name(it.namespace)
+                    .name("fragment_${it.namespace}")
                     .displayName("Disc Fragment")
                     .customItemOptions(itemOptions)
                     .build()
