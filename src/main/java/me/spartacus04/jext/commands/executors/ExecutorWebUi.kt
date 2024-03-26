@@ -21,9 +21,9 @@ class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
         }
 
         val url = if(sender is ConsoleCommandSender || (sender as Player).address == InetAddress.getLocalHost())
-            "https://spartacus04.github.io/jext.reborn/${page}?c=c&ip=127.0.0.1&port=${CONFIG.WEB_INTERFACE_PORT}"
+            "https://spartacus04.github.io/jext-reborn/${page}?c=c&ip=127.0.0.1&port=${CONFIG.WEB_INTERFACE_PORT}"
         else
-            "https://spartacus04.github.io/jext.reborn/${page}?c=c&port=${CONFIG.WEB_INTERFACE_PORT}"
+            "https://spartacus04.github.io/jext-reborn/${page}?c=c&port=${CONFIG.WEB_INTERFACE_PORT}"
 
         sender.sendJEXTMessage("webui", hashMapOf(
             "url" to url
