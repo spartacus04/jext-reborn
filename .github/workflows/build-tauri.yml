@@ -38,35 +38,35 @@ jobs:
 
       - name: Upload .dmg binary
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64.dmg
           path: src-tauri/target/release/bundle/dmg/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64.dmg
 
       - name: Upload .deb binary
         if: matrix.platform == 'ubuntu-20.04'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
           path: src-tauri/target/release/bundle/deb/jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
 
       - name: Upload .appimage binary
         if: matrix.platform == 'ubuntu-20.04'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
           path: src-tauri/target/release/bundle/appimage/jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
 
       - name: Upload .msi installer
         if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
           path: src-tauri/target/release/bundle/msi/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
 
       - name: Upload .exe installer
         if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
           path: src-tauri/target/release/bundle/nsis/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
