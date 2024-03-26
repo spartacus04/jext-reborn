@@ -46,6 +46,13 @@ jobs:
           modrinthChangelog: ${{ github.event.release.body }}
           jextVersion: ${{ env.VERSION }}
 
+      - name: Sync Modrinth body
+        run: ./gradlew modrinthSyncBody
+        env:
+          modrinthApiKey: ${{ secrets.MODRINTH_TOKEN }}
+          modrinthChangelog: ${{ github.event.release.body }}
+          jextVersion: ${{ env.VERSION }}
+
       - name: Publish to Hangar
         run: ./gradlew publishPluginPublicationToHangar
         env:
