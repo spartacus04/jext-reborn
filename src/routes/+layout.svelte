@@ -35,6 +35,7 @@
 	hljs.registerLanguage('java', java);
 	hljs.registerLanguage('gradle', gradle);
 	hljs.registerLanguage('xml', xml);
+	hljs.registerLanguage('http', http);
 	initializeStores();
 
 	storeHighlightJs.set(hljs);

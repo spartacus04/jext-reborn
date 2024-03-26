@@ -6,7 +6,10 @@ const config = {
 	extensions: ['.svelte'],
 	preprocess: [vitePreprocess()],
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		paths: {
+			base: '/jext-reborn'
+		}
 	}
 };
 export default config;
