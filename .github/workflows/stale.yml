@@ -22,7 +22,7 @@ jobs:
     - uses: actions/stale@v5
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale pull request message'
+        stale-issue-message: 'Stale issue, closing this rn'
+        stale-pr-message: 'Stale pull request, closing this rn'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
