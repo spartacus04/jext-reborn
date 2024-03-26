@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 
 export const ssr = false;
 export const prerender = true;
-export const trailingSlash = "always";
+export const trailingSlash = 'always';
 
 export const load: LayoutLoad = async ({ url }) => {
 	if (window.__TAURI__) {

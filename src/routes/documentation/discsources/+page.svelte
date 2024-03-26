@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { CodeBlock, Tab, TabGroup } from '@skeletonlabs/skeleton';
 
 	let buildSystem = 0;
@@ -88,7 +89,7 @@ dependencies {
 
 <p>
 	You can now create a class that implements the <a
-		href="../-j-e-x-t--reborn/me.spartacus04.jext.discs.sources/-disc-source/index.html"
+		href="{base}/javadocs/stable/-j-e-x-t--reborn/me.spartacus04.jext.discs.sources/-disc-source/index.html"
 		>DiscSource</a
 	> interface:
 </p>
@@ -146,7 +147,8 @@ class MyDiscSource : DiscSource {
 <br />
 <p>
 	Finally, you can register the disc source by using the <a
-		href="../-j-e-x-t--reborn/me.spartacus04.jext.discs/-disc-manager/index.html">DiscManager</a
+		href="{base}/javadocs/stable/-j-e-x-t--reborn/me.spartacus04.jext.discs/-disc-manager/index.html"
+		>DiscManager</a
 	>:
 </p>
 
@@ -191,7 +193,8 @@ class MyPlugin : JavaPlugin() {
 
 <p>
 	If you want to play the disc with a custom method, you can create a class that implements use the <a
-		href="../-j-e-x-t--reborn/me.spartacus04.jext.discs/-disc/index.html">Disc</a
+		href="{base}/javadocs/stable/-j-e-x-t--reborn/me.spartacus04.jext.discs/-disc/index.html"
+		>Disc</a
 	> object:
 </p>
 

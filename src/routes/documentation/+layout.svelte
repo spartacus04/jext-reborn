@@ -5,6 +5,7 @@
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
+	import { base } from '$app/paths';
 
 	let indexOpen = false;
 	let marginToggled = false;
@@ -47,7 +48,7 @@
 			<h1 class="h2">Documentation</h1>
 			<hr class="border-b border-white w-full m-2" />
 			<Accordion>
-				<a href="/documentation" class="[&>*]:pointer-events-none">
+				<a href="{base}/documentation" class="[&>*]:pointer-events-none">
 					<div id="AccordionAnchor" class="px-4 py-2">
 						<p class="ml-10 color text-white">Readme</p>
 					</div>
@@ -59,28 +60,28 @@
 					<svelte:fragment slot="summary">For server owners</svelte:fragment>
 					<svelte:fragment slot="content">
 						<Accordion>
-							<a href="/documentation/quickstart" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/quickstart" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Quickstart</p>
 								</div>
 							</a>
 						</Accordion>
 						<Accordion>
-							<a href="/documentation/config" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/config" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Config documentation</p>
 								</div>
 							</a>
 						</Accordion>
 						<Accordion>
-							<a href="/documentation/commands" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/commands" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Commands & Permissions</p>
 								</div>
 							</a>
 						</Accordion>
 						<Accordion>
-							<a href="/documentation/resourcepack" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/resourcepack" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Manual resourcepack config</p>
 								</div>
@@ -95,21 +96,21 @@
 					<svelte:fragment slot="summary">For developers</svelte:fragment>
 					<svelte:fragment slot="content">
 						<Accordion>
-							<a href="/documentation/integrations" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/integrations" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Permission integrations</p>
 								</div>
 							</a>
 						</Accordion>
 						<Accordion>
-							<a href="/documentation/discsources" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/discsources" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">Discs sources</p>
 								</div>
 							</a>
 						</Accordion>
 						<Accordion>
-							<a href="/documentation/api" class="[&>*]:pointer-events-none">
+							<a href="{base}/documentation/api" class="[&>*]:pointer-events-none">
 								<div id="AccordionAnchor" class="px-4 py-2">
 									<p class="ml-10 color text-white">REST Api</p>
 								</div>
@@ -121,12 +122,16 @@
 								<svelte:fragment slot="summary">Javadocs</svelte:fragment>
 								<svelte:fragment slot="content">
 									<Accordion>
-										<a href="/javadocs/stable" class="[&>*]:pointer-events-none" target="_blank">
+										<a
+											href="{base}/javadocs/stable"
+											class="[&>*]:pointer-events-none"
+											target="_blank"
+										>
 											<div id="AccordionAnchor" class="px-4 py-2">
 												<p class="ml-10 color text-white">Stable</p>
 											</div>
 										</a>
-										<a href="/javadocs/dev" class="[&>*]:pointer-events-none" target="_blank">
+										<a href="{base}/javadocs/dev" class="[&>*]:pointer-events-none" target="_blank">
 											<div id="AccordionAnchor" class="px-4 py-2">
 												<p class="ml-10 color text-white">Development</p>
 											</div>

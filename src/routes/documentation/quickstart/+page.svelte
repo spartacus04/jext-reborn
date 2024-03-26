@@ -8,6 +8,7 @@
 	import workflow from '$lib/assets/workflow.svg';
 	import wrench from '$lib/assets/wrench.svg';
 	import hand_helping from '$lib/assets/hand_helping.svg';
+	import { base } from '$app/paths';
 </script>
 
 <div class="mb-10" />
@@ -192,8 +193,8 @@
 					The plugin comes with a default configuration file that you can use as a base, you can
 					find it in the <code>plugins/JukeboxExtendedReborn</code> folder. You can edit it with any
 					text editor, and you can check out the
-					<a href="/documentation/config">config documentation</a> for more information on how to configure
-					the plugin.
+					<a href="{base}/documentation/config">config documentation</a> for more information on how
+					to configure the plugin.
 				</svelte:fragment>
 			</AccordionItem>
 		</Accordion>
@@ -244,8 +245,8 @@
 				<svelte:fragment slot="summary">Configuring manually</svelte:fragment>
 				<svelte:fragment slot="content">
 					Altought it's not recommended you can also add custom discs manually by using a jext.json
-					file inside a resource pack, you can check out the <a href="/documentation/resourcepack"
-						>resourcepack documentation</a
+					file inside a resource pack, you can check out the <a
+						href="{base}/documentation/resourcepack">resourcepack documentation</a
 					> for more information on how to manage discs.
 				</svelte:fragment>
 			</AccordionItem>

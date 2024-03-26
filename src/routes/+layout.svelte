@@ -28,6 +28,8 @@
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
 	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
+	import { base } from '$app/paths';
+
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	hljs.registerLanguage('json', json);
 	hljs.registerLanguage('plaintext', plaintext);
@@ -61,7 +63,7 @@
 <AppShell>
 	<svelte:fragment slot="sidebarLeft">
 		<AppRail hover="bg-tertiary-hover-token">
-			<AppRailAnchor href="/">
+			<AppRailAnchor href="{base}/">
 				<div
 					class="flex"
 					use:popup={{
@@ -77,7 +79,7 @@
 					/>
 				</div>
 			</AppRailAnchor>
-			<AppRailAnchor href="/config">
+			<AppRailAnchor href="{base}/config">
 				<div
 					class="flex"
 					use:popup={{
@@ -89,7 +91,7 @@
 					<img src={cog} alt="Plugin configurator" class="h-full w-full p-2 pointer-events-none" />
 				</div>
 			</AppRailAnchor>
-			<AppRailAnchor href="/documentation">
+			<AppRailAnchor href="{base}/documentation">
 				<div
 					class="flex"
 					use:popup={{

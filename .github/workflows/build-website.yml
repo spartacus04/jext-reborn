@@ -9,7 +9,7 @@ on:
     types: [published]
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -54,7 +54,7 @@ jobs:
           name: stabledocs
           path: build/dokka/html/
 
-  build-docs-latest: 
+  build-docs-latest:
     runs-on: ubuntu-latest
     steps:
       - name: Get latest commit hash
@@ -95,7 +95,7 @@ jobs:
           path: build/dokka/html/
 
   build-publish:
-    permissions: 
+    permissions:
       pages: write
       id-token: write
 
@@ -140,7 +140,7 @@ jobs:
           name: |
             stabledocs
             devdocs
-      
+
       - name: Fix permissions
         run: |
           chmod -c -R +rX "build/" | while read line; do
@@ -151,7 +151,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/
-
 
       - name: Deploy to GitHub Pages
         id: deployment

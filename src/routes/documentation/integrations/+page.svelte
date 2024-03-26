@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { CodeBlock, Tab, TabGroup } from '@skeletonlabs/skeleton';
 
 	let buildSystem = 0;
@@ -95,7 +96,7 @@ dependencies {
 
 <p>
 	You can now create a class that implements the <a
-		href="../-j-e-x-t--reborn/me.spartacus04.jext.integrations/-integration/index.html"
+		href="{base}/javadocs/stable/-j-e-x-t--reborn/me.spartacus04.jext.integrations/-integration/index.html"
 		>Integration</a
 	> interface:
 </p>
@@ -163,7 +164,7 @@ class MyIntegration : Integration {
 
 <p>
 	Finally, you can register your integration by using the <a
-		href="../-j-e-x-t--reborn/me.spartacus04.jext.integrations/-integrations-manager/index.html"
+		href="{base}/javadocs/stable/-j-e-x-t--reborn/me.spartacus04.jext.integrations/-integrations-manager/index.html"
 		>IntegrationManager</a
 	> :
 </p>
