@@ -46,6 +46,7 @@ dependencies {
     compileOnly("org.scala-lang:scala-library:2.13.13")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
     compileOnly("org.geysermc.geyser:api:2.2.2-SNAPSHOT")
+
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.2")
     implementation("xyz.xenondevs.invui:invui:1.26")
@@ -126,12 +127,6 @@ tasks.processResources {
 // publish
 
 tasks.dokkaHtml {
-    val githubTag = System.getenv("githubTag")
-
-    if(githubTag != null) {
-        version = "$version - $githubTag"
-    }
-
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customStyleSheets = listOf(file("docsAssets/logo-styles.css"))
         customAssets = listOf(file("icon.png"))
@@ -165,7 +160,7 @@ hangarPublish {
 
         platforms {
             register(Platforms.PAPER) {
-                jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                jar.set(tasks.getByName("proguardJar").outputs.files.singleFile)
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 this.dependencies {
@@ -178,7 +173,6 @@ hangarPublish {
     }
 }
 
-
 modrinth {
     val modrinthApiKey = System.getenv("modrinthApiKey")
     val modrinthChangelog = System.getenv("modrinthChangelog")
@@ -187,7 +181,7 @@ modrinth {
     projectId.set("${property("modrinth_projectId")}")
     versionNumber.set(rootProject.version.toString())
     versionType.set("${property("modrinth_channel")}")
-    uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile })
+    uploadFile.set(tasks.getByName("proguardJar").outputs.files.singleFile)
     gameVersions.set("${property("minecraft_versions")}".split(","))
     loaders.set("${property("modrinth_loaders")}".split(","))
 

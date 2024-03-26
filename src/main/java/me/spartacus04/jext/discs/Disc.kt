@@ -17,7 +17,7 @@ import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-data class Disc(
+open class Disc(
     val sourceId: String,
     val discItemStack: ItemStack,
     val fragmentItemStack: ItemStack? = null,
