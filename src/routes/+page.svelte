@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { LoginStore, fetchAuthed, healthCheck, isLoggedIn, login, logout } from '$lib/login';
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
+	
 	import {
 		AppBar,
 		AppShell,
@@ -11,20 +10,16 @@
 		Accordion,
 		AccordionItem
 	} from '@skeletonlabs/skeleton';
-	import type { Disc } from '$lib/types';
-	import MinecraftButton from '$lib/components/MinecraftButton.svelte';
-	import ImportResourcePackModal from '$lib/components/ImportResourcePackModal.svelte';
-	import { JextReader, RPChecker } from '$lib/resourcepack/utils';
-	import { importRP } from '$lib/resourcepack/importer';
-	import CreateDiscModal from '$lib/components/CreateDiscModal.svelte';
 	import { press } from 'svelte-gestures';
-	import { beforeNavigate } from '$app/navigation';
-	import { discsStore } from '$lib/config';
-	import EditDiscModal from '$lib/components/EditDiscModal.svelte';
-	import ResourcePackManager from '$lib/components/ResourcePackManager.svelte';
-	import MinecraftLaunchButton from '$lib/components/MinecraftLaunchButton.svelte';
-	import OutputModal from '$lib/components/OutputModal.svelte';
+	import { onMount } from 'svelte';
+	
+	import { MinecraftButton, ImportResourcePackModal, CreateDiscModal, EditDiscModal, ResourcePackManager, MinecraftLaunchButton, OutputModal } from '$lib/components';
+	
+	import { LoginStore, fetchAuthed, healthCheck, isLoggedIn, login, logout, type Disc, JextReader, RPChecker, importRP, discsStore } from '$lib/index';
 
+	import { beforeNavigate } from '$app/navigation';
+
+	
 	export let data: PageData;
 	const modalStore = getModalStore();
 

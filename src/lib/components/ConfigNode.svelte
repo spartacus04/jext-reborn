@@ -1,12 +1,10 @@
 <script lang="ts">
-	import type { ConfigNode } from '$lib/types';
-	import MinecraftCheckbox from './MinecraftCheckbox.svelte';
-	import MinecraftButton from './MinecraftButton.svelte';
-	import MinecraftTextbox from './MinecraftTextbox.svelte';
-	import MinecraftNumber from './MinecraftNumber.svelte';
-	import MinecraftComboBox from './MinecraftComboBox.svelte';
+	import { MinecraftCheckbox, MinecraftButton, MinecraftTextbox, MinecraftNumber, MinecraftComboBox, DungeonSelectModal } from '.';
+	
 	import { getModalStore, type ModalComponent } from '@skeletonlabs/skeleton';
-	import DungeonSelectModal from './DungeonSelectModal.svelte';
+	
+	import type { ConfigNode } from '../';
+
 
 	export let node: ConfigNode<boolean | number | string | { [key: string]: number }>;
 

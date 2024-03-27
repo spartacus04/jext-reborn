@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { warning } from '$lib/assets';
+
 	import { CodeBlock, Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import warning from '$lib/assets/warning.svg';
 </script>
 
 <main class="gap-4">

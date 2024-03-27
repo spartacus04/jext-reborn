@@ -1,6 +1,9 @@
+import { default_icon } from './assets';
+
 import { writable } from 'svelte/store';
-import type { Disc, ResourcePackData } from './types';
-import default_icon from './assets/default_icon.png';
+
+import type { Disc, ResourcePackData } from '.';
+
 
 export const versions = new Map([
 	[4, '1.14 - 1.14.4'],
@@ -23,13 +26,4 @@ export const resourcePackStore = writable<ResourcePackData>({
 	version: Math.max(...Array.from(versions.keys())),
 	description: 'Adds custom music discs!',
 	packs: []
-});
-
-fetch(default_icon).then(async (res) => {
-	const blob = await res.blob();
-
-	resourcePackStore.update((store) => {
-		store.icon = blob;
-		return store;
-	});
 });

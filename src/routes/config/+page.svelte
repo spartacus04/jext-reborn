@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { fetchAuthed, isLoggedIn, login, healthCheck, logout, LoginStore } from '$lib/login';
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
-	import { AppBar, AppShell, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
-	import type { ConfigNode as CfgNode } from '$lib/types';
-	import { get, writable } from 'svelte/store';
-	import ConfigNode from '$lib/components/ConfigNode.svelte';
-	import dark_dirt_background from '$lib/assets/dark_dirt_background.png';
-	import MinecraftLaunchButton from '$lib/components/MinecraftLaunchButton.svelte';
 
+	import { dark_dirt_background } from '$lib/assets';
+
+	import { AppBar, AppShell, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
+	import { get, writable } from 'svelte/store';
+	import { onMount } from 'svelte';
+
+	import { ConfigNode, MinecraftLaunchButton } from '$lib/components';
+	
+	import { fetchAuthed, isLoggedIn, login, healthCheck, logout, type ConfigNode as CfgNode } from '$lib/index';
+
+	
 	export let data: PageData;
 	const modalStore = getModalStore();
 

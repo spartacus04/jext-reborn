@@ -1,10 +1,9 @@
-import { discsStore, resourcePackStore } from '$lib/config';
-import { get } from 'svelte/store';
-import { getDuration, processImage } from './utils';
-import { loadFFmpeg, prepareAudio } from '$lib/ffmpeg';
-import JSZip from 'jszip';
-import { getVersionFromTime } from '$lib/utils';
 import type { FFmpeg } from '@ffmpeg/ffmpeg';
+import { get } from 'svelte/store';
+import JSZip from 'jszip';
+
+import { discsStore, resourcePackStore, getDuration, processImage, loadFFmpeg, prepareAudio, getVersionFromTime } from '../';
+
 
 export const processResources = async (
 	ffmpeg: FFmpeg | null,

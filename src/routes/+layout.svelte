@@ -1,20 +1,9 @@
 <script lang="ts">
-	import '../app.postcss';
-	import default_disc from '$lib/assets/default_disc.png';
-	import cog from '$lib/assets/cog.webp';
-	import knowledge_book from '$lib/assets/knowledge_book.png';
-	import github from '$lib/assets/github.svg';
-	import github_sponsors from '$lib/assets/githubsponsors.svg';
-	import hljs from 'highlight.js';
-	import json from 'highlight.js/lib/languages/json';
-	import plaintext from 'highlight.js/lib/languages/plaintext';
-	import kotlin from 'highlight.js/lib/languages/kotlin';
-	import java from 'highlight.js/lib/languages/java';
-	import gradle from 'highlight.js/lib/languages/gradle';
-	import http from 'highlight.js/lib/languages/http';
-	import xml from 'highlight.js/lib/languages/xml';
 	import 'highlight.js/styles/github-dark-dimmed.min.css';
-	import { listen } from '@tauri-apps/api/event';
+	import '../app.postcss';
+
+	import { default_disc, cog, knowledge_book, github, githubsponsors } from '$lib/assets';
+
 	import {
 		AppShell,
 		AppRail,
@@ -27,19 +16,17 @@
 	} from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
+	import hljs from 'highlight.js';
+	
 	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
 	import { confirm } from '@tauri-apps/api/dialog';
+	import { listen } from '@tauri-apps/api/event';
 	import { open } from '@tauri-apps/api/shell';
+	
 	import { base } from '$app/paths';
 
+	
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-	hljs.registerLanguage('json', json);
-	hljs.registerLanguage('plaintext', plaintext);
-	hljs.registerLanguage('kotlin', kotlin);
-	hljs.registerLanguage('java', java);
-	hljs.registerLanguage('gradle', gradle);
-	hljs.registerLanguage('xml', xml);
-	hljs.registerLanguage('http', http);
 	initializeStores();
 
 	storeHighlightJs.set(hljs);
@@ -141,7 +128,7 @@
 				</AppRailAnchor>
 				<AppRailAnchor href="https://github.com/sponsors/spartacus04" target="_blank">
 					<img
-						src={github_sponsors}
+						src={githubsponsors}
 						alt="Github sponsors"
 						class="h-full w-full p-5 pointer-events-none"
 					/>

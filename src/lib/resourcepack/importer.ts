@@ -1,9 +1,10 @@
-import type { Disc } from '$lib/types';
-import JSZip from 'jszip';
+import { default_disc, default_fragment } from '$lib/assets';
+
 import { get, type Writable } from 'svelte/store';
-import default_disc from '$lib/assets/default_disc.png';
-import default_fragment from '$lib/assets/default_fragment.png';
-import { resourcePackStore } from '$lib/config';
+import JSZip from 'jszip';
+
+import { type Disc, resourcePackStore } from '../';
+
 
 export const importRP = async (discStore: Writable<Disc[]>, rp: Blob, discsJson: Disc[]) => {
 	const zip = await JSZip.loadAsync(rp);

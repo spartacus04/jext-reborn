@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { JextFileChecker, RPChecker } from '$lib/resourcepack/utils';
-	import { Stepper, Step, getModalStore, FileDropzone, FileButton } from '@skeletonlabs/skeleton';
+	import { Stepper, Step, getModalStore, FileDropzone } from '@skeletonlabs/skeleton';
 
+	import { JextFileChecker, RPChecker } from '../';
+
+	
 	const modalStore = getModalStore();
 
 	let files: FileList;

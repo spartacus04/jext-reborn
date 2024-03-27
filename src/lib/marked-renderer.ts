@@ -1,5 +1,6 @@
 import { type RendererObject } from 'marked';
 
+
 export const renderer: RendererObject = {
 	blockquote: (quote: string) => `<blockquote class="blockquote m-2">${quote}</blockquote>`,
 	heading: (text: string, level: number) => `<h${level} class="m-2 h${level}">${text}</h${level}>`,

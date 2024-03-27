@@ -1,6 +1,7 @@
-import type { Disc } from '$lib/types';
-import disc_template from '$lib/assets/disc_template.png';
-import fragment_template from '$lib/assets/fragment_template.png';
+import { disc_template, fragment_template } from '$lib/assets';
+
+import type { Disc } from '../';
+
 
 export const namespace = (disc: Disc) =>
 	`${disc.title}${disc.author}${disc['model-data']}`

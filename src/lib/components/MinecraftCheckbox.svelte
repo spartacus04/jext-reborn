@@ -1,6 +1,6 @@
 <script lang="ts">
-	import checkbox_on from '$lib/assets/checkbox_on.png';
-	import checkbox_off from '$lib/assets/checkbox_off.png';
+	import { checkbox_on, checkbox_off } from '$lib/assets';
+
 
 	export let value: unknown;
 	export let size: string = '24px';
@@ -29,6 +29,3 @@
 		<img src={checkbox_off} alt="false" class="h-full" />
 	</button>
 {/if}
-
-<style>
-</style>

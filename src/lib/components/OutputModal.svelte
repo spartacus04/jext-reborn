@@ -1,20 +1,15 @@
 <script lang="ts">
-	import { outputEverything } from '$lib/resourcepack/exporter';
-	import { ProgressBar, getModalStore } from '@skeletonlabs/skeleton';
-	import { writable } from 'svelte/store';
-	import MinecraftButton from './MinecraftButton.svelte';
-	import { saveAs } from '$lib/utils';
-	import * as THREE from 'three';
-	import panorama_top from '$lib/assets/panorama_4.webp';
-	import panorama_bottom from '$lib/assets/panorama_5.webp';
-	import panorama_left from '$lib/assets/panorama_3.webp';
-	import panorama_right from '$lib/assets/panorama_1.webp';
-	import panorama_front from '$lib/assets/panorama_0.webp';
-	import panorama_back from '$lib/assets/panorama_2.webp';
+	import { panorama_0 as panorama_front, panorama_1 as panorama_right, panorama_2 as panorama_back, panorama_3 as panorama_left, panorama_4 as panorama_top, panorama_5 as panorama_bottom, default_icon } from '$lib/assets';
+
+	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
-	import default_icon from '$lib/assets/default_icon.png';
-	import ForgeProgressBar from './ForgeProgressBar.svelte';
-	import { fetchAuthed, isLoggedIn } from '$lib/login';
+	import { writable } from 'svelte/store';
+	import * as THREE from 'three';
+
+	import { MinecraftButton, ForgeProgressBar } from '.';
+
+	import { outputEverything, saveAs, fetchAuthed, isLoggedIn } from '../';
+
 
 	const modalStore = getModalStore();
 

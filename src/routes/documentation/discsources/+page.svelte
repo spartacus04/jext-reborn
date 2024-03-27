@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { CodeBlock, Tab, TabGroup } from '@skeletonlabs/skeleton';
+
+	import { base } from '$app/paths';
+	
 
 	let buildSystem = 0;
 	let language = 0;

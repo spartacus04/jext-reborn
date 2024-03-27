@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { randomTextures } from '$lib/resourcepack/discs';
-	import type { Disc } from '$lib/types';
 	import { FileDropzone, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
+	
+	import { randomTextures, type Disc } from '$lib/index';
+
 
 	let files: FileList;
 	let discs: Promise<Disc>[] = [];

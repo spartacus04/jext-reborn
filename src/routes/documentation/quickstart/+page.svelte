@@ -1,13 +1,8 @@
 <script lang="ts">
+	import { github, spigotmc, modrinth, hangar, warning, workflow, wrench, hand_helping } from '$lib/assets';
+	
 	import { Step, Stepper, Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import github from '$lib/assets/github.svg';
-	import spigotmc from '$lib/assets/spigotmc.svg';
-	import modrinth from '$lib/assets/modrinth.svg';
-	import hangar from '$lib/assets/hangar.svg';
-	import warning from '$lib/assets/warning.svg';
-	import workflow from '$lib/assets/workflow.svg';
-	import wrench from '$lib/assets/wrench.svg';
-	import hand_helping from '$lib/assets/hand_helping.svg';
+
 	import { base } from '$app/paths';
 </script>
 

@@ -1,16 +1,12 @@
 <script lang="ts">
-	import { discsStore } from '$lib/config';
-	import default_disc from '$lib/assets/default_disc.png';
-	import default_fragment from '$lib/assets/default_fragment.png';
-	import MinecraftTextbox from '$lib/components/MinecraftTextbox.svelte';
-	import FormatEditor from '$lib/components/FormatEditor.svelte';
-	import MinecraftCheckbox from '$lib/components/MinecraftCheckbox.svelte';
-	import MinecraftButton from './MinecraftButton.svelte';
+	import { default_disc, default_fragment } from '$lib/assets';
+
 	import { getModalStore, type ModalComponent } from '@skeletonlabs/skeleton';
-	import DungeonSelectModal from './DungeonSelectModal.svelte';
-	import MinecraftComboBox from './MinecraftComboBox.svelte';
-	import { inputFile, dropFile } from '$lib/directives';
-	import { processImage } from '$lib/resourcepack/utils';
+	
+	import { MinecraftTextbox, FormatEditor, MinecraftCheckbox, MinecraftButton, DungeonSelectModal, MinecraftComboBox } from '.';
+
+	import { inputFile, dropFile, processImage, discsStore } from '../';
+
 
 	export let discNamespaces: string[];
 	let multiple: boolean;

@@ -1,9 +1,11 @@
 <!-- This is extremely messy, but I'm too lazy to rewrite this -->
 <script lang="ts">
-	import { loottables } from '$lib/loottables';
 	import { TabGroup, Tab, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
 	import { onDestroy } from 'svelte';
 
+	import { loottables } from '../';
+
+	
 	const modalStore = getModalStore();
 
 	export let source: string = 'chests/*';

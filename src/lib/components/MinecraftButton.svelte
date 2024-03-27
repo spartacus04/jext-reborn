@@ -1,7 +1,6 @@
 <script lang="ts">
-	import button from '$lib/assets/button.png';
-	import button_highlight from '$lib/assets/button_highlight.png';
-	import button_disabled from '$lib/assets/button_disabled.png';
+	import { button, button_highlight, button_disabled } from '$lib/assets';
+
 
 	export let enabled = true;
 	export let flex = false;
@@ -56,7 +55,7 @@
 	}
 
 	#clickable:hover {
-		border-image-source: url({@assets/button_highlight.png});
+		border-image-source: url({@assets/button_highlight.webp});
 	}
 
 	#clickable {
