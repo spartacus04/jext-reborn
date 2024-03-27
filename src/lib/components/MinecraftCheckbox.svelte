@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { checkbox_on, checkbox_off } from '$lib/assets';
 
-
 	export let value: unknown;
 	export let size: string = '24px';
 	export let onClick: () => unknown = () => {};

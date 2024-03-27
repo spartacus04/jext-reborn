@@ -2,7 +2,6 @@ import { disc_template, fragment_template } from '$lib/assets';
 
 import type { Disc } from '../';
 
-
 export const namespace = (disc: Disc) =>
 	`${disc.title}${disc.author}${disc['model-data']}`
 		.replace(/[^a-zA-Z0-9]/g, '')

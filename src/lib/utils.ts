@@ -97,7 +97,7 @@ export const downloadWithProgress = async (
 
 		buf = data.buffer;
 	} catch (e) {
-		console.log(`failed to send download progress event: `, e);
+		console.log('failed to send download progress event: ', e);
 		buf = await resp.arrayBuffer();
 		cb &&
 			cb({

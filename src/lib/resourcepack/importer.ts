@@ -5,7 +5,6 @@ import JSZip from 'jszip';
 
 import { type Disc, resourcePackStore } from '../';
 
-
 export const importRP = async (discStore: Writable<Disc[]>, rp: Blob, discsJson: Disc[]) => {
 	const zip = await JSZip.loadAsync(rp);
 

@@ -29,7 +29,7 @@
 		rounded="true"
 		code={`
 {
-    \"pack\": {
+    "pack": {
         "pack_format": (Your version),
         "description": "(Your description)"
     }

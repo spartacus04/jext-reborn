@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { generate_btn } from '$lib/assets';
 
-	
 	export let enabled = true;
 	export let highlight = false;
 </script>

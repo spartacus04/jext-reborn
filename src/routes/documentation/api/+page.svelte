@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { CodeBlock, TabGroup, Tab } from '@skeletonlabs/skeleton';
 
-	
 	let responses = new Array(9).fill(0);
 </script>
 

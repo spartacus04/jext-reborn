@@ -4,8 +4,14 @@ import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { listen } from '@tauri-apps/api/event';
 import { invoke } from '@tauri-apps/api/tauri';
 
-import { getDuration, type FFmpegData, arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer, downloadWithProgress } from '.'
-
+import {
+	getDuration,
+	type FFmpegData,
+	arrayBufferToBase64,
+	base64ToArrayBuffer,
+	blobToArraBuffer,
+	downloadWithProgress
+} from '.';
 
 const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
 const baseMTURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm';
@@ -86,12 +92,12 @@ export const prepareAudio = async (
 			onProgress(100, Math.ceil(event.progress * 100), 'Converting audio file', 2)
 		);
 
-		await ffmpeg.exec(['-i', `input.ogg`, ...args, `output.ogg`]);
+		await ffmpeg.exec(['-i', 'input.ogg', ...args, 'output.ogg']);
 
-		const result = await ffmpeg.readFile(`output.ogg`);
+		const result = await ffmpeg.readFile('output.ogg');
 
-		ffmpeg.deleteFile(`input.ogg`);
-		ffmpeg.deleteFile(`output.ogg`);
+		ffmpeg.deleteFile('input.ogg');
+		ffmpeg.deleteFile('output.ogg');
 
 		onProgress(undefined, undefined, undefined, 2);
 

@@ -3,7 +3,6 @@ import Ajv from 'ajv';
 
 import type { Disc } from '../';
 
-
 export const RPChecker = async (blob: Blob): Promise<'JextRP' | 'RP' | 'NotValid'> => {
 	const zip = await JSZip.loadAsync(blob);
 

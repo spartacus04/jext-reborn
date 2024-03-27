@@ -30,12 +30,21 @@ module.exports = {
 	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': [
-			warn,
+			'warn',
 			{
 				argsIgnorePattern: '^_',
 				varsIgnorePattern: '^_',
 				caughtErrorsIgnorePattern: '^_'
 			}
-		]
+		],
+		quotes: 'off',
+		'@typescript-eslint/quotes': ['error', 'single'],
+		'@typescript-eslint/no-explicit-any': 'off',
+		'no-async-promise-executor': 'off',
+		'no-empty': 'off',
+		'svelte/no-at-html-tags': 'off',
+		'no-undef': 'off',
+		'semi': 'off',
+		'@typescript-eslint/semi': ['error', 'always'],
 	}
 };

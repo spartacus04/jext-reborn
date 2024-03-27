@@ -2,11 +2,17 @@
 	import { default_disc, default_fragment } from '$lib/assets';
 
 	import { getModalStore, type ModalComponent } from '@skeletonlabs/skeleton';
-	
-	import { MinecraftTextbox, FormatEditor, MinecraftCheckbox, MinecraftButton, DungeonSelectModal, MinecraftComboBox } from '.';
+
+	import {
+		MinecraftTextbox,
+		FormatEditor,
+		MinecraftCheckbox,
+		MinecraftButton,
+		DungeonSelectModal,
+		MinecraftComboBox
+	} from '.';
 
 	import { inputFile, dropFile, processImage, discsStore } from '../';
-
 
 	export let discNamespaces: string[];
 	let multiple: boolean;
@@ -146,7 +152,7 @@
 		}
 	};
 
-	const openDungeonModal = (isFragment: Boolean) => {
+	const openDungeonModal = (isFragment: boolean) => {
 		$modalStore[0].meta = tempDisc;
 
 		const modalComponent: ModalComponent = {
@@ -252,7 +258,7 @@
 		});
 
 		if ($modalStore[0]) {
-			$modalStore[0].response!!(true);
+			$modalStore[0].response!(true);
 			modalStore.close();
 		}
 	};
@@ -263,7 +269,7 @@
 		});
 
 		if ($modalStore[0]) {
-			$modalStore[0].response!!(true);
+			$modalStore[0].response!(true);
 			modalStore.close();
 		}
 	};

@@ -17,15 +17,14 @@
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
 	import hljs from 'highlight.js';
-	
+
 	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
 	import { confirm } from '@tauri-apps/api/dialog';
 	import { listen } from '@tauri-apps/api/event';
 	import { open } from '@tauri-apps/api/shell';
-	
+
 	import { base } from '$app/paths';
 
-	
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	initializeStores();
 
@@ -41,12 +40,14 @@
 		try {
 			(async () => {
 				const currentVersion = await fetch(`${base}/_app/version.json`).then((res) => res.json());
-				const latestVersion = await fetch('https://spartacus04.github.io/jext-reborn/_app/version.json').then((res) =>
-					res.json()
-				);
+				const latestVersion = await fetch(
+					'https://spartacus04.github.io/jext-reborn/_app/version.json'
+				).then((res) => res.json());
 
 				if (currentVersion.version !== latestVersion.version) {
-					const update = await confirm('A new version of the Jext Companion App is available. Do you want to update?');
+					const update = await confirm(
+						'A new version of the Jext Companion App is available. Do you want to update?'
+					);
 
 					if (update) {
 						const response = await fetch(
@@ -61,7 +62,7 @@
 					}
 				}
 			})();
-		} catch(_) { }
+		} catch (_) { }
 	}
 
 	onMount(async () => {

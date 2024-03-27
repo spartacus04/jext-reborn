@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { MinecraftCheckbox, MinecraftButton, MinecraftTextbox, MinecraftNumber, MinecraftComboBox, DungeonSelectModal } from '.';
-	
-	import { getModalStore, type ModalComponent } from '@skeletonlabs/skeleton';
-	
-	import type { ConfigNode } from '../';
+	import {
+		MinecraftCheckbox,
+		MinecraftButton,
+		MinecraftTextbox,
+		MinecraftNumber,
+		MinecraftComboBox,
+		DungeonSelectModal
+	} from '.';
 
+	import { getModalStore, type ModalComponent } from '@skeletonlabs/skeleton';
+
+	import type { ConfigNode } from '../';
 
 	export let node: ConfigNode<boolean | number | string | { [key: string]: number }>;
 

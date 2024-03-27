@@ -1,6 +1,15 @@
 <script lang="ts">
-	import { github, spigotmc, modrinth, hangar, warning, workflow, wrench, hand_helping } from '$lib/assets';
-	
+	import {
+		github,
+		spigotmc,
+		modrinth,
+		hangar,
+		warning,
+		workflow,
+		wrench,
+		hand_helping
+	} from '$lib/assets';
+
 	import { Step, Stepper, Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	import { base } from '$app/paths';
@@ -74,7 +83,7 @@
 			</Accordion>
 		</div>
 
-		You also need to download Protocollib as it's one of the <b class="underline">required</b>
+		You also need to download Protocollib as it's one of the<b class="underline">required</b>
 		dependencies, you can download it from any of these sources:
 
 		<div class="logo-cloud grid-cols-1 sm:grid-cols-3 gap-1">

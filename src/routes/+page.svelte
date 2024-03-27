@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	
+
 	import {
 		AppBar,
 		AppShell,
@@ -12,14 +12,33 @@
 	} from '@skeletonlabs/skeleton';
 	import { press } from 'svelte-gestures';
 	import { onMount } from 'svelte';
-	
-	import { MinecraftButton, ImportResourcePackModal, CreateDiscModal, EditDiscModal, ResourcePackManager, MinecraftLaunchButton, OutputModal } from '$lib/components';
-	
-	import { LoginStore, fetchAuthed, healthCheck, isLoggedIn, login, logout, type Disc, JextReader, RPChecker, importRP, discsStore } from '$lib/index';
+
+	import {
+		MinecraftButton,
+		ImportResourcePackModal,
+		CreateDiscModal,
+		EditDiscModal,
+		ResourcePackManager,
+		MinecraftLaunchButton,
+		OutputModal
+	} from '$lib/components';
+
+	import {
+		LoginStore,
+		fetchAuthed,
+		healthCheck,
+		isLoggedIn,
+		login,
+		logout,
+		type Disc,
+		JextReader,
+		RPChecker,
+		importRP,
+		discsStore
+	} from '$lib/index';
 
 	import { beforeNavigate } from '$app/navigation';
 
-	
 	export let data: PageData;
 	const modalStore = getModalStore();
 
@@ -27,7 +46,7 @@
 		if (isLoggedIn()) {
 			if (data.server.connect) {
 				if (
-					await new Promise<Boolean>((resolve) => {
+					await new Promise<boolean>((resolve) => {
 						modalStore.trigger({
 							type: 'confirm',
 							title: 'Already logged in',

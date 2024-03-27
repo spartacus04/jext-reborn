@@ -1,7 +1,6 @@
 import { getModalStore, localStorageStore, type ModalStore } from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
-
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);
 
 export const login = async (
@@ -74,8 +73,7 @@ export const login = async (
 
 	switch (response.status) {
 		case 200:
-			const token = result;
-			LoginStore.set({ ip: `${ip}:${port}`, token });
+			LoginStore.set({ ip: `${ip}:${port}`, token: result });
 			return true;
 		default:
 			modalStore.trigger({
@@ -128,7 +126,7 @@ export const logout = async (force: boolean): Promise<void> => {
 	if (force) {
 		fetchAuthed('disconnect', {
 			method: 'POST'
-		}).catch(async (_: any) => {});
+		}).catch(null);
 
 		LoginStore.set(null);
 

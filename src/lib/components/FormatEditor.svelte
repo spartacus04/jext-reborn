@@ -2,7 +2,6 @@
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import MCText from 'minecraft-text-js';
 
-	
 	export let split: string[] = [];
 	export let text = '';
 	export let firstline = '';

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { button, button_highlight, button_disabled } from '$lib/assets';
 
-
 	export let enabled = true;
 	export let flex = false;
 

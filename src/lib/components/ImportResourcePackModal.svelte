@@ -3,7 +3,6 @@
 
 	import { JextFileChecker, RPChecker } from '../';
 
-	
 	const modalStore = getModalStore();
 
 	let files: FileList;

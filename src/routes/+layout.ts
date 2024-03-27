@@ -6,10 +6,10 @@ import { invoke } from '@tauri-apps/api/tauri';
 
 import { resourcePackStore, localFFmpegStore } from '$lib';
 
-
 export const ssr = false;
 export const prerender = true;
 export const trailingSlash = 'always';
+
 
 export const load: LayoutLoad = async ({ url, fetch }) => {
 	if (window.__TAURI__) {
@@ -25,14 +25,15 @@ export const load: LayoutLoad = async ({ url, fetch }) => {
 	const ip = params.get('ip');
 	const port = params.get('port');
 
-	(() => fetch(default_icon).then(async (res) => {
-		const blob = await res.blob();
-	
-		resourcePackStore.update((store) => {
-			store.icon = blob;
-			return store;
-		});
-	}))()
+	(() =>
+		fetch(default_icon).then(async (res) => {
+			const blob = await res.blob();
+
+			resourcePackStore.update((store) => {
+				store.icon = blob;
+				return store;
+			});
+		}))();
 
 	return {
 		server: {

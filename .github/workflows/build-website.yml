@@ -2,7 +2,7 @@ name: Build & publish
 
 on:
   push:
-    branches: [ master, gh-pages ]
+    branches: [master, gh-pages]
   release:
     types: [published]
 

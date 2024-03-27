@@ -1,9 +1,6 @@
-import { default_icon } from './assets';
-
 import { writable } from 'svelte/store';
 
 import type { Disc, ResourcePackData } from '.';
-
 
 export const versions = new Map([
 	[4, '1.14 - 1.14.4'],

@@ -5,7 +5,6 @@
 
 	import { loottables } from '../';
 
-	
 	const modalStore = getModalStore();
 
 	export let source: string = 'chests/*';
@@ -121,7 +120,7 @@
 				}
 			}
 
-			$modalStore[0]!!.response!!(parsedValue);
+			$modalStore[0]!.response!(parsedValue);
 			modalStore.close();
 		}
 	};

@@ -2,8 +2,15 @@ import type { FFmpeg } from '@ffmpeg/ffmpeg';
 import { get } from 'svelte/store';
 import JSZip from 'jszip';
 
-import { discsStore, resourcePackStore, getDuration, processImage, loadFFmpeg, prepareAudio, getVersionFromTime } from '../';
-
+import {
+	discsStore,
+	resourcePackStore,
+	getDuration,
+	processImage,
+	loadFFmpeg,
+	prepareAudio,
+	getVersionFromTime
+} from '../';
 
 export const processResources = async (
 	ffmpeg: FFmpeg | null,
@@ -21,7 +28,7 @@ export const processResources = async (
 
 	const total = discs.filter((disc) => disc.uploadData).length;
 
-	for (const [i, disc] of discs.entries()) {
+	for (const disc of discs) {
 		if (disc.uploadData) {
 			onProgress(total, current, `Processing ${disc['disc-namespace']}`, 1);
 			onProgress(undefined, undefined, undefined, 2);
@@ -230,6 +237,7 @@ export const generateResourcePack = async (): Promise<Blob> => {
 		'jext.json',
 		JSON.stringify(
 			discs.map((disc) => {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const { packData, uploadData, ...rest } = disc;
 				return rest;
 			}),

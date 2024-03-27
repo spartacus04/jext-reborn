@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { spigotmc, java } from '$lib/assets';
-	
+
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	import { afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
-
 
 	let indexOpen = false;
 	let marginToggled = false;

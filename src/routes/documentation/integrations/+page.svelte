@@ -3,7 +3,6 @@
 
 	import { base } from '$app/paths';
 
-	
 	let buildSystem = 0;
 	let language = 0;
 </script>

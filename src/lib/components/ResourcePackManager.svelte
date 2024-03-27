@@ -1,11 +1,10 @@
 <script lang="ts">
 	import JSZip from 'jszip';
-	
+
 	import { MinecraftComboBox, MinecraftTextbox } from '.';
 
 	import { resourcePackStore, versions, inputFile, dropFile, randomDiscTexture } from '../';
 
-	
 	const setTexture = async (files?: File[]) => {
 		if (files && files.length > 0 && files[0]) {
 			$resourcePackStore.icon = files[0];

@@ -8,10 +8,16 @@
 	import { onMount } from 'svelte';
 
 	import { ConfigNode, MinecraftLaunchButton } from '$lib/components';
-	
-	import { fetchAuthed, isLoggedIn, login, healthCheck, logout, type ConfigNode as CfgNode } from '$lib/index';
 
-	
+	import {
+		fetchAuthed,
+		isLoggedIn,
+		login,
+		healthCheck,
+		logout,
+		type ConfigNode as CfgNode
+	} from '$lib/index';
+
 	export let data: PageData;
 	const modalStore = getModalStore();
 
@@ -24,7 +30,7 @@
 		if (isLoggedIn()) {
 			if (data.server.connect) {
 				if (
-					await new Promise<Boolean>((resolve) => {
+					await new Promise<boolean>((resolve) => {
 						modalStore.trigger({
 							type: 'confirm',
 							title: 'Already logged in',

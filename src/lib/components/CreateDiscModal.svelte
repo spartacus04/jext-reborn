@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { FileDropzone, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
-	
-	import { randomTextures, type Disc } from '$lib/index';
 
+	import { randomTextures, type Disc } from '$lib/index';
 
 	let files: FileList;
 	let discs: Promise<Disc>[] = [];
@@ -13,7 +12,7 @@
 		for (let i = 0; i < files.length; i++) {
 			const file = files[i];
 
-			const splitName = file.name.replace(/\.[^\.]+$/g, '').split(/ ?- ?/g);
+			const splitName = file.name.replace(/\.[^.]+$/g, '').split(/ ?- ?/g);
 
 			let name = 'Song name';
 			let author = 'Unknown artist';

@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { panorama_0 as panorama_front, panorama_1 as panorama_right, panorama_2 as panorama_back, panorama_3 as panorama_left, panorama_4 as panorama_top, panorama_5 as panorama_bottom, default_icon } from '$lib/assets';
+	import {
+		panorama_0 as panorama_front,
+		panorama_1 as panorama_right,
+		panorama_2 as panorama_back,
+		panorama_3 as panorama_left,
+		panorama_4 as panorama_top,
+		panorama_5 as panorama_bottom,
+		default_icon
+	} from '$lib/assets';
 
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
@@ -9,7 +17,6 @@
 	import { MinecraftButton, ForgeProgressBar } from '.';
 
 	import { outputEverything, saveAs, fetchAuthed, isLoggedIn } from '../';
-
 
 	const modalStore = getModalStore();
 
