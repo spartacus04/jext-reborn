@@ -7,16 +7,17 @@ import me.spartacus04.jext.config.ConfigFactory
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
+import me.spartacus04.jext.utils.ServerVersion
 import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
-object State {
+object JextState {
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
     val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()
     val LANG = LanguageManager()
     val DISCS = DiscManager()
-    val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
+    internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     val INTEGRATIONS = IntegrationsManager()
-    val WEBSERVER = JextWebServer()
+    internal val WEBSERVER = JextWebServer()
 }

@@ -1,4 +1,4 @@
-package me.spartacus04.jext
+package me.spartacus04.jext.utils
 
 /**
  * The class `ServerVersion` is a utility class that represents the version of a server.
