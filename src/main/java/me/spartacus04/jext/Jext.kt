@@ -1,10 +1,10 @@
 package me.spartacus04.jext
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.INTEGRATIONS
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.WEBSERVER
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.INTEGRATIONS
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.WEBSERVER
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
 import me.spartacus04.jext.gui.JukeboxGui

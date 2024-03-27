@@ -1,8 +1,8 @@
 package me.spartacus04.jext.discs.sources.file
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.DiscPersistentDataContainer
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL

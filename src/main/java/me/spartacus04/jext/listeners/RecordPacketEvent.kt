@@ -2,7 +2,7 @@ package me.spartacus04.jext.listeners
 
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.PacketEvent
-import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.listeners.utils.JextPacketListener
 import net.md_5.bungee.api.ChatMessageType

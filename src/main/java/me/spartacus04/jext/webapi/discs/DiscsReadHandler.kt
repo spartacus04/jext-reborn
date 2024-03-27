@@ -1,8 +1,8 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 import org.bukkit.Bukkit
 

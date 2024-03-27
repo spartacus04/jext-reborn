@@ -4,10 +4,10 @@ import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.PacketContainer
 import io.github.bananapuncher714.nbteditor.NBTEditor
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.SCHEDULER
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.SCHEDULER
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.sources.file.FileDisc
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.SOUND_MAP

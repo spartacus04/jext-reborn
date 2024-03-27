@@ -3,7 +3,7 @@ package me.spartacus04.jext.webapi.config
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode

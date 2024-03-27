@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.State.DISCS
+import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack

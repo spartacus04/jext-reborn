@@ -1,7 +1,7 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.commands.CommandRegistrant.commandRegistry
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.language.LanguageManager.Companion.JEXT_VERSION
