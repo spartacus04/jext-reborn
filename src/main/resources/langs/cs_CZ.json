@@ -36,7 +36,7 @@
   "missing-permission": "§cNemáš oprávnění použít tento příkaz!",
   "invalid-runner": "§cTento příkaz může být spuštěn pouze podle §6%runner%§c.",
   "command-not-supported": "§cPříkaz §6%command% §cnení podporován: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aWebové uživatelské rozhraní dostupné na §2%url%",
+  "webui-disabled": "§cWebové uživatelské rozhraní je momentálně zakázáno!",
   "usage": "[Usage]: §6/%command%"
 }
