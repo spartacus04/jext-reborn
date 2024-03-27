@@ -62,7 +62,7 @@
 					}
 				}
 			})();
-		} catch (_) { }
+		} catch (_) {}
 	}
 
 	onMount(async () => {

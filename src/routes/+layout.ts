@@ -10,7 +10,6 @@ export const ssr = false;
 export const prerender = true;
 export const trailingSlash = 'always';
 
-
 export const load: LayoutLoad = async ({ url, fetch }) => {
 	if (window.__TAURI__) {
 		const downloaded = await invoke<boolean>('download_ffmpeg');

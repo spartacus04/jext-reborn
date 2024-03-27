@@ -44,7 +44,7 @@ module.exports = {
 		'no-empty': 'off',
 		'svelte/no-at-html-tags': 'off',
 		'no-undef': 'off',
-		'semi': 'off',
-		'@typescript-eslint/semi': ['error', 'always'],
+		semi: 'off',
+		'@typescript-eslint/semi': ['error', 'always']
 	}
 };
