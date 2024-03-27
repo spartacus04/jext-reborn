@@ -6,7 +6,7 @@ import org.bukkit.Material
 /**
  * Checks if the material is a record fragment
  */
-val Material.isRecordFragment: Boolean
+internal val Material.isRecordFragment: Boolean
     get() {
         return FRAGMENT_LIST.contains(this)
     }

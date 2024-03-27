@@ -16,7 +16,7 @@ import xyz.xenondevs.invui.inventory.Inventory
 import xyz.xenondevs.invui.item.builder.ItemBuilder
 import xyz.xenondevs.invui.item.impl.SimpleItem
 
-class GuiBuilder {
+internal class GuiBuilder {
     private val border = SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("§r"))
 
     fun buildGui(player: Player, inventory: Inventory) : Gui.Builder<*, *> {

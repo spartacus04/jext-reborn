@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
  * @param key The language key to get the value from.
  * @param params A hashmap containing the parameters to replace.
  */
-fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> = HashMap()) {
+internal fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, String> = HashMap()) {
     if(this !is Player) {
         return sendMessage(
             LANG.replaceParameters("[§aJEXT§f] ${LANG["en_us", key]}", params)

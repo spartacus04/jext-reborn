@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class ConnectHandler : JextHttpHandler(false) {
+internal class ConnectHandler : JextHttpHandler(false) {
     override fun onPost(exchange: HttpExchange) {
         val addr = exchange.remoteAddress.address.address.map { it.toInt() }.joinToString(".")
         val body = exchange.requestBody.bufferedReader().readText()

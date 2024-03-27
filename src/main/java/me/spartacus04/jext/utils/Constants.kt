@@ -140,5 +140,5 @@ object Constants {
         ItemStack(Material.MUSIC_DISC_WARD),
     )
 
-    const val BSTATS_METRICS = 16571
+    internal const val BSTATS_METRICS = 16571
 }

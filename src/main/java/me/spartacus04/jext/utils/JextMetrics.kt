@@ -18,7 +18,7 @@ internal class JextMetrics : Metrics(PLUGIN, BSTATS_METRICS) {
     }
 
     companion object {
-        var METRICS = if(CONFIG.ALLOW_METRICS) {
+        private var METRICS = if(CONFIG.ALLOW_METRICS) {
             JextMetrics()
         } else {
             null

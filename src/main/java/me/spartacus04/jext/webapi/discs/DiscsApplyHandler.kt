@@ -7,7 +7,7 @@ import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class DiscsApplyHandler : JextHttpHandler(true) {
+internal class DiscsApplyHandler : JextHttpHandler(true) {
     override fun onPost(exchange: HttpExchange) {
         val body = exchange.requestBody.readBytes()
         val file = PLUGIN.dataFolder.resolve("resource-pack.zip")

@@ -9,7 +9,7 @@ import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class ConfigReadHandler : JextHttpHandler(true) {
+internal class ConfigReadHandler : JextHttpHandler(true) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     override fun onGet(exchange: HttpExchange) {

@@ -10,7 +10,7 @@ import xyz.xenondevs.invui.inventory.VirtualInventory
 import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
 import xyz.xenondevs.invui.window.Window
 
-class AdminGui(player: Player) {
+internal class AdminGui(player: Player) {
     private val inv: VirtualInventory
 
     init {

@@ -7,7 +7,7 @@ import com.comphenix.protocol.events.PacketAdapter
 import me.spartacus04.jext.State
 import me.spartacus04.jext.State.PLUGIN
 
-open class JextPacketListener(private val minVersion: String? = null, listenerPriority: ListenerPriority = ListenerPriority.NORMAL, packetType: PacketType) : PacketAdapter(PLUGIN, listenerPriority, packetType), AbstractJextListener {
+internal open class JextPacketListener(private val minVersion: String? = null, listenerPriority: ListenerPriority = ListenerPriority.NORMAL, packetType: PacketType) : PacketAdapter(PLUGIN, listenerPriority, packetType), AbstractJextListener {
     override fun register() {
         if(minVersion == null || State.VERSION >= minVersion) {
             ProtocolLibrary.getProtocolManager().addPacketListener(this)

@@ -17,7 +17,7 @@ import org.bukkit.entity.Player
  *
  * @param commandString The `commandString` parameter is a string representing the command name.
  */
-open class ExecutorAdapter(val commandString: String, subCommandString: String? = null) : CommandExecutor, TabCompleter {
+internal open class ExecutorAdapter(val commandString: String, subCommandString: String? = null) : CommandExecutor, TabCompleter {
 
     /**
      * The `subcommandString` property is a string representing the subcommand name.

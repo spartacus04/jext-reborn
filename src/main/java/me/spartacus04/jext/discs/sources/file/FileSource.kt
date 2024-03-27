@@ -20,7 +20,7 @@ import java.security.MessageDigest
 import java.util.zip.ZipFile
 import javax.net.ssl.HttpsURLConnection
 
-class FileSource : DiscSource {
+internal class FileSource : DiscSource {
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     private suspend fun unpackResourcePack(file: File): String? {

@@ -12,7 +12,7 @@ import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-data class FileDisc(
+internal data class FileDisc(
     @SerializedName("title")
     val TITLE: String = "",
 

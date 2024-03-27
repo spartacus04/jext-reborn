@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType
  *
  * @param meta The item meta
  */
-class DiscPersistentDataContainer(meta: ItemMeta) {
+internal class DiscPersistentDataContainer(meta: ItemMeta) {
     private val id = "JEXT"
     private val container = meta.persistentDataContainer
 

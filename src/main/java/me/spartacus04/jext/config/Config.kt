@@ -48,7 +48,7 @@ data class Config(
     var RESOURCE_PACK_HOST : Boolean = true,
 
     @SerializedName("web-interface-port")
-    var WEB_INTERFACE_PORT : Int = 8080,
+    var WEB_INTERFACE_PORT : Int = 9871,
 
     @SerializedName("web-interface-api-enabled")
     var WEB_INTERFACE_API_ENABLED : Boolean = true,

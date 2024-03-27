@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import me.spartacus04.jext.State.PLUGIN
 
-open class LegacyConfig <T>(
+internal open class LegacyConfig <T>(
     private val addList: List<String>? = null,
     private val removeList: List<String>? = null,
     private val replaceTokens: (defaultConfig: String, legacyConfig: T) -> String

@@ -20,7 +20,7 @@ import me.spartacus04.jext.webapi.discs.DiscsReadHandler
 import org.bukkit.Bukkit
 import java.net.InetSocketAddress
 
-class JextWebServer {
+internal class JextWebServer {
     private var server : HttpServer? = null
     private var resourcePackHostEnabled = CONFIG.RESOURCE_PACK_HOST
     private var apiEnabled = CONFIG.WEB_INTERFACE_API_ENABLED

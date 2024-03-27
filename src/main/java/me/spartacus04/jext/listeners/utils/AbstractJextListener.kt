@@ -1,6 +1,6 @@
 package me.spartacus04.jext.listeners.utils
 
-interface AbstractJextListener {
+internal interface AbstractJextListener {
     fun register()
 
     fun unregister()

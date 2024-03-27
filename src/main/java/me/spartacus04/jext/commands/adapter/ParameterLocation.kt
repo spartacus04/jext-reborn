@@ -13,7 +13,7 @@ import java.util.*
  *
  * @param required A boolean value that represents whether the parameter is required or not
  */
-class ParameterLocation internal constructor(required: Boolean, private val axis: Axis) : Parameter(required) {
+internal class ParameterLocation internal constructor(required: Boolean, private val axis: Axis) : Parameter(required) {
 
     /**
      * This enum represents the axis of the location parameter

@@ -25,7 +25,7 @@ import xyz.xenondevs.invui.inventory.event.UpdateReason
 import xyz.xenondevs.invui.window.Window
 import java.util.*
 
-class JukeboxGui {
+internal class JukeboxGui {
     private val player: Player
     private val id: String
     private val block: Block?

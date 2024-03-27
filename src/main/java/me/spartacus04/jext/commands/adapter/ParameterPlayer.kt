@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
  *
  * @param required A boolean value that represents whether the parameter is required or not
  */
-class ParameterPlayer internal constructor(required: Boolean) : Parameter(required) {
+internal class ParameterPlayer internal constructor(required: Boolean) : Parameter(required) {
     override val name: String
         get() = "player"
 

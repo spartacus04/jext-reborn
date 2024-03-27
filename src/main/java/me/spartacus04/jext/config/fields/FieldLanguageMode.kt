@@ -20,7 +20,7 @@ enum class FieldLanguageMode {
     pl_pl, pt_br, pt_pt, ro_ro, ru_ru, sr_sp,
     sv_se, tr_tr, uk_ua, vi_vn, zh_cn, zh_tw;
 
-    fun toLocale(): String {
+    internal fun toLocale(): String {
         return if(this == AUTO || this == SILENT || this == CUSTOM) {
             this.name
         } else {
@@ -28,7 +28,7 @@ enum class FieldLanguageMode {
         }.lowercase()
     }
 
-    companion object {
+    internal companion object {
         fun fromString(name: String): FieldLanguageMode {
             // return enum value, name can either be the actual name or the serialized name
             return entries.find { it.name == name || it.name == name.replace("-", "_").uppercase() } ?: throw IllegalArgumentException("Invalid serialized name")

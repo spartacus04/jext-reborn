@@ -3,7 +3,7 @@ package me.spartacus04.jext.webapi.auth
 import com.sun.net.httpserver.HttpExchange
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class HealthHandler : JextHttpHandler(false) {
+internal class HealthHandler : JextHttpHandler(false) {
     override fun onGet(exchange: HttpExchange) {
         val token = exchange.requestHeaders["Authorization"]?.first()?.replace("Bearer ", "")
 

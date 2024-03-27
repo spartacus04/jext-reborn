@@ -9,7 +9,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
-class ExecutorMain : ExecutorAdapter("jext") {
+internal class ExecutorMain : ExecutorAdapter("jext") {
     override fun execute(sender: CommandSender, args: Array<String>) {
         if(args.isEmpty()) {
             sender.sendMessage(LANG.replaceParameters(JEXT_VERSION, hashMapOf(
@@ -19,7 +19,11 @@ class ExecutorMain : ExecutorAdapter("jext") {
             return
         }
 
-        val subArgs = args.copyOfRange(1, args.size)
+        val subArgs = try {
+            args.copyOfRange(1, args.size)
+        } catch (_ : Exception) {
+            arrayOf()
+        }
 
         val subcommand = commandRegistry.find { it.subCommandString == args[0] } ?: return
 

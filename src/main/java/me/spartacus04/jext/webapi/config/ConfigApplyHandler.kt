@@ -6,7 +6,7 @@ import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.utils.JextMetrics
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class ConfigApplyHandler : JextHttpHandler(true) {
+internal class ConfigApplyHandler : JextHttpHandler(true) {
     override fun onPost(exchange: HttpExchange) {
         val body = exchange.requestBody.bufferedReader().use { it.readText() }
 

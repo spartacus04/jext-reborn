@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
  * @property isRequired The "isRequired" property is a boolean value that represents whether the parameter is required or not.
  * @constructor Creates a Parameter object.
  */
-abstract class Parameter(val isRequired: Boolean) {
+internal abstract class Parameter(val isRequired: Boolean) {
 
     /**
      * The abstract property name represents the name of the parameter.

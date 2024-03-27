@@ -6,7 +6,7 @@ import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.integrations.unique.GeyserIntegration.Companion.GEYSER
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-class DiscsApplyGeyserHandler : JextHttpHandler(true) {
+internal class DiscsApplyGeyserHandler : JextHttpHandler(true) {
     override fun onPost(exchange: HttpExchange) {
         if(GEYSER == null) return notFound(exchange)
 

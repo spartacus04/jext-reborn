@@ -6,7 +6,7 @@ import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 import org.bukkit.Bukkit
 
-class DiscsReadHandler : JextHttpHandler(true) {
+internal class DiscsReadHandler : JextHttpHandler(true) {
     private val rpHosted = PLUGIN.dataFolder.resolve("resource-pack.zip")
     private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${Bukkit.getServer().resourcePackHash}.zip")
     override fun onGet(exchange: HttpExchange) {

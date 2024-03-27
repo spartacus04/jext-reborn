@@ -6,7 +6,7 @@ import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.config.legacy.*
 import me.spartacus04.jext.utils.FileBind
 
-object ConfigFactory {
+internal object ConfigFactory {
     private fun updateOldConfig() {
         val text = PLUGIN.dataFolder.resolve("config.json").readText()
         val gson = GsonBuilder().setPrettyPrinting().setLenient().create()

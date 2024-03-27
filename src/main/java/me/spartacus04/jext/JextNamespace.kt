@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey
 /**
  * The above class is an enum class that represents different namespaces and assigns a NamespacedKey to each namespace value.
  */
-enum class JextNamespace(val key: String) {
+enum class JextNamespace(key: String) {
     NAMESPACE_ID("jext.namespace_id"),
     IDENTIFIER("jext.identifier");
 

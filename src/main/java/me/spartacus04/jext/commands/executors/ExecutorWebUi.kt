@@ -8,7 +8,7 @@ import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 import java.net.InetAddress
 
-class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
+internal class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
     override fun execute(sender: CommandSender, args: Array<String>) {
         if(!CONFIG.WEB_INTERFACE_API_ENABLED) {
             return sender.sendJEXTMessage("webui-disabled")
