@@ -36,7 +36,7 @@
   "missing-permission": "§cJe hebt geen toestemming om dit commando te gebruiken!",
   "invalid-runner": "§cDit commando kan alleen uitgevoerd worden door §6%runner%§c.",
   "command-not-supported": "§cHet commando §6%command% §cwordt niet ondersteund: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aWeb UI beschikbaar op §2%url%",
+  "webui-disabled": "§cDe Web UI is momenteel uitgeschakeld!",
   "usage": "[Usage]: §6/%command%"
 }
