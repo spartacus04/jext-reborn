@@ -36,7 +36,7 @@
   "missing-permission": "§cVous n'avez pas la permission d'utiliser cette commande!",
   "invalid-runner": "§cCette commande ne peut être exécutée que par §6%runner%§c.",
   "command-not-supported": "§cLa commande §6%command% §cn'est pas prise en charge : §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aInterface Web disponible à §2%url%",
+  "webui-disabled": "§cL'interface Web est actuellement désactivée !",
   "usage": "[Usage]: §6/%command%"
 }

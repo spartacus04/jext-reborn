@@ -36,7 +36,7 @@
   "missing-permission": "§cSinulla ei ole lupaa käyttää tätä komentoa!",
   "invalid-runner": "§cTämän komennon voi suorittaa vain pelaajalla §6%runner%§c.",
   "command-not-supported": "§cKomento §6%command% §cis ei tuettu: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aWeb-käyttöliittymä saatavilla osoitteessa §2%url%",
+  "webui-disabled": "§cWeb-käyttöliittymä on tällä hetkellä pois käytöstä!",
   "usage": "[Usage]: §6/%command%"
 }

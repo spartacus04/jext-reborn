@@ -37,6 +37,6 @@
   "invalid-runner": "§c이 명령어는 오직 §6%runner%§c에 의해 사용될 수 있습니다.",
   "command-not-supported": "§6%command% §c은 지원하지 않는 명령어입니다. 이유: §6%reason%§c.",
   "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui-disabled": "§cThe Web UI is currently disabled!",
   "usage": "[사용법]: §6/%command%"
 }

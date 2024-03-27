@@ -36,7 +36,7 @@
   "missing-permission": "§cУ вас немає дозволу на використання цієї команди!",
   "invalid-runner": "§cЦю команду може виконувати лише §6%runner%§c.",
   "command-not-supported": "§cКоманда §6%command%§c не підтримується: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aМережевий інтерфейс доступний на §2%url%",
+  "webui-disabled": "§cВеб-інтерфейс вимкнено!",
   "usage": "[Usage]: §6/%command%"
 }

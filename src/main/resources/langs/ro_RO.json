@@ -36,7 +36,7 @@
   "missing-permission": "§cNu ai permisiunea sa folosesti aceasta comanda!",
   "invalid-runner": "§cAceasta comanda poate fi rulata doar de §6%runner%§c.",
   "command-not-supported": "§cComanda §6%command% §ceste suportata: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aUI web disponibil la §2%url%",
+  "webui-disabled": "§cInterfața web este dezactivata momentan!",
   "usage": "[Usage]: §6/%command%"
 }

@@ -36,7 +36,7 @@
   "missing-permission": "§cこのコマンドを使用する権限がありません！",
   "invalid-runner": "§cこのコマンドは§6%runner%§cでのみ実行できます。",
   "command-not-supported": "§6%command% §cコマンドはサポートされていません: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe webui is currently disabled!",
+  "webui": "§aWeb UI は §2%url% で利用できます",
+  "webui-disabled": "§cWeb UIは現在無効になっています！",
   "usage": "[Usage]: §6/%command%"
 }
