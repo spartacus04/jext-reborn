@@ -3,7 +3,7 @@
 	"build": {
 		"beforeBuildCommand": "npm run build",
 		"beforeDevCommand": "npm run dev",
-		"devPath": "http://localhost:5173",
+		"devPath": "http://localhost:5173/jext-reborn/",
 		"distDir": "../build"
 	},
 	"package": {
@@ -18,6 +18,9 @@
 			},
 			"dialog": {
 				"confirm": true
+			},
+			"shell": {
+				"open": true
 			},
 			"all": false
 		},

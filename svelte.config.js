@@ -8,8 +8,9 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		paths: {
-			base: '/jext-reborn'
+			base: process.env.TAURI_PLATFORM == undefined ? '/jext-reborn' : ''
 		}
 	}
 };
+
 export default config;

@@ -28,6 +28,8 @@
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
 	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
+	import { confirm } from '@tauri-apps/api/dialog';
+	import { open } from '@tauri-apps/api/shell';
 	import { base } from '$app/paths';
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -48,6 +50,31 @@
 			appWindow.requestUserAttention(UserAttentionType.Critical);
 			appWindow.setFocus();
 		});
+
+		try {
+			(async () => {
+				const currentVersion = await fetch(`${base}/_app/version.json`).then((res) => res.json());
+				const latestVersion = await fetch('https://spartacus04.github.io/jext-reborn/_app/version.json').then((res) =>
+					res.json()
+				);
+
+				if (currentVersion.version !== latestVersion.version) {
+					const update = await confirm('A new version of the Jext Companion App is available. Do you want to update?');
+
+					if (update) {
+						const response = await fetch(
+							'https://api.github.com/repos/spartacus04/jext-reborn/actions/workflows/build-tauri.yml/runs?status=success&per_page=1'
+						);
+
+						const json = await response.json();
+
+						if (json.total_count == 0) return;
+
+						open(json.workflow_runs[0].html_url);
+					}
+				}
+			})();
+		} catch(_) { }
 	}
 
 	onMount(async () => {
