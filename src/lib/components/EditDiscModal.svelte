@@ -312,7 +312,7 @@
 				<MinecraftTextbox
 					placeholder="Name"
 					bind:value={tempDisc.title.value}
-					on:input={() => setUpdatedPropery('name')}
+					on:input={() => setUpdatedPropery('title')}
 				/>
 				<MinecraftTextbox
 					placeholder="Author"

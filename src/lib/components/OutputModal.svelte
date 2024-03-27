@@ -148,19 +148,14 @@
 	};
 
 	const getDesktopAppDownload = (async () => {
-		// fetch latest successful workflow run for https://github.com/spartacus04/jext-reborn/actions/workflows/build-tauri.yml
-
 		const response = await fetch(
 			'https://api.github.com/repos/spartacus04/jext-reborn/actions/workflows/build-tauri.yml/runs?status=success&per_page=1'
 		);
 
 		const json = await response.json();
 
-		console.log(json);
-
 		if (json.total_count == 0) return;
 
-		// return html url
 		return json.workflow_runs[0].html_url;
 	})();
 </script>
