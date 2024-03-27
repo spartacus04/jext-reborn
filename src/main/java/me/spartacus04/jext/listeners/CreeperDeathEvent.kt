@@ -1,6 +1,6 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.CREEPER_DROPPABLE_DISCS
 import org.bukkit.entity.Creeper

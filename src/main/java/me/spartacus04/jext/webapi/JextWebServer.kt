@@ -2,10 +2,10 @@ package me.spartacus04.jext.webapi
 
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.*
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.JextState.SCHEDULER
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.State.SCHEDULER
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBAPI_RESOURCEPACK_NOT_FOUND
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STARTED
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STOPPED

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.commands.adapter.ParameterDisc
 import me.spartacus04.jext.commands.adapter.ParameterPlayer

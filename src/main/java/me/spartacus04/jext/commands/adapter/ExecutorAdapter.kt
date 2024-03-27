@@ -1,7 +1,7 @@
 package me.spartacus04.jext.commands.adapter
 
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.Bukkit
 import org.bukkit.command.Command

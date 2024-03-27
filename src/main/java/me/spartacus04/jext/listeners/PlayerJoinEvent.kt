@@ -1,8 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.language.LanguageManager.Companion.CROWDIN_LINK
 import me.spartacus04.jext.language.LanguageManager.Companion.CROWDIN_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK

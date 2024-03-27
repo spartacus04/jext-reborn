@@ -1,6 +1,6 @@
 package me.spartacus04.jext.commands.adapter
 
-import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.discs.Disc
 import org.bukkit.command.CommandSender
 

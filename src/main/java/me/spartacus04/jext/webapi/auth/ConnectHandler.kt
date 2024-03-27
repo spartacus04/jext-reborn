@@ -1,7 +1,7 @@
 package me.spartacus04.jext.webapi.auth
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class ConnectHandler : JextHttpHandler(false) {

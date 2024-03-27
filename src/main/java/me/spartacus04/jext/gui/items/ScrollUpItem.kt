@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui.items
 
-import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.State.LANG
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.gui.ScrollGui

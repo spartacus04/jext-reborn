@@ -1,8 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.DISCS
+import me.spartacus04.jext.State.VERSION
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.ChanceStack
 import me.spartacus04.jext.utils.Constants.DEFAULT_DISCS_LOOT_TABLE

@@ -1,8 +1,8 @@
 package me.spartacus04.jext.webapi.config
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.WEBSERVER
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.utils.JextMetrics
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 

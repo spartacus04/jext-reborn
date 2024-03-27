@@ -1,6 +1,6 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.State.VERSION
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.inventory.ItemStack

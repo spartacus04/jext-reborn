@@ -1,7 +1,7 @@
 package me.spartacus04.jext.listeners.utils
 
-import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.State.VERSION
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 

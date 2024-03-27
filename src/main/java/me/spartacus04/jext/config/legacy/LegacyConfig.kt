@@ -3,7 +3,7 @@ package me.spartacus04.jext.config.legacy
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.PLUGIN
 
 internal open class LegacyConfig <T>(
     private val addList: List<String>? = null,

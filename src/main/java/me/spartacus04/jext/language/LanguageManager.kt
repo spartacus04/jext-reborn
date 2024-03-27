@@ -3,8 +3,8 @@ package me.spartacus04.jext.language
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player

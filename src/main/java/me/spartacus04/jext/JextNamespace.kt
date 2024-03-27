@@ -1,6 +1,6 @@
 package me.spartacus04.jext
 
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.PLUGIN
 import org.bukkit.NamespacedKey
 
 /**

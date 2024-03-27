@@ -1,8 +1,8 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.State
+import me.spartacus04.jext.State.DISCS
+import me.spartacus04.jext.State.VERSION
 import me.spartacus04.jext.integrations.unique.GeyserIntegration
 import me.spartacus04.jext.language.LanguageManager
 import org.bukkit.entity.Player
@@ -40,7 +40,7 @@ internal class AdminGui(player: Player) {
 
         val window = Window.single()
             .setViewer(player)
-            .setTitle(JextState.LANG.getKey(player, "jukebox"))
+            .setTitle(State.LANG.getKey(player, "jukebox"))
             .setGui(gui)
             .build()
 

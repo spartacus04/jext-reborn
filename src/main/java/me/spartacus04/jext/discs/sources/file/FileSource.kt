@@ -5,8 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.sources.DiscSource
 import org.bukkit.Bukkit

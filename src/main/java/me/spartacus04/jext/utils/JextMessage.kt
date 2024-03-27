@@ -1,7 +1,7 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.JextState
-import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.State
+import me.spartacus04.jext.State.LANG
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -19,7 +19,7 @@ internal fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, 
         )
     }
 
-    when(JextState.CONFIG.LANGUAGE_MODE) {
+    when(State.CONFIG.LANGUAGE_MODE) {
         FieldLanguageMode.AUTO -> sendMessage(
             LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale.lowercase(), key]}", params)
         )
@@ -28,7 +28,7 @@ internal fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, 
         )
         FieldLanguageMode.SILENT -> {}
         else -> {
-            val lang = JextState.CONFIG.LANGUAGE_MODE.name.lowercase()
+            val lang = State.CONFIG.LANGUAGE_MODE.name.lowercase()
 
             sendMessage(
                 LANG.replaceParameters("[§aJEXT§f] ${LANG[lang, key]}", params)
