@@ -35,8 +35,8 @@
   "reloaded": "§cĐã nạp lại!",
   "missing-permission": "&cBạn không có quyền sử dụng lệnh này!",
   "invalid-runner": "§cLệnh này chỉ được sử dụng cho §6%runner%§c.",
-  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe Web UI is currently disabled!",
+  "command-not-supported": "§cLệnh §6%command% §ckhông được hỗ trợ: §6%reason%§c.",
+  "webui": "§aWeb UI có sẵn tại §2%url%",
+  "webui-disabled": "§cWeb UI đã bị tắt!",
   "usage": "[Usage]: §6/%command%"
 }
