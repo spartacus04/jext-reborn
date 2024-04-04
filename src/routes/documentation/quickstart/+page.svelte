@@ -186,6 +186,24 @@
 						You can now configure the plugin from the webUI, and apply your setting by clicking the
 						apply button.
 					</p>
+
+					<div class="bg-orange-900 rounded-lg">
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="lead">
+									<img src={warning} alt="warning" />
+								</svelte:fragment>
+								<svelte:fragment slot="summary"
+									>Can't connect to the jext server, what should I do?</svelte:fragment
+								>
+								<svelte:fragment slot="content">
+									<p>
+										Try clicking on the connect button and input the parameters manually, if it's still not working you can configure the plugin manually, it's not difficult!
+									</p>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					</div>
 				</svelte:fragment>
 			</AccordionItem>
 			<AccordionItem>
@@ -240,6 +258,24 @@
 						You can now edit the custom discs for a comfortable ui designed to make the process as
 						easy as possible!
 					</p>
+
+					<div class="bg-orange-900 rounded-lg">
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="lead">
+									<img src={warning} alt="warning" />
+								</svelte:fragment>
+								<svelte:fragment slot="summary"
+									>Can't connect to the jext server, what should I do?</svelte:fragment
+								>
+								<svelte:fragment slot="content">
+									<p>
+										Try clicking on the connect button and input the parameters manually.<br><br>If it's still not working you can add discs in the generator manually, and download the resource pack to the <code>JukeboxExtendedReborn/resource-pack.zip</code> path.
+									</p>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					</div>
 				</svelte:fragment>
 			</AccordionItem>
 			<AccordionItem>
