@@ -50,7 +50,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.2")
     implementation("xyz.xenondevs.invui:invui:1.26")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.26")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.27")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
