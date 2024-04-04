@@ -52,7 +52,9 @@ internal class Jext : JavaPlugin() {
 
         if(CONFIG.CHECK_FOR_UPDATES) {
             Updater().getVersion {
-                if(it != description.version) {
+                if(description.version == "dev") {
+                    Bukkit.getConsoleSender().sendMessage("Current upstream version is $it")
+                } else if(it != description.version) {
                     Bukkit.getConsoleSender().sendMessage("[§aJEXT§f] ${LANG["en_us", "update-available"]}")
                     Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
                 }

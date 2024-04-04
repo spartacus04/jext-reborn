@@ -1,11 +1,11 @@
-name: Generator Bug report
-description: Create a report to help me improve the generator
+name: WebUI Bug report
+description: Create a report to help me improve the webui
 title: '[Bug]: '
 assignees:
   - spartacus04
 labels:
   - bug
-  - generator
+  - webui
 body:
   - type: textarea
     id: description
@@ -18,7 +18,7 @@ body:
     id: reproduce
     attributes:
       label: Steps to reproduce
-      description: Stepts to reproduce the behaviour
+      description: Steps to reproduce the behaviour
       placeholder: 1. Go to '...'  2. Click on '....' 3. Scroll down to '....' 4. See error
     validations:
       required: true

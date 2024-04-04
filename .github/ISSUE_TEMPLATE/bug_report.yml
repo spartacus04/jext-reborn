@@ -17,7 +17,7 @@ body:
     id: reproduce
     attributes:
       label: Steps to reproduce
-      description: Stepts to reproduce the behaviour
+      description: Steps to reproduce the behaviour
       placeholder: 1. Go to '...'  2. Click on '....' 3. Scroll down to '....' 4. See error
     validations:
       required: true
@@ -39,6 +39,9 @@ body:
       label: Server Version
       description: Select the server version
       options:
+        - 1.20.4
+        - 1.20.3
+        - 1.20.2
         - 1.20.1
         - '1.20'
         - 1.19.4
@@ -83,7 +86,7 @@ body:
     id: discsjson
     attributes:
       label: Discs.json
-      description: If you want to, you can upload your discs.json file for further detail
+      description: If you are using legacy disc loading, you can upload your discs.json file for further detail
       render: json
   - type: input
     id: rp
@@ -96,7 +99,7 @@ body:
     id: JukeboxMode
     attributes:
       label: Jukebox Behaviour
-      description: Which jukebox behaviour are you using? (legacy-gui is not supported, just switch to gui)
+      description: Which jukebox behaviour are you using?
       options:
         - Vanilla
         - Gui
