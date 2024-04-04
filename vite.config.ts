@@ -12,6 +12,9 @@ export default defineConfig({
 			}
 		})
 	],
+	build: {
+		sourcemap: true
+	},
 	optimizeDeps: {
 		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core']
 	},
