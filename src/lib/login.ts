@@ -1,10 +1,11 @@
-import { getModalStore, localStorageStore, type ModalStore } from '@skeletonlabs/skeleton';
+import { getModalStore, localStorageStore, type ModalComponent, type ModalStore, type ToastStore } from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);
 
 export const login = async (
 	modalStore: ModalStore,
+	toastStore: ToastStore,
 	data: { ip: string | undefined | null; port: number | undefined | null }
 ): Promise<boolean> => {
 	const ip =
@@ -56,13 +57,27 @@ export const login = async (
 		body: password
 	}).catch(async (e: any) => {
 		console.error(e);
-		await new Promise<void>(async (resolve) => {
-			modalStore.trigger({
-				type: 'alert',
-				title: 'Error connecting to jext server',
-				body: e.message ?? 'Unknown error',
-				response: () => resolve()
-			});
+		toastStore.trigger({
+			message: 'Error connecting to jext server',
+			timeout: 5000,
+			background: 'bg-red-500',
+			action: {
+				label: 'See details',
+				response: async () => {
+					const { ErrorPopup } = await import('./components');
+
+					const modalComponent: ModalComponent = {
+						ref: ErrorPopup,
+						props: { error: e }
+					};
+
+					modalStore.trigger({
+						type: 'component',
+						title: 'Error connecting to jext server',
+						component: modalComponent
+					});
+				}
+			}
 		});
 		return null;
 	});

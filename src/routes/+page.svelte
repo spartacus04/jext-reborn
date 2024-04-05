@@ -8,7 +8,8 @@
 		getModalStore,
 		type ModalComponent,
 		Accordion,
-		AccordionItem
+		AccordionItem,
+		getToastStore,
 	} from '@skeletonlabs/skeleton';
 	import { press } from 'svelte-gestures';
 	import { onMount } from 'svelte';
@@ -41,6 +42,7 @@
 
 	export let data: PageData;
 	const modalStore = getModalStore();
+	const toastStore = getToastStore();
 
 	onMount(async () => {
 		if (isLoggedIn()) {
@@ -55,7 +57,7 @@
 						});
 					})
 				) {
-					const connected = await login(modalStore, {
+					const connected = await login(modalStore, toastStore, {
 						ip: data.server.ip,
 						port: data.server.port
 					});
@@ -73,7 +75,7 @@
 				logout(true);
 			}
 		} else if (data.server.connect) {
-			const connected = await login(modalStore, {
+			const connected = await login(modalStore, toastStore, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -120,7 +122,7 @@
 
 	const importFromPlugin = async () => {
 		if (!isLoggedIn()) {
-			const connected = await login(modalStore, {
+			const connected = await login(modalStore, toastStore, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -310,7 +312,7 @@
 				{:else}
 					<button
 						class="btn variant-filled hover:bg-blue-500 hover:text-white"
-						on:click={() => login(modalStore, { ip: null, port: null })}
+						on:click={() => login(modalStore, toastStore, { ip: null, port: null })}
 					>
 						Connect
 					</button>

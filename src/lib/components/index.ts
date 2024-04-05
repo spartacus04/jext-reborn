@@ -13,3 +13,4 @@ export { default as EditDiscModal } from './EditDiscModal.svelte';
 export { default as FormatEditor } from './FormatEditor.svelte';
 export { default as OutputModal } from './OutputModal.svelte';
 export { default as ConfigNode } from './ConfigNode.svelte';
+export { default as ErrorPopup } from './ErrorPopup.svelte';

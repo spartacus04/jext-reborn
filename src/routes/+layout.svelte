@@ -12,7 +12,8 @@
 		storePopup,
 		initializeStores,
 		Modal,
-		storeHighlightJs
+		storeHighlightJs,
+		Toast
 	} from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
@@ -74,6 +75,8 @@
 </script>
 
 <Modal />
+
+<Toast />
 
 <AppShell>
 	<svelte:fragment slot="sidebarLeft">
