@@ -18,3 +18,9 @@ updates:
     target-branch: "gh-pages"
     schedule:
       interval: 'daily'
+
+  - package-ecosystem: "cargo"
+    directory: "/src-tauri/"
+    target-branch: "gh-pages"
+    schedule:
+      interval: 'daily'
