@@ -16,8 +16,6 @@
 	onMount(() => {
 		marginToggled = main.parentElement!.clientWidth < main?.parentElement!.scrollWidth;
 
-		console.log(window.location.pathname.split('/').pop());
-
 		indexOpen =
 			window.location.pathname.split('/').pop() === 'documentation' ||
 			window.location.pathname.split('/').pop() === '';

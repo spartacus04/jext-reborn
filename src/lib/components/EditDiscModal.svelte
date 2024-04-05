@@ -214,7 +214,6 @@
 
 	const setUpdatedPropery = (property: string) => {
 		(tempDisc as any)[property].edited = true;
-		console.log(tempDisc);
 	};
 
 	const exit = () => {

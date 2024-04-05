@@ -184,8 +184,6 @@
 		} else {
 			selected = [...selected, id];
 		}
-
-		console.log(selected, id);
 	};
 
 	const tap = async (id: string) => {
