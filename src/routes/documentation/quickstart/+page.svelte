@@ -83,7 +83,7 @@
 			</Accordion>
 		</div>
 
-		You also need to download Protocollib as it's one of the<b class="underline">required</b>
+		You also need to download Protocollib as it's one of the <b class="underline">required</b>
 		dependencies, you can download it from any of these sources:
 
 		<div class="logo-cloud grid-cols-1 sm:grid-cols-3 gap-1">
@@ -170,7 +170,7 @@
 						] &#160
 						<p class="text-mc-light-green">
 							Web UI available at
-							https://spartacus04.github.io/jext-reborn/config?c=c&ip=127.0.0.0&port=8080
+							https://spartacus04.github.io/jext-reborn/config?c=c&ip=127.0.0.1&port=9871
 						</p>
 					</blockquote>
 
@@ -243,7 +243,7 @@
 						] &#160
 						<p class="text-mc-light-green">
 							Web UI available at
-							https://spartacus04.github.io/jext-reborn?c=c&ip=127.0.0.0&port=8080
+							https://spartacus04.github.io/jext-reborn?c=c&ip=127.0.0.1&port=9871
 						</p>
 					</blockquote>
 
