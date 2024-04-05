@@ -23,3 +23,7 @@ interface Console {
 	defaultWarn: (...data: any[]) => void;
 	defaultDebug: (...data: any[]) => void;
 }
+
+interface ObjectConstructor {
+	mergeDeep: (...objects: any[]) => any;
+}

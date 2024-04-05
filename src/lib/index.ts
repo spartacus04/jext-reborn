@@ -9,4 +9,4 @@ export * from './login';
 export * from './types';
 export * from './utils';
 
-import './error';
+import './extensions';

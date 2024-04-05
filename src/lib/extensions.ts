@@ -41,3 +41,26 @@ if (console.logs === undefined) {
 		console.defaultDebug(...args);
 	};
 }
+
+if(Object.mergeDeep === undefined) {
+	Object.mergeDeep = (...objects : any[]) => {
+		const isObject = (obj : any) => obj && typeof obj == 'object';
+
+		return objects.reduce((prev, obj) => {
+			Object.keys(obj).forEach(key => {
+				const pVal = prev[key];
+				const oVal = obj[key];
+
+				if(Array.isArray(pVal) && Array.isArray(oVal)) {
+					prev[key] = pVal.concat(...oVal);
+				} else if(isObject(pVal) && isObject(oVal)) {
+					prev[key] = Object.mergeDeep(pVal, oVal);
+				} else {
+					prev[key] = oVal;
+				}
+			});
+
+			return prev;
+		}, {});
+	};
+}

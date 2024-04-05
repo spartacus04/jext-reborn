@@ -382,14 +382,29 @@ export const mergeResourcePacks = async (base: Blob): Promise<Blob> => {
 
 	const rp = new JSZip();
 
+	const mergedJsonFiles : {[key : string] : any} = {};
+
 	for (const pack of packs.toReversed()) {
 		const packZip = await JSZip.loadAsync(pack);
 
-		packZip.forEach((path, file) => {
-			if (file.dir) return;
+		for(const path in packZip.files) {
+			const file = packZip.files[path];
 
-			rp.file(path, file.async('blob'));
-		});
+			if (!file.dir) {
+				if(file.name.endsWith('.json') || file.name.endsWith('.mcmeta')) {
+					if(!mergedJsonFiles[file.name])
+						mergedJsonFiles[file.name] = {};
+	
+					mergedJsonFiles[file.name] = Object.mergeDeep(mergedJsonFiles[file.name], JSON.parse(await file.async('text')));
+				}
+	
+				rp.file(path, file.async('blob'));
+			}
+		}
+	}
+
+	for (const file in mergedJsonFiles) {
+		rp.file(file, JSON.stringify(mergedJsonFiles[file], null, 2));
 	}
 
 	return await rp.generateAsync({ type: 'blob' });
