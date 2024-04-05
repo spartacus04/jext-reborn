@@ -1,4 +1,10 @@
-import { getModalStore, localStorageStore, type ModalComponent, type ModalStore, type ToastStore } from '@skeletonlabs/skeleton';
+import {
+	getModalStore,
+	localStorageStore,
+	type ModalComponent,
+	type ModalStore,
+	type ToastStore
+} from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);

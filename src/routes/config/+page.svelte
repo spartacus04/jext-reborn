@@ -3,7 +3,13 @@
 
 	import { dark_dirt_background } from '$lib/assets';
 
-	import { AppBar, AppShell, ProgressRadial, getModalStore } from '@skeletonlabs/skeleton';
+	import {
+		AppBar,
+		AppShell,
+		ProgressRadial,
+		getModalStore,
+		getToastStore
+	} from '@skeletonlabs/skeleton';
 	import { get, writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 
@@ -20,6 +26,7 @@
 
 	export let data: PageData;
 	const modalStore = getModalStore();
+	const toastStore = getToastStore();
 
 	const configStore = writable<
 		CfgNode<boolean | number | string | { [key: string]: number }>[] | null
@@ -39,7 +46,7 @@
 						});
 					})
 				) {
-					const connected = await login(modalStore, {
+					const connected = await login(modalStore, toastStore, {
 						ip: data.server.ip,
 						port: data.server.port
 					});
@@ -57,7 +64,7 @@
 				logout(true);
 			}
 		} else {
-			const connected = await login(modalStore, {
+			const connected = await login(modalStore, toastStore, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -169,7 +176,7 @@
 
 			<button
 				on:click={async () => {
-					const connected = await login(modalStore, {
+					const connected = await login(modalStore, toastStore, {
 						ip: data.server.ip,
 						port: data.server.port
 					});

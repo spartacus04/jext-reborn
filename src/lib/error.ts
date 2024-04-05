@@ -1,43 +1,43 @@
 if (console.logs === undefined) {
-    console.logs = [];
+	console.logs = [];
 
-    console.defaultLog = console.log.bind(console);
-    console.log = (...args) => {
-        console.logs.push({
-            type: 'log',
-            datetime: Date().toLocaleString(),
-            value: Array.from(args)
-        });
-        console.defaultLog(...args);
-    };
+	console.defaultLog = console.log.bind(console);
+	console.log = (...args) => {
+		console.logs.push({
+			type: 'log',
+			datetime: Date().toLocaleString(),
+			value: Array.from(args)
+		});
+		console.defaultLog(...args);
+	};
 
-    console.defaultError = console.error.bind(console);
-    console.error = (...args) => {
-        console.logs.push({
-            type: 'error',
-            datetime: Date().toLocaleString(),
-            value: Array.from(args)
-        });
-        console.defaultError(...args);
-    };
+	console.defaultError = console.error.bind(console);
+	console.error = (...args) => {
+		console.logs.push({
+			type: 'error',
+			datetime: Date().toLocaleString(),
+			value: Array.from(args)
+		});
+		console.defaultError(...args);
+	};
 
-    console.defaultWarn = console.warn.bind(console);
-    console.warn = (...args) => {
-        console.logs.push({
-            type: 'warn',
-            datetime: Date().toLocaleString(),
-            value: Array.from(args)
-        });
-        console.defaultWarn(...args);
-    };
+	console.defaultWarn = console.warn.bind(console);
+	console.warn = (...args) => {
+		console.logs.push({
+			type: 'warn',
+			datetime: Date().toLocaleString(),
+			value: Array.from(args)
+		});
+		console.defaultWarn(...args);
+	};
 
-    console.defaultDebug = console.debug.bind(console);
-    console.debug = (...args) => {
-        console.logs.push({
-            type: 'debug',
-            datetime: Date().toLocaleString(),
-            value: Array.from(args)
-        });
-        console.defaultDebug(...args);
-    };
+	console.defaultDebug = console.debug.bind(console);
+	console.debug = (...args) => {
+		console.logs.push({
+			type: 'debug',
+			datetime: Date().toLocaleString(),
+			value: Array.from(args)
+		});
+		console.defaultDebug(...args);
+	};
 }

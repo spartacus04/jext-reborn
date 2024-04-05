@@ -198,7 +198,8 @@
 								>
 								<svelte:fragment slot="content">
 									<p>
-										Try clicking on the connect button and input the parameters manually, if it's still not working you can configure the plugin manually, it's not difficult!
+										Try clicking on the connect button and input the parameters manually, if it's
+										still not working you can configure the plugin manually, it's not difficult!
 									</p>
 								</svelte:fragment>
 							</AccordionItem>
@@ -270,7 +271,10 @@
 								>
 								<svelte:fragment slot="content">
 									<p>
-										Try clicking on the connect button and input the parameters manually.<br><br>If it's still not working you can add discs in the generator manually, and download the resource pack to the <code>JukeboxExtendedReborn/resource-pack.zip</code> path.
+										Try clicking on the connect button and input the parameters manually.<br /><br
+										/>If it's still not working you can add discs in the generator manually, and
+										download the resource pack to the
+										<code>JukeboxExtendedReborn/resource-pack.zip</code> path.
 									</p>
 								</svelte:fragment>
 							</AccordionItem>

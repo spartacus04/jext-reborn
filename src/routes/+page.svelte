@@ -9,7 +9,7 @@
 		type ModalComponent,
 		Accordion,
 		AccordionItem,
-		getToastStore,
+		getToastStore
 	} from '@skeletonlabs/skeleton';
 	import { press } from 'svelte-gestures';
 	import { onMount } from 'svelte';
