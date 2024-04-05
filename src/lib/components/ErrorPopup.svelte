@@ -1,9 +1,9 @@
 <script lang="ts">
     import { warning } from '$lib/assets';
     
-    import { Accordion, AccordionItem, CodeBlock } from "@skeletonlabs/skeleton";
+    import { Accordion, AccordionItem, CodeBlock } from '@skeletonlabs/skeleton';
 
-	import { saveAs } from "$lib";
+	import { saveAs } from '$lib';
 
     export let error: Error;
 
@@ -11,7 +11,7 @@
         const blob = new Blob([JSON.stringify(console.logs, null, 4)], { type: 'text/plain' });
 
         saveAs(blob, 'jext-logs.txt');
-    }
+    };
 
     const getDesktopAppDownload = (async () => {
 		const response = await fetch(
