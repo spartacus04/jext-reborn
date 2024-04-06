@@ -13,7 +13,7 @@
 	import { get, writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 
-	import { ConfigNode, MinecraftLaunchButton } from '$lib/components';
+	import { ConfigNode, MinecraftLaunchButton, ErrorPopup } from '$lib/components';
 
 	import {
 		fetchAuthed,
@@ -21,7 +21,7 @@
 		login,
 		healthCheck,
 		logout,
-		type ConfigNode as CfgNode
+		type ConfigNode as CfgNode,
 	} from '$lib/index';
 
 	export let data: PageData;
@@ -46,7 +46,7 @@
 						});
 					})
 				) {
-					const connected = await login(modalStore, toastStore, {
+					const connected = await login(modalStore, toastStore, ErrorPopup, {
 						ip: data.server.ip,
 						port: data.server.port
 					});
@@ -64,7 +64,7 @@
 				logout(true);
 			}
 		} else {
-			const connected = await login(modalStore, toastStore, {
+			const connected = await login(modalStore, toastStore, ErrorPopup, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -176,7 +176,7 @@
 
 			<button
 				on:click={async () => {
-					const connected = await login(modalStore, toastStore, {
+					const connected = await login(modalStore, toastStore, ErrorPopup, {
 						ip: data.server.ip,
 						port: data.server.port
 					});

@@ -7,11 +7,13 @@ import {
 } from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
+
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);
 
 export const login = async (
 	modalStore: ModalStore,
 	toastStore: ToastStore,
+	ErrorPopup: any,
 	data: { ip: string | undefined | null; port: number | undefined | null }
 ): Promise<boolean> => {
 	const ip =
@@ -70,8 +72,6 @@ export const login = async (
 			action: {
 				label: 'See details',
 				response: async () => {
-					const { ErrorPopup } = await import('./components');
-
 					const modalComponent: ModalComponent = {
 						ref: ErrorPopup,
 						props: { error: e }

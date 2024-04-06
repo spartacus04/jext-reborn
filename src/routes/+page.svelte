@@ -21,7 +21,8 @@
 		EditDiscModal,
 		ResourcePackManager,
 		MinecraftLaunchButton,
-		OutputModal
+		OutputModal,
+		ErrorPopup
 	} from '$lib/components';
 
 	import {
@@ -57,7 +58,7 @@
 						});
 					})
 				) {
-					const connected = await login(modalStore, toastStore, {
+					const connected = await login(modalStore, toastStore, ErrorPopup, {
 						ip: data.server.ip,
 						port: data.server.port
 					});
@@ -75,7 +76,7 @@
 				logout(true);
 			}
 		} else if (data.server.connect) {
-			const connected = await login(modalStore, toastStore, {
+			const connected = await login(modalStore, toastStore, ErrorPopup, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -122,7 +123,7 @@
 
 	const importFromPlugin = async () => {
 		if (!isLoggedIn()) {
-			const connected = await login(modalStore, toastStore, {
+			const connected = await login(modalStore, toastStore, ErrorPopup, {
 				ip: data.server.ip,
 				port: data.server.port
 			});
@@ -310,7 +311,7 @@
 				{:else}
 					<button
 						class="btn variant-filled hover:bg-blue-500 hover:text-white"
-						on:click={() => login(modalStore, toastStore, { ip: null, port: null })}
+						on:click={() => login(modalStore, toastStore, ErrorPopup, { ip: null, port: null })}
 					>
 						Connect
 					</button>
