@@ -8,7 +8,18 @@
 	export let error: Error;
 
 	const exportLogs = () => {
-		const blob = new Blob([JSON.stringify(console.logs, null, 4)], { type: 'text/plain' });
+		const blob = new Blob([JSON.stringify(console.logs, (_, value) => {
+			if(value instanceof Error) {
+				return {
+					name: value.name,
+					message: value.message,
+					stack: value.stack,
+					cause: value.cause,
+				};
+			}
+
+			return value;
+		}, 4)], { type: 'text/plain' });
 
 		saveAs(blob, 'jext-logs.txt');
 	};
