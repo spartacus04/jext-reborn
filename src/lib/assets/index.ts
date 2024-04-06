@@ -20,7 +20,9 @@ export { default as button } from './button.webp';
 export { default as cog } from './cog.webp';
 
 export { default as githubsponsors } from './githubsponsors.svg';
+export { default as connectionless } from './earth-lock.svg';
 export { default as hand_helping } from './hand_helping.svg';
+export { default as download } from './download.svg';
 export { default as modrinth } from './modrinth.svg';
 export { default as spigotmc } from './spigotmc.svg';
 export { default as workflow } from './workflow.svg';

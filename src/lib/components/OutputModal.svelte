@@ -6,13 +6,15 @@
 		panorama_3 as panorama_left,
 		panorama_4 as panorama_top,
 		panorama_5 as panorama_bottom,
-		default_icon
+		default_icon,
+		download
 	} from '$lib/assets';
 
-	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 	import * as THREE from 'three';
+	import JSZip from 'jszip';
 
 	import { MinecraftButton, ForgeProgressBar } from '.';
 
@@ -92,12 +94,18 @@
 	]);
 
 	let javaRp: Blob | undefined = undefined;
+	let discsJson: Blob | undefined = undefined;
 	let bedrockRp: Blob | undefined = undefined;
 
 	outputEverything(
 		(rp) => {
-			setTimeout(() => {
+			setTimeout(async () => {
 				javaRp = rp;
+
+				const rpZip = await JSZip.loadAsync(javaRp);
+
+				discsJson = await rpZip.file('jext.json')!.async('blob');
+
 				setTimeout(() => {
 					loadPanorama();
 				}, 1);
@@ -160,6 +168,12 @@
 
 		return json.workflow_runs[0].html_url;
 	})();
+
+	const popupDiscs: PopupSettings = {
+		event: 'hover',
+		target: 'discsjson',
+		placement: 'bottom'
+	};
 </script>
 
 <main
@@ -188,9 +202,17 @@
 				{#if isLoggedIn()}
 					<MinecraftButton on:click={applyToServer}>Apply to your JEXT server!</MinecraftButton>
 				{/if}
-				<MinecraftButton on:click={() => saveAs(javaRp, 'resourcepack.zip')}
-					>Download Resource Pack for Minecraft: Java Edition</MinecraftButton
-				>
+				<div class="flex w-full gap-2">
+					<MinecraftButton on:click={() => saveAs(javaRp, 'resourcepack.zip')} flex={true}
+						>Download Resource Pack for Minecraft: Java Edition</MinecraftButton
+					>
+
+					<div use:popup={popupDiscs}>
+						<MinecraftButton on:click={() => saveAs(discsJson, 'discs.json')} square={true}>
+							<img src={download} alt="download" />
+						</MinecraftButton>
+					</div>
+				</div>
 				<MinecraftButton
 					enabled={bedrockRp != undefined}
 					on:click={() => saveAs(bedrockRp, 'resourcepack-geysermc.mcpack')}
@@ -274,3 +296,8 @@
 		</div>
 	</div>
 </main>
+
+<div class="card p-1 variant-filled-primary" data-popup="discsjson">
+	<p>Download <code>discs.json</code></p>
+	<div class="arrow variant-filled-primary" />
+</div>

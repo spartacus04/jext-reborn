@@ -3,6 +3,7 @@
 
 	export let enabled = true;
 	export let flex = false;
+	export let square = false;
 
 	const onMouseEnter = (e: MouseEvent) => {
 		if (enabled) {
@@ -22,7 +23,9 @@
 		class:flex-1={flex}
 		disabled={!enabled}
 		id="clickable"
-		class="cursor-pointer border-8 border-transparent border-b-[12px] font-minecraft text-white h-min select-none"
+		class="cursor-pointer border-8 border-transparent border-b-[12px] font-minecraft text-white h-min select-none {square
+			? 'aspect-square'
+			: ''}"
 		style:border-image-source="url({button})"
 		on:click
 		on:mouseenter={onMouseEnter}
@@ -36,7 +39,9 @@
 		class:flex-1={flex}
 		disabled={!enabled}
 		id="clickable"
-		class="cursor-pointer border-8 border-transparent border-b-[12px] font-minecraft text-white h-min select-none"
+		class="cursor-pointer border-8 border-transparent border-b-[12px] font-minecraft text-white h-min select-none {square
+			? 'aspect-square'
+			: ''}"
 		style:border-image-source="url({button_disabled})"
 		on:click
 		on:mouseenter={onMouseEnter}

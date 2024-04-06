@@ -7,7 +7,8 @@
 		warning,
 		workflow,
 		wrench,
-		hand_helping
+		hand_helping,
+		connectionless
 	} from '$lib/assets';
 
 	import { Step, Stepper, Accordion, AccordionItem } from '@skeletonlabs/skeleton';
@@ -83,7 +84,7 @@
 			</Accordion>
 		</div>
 
-		You also need to download Protocollib as it's one of the <b class="underline">required</b>
+		You also need to download Protocollib as it's one of the<b class="underline">required</b>
 		dependencies, you can download it from any of these sources:
 
 		<div class="logo-cloud grid-cols-1 sm:grid-cols-3 gap-1">
@@ -272,9 +273,110 @@
 								<svelte:fragment slot="content">
 									<p>
 										Try clicking on the connect button and input the parameters manually.<br /><br
-										/>If it's still not working you can add discs in the generator manually, and
-										download the resource pack to the
-										<code>JukeboxExtendedReborn/resource-pack.zip</code> path.
+										/>If it's still not working, you can follow the
+										<code>Adding custom discs using the Web UI (connectionless)</code> guide
+									</p>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					</div>
+				</svelte:fragment>
+			</AccordionItem>
+			<AccordionItem>
+				<svelte:fragment slot="lead">
+					<img src={connectionless} alt="warning" />
+				</svelte:fragment>
+				<svelte:fragment slot="summary"
+					>Adding custom discs using the Web UI (connectionless)</svelte:fragment
+				>
+				<svelte:fragment slot="content">
+					<p>
+						If you don't want to connect to the webUI, or you can't due to a esoteric server setup,
+						you can use the webui to generate the discs automatically
+					</p>
+					<p>
+						Just navigate to the <a
+							href="http://spartacus04.github.io/jext-reborn/"
+							target="_blank"
+							rel="noopener noreferrer">discs</a
+						> page and start adding them without connecting to the server.
+					</p>
+
+					<p>
+						You can now edit the custom discs for a comfortable ui designed to make the process as
+						easy as possible!
+					</p>
+
+					<hr />
+
+					<p>
+						After finishing generating the discs you can apply the resourcepack by either hosting it
+						manually or using a the built-in resource pack host.
+					</p>
+
+					<div class="bg-purple-900 rounded-lg">
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="lead">
+									<img src={workflow} alt="warning" />
+								</svelte:fragment>
+								<svelte:fragment slot="summary"
+									>Using the built-in resource pack host</svelte:fragment
+								>
+								<svelte:fragment slot="content">
+									<p>
+										After generating the resource pack, click on the "Download Resource Pack for
+										Minecraft: Java Edition" button, and place the downloaded resourcepack in the
+										`JukeboxExtendedReborn/resource-pack.zip`.
+									</p>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					</div>
+
+					<div class="bg-purple-900 rounded-lg">
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="lead">
+									<img src={connectionless} alt="warning" />
+								</svelte:fragment>
+								<svelte:fragment slot="summary">Hosting the resourcepack yourself</svelte:fragment>
+								<svelte:fragment slot="content">
+									<p>
+										If the resource-pack host isn't working (common for esoteric server
+										environments) you can host the resourcepack manually.
+									</p>
+									<p>
+										After generating the resource pack, click on the "Download Resource Pack for
+										Minecraft: Java Edition" button, host the resourcepack like you would manually
+										and remember to <b
+											>set the <code>resource-pack-sha1</code> property in the
+											<code>server.properties</code> file</b
+										>.
+									</p>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					</div>
+
+					<div class="bg-purple-900 rounded-lg">
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="lead">
+									<img src={wrench} alt="warning" />
+								</svelte:fragment>
+								<svelte:fragment slot="summary"
+									>Hosting the resourcepack yourself and using the manual disc loading method</svelte:fragment
+								>
+								<svelte:fragment slot="content">
+									<p>If both options aren't working you can try loading the disc data manually.</p>
+									<p>
+										After generating the resource pack, click on the "Download Resource Pack for
+										Minecraft: Java Edition" button, host the resourcepack like you would manually.
+										In the Web UI click the small square download button near the "Download Resource
+										Pack" button, and place the downloaded file into the <code
+											>JukeboxExtendedReborn/discs.json</code
+										> path.
 									</p>
 								</svelte:fragment>
 							</AccordionItem>
