@@ -45,7 +45,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@ffmpeg/core": "^0.12.6",
 		"@ffmpeg/ffmpeg": "^0.12.10",
 		"@ffmpeg/util": "^0.12.1",
 		"@floating-ui/dom": "1.6.3",
