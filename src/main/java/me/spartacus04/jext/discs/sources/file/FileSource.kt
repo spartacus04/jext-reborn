@@ -4,21 +4,20 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.PLUGIN
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.sources.DiscSource
+import me.spartacus04.jext.language.LanguageManager.Companion.DOWNLOADING_RESOURCEPACK
+import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOADED
+import me.spartacus04.jext.language.LanguageManager.Companion.SHA1_REQUIRED
 import org.bukkit.Bukkit
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.math.BigInteger
+import java.io.*
 import java.net.URI
-import java.security.MessageDigest
 import java.util.zip.ZipFile
-import javax.net.ssl.HttpsURLConnection
+
 
 internal class FileSource : DiscSource {
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
@@ -54,7 +53,10 @@ internal class FileSource : DiscSource {
 
         val sha1 = Bukkit.getServer().resourcePackHash.ifEmpty {
             null
-        } ?: return null
+        } ?: return run {
+            Bukkit.getConsoleSender().sendMessage(SHA1_REQUIRED)
+            null
+        }
         val sha1CachePath = PLUGIN.dataFolder.resolve("caches").resolve("$sha1.zip")
 
         if(sha1CachePath.exists()) {
@@ -65,45 +67,36 @@ internal class FileSource : DiscSource {
             }
         }
 
+        Bukkit.getConsoleSender().sendMessage(DOWNLOADING_RESOURCEPACK)
+
         val rpUrl = Bukkit.getServer().resourcePack
 
         if(rpUrl.isNotEmpty()) {
-            // fetch resource pack from url
-
             val url = URI(rpUrl).toURL()
-            val connection = withContext(Dispatchers.IO) {
-                url.openConnection()
-            } as HttpsURLConnection
-            val reader = BufferedReader(InputStreamReader(connection.inputStream))
 
-            val content = StringBuilder()
-            var line: String?
-            while (withContext(Dispatchers.IO) {
-                    reader.readLine()
-                }.also { line = it } != null) {
-                content.append(line)
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    if(!PLUGIN.dataFolder.resolve("caches").exists())
+                        PLUGIN.dataFolder.resolve("caches").mkdir()
+
+                    val inputStream = BufferedInputStream(url.openStream())
+                    val outputStream = FileOutputStream(PLUGIN.dataFolder.resolve("caches").resolve("$sha1.zip"))
+
+                    val buffer = ByteArray(1024)
+                    var bytesRead: Int
+
+                    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                        outputStream.write(buffer, 0, bytesRead)
+                    }
+
+                    outputStream.close()
+                    inputStream.close()
+                }
             }
 
-            // Calculate SHA-1 hash
-            val md = MessageDigest.getInstance("SHA-1")
-            val messageDigest = md.digest(content.toString().toByteArray())
-            val no = BigInteger(1, messageDigest)
-            var hashText = no.toString(16)
-            while (hashText.length < 32) {
-                hashText = "0$hashText"
-            }
+            Bukkit.getConsoleSender().sendMessage(RESOURCEPACK_DOWNLOADED)
 
-            // Write content to a file named with the SHA-1 hash
-            val writer = withContext(Dispatchers.IO) {
-                if(!PLUGIN.dataFolder.resolve("caches").exists())
-                    PLUGIN.dataFolder.resolve("caches").mkdir()
-                PrintWriter(PLUGIN.dataFolder.resolve("caches").resolve("$hashText.zip").absolutePath, "UTF-8")
-            }
-
-            writer.println(content.toString())
-            writer.close()
-
-            return unpackResourcePack(PLUGIN.dataFolder.resolve("caches").resolve("$hashText.zip"))
+            return unpackResourcePack(PLUGIN.dataFolder.resolve("caches").resolve("$sha1.zip"))
         }
 
         return null
