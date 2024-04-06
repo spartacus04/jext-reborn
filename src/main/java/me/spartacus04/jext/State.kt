@@ -20,4 +20,5 @@ object State {
     internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     val INTEGRATIONS = IntegrationsManager()
     internal val WEBSERVER = JextWebServer()
+    internal var PUBLIC_IP = ""
 }

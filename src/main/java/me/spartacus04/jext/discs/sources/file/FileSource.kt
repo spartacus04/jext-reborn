@@ -52,7 +52,9 @@ internal class FileSource : DiscSource {
 
         // check resource pack url in server.properties
 
-        val sha1 = Bukkit.getServer().resourcePackHash
+        val sha1 = Bukkit.getServer().resourcePackHash.ifEmpty {
+            null
+        } ?: return null
         val sha1CachePath = PLUGIN.dataFolder.resolve("caches").resolve("$sha1.zip")
 
         if(sha1CachePath.exists()) {
