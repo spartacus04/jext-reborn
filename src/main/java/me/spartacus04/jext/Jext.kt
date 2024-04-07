@@ -4,6 +4,7 @@ import me.spartacus04.jext.State.CONFIG
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.INTEGRATIONS
 import me.spartacus04.jext.State.LANG
+import me.spartacus04.jext.State.PUBLIC_IP
 import me.spartacus04.jext.State.WEBSERVER
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
@@ -12,6 +13,7 @@ import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
 import me.spartacus04.jext.listeners.ListenerRegistrant
+import me.spartacus04.jext.utils.PublicIP
 import me.spartacus04.jext.utils.Updater
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -59,6 +61,10 @@ internal class Jext : JavaPlugin() {
                     Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
                 }
             }
+        }
+
+        PublicIP().getIP {
+            PUBLIC_IP = it
         }
     }
 }

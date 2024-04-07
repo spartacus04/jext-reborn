@@ -157,5 +157,8 @@ class LanguageManager {
         const val WEBSERVER_STOPPED = "[§eJEXT§f] §eWebserver stopped"
         const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
         const val GEYSER_RELOAD = "[§eJEXT§f]§e Warning: Geyser won't apply the resource pack changes until you restart the server!"
+        const val DOWNLOADING_RESOURCEPACK = "[§aJEXT§f]§a Downloading resource pack..."
+        const val RESOURCEPACK_DOWNLOADED = "[§aJEXT§f]§a Resource pack downloaded!"
+        const val SHA1_REQUIRED = "[§cJEXT§f]§c SHA1 is required for resource pack downloads!"
     }
 }
