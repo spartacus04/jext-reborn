@@ -1,6 +1,7 @@
 package me.spartacus04.jext.commands.executors
 
 import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.State.PUBLIC_IP
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.command.CommandSender
@@ -23,7 +24,7 @@ internal class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
         val url = if(sender is ConsoleCommandSender || (sender as Player).address == InetAddress.getLocalHost())
             "https://spartacus04.github.io/jext-reborn/${page}?c=c&ip=127.0.0.1&port=${CONFIG.WEB_INTERFACE_PORT}"
         else
-            "https://spartacus04.github.io/jext-reborn/${page}?c=c&port=${CONFIG.WEB_INTERFACE_PORT}"
+            "https://spartacus04.github.io/jext-reborn/${page}?c=c&ip=${PUBLIC_IP}&port=${CONFIG.WEB_INTERFACE_PORT}"
 
         sender.sendJEXTMessage("webui", hashMapOf(
             "url" to url
