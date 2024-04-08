@@ -7,6 +7,7 @@ depend: [ProtocolLib]
 softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot]
 prefix: JEXT
 folia-supported: true
+website: https://github.com/spartacus04/jext-reborn
 
 commands:
   disc:
