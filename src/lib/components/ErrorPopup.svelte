@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { warning } from '$lib/assets';
+	import { connectionless, warning } from '$lib/assets';
 
 	import { Accordion, AccordionItem, CodeBlock } from '@skeletonlabs/skeleton';
 
@@ -42,17 +42,20 @@
 
 	<p>There was an error connecting to the JEXT server. Please try again later.</p>
 
-	<div class="bg-orange-900 rounded-lg">
+	<div class="bg-orange-900 rounded-lg mt-2">
 		<Accordion>
 			<AccordionItem>
 				<svelte:fragment slot="lead">
-					<img src={warning} alt="warning" />
+					<img src={connectionless} alt="warning" />
 				</svelte:fragment>
-				<svelte:fragment slot="summary">My requests keep failing!</svelte:fragment>
+				<svelte:fragment slot="summary">My requests keep failing</svelte:fragment>
 				<svelte:fragment slot="content">
 					<p>
-						Due to the nature of HTTPS, some requests may fail. This is because the server is
-						running on HTTP and the browser is blocking the request. To fix this, you can download
+						Due to the nature of HTTPS, some requests may fail. This is because the Jext server is
+						running on HTTP and the browser is blocking the request.<br><br>If you are using chrome you can enable unsafe content for the website. 
+						Just follow <a href="https://support.google.com/chrome/answer/114662" target="_blank" rel="noopener noreferrer">this</a> guide and enable unsafe content.
+						<br><br>
+						Alternatively, you can download
 						the JEXT Desktop App and run it on your computer. This will allow you to connect to the
 						server without any issues.
 					</p>
