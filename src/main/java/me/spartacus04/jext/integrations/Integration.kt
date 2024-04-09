@@ -18,12 +18,12 @@ interface Integration {
      * @param player The player parameter represents the player who is trying to interact with the jukebox GUI.
      * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
      */
-    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean
+    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean?
     /**
      * The function checks if a player can interact with a jukebox block.
      *
      * @param player The player parameter represents the player who wants to interact with the jukebox.
      * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
      */
-    fun hasJukeboxAccess(player: Player, block: Block): Boolean
+    fun hasJukeboxAccess(player: Player, block: Block): Boolean?
 }

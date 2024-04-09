@@ -5,6 +5,7 @@ import me.spartacus04.jext.language.LanguageManager.Companion.GEYSER_RELOAD
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import javax.annotation.Nullable
 
 class IntegrationsManager {
     private val integrations = ArrayList<Integration>()
@@ -19,9 +20,29 @@ class IntegrationsManager {
         integrations.forEach { registerIntegration(it) }
     }
 
-    fun hasJukeboxAccess(player: Player, block: Block): Boolean = integrations.all { it.hasJukeboxAccess(player, block) }
+    fun hasJukeboxAccess(player: Player, block: Block): Boolean? {
+        for(integration in integrations){
+            val state = integration.hasJukeboxAccess(player, block)
+            return when(state){
+                true->true
+                false->continue
+                null->null
+            }
+        }
+        return false
+    }
 
-    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean = integrations.all { it.hasJukeboxGuiAccess(player, block) }
+    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean? {
+        for(integration in integrations){
+            val state = integration.hasJukeboxGuiAccess(player, block)
+            return when(state){
+                true->true
+                false->continue
+                null->null
+            }
+        }
+        return false
+    }
 
     fun reloadDefaultIntegrations() {
         integrations.removeIf { it.id == "worldguard" || it.id == "griefprevention" }

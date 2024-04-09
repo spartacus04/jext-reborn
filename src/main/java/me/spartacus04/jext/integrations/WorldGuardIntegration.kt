@@ -15,19 +15,25 @@ internal class WorldGuardIntegration : Integration {
         Flags.CHEST_ACCESS
     }
 
-    override fun hasJukeboxAccess(player: Player, block: Block): Boolean = canInteract(player, block, Flags.CHEST_ACCESS)
+    override fun hasJukeboxAccess(player: Player, block: Block): Boolean? = canInteract(player, block, Flags.CHEST_ACCESS)
 
-    override fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean = canInteract(player, block, Flags.BUILD, Flags.INTERACT, Flags.USE)
+    override fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean? = canInteract(player, block, Flags.BUILD, Flags.INTERACT, Flags.USE)
 
-    private fun canInteract(player: Player, block: Block, vararg flags: StateFlag) : Boolean {
+    private fun canInteract(player: Player, block: Block, vararg flags: StateFlag) : Boolean? {
         val wgPlayer = WorldGuardPlugin.inst().wrapPlayer(player)
 
         if(WorldGuard.getInstance().platform.sessionManager.hasBypass(wgPlayer, wgPlayer.world)) return true
 
         val containerQuery = WorldGuard.getInstance().platform.regionContainer.createQuery()
 
-        return flags.any {
-            containerQuery.testState(BukkitAdapter.adapt(block.location), wgPlayer, it)
+        for(flag in flags) {
+            val state = containerQuery.queryState(BukkitAdapter.adapt(block.location), wgPlayer, flag)
+            return when(state) {
+                StateFlag.State.ALLOW -> true
+                StateFlag.State.DENY -> continue
+                null -> null
+            }
         }
+        return false
     }
 }

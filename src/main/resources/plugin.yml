@@ -74,6 +74,7 @@ permissions:
       jext.notifyupdate: true
       jext.webui: true
       jext.admingui: true
+      jext.usejukebox: true
   jext.disc:
     description: Allows player to access all custom disc.
     default: op
@@ -109,3 +110,6 @@ permissions:
     default: op
   jext.admingui:
     description: Allows player to access admin gui
+  jext.usejukebox:
+    description: Allows player to use jukeboxes.
+    default: op

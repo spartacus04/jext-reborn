@@ -30,9 +30,21 @@ internal class JukeboxClickEvent : JextListener() {
     }
 
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(!INTEGRATIONS.hasJukeboxAccess(event.player, block)) {
-             event.isCancelled = true
-             return
+        if(INTEGRATIONS.hasJukeboxAccess(event.player, block)==false) {
+            event.player.sendMessage("Missing flag")
+            event.isCancelled = true
+            return
+        }
+        val t = if(event.player.hasPermission("jext.notifyupdate")) "true" else "false"
+        event.player.sendMessage(t);
+        event.player.sendMessage(if(event.player.hasPermission("jext.usejukebox")) "true" else "false")
+        if(!(event.player.hasPermission("jext.usejukebox")||event.player.isOp)){
+            for(perm in event.player.effectivePermissions){
+                event.player.sendMessage(perm.permission)
+            }
+            event.player.sendMessage("Missing permission")
+            event.isCancelled = true
+            return
         }
 
         val state = block.state as? Jukebox ?: return
@@ -54,8 +66,14 @@ internal class JukeboxClickEvent : JextListener() {
 
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
-
-        if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) return
+        if(INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)==false) {
+            event.player.sendMessage("Missing flag")
+            return
+        }
+        if(!(event.player.hasPermission("jext.usejukebox")||event.player.isOp)){
+            event.player.sendMessage("Missing permission")
+            return
+        }
 
         JukeboxGui(event.player, block)
     }
