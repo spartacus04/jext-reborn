@@ -35,10 +35,10 @@ internal class JukeboxClickEvent : JextListener() {
             event.isCancelled = true
             return
         }
-        val t = if(event.player.hasPermission("jext.notifyupdate")) "true" else "false"
+        val t = if(event.player.isPermissionSet("jext.notifyupdate")) "true" else "false"
         event.player.sendMessage(t);
-        event.player.sendMessage(if(event.player.hasPermission("jext.usejukebox")) "true" else "false")
-        if(!(event.player.hasPermission("jext.usejukebox")||event.player.isOp)){
+        event.player.sendMessage(if(event.player.isPermissionSet("jext.usejukebox")) "true" else "false")
+        if(!(event.player.isPermissionSet("jext.usejukebox")||event.player.isOp)){
             for(perm in event.player.effectivePermissions){
                 event.player.sendMessage(perm.permission)
             }
