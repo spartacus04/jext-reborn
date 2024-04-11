@@ -1,135 +1,341 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
     "lang": {
       "type": "string",
-      "enum": [
-        "auto",
-        "custom",
-        "silent",
-        "ar_sa",
-        "cs_cz",
-        "da_dk",
-        "de_de",
-        "el_gr",
-        "en_us",
-        "es_es",
-        "fi_fi",
-        "fr_fr",
-        "it_it",
-        "ja_jp",
-        "nl_nl",
-        "no_no",
-        "pl_pl",
-        "pt_br",
-        "pt_pt",
-        "ro_ro",
-        "ru_ru",
-        "sv_se",
-        "uk_ua",
-        "zh_cn"
-      ]
-    },
-    "force-resource-pack": {
-      "type": "boolean"
-    },
-    "ignore-failed-download": {
-      "type": "boolean"
-    },
-    "allow-music-overlapping": {
-      "type": "boolean"
-    },
-    "allow-metrics": {
-      "type": "boolean"
+      "description": "If set to auto, the plugin will use the player's locale; if set to silent, the plugin won't output any messages; if set to custom the plugin will use the language specified in the custom language file; If set to a locale, the plugin will use that locale.",
+      "default": "auto",
+      "enum": ["auto", "AUTO", "silent", "SILENT", "custom", "CUSTOM", "af_za", "ar_sa", "ca_es", "cs_cz", "da_dk", "de_de", "el_gr", "en_us", "es_es", "fi_fi", "fr_fr", "he_il", "hu_hu", "it_it", "ja_jp", "ko_kr", "nl_nl", "no_no", "pl_pl", "pt_br", "pt_pt", "ro_ro", "ru_ru", "sr_sp", "sv_se", "tr_tr", "uk_ua", "vi_vn", "zh_cn", "zh_tw"]
     },
     "jukebox-behaviour": {
       "type": "string",
-      "enum": ["vanilla", "legacy-gui", "gui"]
+      "description": "If set to vanilla, the plugin will use the vanilla jukebox behaviour; if set to gui, the plugin will use the custom GUI.",
+      "default": "vanilla",
+      "enum": ["vanilla", "VANILLA", "gui", "GUI"]
     },
-    "discs-random-chance": {
-      "type": "number",
+    "jukebox-gui-style": {
+      "type": "string",
+      "description": "Determines the style of the jukebox GUI.",
+      "default": "scroll-vertical",
+      "enum": ["scroll-vertical", "SCROLL_VERTICAL", "scroll-horizontal", "SCROLL_HORIZONTAL", "page-horizontal", "PAGE_HORIZONTAL", "page-vertical", "PAGE_VERTICAL"]
+    },
+    "jukebox-gui-size": {
+      "type": "integer",
+      "description": "Sets the maximum amount of items that can be added to a jukebox GUI.",
+      "default": "96",
       "minimum": 0,
-      "maximum": 1000
+      "exclusiveMinimum": true
+    },
+    "disable-music-overlap": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will not play music if there is already music playing.",
+      "default": true
     },
     "disc-loottables-limit": {
       "type": "object",
-      "discs/*": { "type": "integer" },
-      "chests/ancient_city": { "type": "integer" },
-      "chests/ancient_city_ice_box": { "type": "integer" },
-      "chests/bastion_bridge": { "type": "integer" },
-      "chests/bastion_hoglin_treasure": { "type": "integer" },
-      "chests/bastion_other": { "type": "integer" },
-      "chests/bastion_treasure": { "type": "integer" },
-      "chests/desert_pyramid": { "type": "integer" },
-      "chests/end_city_treasure": { "type": "integer" },
-      "chests/igloo_chest": { "type": "integer" },
-      "chests/jungle_temple": { "type": "integer" },
-      "chests/nether_bridge": { "type": "integer" },
-      "chests/ruined_portal": { "type": "integer" },
-      "chests/shipwreck_map": { "type": "integer" },
-      "chests/shipwreck_supply": { "type": "integer" },
-      "chests/shipwreck_treasure": { "type": "integer" },
-      "chests/stronghold_corridor": { "type": "integer" },
-      "chests/stronghold_crossing": { "type": "integer" },
-      "chests/underwater_ruin_big": { "type": "integer" },
-      "chests/underwater_ruin_small": { "type": "integer" },
-      "chests/village/village_plains_house": { "type": "integer" },
-      "chests/village/village_savanna_house": { "type": "integer" },
-      "chests/village/village_desert_house": { "type": "integer" },
-      "chests/village/village_snowy_house": { "type": "integer" },
-      "chests/village/village_taiga_house": { "type": "integer" },
-      "chests/woodland_mansion": { "type": "integer" },
-      "chests/abandoned_mineshaft": { "type": "integer" },
-      "chests/simple_dungeon": { "type": "integer" },
-      "chests/pillager_outpost": { "type": "integer" }
+      "description": "Sets the maximum amount of discs that can be found in chests, the default amount is 2.",
+      "properties": {
+        "chests/ancient_city": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Ancient City chest."
+        },
+        "chests/ancient_city_ice_box": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Ancient City Ice Box chest."
+        },
+        "chests/bastion_bridge": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Bastion Bridge chest."
+        },
+        "chests/bastion_hoglin_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Bastion Hoglin Treasure chest."
+        },
+        "chests/bastion_other": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Bastion Other chest."
+        },
+        "chests/bastion_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Bastion Treasure chest."
+        },
+        "chests/desert_pyramid": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Desert Pyramid chest."
+        },
+        "chests/simple_dungeon": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Simple Dungeon chest."
+        },
+        "chests/end_city_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an End City Treasure chest."
+        },
+        "chests/igloo_chest": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Igloo chest."
+        },
+        "chests/jungle_temple": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Jungle Temple chest."
+        },
+        "chests/nether_bridge": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Nether Bridge chest."
+        },
+        "chests/ruined_portal": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Ruined Portal chest."
+        },
+        "chests/pillager_outpost": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Pillager Outpost chest."
+        },
+        "chests/shipwreck_map": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Shipwreck Map chest."
+        },
+        "chests/shipwreck_supply": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Shipwreck Supply chest."
+        },
+        "chests/shipwreck_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Shipwreck Treasure chest."
+        },
+        "chests/stronghold_corridor": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Stronghold Corridor chest."
+        },
+        "chests/stronghold_crossing": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Stronghold Crossing chest."
+        },
+        "chests/underwater_ruin_big": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Underwater Ruin Big chest."
+        },
+        "chests/underwater_ruin_small": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Underwater Ruin Small chest."
+        },
+        "chests/village/village_plains_house": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Village Plains House chest."
+        },
+        "chests/village/village_savanna_house": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Village Savanna House chest."
+        },
+        "chests/village/village_desert_house": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Village Desert House chest."
+        },
+        "chests/village/village_snowy_house": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Village Snowy House chest."
+        },
+        "chests/village/village_taiga_house": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Village Taiga House chest."
+        },
+        "chests/woodland_mansion": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Woodland Mansion chest."
+        },
+        "chests/abandoned_mineshaft": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in an Abandoned Mineshaft chest."
+        },
+        "chests/trial_chambers": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in a Trial Chambers chest."
+        },
+        "chests/*": {
+          "type": "integer",
+          "description": "The maximum amount of discs that can be found in any other chest."
+        }
+      }
     },
-    "fragments-random-chance": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1000
-    },
-    "fragment-lottables-limit": {
+    "fragment-loottables-limit": {
       "type": "object",
-      "discs/*": { "type": "integer" },
-      "chests/ancient_city": { "type": "integer" },
-      "chests/ancient_city_ice_box": { "type": "integer" },
-      "chests/bastion_bridge": { "type": "integer" },
-      "chests/bastion_hoglin_treasure": { "type": "integer" },
-      "chests/bastion_other": { "type": "integer" },
-      "chests/bastion_treasure": { "type": "integer" },
-      "chests/desert_pyramid": { "type": "integer" },
-      "chests/end_city_treasure": { "type": "integer" },
-      "chests/igloo_chest": { "type": "integer" },
-      "chests/jungle_temple": { "type": "integer" },
-      "chests/nether_bridge": { "type": "integer" },
-      "chests/ruined_portal": { "type": "integer" },
-      "chests/shipwreck_map": { "type": "integer" },
-      "chests/shipwreck_supply": { "type": "integer" },
-      "chests/shipwreck_treasure": { "type": "integer" },
-      "chests/stronghold_corridor": { "type": "integer" },
-      "chests/stronghold_crossing": { "type": "integer" },
-      "chests/underwater_ruin_big": { "type": "integer" },
-      "chests/underwater_ruin_small": { "type": "integer" },
-      "chests/village/village_plains_house": { "type": "integer" },
-      "chests/village/village_savanna_house": { "type": "integer" },
-      "chests/village/village_desert_house": { "type": "integer" },
-      "chests/village/village_snowy_house": { "type": "integer" },
-      "chests/village/village_taiga_house": { "type": "integer" },
-      "chests/woodland_mansion": { "type": "integer" },
-      "chests/abandoned_mineshaft": { "type": "integer" },
-      "chests/simple_dungeon": { "type": "integer" },
-      "chests/pillager_outpost": { "type": "integer" }
+      "description": "Sets the maximum amount of disc fragments that can be found in chests, the default amount is 3.",
+      "properties": {
+        "chests/ancient_city": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Ancient City chest."
+        },
+        "chests/ancient_city_ice_box": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Ancient City Ice Box chest."
+        },
+        "chests/bastion_bridge": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Bastion Bridge chest."
+        },
+        "chests/bastion_hoglin_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Bastion Hoglin Treasure chest."
+        },
+        "chests/bastion_other": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Bastion Other chest."
+        },
+        "chests/bastion_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Bastion Treasure chest."
+        },
+        "chests/desert_pyramid": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Desert Pyramid chest."
+        },
+        "chests/simple_dungeon": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Simple Dungeon chest."
+        },
+        "chests/end_city_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an End City Treasure chest."
+        },
+        "chests/igloo_chest": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Igloo chest."
+        },
+        "chests/jungle_temple": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Jungle Temple chest."
+        },
+        "chests/nether_bridge": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Nether Bridge chest."
+        },
+        "chests/ruined_portal": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Ruined Portal chest."
+        },
+        "chests/pillager_outpost": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Pillager Outpost chest."
+        },
+        "chests/shipwreck_map": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Shipwreck Map chest."
+        },
+        "chests/shipwreck_supply": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Shipwreck Supply chest."
+        },
+        "chests/shipwreck_treasure": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Shipwreck Treasure chest."
+        },
+        "chests/stronghold_corridor": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Stronghold Corridor chest."
+        },
+        "chests/stronghold_crossing": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Stronghold Crossing chest."
+        },
+        "chests/underwater_ruin_big": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Underwater Ruin Big chest."
+        },
+        "chests/underwater_ruin_small": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Underwater Ruin Small chest."
+        },
+        "chests/village/village_plains_house": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Village Plains House chest."
+        },
+        "chests/village/village_savanna_house": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Village Savanna House chest."
+        },
+        "chests/village/village_desert_house": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Village Desert House chest."
+        },
+        "chests/village/village_snowy_house": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Village Snowy House chest."
+        },
+        "chests/village/village_taiga_house": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Village Taiga House chest."
+        },
+        "chests/woodland_mansion": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Woodland Mansion chest."
+        },
+        "chests/abandoned_mineshaft": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in an Abandoned Mineshaft chest."
+        },
+        "chests/trial_chambers": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in a Trial Chambers chest."
+        },
+        "chests/*": {
+          "type": "integer",
+          "description": "The maximum amount of disc fragments that can be found in any other chest."
+        }
+      }
+    },
+    "check-for-updates": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will check for updates on startup.",
+      "default": true
+    },
+    "allow-metrics": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will send metrics to bStats. Please consider enabling this, as it helps me improve the plugin.",
+      "default": true
+    },
+    "force-resource-pack": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will force players to use the resource pack. If the player declines, they will be kicked.",
+      "default": false
+    },
+    "enable-resource-pack-host": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will host the resource pack and automatically send it to players.",
+      "default": true
+    },
+    "web-interface-port": {
+      "type": "integer",
+      "description": "The port the web interface api & resource pack will be hosted on.",
+      "default": "9871",
+      "minimum": 0,
+      "maximum": 65535,
+      "exclusiveMinimum": true,
+      "exclusiveMaximum": true
+    },
+    "web-interface-api-enabled": {
+      "type": "boolean",
+      "description": "If set to true, the plugin will have a REST api running to edit the discs settings and the config.",
+      "default": true
+    },
+    "web-interface-password": {
+      "type": "string",
+      "description": "The password required to access the web interface api."
     }
   },
   "required": [
     "lang",
-    "force-resource-pack",
-    "ignore-failed-download",
-    "allow-music-overlapping",
-    "allow-metrics",
     "jukebox-behaviour",
+    "jukebox-gui-style",
+    "jukebox-gui-size",
+    "disable-music-overlap",
     "disc-loottables-limit",
-    "fragment-loottables-limit"
+    "fragment-loottables-limit",
+    "check-for-updates",
+    "allow-metrics",
+    "force-resource-pack",
+    "enable-resource-pack-host",
+    "web-interface-port",
+    "web-interface-api-enabled",
+    "web-interface-password"
   ]
 }

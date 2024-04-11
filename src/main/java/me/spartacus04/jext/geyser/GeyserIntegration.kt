@@ -1,4 +1,4 @@
-package me.spartacus04.jext.integrations.unique
+package me.spartacus04.jext.geyser
 
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.PLUGIN

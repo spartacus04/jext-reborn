@@ -1,6 +1,6 @@
 package me.spartacus04.jext.integrations
 
-import me.spartacus04.jext.integrations.unique.GeyserIntegration
+import me.spartacus04.jext.geyser.GeyserIntegration
 import me.spartacus04.jext.language.LanguageManager.Companion.GEYSER_RELOAD
 import org.bukkit.Bukkit
 import org.bukkit.block.Block

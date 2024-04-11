@@ -3,7 +3,7 @@ package me.spartacus04.jext.gui
 import me.spartacus04.jext.State
 import me.spartacus04.jext.State.DISCS
 import me.spartacus04.jext.State.VERSION
-import me.spartacus04.jext.integrations.unique.GeyserIntegration
+import me.spartacus04.jext.geyser.GeyserIntegration
 import me.spartacus04.jext.language.LanguageManager
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory

@@ -21,7 +21,7 @@ internal class ResourceStatusEvent : JextListener() {
                         "resource-pack-decline-kick-message"
                     ))
                 }
-                if (status == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD && !CONFIG.FORCE_RESOURCE_PACK) {
+                if (status == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD && CONFIG.FORCE_RESOURCE_PACK) {
                     return e.player.kickPlayer(LANG.getKey(
                         e.player,
                         "failed-download-kick-message"
