@@ -21,7 +21,7 @@
 		login,
 		healthCheck,
 		logout,
-		type ConfigNode as CfgNode,
+		type ConfigNode as CfgNode
 	} from '$lib/index';
 
 	export let data: PageData;

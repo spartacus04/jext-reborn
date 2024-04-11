@@ -7,7 +7,6 @@ import {
 } from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
-
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);
 
 export const login = async (

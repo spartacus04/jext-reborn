@@ -6,22 +6,31 @@
 	import { saveAs } from '$lib';
 
 	export let error: Error;
-	
+
 	const isBrowser = !window.__TAURI__;
 
 	const exportLogs = () => {
-		const blob = new Blob([JSON.stringify(console.logs, (_, value) => {
-			if(value instanceof Error) {
-				return {
-					name: value.name,
-					message: value.message,
-					stack: value.stack,
-					cause: value.cause,
-				};
-			}
+		const blob = new Blob(
+			[
+				JSON.stringify(
+					console.logs,
+					(_, value) => {
+						if (value instanceof Error) {
+							return {
+								name: value.name,
+								message: value.message,
+								stack: value.stack,
+								cause: value.cause
+							};
+						}
 
-			return value;
-		}, 4)], { type: 'text/plain' });
+						return value;
+					},
+					4
+				)
+			],
+			{ type: 'text/plain' }
+		);
 
 		saveAs(blob, 'jext-logs.txt');
 	};
@@ -55,12 +64,18 @@
 					<svelte:fragment slot="content">
 						<p>
 							Due to the nature of HTTPS, some requests may fail. This is because the Jext server is
-							running on HTTP and the browser is blocking the request.<br><br>If you are using chrome you can enable unsafe content for the website. 
-							Just follow <a href="https://support.google.com/chrome/answer/114662" target="_blank" rel="noopener noreferrer" class="underline">this</a> guide and enable unsafe content.
-							<br><br>
-							Alternatively, you can download
-							the JEXT Desktop App and run it on your computer. This will allow you to connect to the
-							server without any issues.
+							running on HTTP and the browser is blocking the request.<br /><br />If you are using
+							chrome you can enable unsafe content for the website. Just follow
+							<a
+								href="https://support.google.com/chrome/answer/114662"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="underline">this</a
+							>
+							guide and enable unsafe content.
+							<br /><br />
+							Alternatively, you can download the JEXT Desktop App and run it on your computer. This
+							will allow you to connect to the server without any issues.
 						</p>
 						{#await getDesktopAppDownload}
 							<p></p>
