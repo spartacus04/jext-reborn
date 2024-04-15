@@ -73,8 +73,8 @@ permissions:
       jext.fragment.give: true
       jext.notifyupdate: true
       jext.webui: true
-      jext.admingui: true
       jext.usejukebox: true
+      jext.admingui: true
   jext.disc:
     description: Allows player to access all custom disc.
     default: op
@@ -108,8 +108,8 @@ permissions:
   jext.webui:
     description: Allows player to access webui
     default: op
-  jext.admingui:
-    description: Allows player to access admin gui
   jext.usejukebox:
     description: Allows player to use jukeboxes.
     default: op
+  jext.admingui:
+    description: Allows player to access admin gui
