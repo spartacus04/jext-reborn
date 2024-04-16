@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [
 		sveltekit(),
 		purgeCss({
+			legacy: true,
 			safelist: {
 				// any selectors that begin with "hljs-" will not be purged
 				greedy: [/^hljs-/]
