@@ -705,9 +705,9 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-sidecar"
-version = "1.0.1"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b804c3b30a27aa028ac6cfc9a3cfe52dbb1232df88921a1964cbf5ef7a86ae0"
+checksum = "bec830aba6cd3da7621c58e8f06727e3b750e8383bcd934d789f2b9c3c4ea595"
 dependencies = [
  "anyhow",
 ]
