@@ -110,6 +110,6 @@ permissions:
     default: op
   jext.usejukebox:
     description: Allows player to use jukeboxes.
-    default: op
+    default: true
   jext.admingui:
     description: Allows player to access admin gui
