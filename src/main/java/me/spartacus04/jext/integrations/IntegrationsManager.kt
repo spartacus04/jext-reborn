@@ -20,29 +20,9 @@ class IntegrationsManager {
         integrations.forEach { registerIntegration(it) }
     }
 
-    fun hasJukeboxAccess(player: Player, block: Block): Boolean? {
-        for(integration in integrations){
-            val state = integration.hasJukeboxAccess(player, block)
-            return when(state){
-                true->true
-                false->continue
-                null->null
-            }
-        }
-        return false
-    }
+    fun hasJukeboxAccess(player: Player, block: Block): Boolean = integrations.all { it.hasJukeboxAccess(player, block) }
 
-    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean? {
-        for(integration in integrations){
-            val state = integration.hasJukeboxGuiAccess(player, block)
-            return when(state){
-                true->true
-                false->continue
-                null->null
-            }
-        }
-        return false
-    }
+    fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean = integrations.all { it.hasJukeboxGuiAccess(player, block) }
 
     fun reloadDefaultIntegrations() {
         integrations.removeIf { it.id == "worldguard" || it.id == "griefprevention" }
