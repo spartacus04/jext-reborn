@@ -19,10 +19,13 @@ internal class JukeboxClickEvent : JextListener() {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
-
+        
         if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
         if (event.player.isSneaking) return
-
+        if(!event.player.hasPermission("jext.usejukebox")){
+            event.isCancelled = true
+            return
+        }
         when(CONFIG.JUKEBOX_BEHAVIOUR) {
             FieldJukeboxBehaviour.VANILLA -> defaultBehaviour(event, block)
             else -> jukeboxGui(event, block)
@@ -30,15 +33,11 @@ internal class JukeboxClickEvent : JextListener() {
     }
 
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(INTEGRATIONS.hasJukeboxAccess(event.player, block)==false) {
+        if(!INTEGRATIONS.hasJukeboxAccess(event.player, block)) {
             event.isCancelled = true
             return
         }
-        if(!(event.player.hasPermission("jext.usejukebox")||event.player.isOp)){
-            event.isCancelled = true
-            return
-        }
-
+        
         val state = block.state as? Jukebox ?: return
         val location = block.location
 
@@ -58,13 +57,9 @@ internal class JukeboxClickEvent : JextListener() {
 
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
-        if(INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)==false) {
+        if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) {
             return
         }
-        if(!(event.player.hasPermission("jext.usejukebox")||event.player.isOp)){
-            return
-        }
-
         JukeboxGui(event.player, block)
     }
 
