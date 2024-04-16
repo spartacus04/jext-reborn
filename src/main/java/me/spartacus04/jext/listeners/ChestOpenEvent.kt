@@ -40,9 +40,9 @@ internal class ChestOpenEvent : JextListener() {
         DISCS.forEach {
             it.lootTables.forEach { lootTable ->
                 if (discsMap.containsKey(lootTable.key)) {
-                    discsMap[lootTable.key]!!.add(ChanceStack(lootTable.value, DISCS[lootTable.key]!!.discItemStack))
+                    discsMap[lootTable.key]!!.add(ChanceStack(lootTable.value, it.discItemStack))
                 } else {
-                    discsMap[lootTable.key] = arrayListOf(ChanceStack(lootTable.value, DISCS[lootTable.key]!!.discItemStack))
+                    discsMap[lootTable.key] = arrayListOf(ChanceStack(lootTable.value, it.discItemStack))
                 }
             }
 
@@ -50,9 +50,9 @@ internal class ChestOpenEvent : JextListener() {
 
             it.fragmentLootTables.forEach { lootTable ->
                 if (discFragmentMap.containsKey(lootTable.key)) {
-                    discFragmentMap[lootTable.key]!!.add(ChanceStack(lootTable.value, DISCS[lootTable.key]!!.fragmentItemStack!!))
+                    discFragmentMap[lootTable.key]!!.add(ChanceStack(lootTable.value, it.fragmentItemStack!!))
                 } else {
-                    discFragmentMap[lootTable.key] = arrayListOf(ChanceStack(lootTable.value, DISCS[lootTable.key]!!.fragmentItemStack!!))
+                    discFragmentMap[lootTable.key] = arrayListOf(ChanceStack(lootTable.value, it.fragmentItemStack!!))
                 }
             }
         }
@@ -74,9 +74,10 @@ internal class ChestOpenEvent : JextListener() {
 
             var discAmount = Random.nextInt(0, discMaxAmount + 1)
 
-            discsMap[key]?.apply{ shuffle() }?.forEach { chanceStack ->
+            discsMap[key]?.apply{ shuffle(); sortTop() }?.forEach { chanceStack ->
                 if (Random.nextInt(0, 1001) < chanceStack.chance) {
                     var size = inventory.size
+                    var discSet = false
 
                     while (size > 0 && discAmount > 0) {
 
@@ -85,13 +86,16 @@ internal class ChestOpenEvent : JextListener() {
 
                         if (item == null || item.type == Material.AIR) {
                             inventory.setItem(slot, chanceStack.stack)
-                            discAmount--
+                            discSet = true
                             break
                         }
 
                         size--
                     }
+
+                    if(!discSet) inventory.setItem(Random.nextInt(0, inventory.size), chanceStack.stack)
                 }
+                discAmount--
             }
         }
 
@@ -112,12 +116,14 @@ internal class ChestOpenEvent : JextListener() {
 
             var fragmentAmount = Random.nextInt(0, fragmentMaxAmount + 1)
 
-            discFragmentMap[key]?.apply{ shuffle() }?.forEach { chanceStack ->
-                if (Random.nextInt(0, 1001) < chanceStack.chance) {
-                    val number = if(fragmentAmount > 3) Random.nextInt(0, 4)
-                    else Random.nextInt(0, fragmentAmount + 1)
+            discFragmentMap[key]?.apply{ shuffle(); sortTop() }?.forEach { chanceStack ->
+                val number = if(fragmentAmount > 3) Random.nextInt(0, 4)
+                else Random.nextInt(0, fragmentAmount + 1)
 
+                if (Random.nextInt(0, 1001) < chanceStack.chance) {
                     var size = inventory.size
+                    var fragmentSet = false
+
 
                     while (size > 0 && fragmentAmount > 0) {
                         val slot = Random.nextInt(0, size)
@@ -128,14 +134,29 @@ internal class ChestOpenEvent : JextListener() {
                                 amount = number
                             })
 
-                            fragmentAmount -= number
+                            fragmentSet = true
+
                             break
                         }
                         size--
                     }
+
+                    if(!fragmentSet) inventory.setItem(Random.nextInt(0, inventory.size), chanceStack.stack.apply {
+                        amount = number
+                    })
                 }
+                fragmentAmount -= number
             }
         }
+    }
+
+    private fun ArrayList<ChanceStack>.sortTop() {
+        val top = this.filter { it.chance >= 1000 }
+        val bottom = this.filter { it.chance < 1000 }
+
+        this.clear()
+        this.addAll(top)
+        this.addAll(bottom)
     }
 
     /**
