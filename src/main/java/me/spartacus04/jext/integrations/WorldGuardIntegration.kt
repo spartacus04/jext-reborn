@@ -26,7 +26,7 @@ internal class WorldGuardIntegration : Integration {
 
         val containerQuery = WorldGuard.getInstance().platform.regionContainer.createQuery()
         return flags.any{
-            containerQuery.testState(BukkitAdapter.adapt(block.location), wgPlayer, it) == StateFlag.State.ALLOW
+            containerQuery.queryState(BukkitAdapter.adapt(block.location), wgPlayer, it) == StateFlag.State.ALLOW
         }
     }
 }
