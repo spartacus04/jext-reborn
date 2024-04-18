@@ -22,25 +22,28 @@ data class JukeboxEntry(
      * @return
      */
     fun toItemStack() : ItemStack {
-        return if(type == "jext") {
-            val disc = DISCS[value]
+        return when(type) {
+            "jext" -> {
+                val disc = DISCS[value]
 
-            disc?.discItemStack
-                ?: arrayListOf(
-                    SOUND_MAP.keys.map { mat -> ItemStack(mat) },
-                    DISCS.map { discm -> discm.discItemStack }
-                ).flatten().random()
-        } else {
-            val material = Material.matchMaterial(value)
-
-            if(material != null) {
-                return ItemStack(material)
+                disc?.discItemStack
+                    ?: arrayListOf(
+                        SOUND_MAP.keys.map { mat -> ItemStack(mat) },
+                        DISCS.map { discm -> discm.discItemStack }
+                    ).flatten().random()
             }
+            else -> {
+                val material = Material.matchMaterial(value)
 
-            arrayListOf(
-                SOUND_MAP.keys.map { mat -> ItemStack(mat) },
-                DISCS.map { disc -> disc.discItemStack }
-            ).flatten().random()
+                if(material != null) {
+                    return ItemStack(material)
+                }
+
+                arrayListOf(
+                    SOUND_MAP.keys.map { mat -> ItemStack(mat) },
+                    DISCS.map { disc -> disc.discItemStack }
+                ).flatten().random()
+            }
         }
     }
 }

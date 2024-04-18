@@ -1,27 +1,28 @@
-package me.spartacus04.jext.discs.sources.file
+package me.spartacus04.jext.discs.sources.nbs
 
 import com.google.gson.annotations.SerializedName
+import com.xxmicloxx.NoteBlockAPI.utils.NBSDecoder
 import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.DiscPersistentDataContainer
-import me.spartacus04.jext.discs.discplaying.DefaultDiscPlayingMethod
+import me.spartacus04.jext.discs.discplaying.NbsDiscPlayingMethod
+import me.spartacus04.jext.language.LanguageManager.Companion.NBS_NOT_FOUND
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_MATERIAL
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import kotlin.math.ceil
 
-internal data class FileDisc(
+internal data class NbsDisc(
     @SerializedName("title")
     val TITLE: String = "",
 
     @SerializedName("author")
     val AUTHOR: String = "",
-
-    @SerializedName("duration")
-    val DURATION: Int = -1,
 
     @SerializedName("disc-namespace")
     val DISC_NAMESPACE: String,
@@ -41,6 +42,8 @@ internal data class FileDisc(
     @SerializedName("fragment-loot-tables")
     val FRAGMENT_LOOT_TABLES: HashMap<String, Int> = HashMap(),
 ) {
+    private val nbsFile = PLUGIN.dataFolder.resolve("nbs").resolve("$DISC_NAMESPACE.nbs")
+
     private fun getProcessedLore(): ArrayList<String> {
         val lore = ArrayList<String>()
 
@@ -90,27 +93,42 @@ internal data class FileDisc(
         return fragment
     }
 
-    fun toJextDisc() : Disc {
+
+    fun toJextDisc() : Disc? {
+        if(!nbsFile.exists()) {
+            Bukkit.getConsoleSender().sendMessage(
+                LANG.replaceParameters(NBS_NOT_FOUND, hashMapOf(
+                    "name" to DISC_NAMESPACE
+                ))
+            )
+
+            return null
+        }
+
+        val song = NBSDecoder.parse(nbsFile)
+
         return Disc(
-            "jext",
+            "jext-nbs",
             getDiscItemStack(),
             if(VERSION > "1.19") getFragmentItemStack() else null,
             DISC_NAMESPACE,
             if(AUTHOR.isNotEmpty()) {
-                LANG.getKey(Bukkit.getConsoleSender(), "disc-name", hashMapOf(
+                LANG.getKey(
+                    Bukkit.getConsoleSender(), "disc-name", hashMapOf(
                     "author" to AUTHOR,
                     "title" to TITLE
                 ))
             } else {
-                LANG.getKey(Bukkit.getConsoleSender(), "disc-name-simple", hashMapOf(
+                LANG.getKey(
+                    Bukkit.getConsoleSender(), "disc-name-simple", hashMapOf(
                     "title" to TITLE
                 ))
             },
-            DURATION,
+            ceil(song.length / song.speed).toInt(),
             CREEPER_DROP,
             LOOT_TABLES,
             FRAGMENT_LOOT_TABLES,
-            DefaultDiscPlayingMethod()
+            NbsDiscPlayingMethod(song)
         )
     }
 }

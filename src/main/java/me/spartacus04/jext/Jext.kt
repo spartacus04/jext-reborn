@@ -8,6 +8,7 @@ import me.spartacus04.jext.JextState.PUBLIC_IP
 import me.spartacus04.jext.JextState.WEBSERVER
 import me.spartacus04.jext.commands.CommandRegistrant
 import me.spartacus04.jext.discs.sources.file.FileSource
+import me.spartacus04.jext.discs.sources.nbs.NbsSource
 import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
@@ -41,7 +42,7 @@ internal class Jext : JavaPlugin() {
     }
 
     private fun load() {
-        DISCS.registerDiscSource(FileSource()) {
+        DISCS.registerDiscSource(FileSource(), NbsSource()) {
             INTEGRATIONS.reloadDefaultIntegrations()
             JukeboxGui.loadFromFile()
         }

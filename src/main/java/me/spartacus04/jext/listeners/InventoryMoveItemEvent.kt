@@ -1,6 +1,7 @@
 package me.spartacus04.jext.listeners
 
 import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.language.LanguageManager.Companion.VULNERABLE_MESSAGE
@@ -34,7 +35,7 @@ internal class InventoryMoveItemEvent : JextListener("1.19.4") {
                     Disc.fromItemstack(e.item)?.play(e.destination.location!!)
                 } else if(e.source.type == InventoryType.JUKEBOX) {
                     val disc = Disc.fromItemstack(e.item) ?: return
-                    Disc.stop(e.source.location!!, disc.namespace)
+                    DISCS.stop(e.source.location!!, disc.namespace)
                 }
             }
             else -> {

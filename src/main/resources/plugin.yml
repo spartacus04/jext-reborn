@@ -4,7 +4,7 @@ authors: [ Spartacus04 ]
 version: ${version}
 api-version: 1.14
 depend: [ProtocolLib]
-softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot]
+softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot, NoteBlockAPI]
 prefix: JEXT
 folia-supported: true
 website: https://github.com/spartacus04/jext-reborn

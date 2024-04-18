@@ -167,5 +167,7 @@ class LanguageManager {
         const val RESOURCEPACK_DOWNLOAD_START = "[§aJEXT§f]§a Downloading resource pack..."
         const val RESOURCEPACK_DOWNLOAD_SUCCESS = "[§aJEXT§f]§a Resource pack downloaded!"
         const val RESOURCEPACK_DOWNLOAD_FAIL = "[§cJEXT§f]§c Resource pack download failed! No disc will be loaded."
+
+        const val NBS_NOT_FOUND = "[§cJEXT§f]§c No %name%.nbs file found in the nbs folder! This disc won't be loaded."
     }
 }

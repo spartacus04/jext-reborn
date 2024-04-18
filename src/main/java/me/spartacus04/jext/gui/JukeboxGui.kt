@@ -3,6 +3,7 @@ package me.spartacus04.jext.gui
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
@@ -131,9 +132,9 @@ internal class JukeboxGui {
         }
 
         if(block != null) {
-            Disc.stop(block.location)
+            DISCS.stop(block.location)
         } else {
-            Disc.stop(player)
+            DISCS.stop(player)
         }
     }
 
@@ -314,7 +315,7 @@ internal class JukeboxGui {
 
                     if(Disc.isCustomDisc(itemStack)) {
                         val container = Disc.fromItemstack(itemStack)!!
-                        data[it.key]!![index] = JukeboxEntry("jext", container.namespace)
+                        data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
                     } else {
                         data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
                     }
