@@ -1,8 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.SCHEDULER
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.SCHEDULER
 import me.spartacus04.jext.listeners.utils.JextListener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerResourcePackStatusEvent

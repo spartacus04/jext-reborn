@@ -1,9 +1,9 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.INTEGRATIONS
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.INTEGRATIONS
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 

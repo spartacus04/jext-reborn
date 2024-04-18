@@ -6,8 +6,8 @@ import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.sources.DiscSource
 import me.spartacus04.jext.language.LanguageManager.Companion.DOWNLOADING_RESOURCEPACK

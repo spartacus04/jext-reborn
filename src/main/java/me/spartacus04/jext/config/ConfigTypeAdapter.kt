@@ -51,6 +51,8 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
     override fun write(writer: JsonWriter, value: Config) {
         writer.beginObject()
 
+        writer.name("\$schema").value("https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json")
+
         writer.name("lang").value(value.LANGUAGE_MODE.name)
         writer.name("jukebox-behaviour").value(value.JUKEBOX_BEHAVIOUR.name)
         writer.name("jukebox-gui-style").value(value.GUI_STYLE.name)

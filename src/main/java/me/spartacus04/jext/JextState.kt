@@ -11,7 +11,7 @@ import me.spartacus04.jext.utils.ServerVersion
 import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
-object State {
+object JextState {
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
     val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()

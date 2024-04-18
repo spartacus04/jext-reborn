@@ -1,11 +1,10 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.State
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.INTEGRATIONS
-import me.spartacus04.jext.State.PUBLIC_IP
-import me.spartacus04.jext.State.WEBSERVER
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.INTEGRATIONS
+import me.spartacus04.jext.JextState.PUBLIC_IP
+import me.spartacus04.jext.JextState.WEBSERVER
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.JextMetrics
 import me.spartacus04.jext.utils.PublicIP

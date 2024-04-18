@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.gui.items.NextPageItem
 import me.spartacus04.jext.gui.items.PreviousPageItem

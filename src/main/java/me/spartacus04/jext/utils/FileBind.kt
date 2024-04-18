@@ -2,7 +2,7 @@ package me.spartacus04.jext.utils
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.ConfigTypeAdapter
 

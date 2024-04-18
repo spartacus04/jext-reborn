@@ -1,7 +1,7 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.INTEGRATIONS
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.INTEGRATIONS
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.gui.JukeboxGui

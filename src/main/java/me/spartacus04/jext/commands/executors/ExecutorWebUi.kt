@@ -1,7 +1,7 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PUBLIC_IP
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.PUBLIC_IP
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.command.CommandSender
