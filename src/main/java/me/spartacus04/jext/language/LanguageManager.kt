@@ -147,18 +147,25 @@ class LanguageManager {
     companion object {
         const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extended Reborn, Do Re Mi!"
         const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extended Reborn, Mi Re Do!"
+
         const val UPDATE_LINK = "§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]"
+        const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
+
         const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
         const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
+
         const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
         const val BEDROCK_NOT_SUPPORTED = "[§cJEXT§f] §cJukebox GUI is not supported on bedrock edition!"
+
         const val WEBAPI_RESOURCEPACK_NOT_FOUND = "[§cJEXT§f] §cresource-pack.zip not found, please provide it in the plugin directory"
+
         const val WEBSERVER_STARTED = "[§aJEXT§f] §aWebserver started on port %port%"
         const val WEBSERVER_STOPPED = "[§eJEXT§f] §eWebserver stopped"
-        const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
+
         const val GEYSER_RELOAD = "[§eJEXT§f]§e Warning: Geyser won't apply the resource pack changes until you restart the server!"
-        const val DOWNLOADING_RESOURCEPACK = "[§aJEXT§f]§a Downloading resource pack..."
-        const val RESOURCEPACK_DOWNLOADED = "[§aJEXT§f]§a Resource pack downloaded!"
-        const val SHA1_REQUIRED = "[§cJEXT§f]§c SHA1 is required for resource pack downloads!"
+
+        const val RESOURCEPACK_DOWNLOAD_START = "[§aJEXT§f]§a Downloading resource pack..."
+        const val RESOURCEPACK_DOWNLOAD_SUCCESS = "[§aJEXT§f]§a Resource pack downloaded!"
+        const val RESOURCEPACK_DOWNLOAD_FAIL = "[§cJEXT§f]§c Resource pack download failed! No disc will be loaded."
     }
 }

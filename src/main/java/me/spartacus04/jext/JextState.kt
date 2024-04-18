@@ -20,5 +20,6 @@ object JextState {
     internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     val INTEGRATIONS = IntegrationsManager()
     internal val WEBSERVER = JextWebServer()
+    internal val ASSETS_MANAGER = AssetsManager()
     internal var PUBLIC_IP = ""
 }

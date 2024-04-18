@@ -3,6 +3,7 @@ package me.spartacus04.jext.discs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.SCHEDULER
 import me.spartacus04.jext.discs.sources.DiscSource
 import org.bukkit.inventory.meta.ItemMeta
@@ -16,6 +17,8 @@ class DiscManager : Iterable<Disc> {
 
         SCHEDULER.runTaskAsynchronously {
             val discs = CoroutineScope(Dispatchers.Default).launch {
+                ASSETS_MANAGER.reloadAssets()
+
                 discSources.forEach {
                     discs.addAll(it.getDiscs())
                 }
