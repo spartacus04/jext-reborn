@@ -20,7 +20,7 @@ class NbsDiscStoppingMethod : DiscStoppingMethod {
         location.world!!.players.forEach {
             val songPlayers = NoteBlockAPI.getSongPlayersByPlayer(it)
 
-            songPlayers.forEach { songPlayer ->
+            songPlayers?.forEach { songPlayer ->
                 if(songPlayer is PositionSongPlayer && songPlayer.targetLocation == location) {
                     songPlayer.isPlaying = false
                     songPlayer.destroy()
@@ -33,11 +33,11 @@ class NbsDiscStoppingMethod : DiscStoppingMethod {
         location.world!!.players.forEach {
             val songPlayers = NoteBlockAPI.getSongPlayersByPlayer(it)
 
-            songPlayers.forEach { songPlayer ->
+            songPlayers?.forEach { songPlayer ->
                 if(
                     songPlayer is PositionSongPlayer &&
                     songPlayer.targetLocation == location &&
-                    songPlayer.song.path.path.endsWith("$namespace.nbs")
+                    songPlayer.song.path.nameWithoutExtension == namespace
                 ) {
                     songPlayer.isPlaying = false
                     songPlayer.destroy()

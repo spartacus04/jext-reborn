@@ -8,6 +8,7 @@ import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.SCHEDULER
 import me.spartacus04.jext.discs.discstopping.DefaultDiscStoppingMethod
 import me.spartacus04.jext.discs.discstopping.DiscStoppingMethod
+import me.spartacus04.jext.discs.discstopping.NbsDiscStoppingMethod
 import me.spartacus04.jext.discs.sources.DiscSource
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -19,8 +20,9 @@ class DiscManager : Iterable<Disc> {
     private val discSources = arrayListOf<DiscSource>()
     private var discs: ArrayList<Disc> = arrayListOf()
 
-    private val discStoppingMethods = arrayListOf<DiscStoppingMethod>(
-        DefaultDiscStoppingMethod()
+    private val discStoppingMethods = arrayListOf(
+        DefaultDiscStoppingMethod(),
+        NbsDiscStoppingMethod()
     )
 
     fun registerDiscStoppingMethod(discStoppingMethod: DiscStoppingMethod) {

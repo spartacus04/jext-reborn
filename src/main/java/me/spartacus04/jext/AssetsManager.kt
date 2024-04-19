@@ -10,20 +10,28 @@ import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNL
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_SUCCESS
 import org.bukkit.Bukkit
 import java.io.BufferedInputStream
-import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.InputStream
 import java.net.URI
 import java.util.zip.ZipFile
 
 class AssetsManager {
-    private lateinit var resourcePack: File
-    private var legacyMode: Boolean = false
+    private val localToRpMap = hashMapOf(
+        "discs" to "",
+        "nbs" to "nbs",
+    )
+
+    fun registerConfigFile(id: String) {
+        localToRpMap[id] = id
+    }
+
+    fun registerAsset(id: String, path: String) {
+        localToRpMap[id] = path
+    }
 
     internal suspend fun reloadAssets() {
-        if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
-            resourcePack = PLUGIN.dataFolder.resolve("resource-pack.zip")
-            legacyMode = false
+        val file = if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
+            PLUGIN.dataFolder.resolve("resource-pack.zip")
         } else if(Bukkit.getServer().resourcePack.isNotBlank()) {
             val name = Bukkit.getServer().resourcePackHash.ifBlank { "current" }
 
@@ -31,15 +39,35 @@ class AssetsManager {
                 Bukkit.getServer().resourcePack,
                 name
             )) {
-                resourcePack = PLUGIN.dataFolder.resolve("caches").resolve("$name.zip")
-                legacyMode = false
+                PLUGIN.dataFolder.resolve("caches").resolve("$name.zip")
             } else {
-                resourcePack = PLUGIN.dataFolder
-                legacyMode = true
+                null
             }
         } else {
-            resourcePack = PLUGIN.dataFolder
-            legacyMode = true
+            null
+        }
+
+        if(file != null) {
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    val zipFile = ZipFile(file)
+
+                    localToRpMap.entries.forEach {
+                        try {
+                            val zipEntry = zipFile.getEntry(getNameFromId(it.value))
+                            val entry = PLUGIN.dataFolder.resolve("${it.key}.json")
+
+                            if(zipEntry.time > entry.lastModified()) {
+                                zipFile.getInputStream(zipEntry).use { input ->
+                                    entry.outputStream().use { output ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                            }
+                        } catch (_: Exception) { }
+                    }
+                }
+            }
         }
     }
 
@@ -100,39 +128,27 @@ class AssetsManager {
         }
     }
 
-    fun getFile(name: String) : InputStream? {
-        val str = arrayListOf(
-            if(!legacyMode) {
-                "jext"
-            } else "",
-            name,
-            "json"
-        ).filter { it.isNotBlank() }.joinToString(".")
+    private fun getNameFromId(id: String) = listOf(
+        "jext",
+        id,
+        "json"
+    ).filter { it.isNotBlank() }.joinToString(".")
 
-        if(legacyMode) {
-            val file = resourcePack.resolve(str)
+    fun getAsset(id: String) : FileInputStream? {
+        val file = PLUGIN.dataFolder.resolve("$id.json")
 
-            return if(file.exists()) {
-                file.inputStream()
-            } else {
-                null
-            }
-        } else {
-            val zipFile = ZipFile(resourcePack)
-
-            zipFile.getEntry(str).let {
-                return if(it != null) {
-                    zipFile.getInputStream(it)
-                } else {
-                    null
-                }
-            }
-        }
+        return if(file.exists()) {
+            file.inputStream()
+        } else null
     }
 
-    internal fun getDefaultFile() = getFile(if(legacyMode) {
-        "discs"
-    } else {
-        "jext"
-    })
+    fun saveAsset(id: String, content: String) {
+        val file = PLUGIN.dataFolder.resolve("$id.json")
+
+        if(!file.exists()) {
+            file.createNewFile()
+        }
+
+        file.writeText(content)
+    }
 }

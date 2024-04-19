@@ -13,7 +13,7 @@ internal class FileSource : DiscSource {
     override suspend fun getDiscs(): List<Disc> {
         val discTypeToken = object : TypeToken<List<FileDisc>>() {}.type
 
-        val contents = ASSETS_MANAGER.getDefaultFile()?.bufferedReader()?.readText() ?: return emptyList()
+        val contents = ASSETS_MANAGER.getAsset("discs")?.bufferedReader()?.readText() ?: return emptyList()
 
         return gson.fromJson<List<FileDisc>>(contents, discTypeToken).map { it.toJextDisc() }
     }

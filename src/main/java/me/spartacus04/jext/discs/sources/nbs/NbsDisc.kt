@@ -6,15 +6,12 @@ import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.discs.DiscPersistentDataContainer
+import me.spartacus04.jext.discs.DiscUtils
 import me.spartacus04.jext.discs.discplaying.NbsDiscPlayingMethod
 import me.spartacus04.jext.language.LanguageManager.Companion.NBS_NOT_FOUND
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_MATERIAL
-import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
-import org.bukkit.inventory.ItemFlag
-import org.bukkit.inventory.ItemStack
 import kotlin.math.ceil
 
 internal data class NbsDisc(
@@ -42,59 +39,9 @@ internal data class NbsDisc(
     @SerializedName("fragment-loot-tables")
     val FRAGMENT_LOOT_TABLES: HashMap<String, Int> = HashMap(),
 ) {
-    private val nbsFile = PLUGIN.dataFolder.resolve("nbs").resolve("$DISC_NAMESPACE.nbs")
-
-    private fun getProcessedLore(): ArrayList<String> {
-        val lore = ArrayList<String>()
-
-        if(AUTHOR != "")
-            lore.add("${ChatColor.GRAY}$AUTHOR - $TITLE")
-        else {
-            lore.add("${ChatColor.GRAY}$TITLE")
-        }
-
-        lore.addAll(LORE)
-
-        return lore
-    }
-
-    private fun getDiscItemStack(): ItemStack {
-        val disc = ItemStack(JEXT_DISC_MATERIAL)
-        val meta = disc.itemMeta
-
-        meta!!.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
-
-        meta.setCustomModelData(MODEL_DATA)
-
-        // Store custom disc data
-        val helper = DiscPersistentDataContainer(meta)
-        helper.namespaceID = DISC_NAMESPACE
-        helper.setIdentifier()
-
-        meta.lore = getProcessedLore()
-        disc.itemMeta = meta
-        return disc
-    }
-
-    private fun getFragmentItemStack(): ItemStack {
-        val fragment = ItemStack(JEXT_FRAGMENT_MATERIAL)
-        val meta = fragment.itemMeta
-
-        meta!!.setCustomModelData(MODEL_DATA)
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
-
-        val helper = DiscPersistentDataContainer(meta)
-        helper.namespaceID = DISC_NAMESPACE
-        helper.setIdentifier()
-
-        meta.lore = getProcessedLore()
-        fragment.itemMeta = meta
-
-        return fragment
-    }
-
-
     fun toJextDisc() : Disc? {
+        val nbsFile = PLUGIN.dataFolder.resolve("nbs").resolve("$DISC_NAMESPACE.nbs")
+
         if(!nbsFile.exists()) {
             Bukkit.getConsoleSender().sendMessage(
                 LANG.replaceParameters(NBS_NOT_FOUND, hashMapOf(
@@ -109,8 +56,22 @@ internal data class NbsDisc(
 
         return Disc(
             "jext-nbs",
-            getDiscItemStack(),
-            if(VERSION > "1.19") getFragmentItemStack() else null,
+            DiscUtils.buildCustomItemstack(
+                JEXT_DISC_MATERIAL,
+                MODEL_DATA,
+                DISC_NAMESPACE,
+                LORE,
+                TITLE,
+                AUTHOR
+            ),
+            if(VERSION > "1.19") DiscUtils.buildCustomItemstack(
+                JEXT_FRAGMENT_MATERIAL,
+                MODEL_DATA,
+                DISC_NAMESPACE,
+                LORE,
+                TITLE,
+                AUTHOR
+            ) else null,
             DISC_NAMESPACE,
             if(AUTHOR.isNotEmpty()) {
                 LANG.getKey(
