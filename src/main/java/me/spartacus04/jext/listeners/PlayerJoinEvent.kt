@@ -12,14 +12,13 @@ import me.spartacus04.jext.utils.Updater
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
-import java.net.InetAddress
 
 internal class PlayerJoinEvent : JextListener() {
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
         if(CONFIG.WEB_INTERFACE_API_ENABLED && CONFIG.RESOURCE_PACK_HOST) {
-            val hostName = if(playerJoinEvent.player.address == InetAddress.getLocalHost()) {
-                "http://localhost"
+            val hostName = if(playerJoinEvent.player.address?.address?.isLoopbackAddress == true) {
+                "http://127.0.0.1"
             } else {
                 "http://$PUBLIC_IP"
             }
