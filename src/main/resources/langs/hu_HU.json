@@ -33,10 +33,10 @@
   "stopped-music-for": "§fStopped music for §6%player%§f!",
   "stopped-music-for-no-one": "§fStopped music for no player, something went wrong!",
   "reloaded": "§cReloaded!",
-  "missing-permission": "§cYou don't have permission to use this command!",
+  "missing-permission": "§cNincs jogod ehhez a commandhoz!",
   "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
   "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
   "webui": "§aWeb UI available at §2%url%",
-  "webui-disabled": "§cThe Web UI is currently disabled!",
+  "webui-disabled": "A Web UI jelenleg inaktív!",
   "usage": "[Usage]: §6/%command%"
 }
