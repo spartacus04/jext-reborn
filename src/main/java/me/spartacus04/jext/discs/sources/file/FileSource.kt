@@ -13,6 +13,8 @@ import me.spartacus04.jext.discs.sources.DiscSource
 import me.spartacus04.jext.language.LanguageManager.Companion.DOWNLOADING_RESOURCEPACK
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOADED
 import me.spartacus04.jext.language.LanguageManager.Companion.SHA1_REQUIRED
+import me.spartacus04.jext.utils.getResourcePack
+import me.spartacus04.jext.utils.getResourcePackHash
 import org.bukkit.Bukkit
 import java.io.*
 import java.net.URI
@@ -51,7 +53,7 @@ internal class FileSource : DiscSource {
 
         // check resource pack url in server.properties
 
-        val sha1 = Bukkit.getServer().resourcePackHash.ifEmpty {
+        val sha1 = getResourcePackHash().ifEmpty {
             null
         } ?: return run {
             Bukkit.getConsoleSender().sendMessage(SHA1_REQUIRED)
@@ -69,7 +71,7 @@ internal class FileSource : DiscSource {
 
         Bukkit.getConsoleSender().sendMessage(DOWNLOADING_RESOURCEPACK)
 
-        val rpUrl = Bukkit.getServer().resourcePack
+        val rpUrl = getResourcePack()
 
         if(rpUrl.isNotEmpty()) {
             val url = URI(rpUrl).toURL()

@@ -113,8 +113,8 @@ object Constants {
     }
 
     val JEXT_DISC_MATERIAL = Material.MUSIC_DISC_11
-    val JEXT_FRAGMENT_MATERIAL = Material.DISC_FRAGMENT_5
-    val JEXT_FRAGMENT_OUTPUT = Material.MUSIC_DISC_5
+    val JEXT_FRAGMENT_MATERIAL = if(VERSION >= "1.19") Material.DISC_FRAGMENT_5 else null
+    val JEXT_FRAGMENT_OUTPUT = if(VERSION >= "1.19") Material.MUSIC_DISC_5 else null
 
     val BRUSH_LOOT_TABLE_ITEMS = mapOf(
         "archaeology/trail_ruins_rare" to 12,

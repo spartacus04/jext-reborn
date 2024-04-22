@@ -73,7 +73,7 @@ internal data class FileDisc(
     }
 
     private fun getFragmentItemStack(): ItemStack {
-        val fragment = ItemStack(JEXT_FRAGMENT_MATERIAL)
+        val fragment = ItemStack(JEXT_FRAGMENT_MATERIAL!!)
         val meta = fragment.itemMeta
 
         meta!!.setCustomModelData(MODEL_DATA)
@@ -93,7 +93,7 @@ internal data class FileDisc(
         return Disc(
             "JEXT_FILE_SOURCE",
             getDiscItemStack(),
-            if(VERSION > "1.19") getFragmentItemStack() else null,
+            if(VERSION >= "1.19") getFragmentItemStack() else null,
             DISC_NAMESPACE,
             if(AUTHOR.isNotEmpty()) {
                 LANG.getKey(Bukkit.getConsoleSender(), "disc-name", hashMapOf(
