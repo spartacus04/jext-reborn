@@ -49,8 +49,8 @@ internal data class FileDisc(
                 TITLE,
                 AUTHOR
             ),
-            if(VERSION > "1.19") DiscUtils.buildCustomItemstack(
-                JEXT_FRAGMENT_MATERIAL,
+            if(VERSION >= "1.19") DiscUtils.buildCustomItemstack(
+                JEXT_FRAGMENT_MATERIAL!!,
                 MODEL_DATA,
                 DISC_NAMESPACE,
                 LORE,

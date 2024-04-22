@@ -10,6 +10,7 @@ import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNL
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_SUCCESS
 import org.bukkit.Bukkit
 import java.io.BufferedInputStream
+import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.net.URI
@@ -32,11 +33,11 @@ class AssetsManager {
     internal suspend fun reloadAssets() {
         val file = if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
             PLUGIN.dataFolder.resolve("resource-pack.zip")
-        } else if(Bukkit.getServer().resourcePack.isNotBlank()) {
-            val name = Bukkit.getServer().resourcePackHash.ifBlank { "current" }
+        } else if(resourcePack.isNotBlank()) {
+            val name = resourcePackHash.ifBlank { "current" }
 
             if(tryDownloadRP(
-                Bukkit.getServer().resourcePack,
+                resourcePack,
                 name
             )) {
                 PLUGIN.dataFolder.resolve("caches").resolve("$name.zip")
@@ -151,4 +152,23 @@ class AssetsManager {
 
         file.writeText(content)
     }
+
+    private val resourcePack: String
+        get() = try {
+            Bukkit.getServer().resourcePack
+        } catch (_: NoSuchMethodError) {
+            val propertiesFile = File(".").resolve("server.properties")
+
+            propertiesFile.readLines().find { it.startsWith("resource-pack=") }!!.substringAfter("resource-pack=")
+        }
+
+    private val resourcePackHash: String
+        get() = try {
+            Bukkit.getServer().resourcePackHash
+        } catch (_: NoSuchMethodError) {
+            val propertiesFile = File(".").resolve("server.properties")
+
+            propertiesFile.readLines().find { it.startsWith("resource-pack-sha1=") }!!.substringAfter("resource-pack-sha1=")
+        }
+
 }
