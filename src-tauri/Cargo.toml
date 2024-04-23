@@ -17,7 +17,7 @@ tauri-build = { version = "1.5.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.6.0", features = [ "shell-open", "dialog-confirm", "window-set-focus", "window-request-user-attention"] }
+tauri = { version = "1.6.2", features = [ "shell-open", "dialog-confirm", "window-set-focus", "window-request-user-attention"] }
 ffmpeg-sidecar = "1.1.0"
 base64 = "0.22.0"
 tauri-plugin-deep-link = { git = "https://github.com/FabianLars/tauri-plugin-deep-link", branch = "main" }
