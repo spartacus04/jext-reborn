@@ -10,7 +10,6 @@ import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
 import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.Material
 import org.bukkit.block.Chest
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.minecart.StorageMinecart
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
@@ -221,7 +220,7 @@ internal class ChestOpenEvent : JextListener() {
      */
     @EventHandler(ignoreCancelled = true)
     fun onMinecartChestBreak(e : VehicleDestroyEvent) {
-        if(e.vehicle.type != EntityType.MINECART_CHEST) return
+        if(e.vehicle !is StorageMinecart) return
 
         val minecart = e.vehicle as StorageMinecart
         val key = minecart.lootTable?.key?.key ?: return
