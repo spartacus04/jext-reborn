@@ -1,8 +1,6 @@
 package me.spartacus04.jext.discs.sources.nbs
 
 import com.google.common.reflect.TypeToken
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.xxmicloxx.NoteBlockAPI.utils.NBSDecoder
 import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.GSON

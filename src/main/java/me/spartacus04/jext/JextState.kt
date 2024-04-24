@@ -11,20 +11,21 @@ import me.spartacus04.jext.config.ConfigTypeAdapter
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
+import me.spartacus04.jext.utils.BaseUrl
 import me.spartacus04.jext.utils.ServerVersion
 import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
 object JextState {
-    val GSON: Gson = GsonBuilder().setLenient().setPrettyPrinting().registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter()).create()
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
     val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()
     val LANG = LanguageManager()
     val DISCS = DiscManager()
-    internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     val INTEGRATIONS = IntegrationsManager()
+    internal val GSON: Gson = GsonBuilder().setLenient().setPrettyPrinting().registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter()).create()
+    internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     internal val WEBSERVER = JextWebServer()
     internal val ASSETS_MANAGER = AssetsManager()
-    internal var PUBLIC_IP = ""
+    internal val BASE_URL = BaseUrl()
 }

@@ -56,9 +56,9 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
 
         writer.name("\$schema").value("https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json")
 
-        writer.name("lang").value(GSON.toJson(value.LANGUAGE_MODE))
-        writer.name("jukebox-behaviour").value(GSON.toJson(value.JUKEBOX_BEHAVIOUR))
-        writer.name("jukebox-gui-style").value(GSON.toJson(value.GUI_STYLE))
+        writer.name("lang").value(GSON.toJson(value.LANGUAGE_MODE).removeSurrounding("\""))
+        writer.name("jukebox-behaviour").value(GSON.toJson(value.JUKEBOX_BEHAVIOUR).removeSurrounding("\""))
+        writer.name("jukebox-gui-style").value(GSON.toJson(value.GUI_STYLE).removeSurrounding("\""))
         writer.name("jukebox-gui-size").value(value.GUI_SIZE)
         writer.name("disable-music-overlap").value(value.DISABLE_MUSIC_OVERLAP)
         writer.name("jukebox-range").value(value.JUKEBOX_RANGE)

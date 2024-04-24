@@ -1,9 +1,9 @@
 package me.spartacus04.jext.listeners
 
+import me.spartacus04.jext.JextState.BASE_URL
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.JextState.PUBLIC_IP
 import me.spartacus04.jext.language.LanguageManager.Companion.CROWDIN_LINK
 import me.spartacus04.jext.language.LanguageManager.Companion.CROWDIN_MESSAGE
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
@@ -17,11 +17,7 @@ internal class PlayerJoinEvent : JextListener() {
     @EventHandler
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
         if(CONFIG.WEB_INTERFACE_API_ENABLED && CONFIG.RESOURCE_PACK_HOST) {
-            val hostName = if(playerJoinEvent.player.address?.address?.isLoopbackAddress == true) {
-                "http://127.0.0.1"
-            } else {
-                "http://$PUBLIC_IP"
-            }
+            val hostName = BASE_URL.getBaseUrl(playerJoinEvent.player)
 
             playerJoinEvent.player.setResourcePack("${hostName}:${CONFIG.WEB_INTERFACE_PORT}/resource-pack.zip")
         }
