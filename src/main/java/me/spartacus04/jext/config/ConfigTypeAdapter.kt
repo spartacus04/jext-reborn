@@ -15,11 +15,12 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
 
         while(reader.hasNext()) {
             when(reader.nextName()) {
-                "lang" -> config.LANGUAGE_MODE = FieldLanguageMode.fromString(reader.nextString())
-                "jukebox-behaviour" -> config.JUKEBOX_BEHAVIOUR = FieldJukeboxBehaviour.fromString(reader.nextString())
+                "lang" -> config.LANGUAGE_MODE = GSON.fromJson(reader.nextString(), FieldLanguageMode::class.java)
+                "jukebox-behaviour" -> config.JUKEBOX_BEHAVIOUR = GSON.fromJson(reader.nextString(), FieldJukeboxBehaviour::class.java)
                 "jukebox-gui-size" -> config.GUI_SIZE = reader.nextInt()
-                "jukebox-gui-style" -> config.GUI_STYLE = FieldGuiStyle.fromString(reader.nextString())
+                "jukebox-gui-style" -> config.GUI_STYLE = GSON.fromJson(reader.nextString(), FieldGuiStyle::class.java)
                 "disable-music-overlap" -> config.DISABLE_MUSIC_OVERLAP = reader.nextBoolean()
+                "jukebox-range" -> config.JUKEBOX_RANGE = reader.nextInt()
                 "disc-loottables-limit" -> {
                     reader.beginObject()
                     while(reader.hasNext()) {
@@ -39,6 +40,7 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
                 "force-resource-pack" -> config.FORCE_RESOURCE_PACK = reader.nextBoolean()
                 "enable-resource-pack-host" -> config.RESOURCE_PACK_HOST = reader.nextBoolean()
                 "web-interface-port" -> config.WEB_INTERFACE_PORT = reader.nextInt()
+                "override-web-interface-base-url" -> config.WEB_INTERFACE_BASE_URL = reader.nextString()
                 "web-interface-api-enabled" -> config.WEB_INTERFACE_API_ENABLED = reader.nextBoolean()
                 "web-interface-password" -> config.WEB_INTERFACE_PASSWORD = reader.nextString()
                 else -> reader.skipValue()
