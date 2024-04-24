@@ -1,6 +1,7 @@
 package me.spartacus04.jext.listeners
 
 import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.FRAGMENT_LIST
@@ -49,21 +50,21 @@ internal class DiscUpdateEvent : JextListener() {
                     disc.discItemStack
                 }
             }
-        } else if(itemStack.type.isRecordFragment) {
+        } else if(VERSION >= "1.19" && itemStack.type.isRecordFragment) {
             if(Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
 
                 return if(disc == null) {
                     val stacks = arrayListOf(
                         FRAGMENT_LIST.map { ItemStack(it) },
-                        DISCS.map { it.discItemStack }
+                        DISCS.map { it.fragmentItemStack!! }
                     ).flatten()
 
                     stacks.random().apply {
                         amount = itemStack.amount
                     }
                 } else {
-                    disc.discItemStack.apply {
+                    disc.fragmentItemStack!!.apply {
                         amount = itemStack.amount
                     }
                 }
