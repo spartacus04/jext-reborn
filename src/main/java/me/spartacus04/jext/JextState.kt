@@ -2,8 +2,12 @@ package me.spartacus04.jext
 
 import com.github.Anon8281.universalScheduler.UniversalScheduler
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.ConfigFactory
+import me.spartacus04.jext.config.ConfigTypeAdapter
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
@@ -12,6 +16,7 @@ import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
 object JextState {
+    val GSON: Gson = GsonBuilder().setLenient().setPrettyPrinting().registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter()).create()
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
     val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()

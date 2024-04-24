@@ -1,20 +1,11 @@
 package me.spartacus04.jext.utils
 
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.config.Config
-import me.spartacus04.jext.config.ConfigTypeAdapter
 
 
 open class FileBind(@Transient private val filePath: String, @Transient private val resourcePath: String, @Transient private val typeToken: TypeToken<*>) {
-    @Transient
-    private val gson = GsonBuilder()
-        .setLenient()
-        .setPrettyPrinting()
-        .registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter())
-        .create()
-
     constructor(filePath: String, typeToken: TypeToken<*>) : this(filePath, filePath, typeToken)
 
     fun read() {
@@ -30,7 +21,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
             }
         }
 
-        val obj = gson.fromJson(file.readText(), typeToken)
+        val obj = GSON.fromJson(file.readText(), typeToken)
 
         obj.javaClass.declaredFields.forEach { field ->
             field.isAccessible = true
@@ -41,7 +32,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
 
     fun fromText(text: String) : Boolean {
         try {
-            val obj = gson.fromJson(text, typeToken)
+            val obj = GSON.fromJson(text, typeToken)
 
             obj.javaClass.declaredFields.forEach { field ->
                 field.isAccessible = true
@@ -56,7 +47,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
     }
 
     fun save() {
-        val text = gson.toJson(this)
+        val text = GSON.toJson(this)
 
         PLUGIN.dataFolder.resolve(filePath).writeText(text)
     }

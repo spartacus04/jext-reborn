@@ -3,6 +3,7 @@ package me.spartacus04.jext.config
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
@@ -53,11 +54,12 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
 
         writer.name("\$schema").value("https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json")
 
-        writer.name("lang").value(value.LANGUAGE_MODE.name)
-        writer.name("jukebox-behaviour").value(value.JUKEBOX_BEHAVIOUR.name)
-        writer.name("jukebox-gui-style").value(value.GUI_STYLE.name)
+        writer.name("lang").value(GSON.toJson(value.LANGUAGE_MODE))
+        writer.name("jukebox-behaviour").value(GSON.toJson(value.JUKEBOX_BEHAVIOUR))
+        writer.name("jukebox-gui-style").value(GSON.toJson(value.GUI_STYLE))
         writer.name("jukebox-gui-size").value(value.GUI_SIZE)
         writer.name("disable-music-overlap").value(value.DISABLE_MUSIC_OVERLAP)
+        writer.name("jukebox-range").value(value.JUKEBOX_RANGE)
 
         writer.name("disc-loottables-limit").beginObject()
         value.DISC_LIMIT.forEach { (key, value) ->
@@ -77,6 +79,7 @@ internal class ConfigTypeAdapter : TypeAdapter<Config>() {
         writer.name("force-resource-pack").value(value.FORCE_RESOURCE_PACK)
         writer.name("enable-resource-pack-host").value(value.RESOURCE_PACK_HOST)
         writer.name("web-interface-port").value(value.WEB_INTERFACE_PORT)
+        writer.name("override-web-interface-base-url").value(value.WEB_INTERFACE_BASE_URL)
         writer.name("web-interface-api-enabled").value(value.WEB_INTERFACE_API_ENABLED)
         writer.name("web-interface-password").value(value.WEB_INTERFACE_PASSWORD)
 

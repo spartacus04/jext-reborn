@@ -1,9 +1,8 @@
 package me.spartacus04.jext.language
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import org.bukkit.command.CommandSender
@@ -19,7 +18,6 @@ import java.util.jar.JarFile
  */
 class LanguageManager {
     private val languageMap = HashMap<String, Map<String, String>>()
-    private var gson : Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
     init {
         // this loads all languages in the languageMap
@@ -32,7 +30,7 @@ class LanguageManager {
 
                     PLUGIN.getResource("langs/$langName")!!.bufferedReader().use {file ->
                         val mapType = object : TypeToken<Map<String, String>>() {}.type
-                        val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
+                        val languageMap : Map<String, String> = GSON.fromJson(file.readText(), mapType)
 
                         this.languageMap.put(langName.replace(".json", "").lowercase(), languageMap)
                     }
@@ -54,7 +52,7 @@ class LanguageManager {
 
             customFile.bufferedReader().use {
                 val mapType = object : TypeToken<Map<String, String>>() {}.type
-                val languageMap : Map<String, String> = gson.fromJson(it.readText(), mapType)
+                val languageMap : Map<String, String> = GSON.fromJson(it.readText(), mapType)
 
                 this.languageMap.put("custom", languageMap)
             }
@@ -68,11 +66,10 @@ class LanguageManager {
      * @param lang The language map
      */
     private fun updateLang(file: File, lang: Map<String, String>) {
-        val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
         val jsonConfig = file.readText()
 
         val mapType = object : TypeToken<HashMap<String, String>>() {}.type
-        val languageMap = gson.fromJson<HashMap<String, String>>(jsonConfig, mapType)
+        val languageMap = GSON.fromJson<HashMap<String, String>>(jsonConfig, mapType)
 
         lang.keys.forEach {
             if(!languageMap.containsKey(it)) {
@@ -80,7 +77,7 @@ class LanguageManager {
             }
         }
 
-        file.writeText(gson.toJson(languageMap))
+        file.writeText(GSON.toJson(languageMap))
     }
 
     /**

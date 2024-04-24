@@ -1,15 +1,13 @@
 package me.spartacus04.jext.webapi.config
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.sun.net.httpserver.HttpExchange
 import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.config.ConfigField
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class ConfigReadHandler : JextHttpHandler(true) {
-    private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     override fun onGet(exchange: HttpExchange) {
         val data = CONFIG::class.java.declaredFields.map {
@@ -18,7 +16,7 @@ internal class ConfigReadHandler : JextHttpHandler(true) {
             val data = it.getAnnotation(ConfigField::class.java)
 
             it.isAccessible = true
-            val value = gson.toJson(it.get(CONFIG))
+            val value = GSON.toJson(it.get(CONFIG))
             it.isAccessible = false
 
             """
