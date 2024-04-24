@@ -1,8 +1,6 @@
 package me.spartacus04.jext.config
 
 import com.google.common.reflect.TypeToken
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN

@@ -1,6 +1,5 @@
 package me.spartacus04.jext.gui
 
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.DISCS
