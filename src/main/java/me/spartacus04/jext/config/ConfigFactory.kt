@@ -2,6 +2,7 @@ package me.spartacus04.jext.config
 
 import com.google.common.reflect.TypeToken
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.config.legacy.*
 import me.spartacus04.jext.utils.FileBind
@@ -11,26 +12,11 @@ internal object ConfigFactory {
         val text = PLUGIN.dataFolder.resolve("config.json").readText()
         val gson = GsonBuilder().setPrettyPrinting().setLenient().create()
 
-        val currentConfigParams = listOf(
-            "\"lang\"",
-            "\"jukebox-behaviour\"",
-            "\"jukebox-gui-style\"",
-            "\"jukebox-gui-size\"",
-            "\"disable-music-overlap\"",
-            "\"disc-loottables-limit\"",
-            "\"fragment-loottables-limit\"",
-            "\"check-for-updates\"",
-            "\"allow-metrics\"",
-            "\"force-resource-pack\"",
-            "\"enable-resource-pack-host\"",
-            "\"web-interface-port\"",
-            "\"web-interface-api-enabled\"",
-            "\"web-interface-password\""
-        )
+        val currentConfigParams = Config::class.java.declaredFields.map {
+            it.getAnnotation(SerializedName::class.java).value
+        }
 
         if(currentConfigParams.all { text.contains(it) }) return
-
-
 
         if(LegacyConfig<V1Config> (
             listOf(
