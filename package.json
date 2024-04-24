@@ -14,7 +14,7 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@skeletonlabs/skeleton": "2.9.1",
+    "@skeletonlabs/skeleton": "2.9.2",
     "@skeletonlabs/tw-plugin": "0.4.0",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-static": "^3.0.1",
