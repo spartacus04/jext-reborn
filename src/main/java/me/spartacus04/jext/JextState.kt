@@ -4,10 +4,8 @@ import com.github.Anon8281.universalScheduler.UniversalScheduler
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.ConfigFactory
-import me.spartacus04.jext.config.ConfigTypeAdapter
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
@@ -17,15 +15,17 @@ import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
 object JextState {
+    internal val BASE_URL = BaseUrl()
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
+
+    internal val GSON: Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
+    internal val ASSETS_MANAGER = AssetsManager()
+    internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
+
     val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()
     val LANG = LanguageManager()
     val DISCS = DiscManager()
     val INTEGRATIONS = IntegrationsManager()
-    internal val GSON: Gson = GsonBuilder().setLenient().setPrettyPrinting().registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter()).create()
-    internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
     internal val WEBSERVER = JextWebServer()
-    internal val ASSETS_MANAGER = AssetsManager()
-    internal val BASE_URL = BaseUrl()
 }

@@ -8,10 +8,11 @@ import me.spartacus04.jext.config.ConfigField
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class ConfigReadHandler : JextHttpHandler(true) {
-
     override fun onGet(exchange: HttpExchange) {
-        val data = CONFIG::class.java.declaredFields.map {
+        val data = CONFIG::class.java.declaredFields.mapNotNull {
             val id = it.getAnnotation(SerializedName::class.java).value
+
+            if(id == "\$schema") return@mapNotNull null
 
             val data = it.getAnnotation(ConfigField::class.java)
 
@@ -31,7 +32,11 @@ internal class ConfigReadHandler : JextHttpHandler(true) {
             """.trimIndent()
         }
 
+        println(data)
+
         val response = "[${data.joinToString(",")}]"
+
+        println(response)
 
         exchange.sendResponseHeaders(200, response.length.toLong())
         exchange.responseBody.use { output ->

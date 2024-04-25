@@ -1,7 +1,6 @@
 package me.spartacus04.jext.config
 
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
@@ -146,4 +145,8 @@ data class Config(
     )
     @SerializedName("web-interface-password")
     var WEB_INTERFACE_PASSWORD : String = "",
-) : FileBind("config.json", object : TypeToken<Config>() {})
+) : FileBind("config.json", Config::class.java) {
+    @Suppress("unused")
+    @SerializedName("\$schema")
+    private val schema = "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json"
+}

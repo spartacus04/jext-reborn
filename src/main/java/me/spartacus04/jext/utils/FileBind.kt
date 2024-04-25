@@ -1,12 +1,11 @@
 package me.spartacus04.jext.utils
 
-import com.google.gson.reflect.TypeToken
 import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN
 
 
-open class FileBind(@Transient private val filePath: String, @Transient private val resourcePath: String, @Transient private val typeToken: TypeToken<*>) {
-    constructor(filePath: String, typeToken: TypeToken<*>) : this(filePath, filePath, typeToken)
+open class FileBind(@Transient private val filePath: String, @Transient private val resourcePath: String, @Transient private val clazz: Class<*>) {
+    constructor(filePath: String, clazz: Class<*>) : this(filePath, filePath, clazz)
 
     fun read() {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
@@ -21,7 +20,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
             }
         }
 
-        val obj = GSON.fromJson(file.readText(), typeToken)
+        val obj = GSON.fromJson(file.readText(), clazz)
 
         obj.javaClass.declaredFields.forEach { field ->
             field.isAccessible = true
@@ -32,7 +31,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
 
     fun fromText(text: String) : Boolean {
         try {
-            val obj = GSON.fromJson(text, typeToken)
+            val obj = GSON.fromJson(text, clazz)
 
             obj.javaClass.declaredFields.forEach { field ->
                 field.isAccessible = true
