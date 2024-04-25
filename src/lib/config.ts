@@ -13,7 +13,8 @@ export const versions = new Map([
 	[13, '1.19.4'],
 	[15, '1.20 - 1.20.1'],
 	[18, '1.20.2'],
-	[22, '1.20.3 - 1.20.4']
+	[22, '1.20.3 - 1.20.4'],
+	[32, '1.20.5']
 ]);
 
 export const discsStore = writable<Disc[]>([]);
