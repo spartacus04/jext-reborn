@@ -5,6 +5,8 @@
 
 	import { loottables } from '../';
 
+	import { base } from '$app/paths';
+
 	const modalStore = getModalStore();
 
 	export let source: string = 'chests/*';
@@ -93,7 +95,7 @@
 	};
 
 	const getImage = async (item: string) => {
-		const response = fetch(item);
+		const response = fetch(`${base}/${item}`);
 		const blob = await response.then((res) => res.blob());
 
 		cleanUp = URL.createObjectURL(blob);
