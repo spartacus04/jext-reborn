@@ -8,17 +8,12 @@ import me.spartacus04.jext.config.legacy.*
 import me.spartacus04.jext.utils.FileBind
 
 internal object ConfigFactory {
-    internal data class ConfigMapping(
-        val name: String,
-        val method: String,
-    )
-
     private fun getSerializedNames(clazz: Class<*>) =
         clazz.declaredFields.map {
             it.getAnnotation(SerializedName::class.java).value
         }
 
-    val legacyConfigs = listOf(
+    private val legacyConfigs = listOf(
         V1Config::class.java,
         V2Config::class.java,
         V3Config::class.java,

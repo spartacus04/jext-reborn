@@ -4,9 +4,7 @@ import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN
 
 
-open class FileBind(@Transient private val filePath: String, @Transient private val resourcePath: String, @Transient private val clazz: Class<*>) {
-    constructor(filePath: String, clazz: Class<*>) : this(filePath, filePath, clazz)
-
+open class FileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>) {
     fun read() {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
 
@@ -15,9 +13,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
         if(!file.exists()) {
             file.createNewFile()
 
-            PLUGIN.getResource(resourcePath)!!.bufferedReader().use {
-                file.writeText(it.readText())
-            }
+            save()
         }
 
         val obj = GSON.fromJson(file.readText(), clazz)
