@@ -58,7 +58,7 @@ internal data class FileDisc(
         val disc = ItemStack(JEXT_DISC_MATERIAL)
         val meta = disc.itemMeta
 
-        meta!!.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+        meta!!.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP)
 
         meta.setCustomModelData(MODEL_DATA)
 
@@ -77,7 +77,7 @@ internal data class FileDisc(
         val meta = fragment.itemMeta
 
         meta!!.setCustomModelData(MODEL_DATA)
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP)
 
         val helper = DiscPersistentDataContainer(meta)
         helper.namespaceID = DISC_NAMESPACE

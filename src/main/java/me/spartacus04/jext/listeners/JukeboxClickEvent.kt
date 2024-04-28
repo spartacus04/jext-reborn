@@ -22,10 +22,12 @@ internal class JukeboxClickEvent : JextListener() {
         
         if (event.action != Action.RIGHT_CLICK_BLOCK || block.type != Material.JUKEBOX) return
         if (event.player.isSneaking) return
+
         if(!event.player.hasPermission("jext.usejukebox")){
             event.isCancelled = true
             return
         }
+
         when(CONFIG.JUKEBOX_BEHAVIOUR) {
             FieldJukeboxBehaviour.VANILLA -> defaultBehaviour(event, block)
             else -> jukeboxGui(event, block)
