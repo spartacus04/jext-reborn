@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 
 internal class DiscsReadHandler : JextHttpHandler(true) {
     private val rpHosted = PLUGIN.dataFolder.resolve("resource-pack.zip")
-    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${Bukkit.getServer().resourcePackHash}.zip")
+    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${getResourcePackHash()}.zip")
     override fun onGet(exchange: HttpExchange) {
         if(CONFIG.RESOURCE_PACK_HOST) {
             if(!rpHosted.exists()) {
