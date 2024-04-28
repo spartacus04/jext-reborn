@@ -24,7 +24,7 @@ object DiscUtils {
         val disc = ItemStack(material)
         val meta = disc.itemMeta
 
-        meta!!.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+        meta!!.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP)
 
         meta.setCustomModelData(modelData)
 
