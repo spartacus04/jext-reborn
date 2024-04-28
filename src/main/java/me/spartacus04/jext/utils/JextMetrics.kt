@@ -1,7 +1,7 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.utils.Constants.BSTATS_METRICS
 import org.bstats.bukkit.Metrics

@@ -46,6 +46,7 @@ dependencies {
     compileOnly("org.scala-lang:scala-library:2.13.13")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
     compileOnly("org.geysermc.geyser:api:2.2.3-SNAPSHOT")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.2")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.2")

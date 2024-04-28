@@ -1,8 +1,8 @@
 package me.spartacus04.jext.geyser
 
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.JextState.VERSION
 import org.bukkit.entity.Player
 import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.GeyserApi

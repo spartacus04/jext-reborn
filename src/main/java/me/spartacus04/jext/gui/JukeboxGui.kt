@@ -1,10 +1,11 @@
 package me.spartacus04.jext.gui
 
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.geyser.GeyserIntegration.Companion.GEYSER
 import me.spartacus04.jext.language.LanguageManager.Companion.BEDROCK_NOT_SUPPORTED
@@ -131,9 +132,9 @@ internal class JukeboxGui {
         }
 
         if(block != null) {
-            Disc.stop(block.location)
+            DISCS.stop(block.location)
         } else {
-            Disc.stop(player)
+            DISCS.stop(player)
         }
     }
 
@@ -227,8 +228,6 @@ internal class JukeboxGui {
     }
 
     companion object {
-        private val gson = GsonBuilder().setPrettyPrinting().create()
-
         private val inventories = HashMap<String, VirtualInventory>()
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()
@@ -276,7 +275,7 @@ internal class JukeboxGui {
             } else {
                 val text = file.readText()
 
-                val data = gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
+                val data = GSON.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
 
                 data.forEach { (id, itemMap) ->
                     val inv = getInv(id)
@@ -314,14 +313,14 @@ internal class JukeboxGui {
 
                     if(Disc.isCustomDisc(itemStack)) {
                         val container = Disc.fromItemstack(itemStack)!!
-                        data[it.key]!![index] = JukeboxEntry("jext", container.namespace)
+                        data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
                     } else {
                         data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
                     }
                 }
             }
 
-            file.writeText(gson.toJson(data))
+            file.writeText(GSON.toJson(data))
         }
 
         /**

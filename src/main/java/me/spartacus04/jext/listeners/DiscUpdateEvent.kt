@@ -1,7 +1,7 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.FRAGMENT_LIST

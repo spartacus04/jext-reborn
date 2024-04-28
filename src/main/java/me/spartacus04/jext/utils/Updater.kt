@@ -1,7 +1,7 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.State.SCHEDULER
+import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.JextState.SCHEDULER
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

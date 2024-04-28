@@ -1,14 +1,12 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.State
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.DISCS
-import me.spartacus04.jext.State.INTEGRATIONS
-import me.spartacus04.jext.State.PUBLIC_IP
-import me.spartacus04.jext.State.WEBSERVER
+import me.spartacus04.jext.JextState.BASE_URL
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.INTEGRATIONS
+import me.spartacus04.jext.JextState.WEBSERVER
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
 import me.spartacus04.jext.utils.JextMetrics
-import me.spartacus04.jext.utils.PublicIP
 import me.spartacus04.jext.utils.sendJEXTMessage
 import org.bukkit.command.CommandSender
 
@@ -30,9 +28,7 @@ internal class ExecutorReload : ExecutorAdapter("jextreload", "reload") {
         JextMetrics.reloadMetrics()
         WEBSERVER.reload()
 
-        PublicIP().getIP {
-            PUBLIC_IP = it
-        }
+        BASE_URL.updatePublicIp()
 
         sender.sendJEXTMessage("reloaded")
     }
