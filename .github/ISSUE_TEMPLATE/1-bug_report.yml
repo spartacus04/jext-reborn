@@ -39,6 +39,7 @@ body:
       label: Server Version
       description: Select the server version
       options:
+        - 1.20.5
         - 1.20.4
         - 1.20.3
         - 1.20.2
@@ -80,6 +81,7 @@ body:
         - Paper
         - Purpur
         - Folia
+        - Other (please specify in the description field)
     validations:
       required: true
   - type: textarea
