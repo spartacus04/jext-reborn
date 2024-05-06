@@ -1,5 +1,6 @@
 package me.spartacus04.jext.discs
 
+import me.spartacus04.jext.JextState.VERSION
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
@@ -24,7 +25,11 @@ object DiscUtils {
         val disc = ItemStack(material)
         val meta = disc.itemMeta
 
-        meta!!.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP)
+        meta!!.addItemFlags(if(VERSION >= "1.19.5")
+            ItemFlag.HIDE_ADDITIONAL_TOOLTIP
+        else
+            ItemFlag.valueOf("HIDE_POTION_EFFECTS")
+        )
 
         meta.setCustomModelData(modelData)
 
