@@ -55,7 +55,13 @@ internal class JukeboxGui : BaseGui {
         if(updateReason.event !is InventoryClickEvent) return
         val mcevent = updateReason.event as InventoryClickEvent
 
-        if(mcevent.isLeftClick) {
+        val isAltClick = if(isBedrock) {
+            !mcevent.isShiftClick
+        } else {
+            mcevent.isRightClick
+        }
+
+        if(isAltClick) {
             if(event.isRemove && event.slot == playingMap[inventoryId]!!) {
                 event.isCancelled = true
                 stopDisc(event)
@@ -65,7 +71,10 @@ internal class JukeboxGui : BaseGui {
             return
         }
 
-        if(mcevent.isRightClick && !event.isRemove) return
+        if(
+            (isBedrock && !event.isRemove) ||
+            (!isBedrock && mcevent.isRightClick && !event.isRemove)
+        ) return
 
         event.isCancelled = true
 
@@ -79,17 +88,11 @@ internal class JukeboxGui : BaseGui {
         }
     }
 
-    override fun onBedrockItemPreUpdate(event: ItemPreUpdateEvent) {
-        TODO("Not yet implemented")
-    }
-
     override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
         if(event.isAdd || event.isSwap || event.isRemove) {
             save()
         }
     }
-
-    override fun onBedrockItemPostUpdate(event: ItemPostUpdateEvent) = onItemPostUpdate(event)
 
 
     /**

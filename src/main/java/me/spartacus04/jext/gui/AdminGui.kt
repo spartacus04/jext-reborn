@@ -38,8 +38,4 @@ internal class AdminGui(player: Player) : BaseGui(player) {
                 DISCS[event.slot].discItemStack
         )
     }
-
-    override fun onBedrockItemPreUpdate(event: ItemPreUpdateEvent) { }
-
-    override fun onBedrockItemPostUpdate(event: ItemPostUpdateEvent) = onItemPostUpdate(event)
 }
