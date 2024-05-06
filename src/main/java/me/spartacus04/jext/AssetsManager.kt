@@ -30,16 +30,16 @@ class AssetsManager {
         localToRpMap[id] = path
     }
 
-    internal suspend fun reloadAssets() {
-        val file = if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
+    private suspend fun getResourcePack() : File? {
+        return if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
             PLUGIN.dataFolder.resolve("resource-pack.zip")
         } else if(resourcePack.isNotBlank()) {
             val name = resourcePackHash.ifBlank { "current" }
 
             if(tryDownloadRP(
-                resourcePack,
-                name
-            )) {
+                    resourcePack,
+                    name
+                )) {
                 PLUGIN.dataFolder.resolve("caches").resolve("$name.zip")
             } else {
                 null
@@ -47,6 +47,10 @@ class AssetsManager {
         } else {
             null
         }
+    }
+
+    internal suspend fun reloadAssets() {
+        val file = getResourcePack()
 
         if(file != null) {
             runBlocking {
@@ -171,4 +175,38 @@ class AssetsManager {
             propertiesFile.readLines().find { it.startsWith("resource-pack-sha1=") }!!.substringAfter("resource-pack-sha1=")
         }
 
+    suspend fun tryExportResourcePack() : Boolean {
+        val file = getResourcePack() ?: return false
+
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                val zipFile = ZipFile(file)
+
+                localToRpMap.entries.forEach {
+                    try {
+                        val zipEntry = zipFile.getEntry(getNameFromId(it.value))
+                        val entry = PLUGIN.dataFolder.resolve("${it.key}.json")
+
+                        if(zipEntry.time < entry.lastModified()) {
+                            zipFile.getInputStream(zipEntry).use { input ->
+                                entry.outputStream().use { output ->
+                                    input.copyTo(output)
+                                }
+                            }
+                        }
+                    } catch (_: Exception) { }
+                }
+
+                val exportedFile = PLUGIN.dataFolder.resolve("exported.zip")
+
+                if(exportedFile.exists()) {
+                    exportedFile.delete()
+                }
+
+                file.copyTo(exportedFile)
+            }
+        }
+
+        return true
+    }
 }
