@@ -79,11 +79,18 @@ internal class JukeboxGui : BaseGui {
         }
     }
 
+    override fun onBedrockItemPreUpdate(event: ItemPreUpdateEvent) {
+        TODO("Not yet implemented")
+    }
+
     override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
         if(event.isAdd || event.isSwap || event.isRemove) {
             save()
         }
     }
+
+    override fun onBedrockItemPostUpdate(event: ItemPostUpdateEvent) = onItemPostUpdate(event)
+
 
     /**
      * The function `playDisc` plays a music disc, sets the itemstack as playing, and sets a timer to revert the changes
@@ -174,15 +181,14 @@ internal class JukeboxGui : BaseGui {
         }
     }
 
-    /**
-     * The function `mergedConstructor` creates and opens a scrollable GUI window for a player, displaying their inventory
-     * and allowing them to scroll through it.
-     */
 
     companion object {
         private val inventories = HashMap<String, VirtualInventory>()
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()
+
+        private val saveFile = PLUGIN.dataFolder.resolve(".savedata")
+
 
         /**
          * The function `getInv` returns a `VirtualInventory` object based on the given `id`, creating a new one if it
@@ -216,16 +222,15 @@ internal class JukeboxGui : BaseGui {
          */
         internal fun loadFromFile() {
             val typeToken = object : TypeToken<HashMap<String, HashMap<Int, JukeboxEntry>>>() {}.type
-            val file = PLUGIN.dataFolder.resolve(".savedata")
 
             if (inventories.isNotEmpty()) {
                 save()
             }
 
-            if (!file.exists()) {
-                file.createNewFile()
+            if (!saveFile.exists()) {
+                saveFile.createNewFile()
             } else {
-                val text = file.readText()
+                val text = saveFile.readText()
 
                 val data = GSON.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
 
@@ -249,10 +254,8 @@ internal class JukeboxGui : BaseGui {
          * The function saves inventory data to a file in JSON format.
          */
         private fun save() {
-            val file = PLUGIN.dataFolder.resolve(".savedata")
-
-            if(!file.exists()) {
-                file.createNewFile()
+            if(!saveFile.exists()) {
+                saveFile.createNewFile()
             }
 
             val data = HashMap<String, HashMap<Int, JukeboxEntry>>()
@@ -272,7 +275,7 @@ internal class JukeboxGui : BaseGui {
                 }
             }
 
-            file.writeText(GSON.toJson(data))
+            saveFile.writeText(GSON.toJson(data))
         }
 
         /**

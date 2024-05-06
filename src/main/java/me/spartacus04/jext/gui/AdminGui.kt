@@ -3,7 +3,6 @@ package me.spartacus04.jext.gui
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.VERSION
-import me.spartacus04.jext.language.LanguageManager
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory
 import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
@@ -18,10 +17,6 @@ internal class AdminGui(player: Player) : BaseGui(player) {
 
 
     override fun onInit() {
-        if(isBedrock) {
-            return targetPlayer.sendMessage(LanguageManager.BEDROCK_NOT_SUPPORTED)
-        }
-
         DISCS.forEachIndexed { i, it ->
             inventory.setItemSilently(i, it.discItemStack)
         }
@@ -36,17 +31,6 @@ internal class AdminGui(player: Player) : BaseGui(player) {
     override fun onItemPreUpdate(event: ItemPreUpdateEvent) { }
 
     override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
-        if(event.isRemove) {
-            inventory.setItemSilently(event.slot,
-                if(event.slot >= DISCS.size())
-                    DISCS[event.slot - DISCS.size()].fragmentItemStack
-                else
-                    DISCS[event.slot].discItemStack
-            )
-
-            return
-        }
-
         inventory.setItemSilently(event.slot,
             if(event.slot >= DISCS.size())
                 DISCS[event.slot - DISCS.size()].fragmentItemStack
@@ -54,4 +38,8 @@ internal class AdminGui(player: Player) : BaseGui(player) {
                 DISCS[event.slot].discItemStack
         )
     }
+
+    override fun onBedrockItemPreUpdate(event: ItemPreUpdateEvent) { }
+
+    override fun onBedrockItemPostUpdate(event: ItemPostUpdateEvent) = onItemPostUpdate(event)
 }

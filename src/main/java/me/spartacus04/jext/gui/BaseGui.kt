@@ -52,11 +52,20 @@ abstract class BaseGui {
 
     abstract fun onItemPostUpdate(event: ItemPostUpdateEvent)
 
+    abstract fun onBedrockItemPostUpdate(event: ItemPostUpdateEvent)
+
+    abstract fun onBedrockItemPreUpdate(event: ItemPreUpdateEvent)
+
     abstract fun onInit()
 
     private fun setHandlers() {
-        inventory.setPreUpdateHandler(this::onItemPreUpdate)
-        inventory.setPostUpdateHandler(this::onItemPostUpdate)
+        if(isBedrock) {
+            inventory.setPreUpdateHandler(this::onBedrockItemPreUpdate)
+            inventory.setPostUpdateHandler(this::onBedrockItemPostUpdate)
+        } else {
+            inventory.setPreUpdateHandler(this::onItemPreUpdate)
+            inventory.setPostUpdateHandler(this::onItemPostUpdate)
+        }
     }
 
     @SuppressWarnings
