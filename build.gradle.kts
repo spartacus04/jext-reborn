@@ -45,7 +45,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.14")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
-    compileOnly("org.geysermc.geyser:api:2.3.0-SNAPSHOT")
+    compileOnly("org.geysermc.geyser:api:2.2.0-SNAPSHOT")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("io.github.bananapuncher714:nbteditor:7.19.2")
