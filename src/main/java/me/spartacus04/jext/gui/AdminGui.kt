@@ -1,57 +1,43 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState
 import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.VERSION
-import me.spartacus04.jext.geyser.GeyserIntegration
 import me.spartacus04.jext.language.LanguageManager
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory
 import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
-import xyz.xenondevs.invui.window.Window
+import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
 
-internal class AdminGui(player: Player) {
-    private val inv: VirtualInventory
+internal class AdminGui(player: Player) : BaseGui(player) {
+    override val inventory = VirtualInventory(
+        DISCS.size() * if(VERSION >= "1.19") 2 else 1
+    )
 
-    init {
-        try {
-            if(GeyserIntegration.GEYSER?.isBedrockPlayer(player) == true) {
-                player.sendMessage(LanguageManager.BEDROCK_NOT_SUPPORTED)
-            }
-        } catch (_: NoClassDefFoundError) { }
+    override val inventoryName = LANG.getKey(targetPlayer, "jukebox")
 
-        inv = VirtualInventory(
-            DISCS.size() * if(VERSION >= "1.19") 2 else 1
-        )
+
+    override fun onInit() {
+        if(isBedrock) {
+            return targetPlayer.sendMessage(LanguageManager.BEDROCK_NOT_SUPPORTED)
+        }
 
         DISCS.forEachIndexed { i, it ->
-            inv.setItemSilently(i, it.discItemStack)
+            inventory.setItemSilently(i, it.discItemStack)
         }
 
         if(VERSION >= "1.19") {
             DISCS.forEachIndexed {i, it ->
-                inv.setItemSilently(i + DISCS.size(), it.fragmentItemStack)
+                inventory.setItemSilently(i + DISCS.size(), it.fragmentItemStack)
             }
         }
-
-        inv.setPostUpdateHandler(this::itemPostUpdateHandler)
-
-        val gui = GuiBuilder().buildGui(player, inv)
-
-        val window = Window.single()
-            .setViewer(player)
-            .setTitle(JextState.LANG.getKey(player, "jukebox"))
-            .setGui(gui)
-            .build()
-
-        window.open()
-
-        inv.notifyWindows()
     }
 
-    private fun itemPostUpdateHandler(event: ItemPostUpdateEvent) {
+    override fun onItemPreUpdate(event: ItemPreUpdateEvent) { }
+
+    override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
         if(event.isRemove) {
-            inv.setItemSilently(event.slot,
+            inventory.setItemSilently(event.slot,
                 if(event.slot >= DISCS.size())
                     DISCS[event.slot - DISCS.size()].fragmentItemStack
                 else
@@ -61,7 +47,7 @@ internal class AdminGui(player: Player) {
             return
         }
 
-        inv.setItemSilently(event.slot,
+        inventory.setItemSilently(event.slot,
             if(event.slot >= DISCS.size())
                 DISCS[event.slot - DISCS.size()].fragmentItemStack
             else

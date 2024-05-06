@@ -32,6 +32,15 @@ data class JukeboxEntry(
                         DISCS.map { discm -> discm.discItemStack }
                     ).flatten().random()
             }
+            "jext-nbs" -> {
+                val disc = DISCS[value]
+
+                disc?.discItemStack
+                    ?: arrayListOf(
+                        SOUND_MAP.keys.map { mat -> ItemStack(mat) },
+                        DISCS.map { discm -> discm.discItemStack }
+                    ).flatten().random()
+            }
             else -> {
                 val material = Material.matchMaterial(value)
 

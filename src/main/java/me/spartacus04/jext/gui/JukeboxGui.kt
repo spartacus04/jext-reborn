@@ -7,7 +7,6 @@ import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.geyser.GeyserIntegration.Companion.GEYSER
 import me.spartacus04.jext.language.LanguageManager.Companion.BEDROCK_NOT_SUPPORTED
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Location
@@ -23,34 +22,67 @@ import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
 import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
 import xyz.xenondevs.invui.inventory.event.PlayerUpdateReason
 import xyz.xenondevs.invui.inventory.event.UpdateReason
-import xyz.xenondevs.invui.window.Window
 import java.util.*
 
-internal class JukeboxGui {
-    private val player: Player
-    private val id: String
-    private val block: Block?
+internal class JukeboxGui : BaseGui {
+    override val inventory = getInv(inventoryId)
+    override val inventoryName = LANG.getKey(targetPlayer, "jukebox")
 
-    /**
-     * Create a new jukebox container for a player
-     */
-    constructor(player: Player) {
-        this.player = player
-        this.block = null
-        this.id = player.uniqueId.toString()
+    constructor(player: Player) : super(player)
 
-        mergedConstructor()
+    constructor(player: Player, block: Block) : super(player, block)
+
+
+    override fun onInit() {
+        if(isBedrock) {
+            return targetPlayer.sendMessage(BEDROCK_NOT_SUPPORTED)
+        }
+
+        if(!playingMap.containsKey(inventoryId)) {
+            playingMap[inventoryId] = -1
+        }
     }
 
-    /**
-     * Create a new jukebox container for a block
-     */
-    constructor(player: Player, block: Block) {
-        this.player = player
-        this.block = block
-        this.id = "${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"
+    override fun onItemPreUpdate(event: ItemPreUpdateEvent) {
+        if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
+            event.isCancelled = true
+            return
+        }
 
-        mergedConstructor()
+        if(event.updateReason == null || event.updateReason !is PlayerUpdateReason) return
+        val updateReason = event.updateReason as PlayerUpdateReason
+
+        if(updateReason.event !is InventoryClickEvent) return
+        val mcevent = updateReason.event as InventoryClickEvent
+
+        if(mcevent.isLeftClick) {
+            if(event.isRemove && event.slot == playingMap[inventoryId]!!) {
+                event.isCancelled = true
+                stopDisc(event)
+                playingMap[inventoryId] = -1
+            }
+
+            return
+        }
+
+        if(mcevent.isRightClick && !event.isRemove) return
+
+        event.isCancelled = true
+
+        stopDisc(event)
+
+        if(playingMap[inventoryId]!! != -1 && playingMap[inventoryId]!! == event.slot) {
+            playingMap[inventoryId] = -1
+        } else {
+            playingMap[inventoryId] = event.slot
+            playDisc(event)
+        }
+    }
+
+    override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
+        if(event.isAdd || event.isSwap || event.isRemove) {
+            save()
+        }
     }
 
     /**
@@ -71,18 +103,18 @@ internal class JukeboxGui {
         val delay = if(Disc.isCustomDisc(event.previousItem!!)) {
             val disc = Disc.fromItemstack(event.previousItem!!)!!
 
-            if(block != null) {
-                disc.play(block.location)
+            if(targetBlock != null) {
+                disc.play(targetBlock.location)
             } else {
-                disc.play(player)
+                disc.play(targetPlayer)
             }
 
             disc.duration
         } else {
-            if(block != null) {
-                block.location.world?.playSound(block.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 1f, 1f)
+            if(targetBlock != null) {
+                targetBlock.location.world?.playSound(targetBlock.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 1f, 1f)
             } else {
-                player.playSound(player.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 500f, 1f)
+                targetPlayer.playSound(targetPlayer.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 500f, 1f)
             }
 
             SOUND_MAP[event.previousItem!!.type]!!.duration
@@ -92,10 +124,10 @@ internal class JukeboxGui {
             return
         }
 
-        timerMap[id] = Timer().apply {
+        timerMap[inventoryId] = Timer().apply {
             schedule(object : TimerTask() {
                 override fun run() {
-                    event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.previousItem!!.clone().apply {
+                    event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[inventoryId]!!, event.previousItem!!.clone().apply {
                         removeEnchantment(Enchantment.MENDING)
 
                         itemMeta = itemMeta!!.apply {
@@ -103,7 +135,7 @@ internal class JukeboxGui {
                         }
                     })
 
-                    playingMap[id] = -1
+                    playingMap[inventoryId] = -1
 
                 }
             }, delay.toLong() * 1000)
@@ -116,25 +148,29 @@ internal class JukeboxGui {
      * @param event The parameter "event" is of type ItemPreUpdateEvent.
      */
     private fun stopDisc(event: ItemPreUpdateEvent) {
-        if(timerMap.containsKey(id)) {
-            timerMap[id]!!.cancel()
-            timerMap.remove(id)
+        if(timerMap.containsKey(inventoryId)) {
+            timerMap[inventoryId]!!.cancel()
+            timerMap.remove(inventoryId)
         }
 
-        if(playingMap[id]!! != -1) {
-            event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[id]!!, event.inventory.getItem(playingMap[id]!!)!!.clone().apply {
-                removeEnchantment(Enchantment.MENDING)
+        if(playingMap[inventoryId]!! != -1) {
+            event.inventory.setItem(
+                UpdateReason.SUPPRESSED,
+                playingMap[inventoryId]!!,
+                event.inventory.getItem(playingMap[inventoryId]!!)!!.clone().apply {
+                    removeEnchantment(Enchantment.MENDING)
 
-                itemMeta = itemMeta!!.apply {
-                    removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    itemMeta = itemMeta!!.apply {
+                        removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    }
                 }
-            })
+            )
         }
 
-        if(block != null) {
-            DISCS.stop(block.location)
+        if(targetBlock != null) {
+            DISCS.stop(targetBlock.location)
         } else {
-            DISCS.stop(player)
+            DISCS.stop(targetPlayer)
         }
     }
 
@@ -142,90 +178,6 @@ internal class JukeboxGui {
      * The function `mergedConstructor` creates and opens a scrollable GUI window for a player, displaying their inventory
      * and allowing them to scroll through it.
      */
-    private fun mergedConstructor() {
-        try {
-            if(GEYSER?.isBedrockPlayer(player) == true) {
-                player.sendMessage(BEDROCK_NOT_SUPPORTED)
-                return
-            }
-        } catch (_: NoClassDefFoundError) { }
-
-        if(!playingMap.containsKey(id)) {
-            playingMap[id] = -1
-        }
-
-        val inv = getInv(id)
-
-        inv.setPreUpdateHandler(this::itemPreUpdateHandler)
-        inv.setPostUpdateHandler(this::itemPostUpdateHandler)
-
-        val gui = GuiBuilder().buildGui(player, inv)
-
-        val window = Window.single()
-            .setViewer(player)
-            .setTitle(LANG.getKey(player, "jukebox"))
-            .setGui(gui)
-            .build()
-
-        window.open()
-
-        inv.notifyWindows()
-    }
-
-    /**
-     * The function `itemPreUpdateHandler` handles various events related to updating the jukebox gui, including
-     * cancelling certain actions and performing specific actions based on the event type.
-     *
-     * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item is
-     * updated in an inventory.
-     */
-    private fun itemPreUpdateHandler(event: ItemPreUpdateEvent) {
-        if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
-            event.isCancelled = true
-            return
-        }
-
-        if(event.updateReason == null || event.updateReason !is PlayerUpdateReason) return
-        val updateReason = event.updateReason as PlayerUpdateReason
-
-        if(updateReason.event !is InventoryClickEvent) return
-        val mcevent = updateReason.event as InventoryClickEvent
-
-        if(mcevent.isLeftClick) {
-            if(event.isRemove && event.slot == playingMap[id]!!) {
-                event.isCancelled = true
-                stopDisc(event)
-                playingMap[id] = -1
-            }
-
-            return
-        }
-
-        if(mcevent.isRightClick && !event.isRemove) return
-
-        event.isCancelled = true
-
-        stopDisc(event)
-
-        if(playingMap[id]!! != -1 && playingMap[id]!! == event.slot) {
-            playingMap[id] = -1
-        } else {
-            playingMap[id] = event.slot
-            playDisc(event)
-        }
-    }
-
-    /**
-     * The function `itemPostUpdateHandler` saves the gui if an item is added, swapped, or removed.
-     *
-     * @param event The event parameter is of type ItemPostUpdateEvent, which is an event object that contains information
-     * about the item post update event.
-     */
-    private fun itemPostUpdateHandler(event: ItemPostUpdateEvent) {
-        if(event.isAdd || event.isSwap || event.isRemove) {
-            save()
-        }
-    }
 
     companion object {
         private val inventories = HashMap<String, VirtualInventory>()
