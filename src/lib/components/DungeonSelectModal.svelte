@@ -128,7 +128,7 @@
 	};
 </script>
 
-<main class="bg-surface-500 rounded-md p-2 h-[50%] overflow-y-auto w-[90%] sm:w-[80%] lg:w-[50%]">
+<main class="bg-surface-500 rounded-md p-2 h-[50%] overflow-y-auto w-[90%] sm:w-[80%] lg:w-[50%] m-10">
 	<TabGroup>
 		<Tab bind:group={tabSet} name="tab1" value={0}>Simple</Tab>
 		<Tab bind:group={tabSet} name="tab2" value={1}>Advanced</Tab>
