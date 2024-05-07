@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.ConfigFactory
 import me.spartacus04.jext.discs.DiscManager
+import me.spartacus04.jext.geyser.GeyserManager
 import me.spartacus04.jext.integrations.IntegrationsManager
 import me.spartacus04.jext.language.LanguageManager
 import me.spartacus04.jext.utils.BaseUrl
@@ -27,5 +28,7 @@ object JextState {
     val LANG = LanguageManager()
     val DISCS = DiscManager()
     val INTEGRATIONS = IntegrationsManager()
+
     internal val WEBSERVER = JextWebServer()
+    internal val GEYSER = GeyserManager()
 }

@@ -3,6 +3,7 @@ package me.spartacus04.jext.commands.executors
 import me.spartacus04.jext.JextState.BASE_URL
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.GEYSER
 import me.spartacus04.jext.JextState.INTEGRATIONS
 import me.spartacus04.jext.JextState.WEBSERVER
 import me.spartacus04.jext.commands.adapter.ExecutorAdapter
@@ -27,6 +28,8 @@ internal class ExecutorReload : ExecutorAdapter("jextreload", "reload") {
         INTEGRATIONS.reloadDefaultIntegrations()
         JextMetrics.reloadMetrics()
         WEBSERVER.reload()
+
+        GEYSER.reloadGeyser()
 
         BASE_URL.updatePublicIp()
 

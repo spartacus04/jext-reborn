@@ -32,6 +32,20 @@ internal class JextWebServer {
         }
     }
 
+    private fun createContext() {
+        server!!.createContext("/connect", ConnectHandler())
+        server!!.createContext("/disconnect", DisconnectHandler())
+        server!!.createContext("/health", HealthHandler())
+
+        server!!.createContext("/config/read", ConfigReadHandler())
+        server!!.createContext("/config/apply", ConfigApplyHandler())
+
+        server!!.createContext("/discs/read", DiscsReadHandler())
+        server!!.createContext("/discs/apply", DiscsApplyHandler())
+
+        server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+    }
+
     private fun start() {
         SCHEDULER.runTaskAsynchronously {
             scope = CoroutineScope(Dispatchers.Default).launch {
@@ -59,17 +73,7 @@ internal class JextWebServer {
                 }
 
                 if(apiEnabled) {
-                    server!!.createContext("/connect", ConnectHandler())
-                    server!!.createContext("/disconnect", DisconnectHandler())
-                    server!!.createContext("/health", HealthHandler())
-
-                    server!!.createContext("/config/read", ConfigReadHandler())
-                    server!!.createContext("/config/apply", ConfigApplyHandler())
-
-                    server!!.createContext("/discs/read", DiscsReadHandler())
-                    server!!.createContext("/discs/apply", DiscsApplyHandler())
-
-                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+                    createContext()
                 }
             }
         }
@@ -103,17 +107,7 @@ internal class JextWebServer {
                 }
 
                 if(apiEnabled) {
-                    server!!.createContext("/connect", ConnectHandler())
-                    server!!.createContext("/disconnect", DisconnectHandler())
-                    server!!.createContext("/health", HealthHandler())
-
-                    server!!.createContext("/config/read", ConfigReadHandler())
-                    server!!.createContext("/config/apply", ConfigApplyHandler())
-
-                    server!!.createContext("/discs/read", DiscsReadHandler())
-                    server!!.createContext("/discs/apply", DiscsApplyHandler())
-
-                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+                    createContext()
                 } else {
                     server!!.removeContext("/connect")
                     server!!.removeContext("/disconnect")

@@ -3,16 +3,16 @@ package me.spartacus04.jext.geyser
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.JextState.VERSION
-import org.bukkit.entity.Player
 import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.GeyserApi
 import org.geysermc.geyser.api.event.EventRegistrar
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomItemsEvent
 import org.geysermc.geyser.api.item.custom.CustomItemData
 import org.geysermc.geyser.api.item.custom.CustomItemOptions
+import java.util.UUID
 
 
-internal class GeyserIntegration : EventRegistrar {
+internal class GeyserSpigot : EventRegistrar, GeyserMode {
 
     init {
         GeyserApi.api().eventBus().register(this, PLUGIN)
@@ -55,11 +55,11 @@ internal class GeyserIntegration : EventRegistrar {
         }
     }
 
-    fun isBedrockPlayer(player: Player) : Boolean {
-        return GeyserApi.api().isBedrockPlayer(player.uniqueId)
-    }
+    override fun isBedrockPlayer(player: UUID) = GeyserApi.api().isBedrockPlayer(player)
 
-    companion object {
-        var GEYSER : GeyserIntegration? = null
+    override fun applyResourcePack(buffer: ByteArray) {
+        val geyserPlugin = PLUGIN.server.pluginManager.getPlugin("Geyser-Spigot") ?: return
+
+        geyserPlugin.dataFolder.resolve("packs").resolve("jext_resources.mcpack").writeBytes(buffer)
     }
 }

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.geyser.GeyserIntegration.Companion.GEYSER
+import me.spartacus04.jext.JextState.GEYSER
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory
@@ -23,9 +23,7 @@ abstract class BaseGui {
         this.targetPlayer = player
         this.inventoryId = player.uniqueId.toString()
         this.targetBlock = null
-        this.isBedrock = try {
-            GEYSER?.isBedrockPlayer(player) ?: false
-        } catch (_: NoClassDefFoundError) { false }
+        this.isBedrock = GEYSER.isBedrockPlayer(player)
 
         this.onInit()
         this.setHandlers()
@@ -39,9 +37,7 @@ abstract class BaseGui {
         this.targetPlayer = player
         this.inventoryId = "${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"
         this.targetBlock = block
-        this.isBedrock = try {
-            GEYSER?.isBedrockPlayer(player) ?: false
-        } catch (_: NoClassDefFoundError) { false }
+        this.isBedrock = GEYSER.isBedrockPlayer(player)
 
         this.onInit()
         this.setHandlers()
