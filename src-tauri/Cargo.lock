@@ -2845,7 +2845,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-deep-link"
 version = "0.1.2"
-source = "git+https://github.com/FabianLars/tauri-plugin-deep-link?branch=main#e05d87aed75b2055495cb992024c4692d94adc56"
+source = "git+https://github.com/FabianLars/tauri-plugin-deep-link?branch=main#1aa5c3d01dfadfe6495673bb8767a913198da279"
 dependencies = [
  "dirs",
  "interprocess",
