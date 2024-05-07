@@ -283,6 +283,17 @@ export const generateGeyserResourcePack = async (): Promise<Blob> => {
 		)
 	);
 
+	rp.file('mappings.json', JSON.stringify({
+		'format_version': 2,
+		'items': {
+			'minecraft:music_disc_11': discs.map(disc => ({
+				name: `music_disc_${disc['disc-namespace']}`,
+				custom_model_data: disc['model-data'],
+				display_name: 'Music Disc',
+			})),
+		}
+	}, null, 2));
+
 	// pack_icon.png
 
 	rp.file('pack_icon.png', resourcePackData.icon);
