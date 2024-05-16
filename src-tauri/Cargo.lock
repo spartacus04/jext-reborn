@@ -2736,9 +2736,9 @@ checksum = "e1fc403891a21bcfb7c37834ba66a547a8f402146eba7265b5a6d88059c9ff2f"
 
 [[package]]
 name = "tauri"
-version = "1.6.3"
+version = "1.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a4fab012dcf1e72762561cef2c08a6538aec2ca44d282158128117f79eb9d39"
+checksum = "f3f99c42ed6e39885ad1bb14317b0379bc99aad7ffe20db517cd761267b30343"
 dependencies = [
  "anyhow",
  "cocoa",
@@ -2880,9 +2880,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-runtime-wry"
-version = "0.14.6"
+version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a777eaa0d88ae47d8081cdc667eba8941b3a18af0f0ccb22640d8f0c3431d6d1"
+checksum = "ef2af45aeb15b1cadb4ca91248423f4438a0864b836298cecb436892afbfdff4"
 dependencies = [
  "cocoa",
  "gtk",
