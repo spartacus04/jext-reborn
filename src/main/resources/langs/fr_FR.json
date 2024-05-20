@@ -1,5 +1,5 @@
 {
-  "now-playing": "§7En cours de lecture : §a%name%",
+  "now-playing": "§6En cours de lecture :§a %name%",
   "disc-name": "§a%author% §7- §a%title%",
   "disc-name-simple": "§a%title%",
   "update-available": "Une nouvelle mise à jour est disponible !",
@@ -38,5 +38,5 @@
   "command-not-supported": "§cLa commande §6%command% §cn'est pas prise en charge : §6%reason%§c.",
   "webui": "§aInterface Web disponible à §2%url%",
   "webui-disabled": "§cL'interface Web est actuellement désactivée !",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "[Utilisation]: §6/%command%"
 }
