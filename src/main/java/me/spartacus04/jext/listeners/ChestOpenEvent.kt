@@ -9,16 +9,19 @@ import me.spartacus04.jext.utils.Constants.DEFAULT_DISCS_LOOT_TABLE
 import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
 import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.Material
-import org.bukkit.block.Chest
+import org.bukkit.block.Block
+import org.bukkit.block.Container
 import org.bukkit.entity.minecart.StorageMinecart
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockExplodeEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import org.bukkit.loot.Lootable
 import kotlin.random.Random
 
 internal class ChestOpenEvent : JextListener() {
@@ -168,12 +171,12 @@ internal class ChestOpenEvent : JextListener() {
      */
     @EventHandler(ignoreCancelled = true)
     fun onChestOpen(e : PlayerInteractEvent) {
-        if(e.action != Action.RIGHT_CLICK_BLOCK || e.clickedBlock?.type != Material.CHEST) return
+        if(e.action != Action.RIGHT_CLICK_BLOCK || e.clickedBlock?.let { isLootable(it) } == false) return
 
-        val chest = e.clickedBlock!!.state as Chest
-        val key = chest.lootTable?.key?.key ?: return
+        val inventory = (e.clickedBlock!!.state as Container).inventory
+        val key = (e.clickedBlock!!.state as Lootable).lootTable?.key?.key ?: return
 
-        generateItems(chest.blockInventory, key)
+        generateItems(inventory, key)
     }
 
     /**
@@ -186,13 +189,25 @@ internal class ChestOpenEvent : JextListener() {
      */
     @EventHandler(ignoreCancelled = true)
     fun onChestBreak(e : BlockBreakEvent) {
-        if(e.block.type != Material.CHEST) return
+        if(!isLootable(e.block)) return
 
-        val chest = e.block.state as Chest
-        val key = chest.lootTable?.key?.key ?: return
+        val inventory = (e.block.state as Container).inventory
+        val key = (e.block.state as Lootable).lootTable?.key?.key ?: return
 
-        generateItems(chest.inventory, key)
+        generateItems(inventory, key)
     }
+
+    @EventHandler(ignoreCancelled = true)
+    fun onChestExplore(e : BlockExplodeEvent) {
+        if(!isLootable(e.block)) return
+
+        val inventory = (e.block.state as Container).inventory
+        val key = (e.block.state as Lootable).lootTable?.key?.key ?: return
+
+        generateItems(inventory, key)
+    }
+
+    private fun isLootable(block: Block) = block.type == Material.CHEST || block.type == Material.BARREL
 
     /**
      * The function is called when a player interacts with a minecart with chest. It checks if the minecart is a loot minecart and if it is, it
