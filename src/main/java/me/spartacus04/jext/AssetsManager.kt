@@ -166,7 +166,7 @@ class AssetsManager {
             propertiesFile.readLines().find { it.startsWith("resource-pack=") }!!.substringAfter("resource-pack=")
         }
 
-    private val resourcePackHash: String
+    val resourcePackHash: String
         get() = try {
             Bukkit.getServer().resourcePackHash
         } catch (_: NoSuchMethodError) {

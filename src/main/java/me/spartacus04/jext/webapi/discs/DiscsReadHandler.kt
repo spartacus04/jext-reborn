@@ -1,14 +1,14 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
+import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class DiscsReadHandler : JextHttpHandler(true) {
     private val rpHosted = PLUGIN.dataFolder.resolve("resource-pack.zip")
-    // TODO: replace "stub" with the actual resource pack names
-    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${"stub"}.zip")
+    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${ASSETS_MANAGER.resourcePackHash.ifBlank { "current" }}.zip")
 
     override fun onGet(exchange: HttpExchange) {
         if(CONFIG.RESOURCE_PACK_HOST) {
