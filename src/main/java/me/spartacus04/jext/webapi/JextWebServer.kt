@@ -2,10 +2,10 @@ package me.spartacus04.jext.webapi
 
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.*
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.State.SCHEDULER
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.JextState.SCHEDULER
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBAPI_RESOURCEPACK_NOT_FOUND
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STARTED
 import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STOPPED
@@ -30,6 +30,20 @@ internal class JextWebServer {
         if(CONFIG.WEB_INTERFACE_API_ENABLED || CONFIG.RESOURCE_PACK_HOST) {
             start()
         }
+    }
+
+    private fun createContext() {
+        server!!.createContext("/connect", ConnectHandler())
+        server!!.createContext("/disconnect", DisconnectHandler())
+        server!!.createContext("/health", HealthHandler())
+
+        server!!.createContext("/config/read", ConfigReadHandler())
+        server!!.createContext("/config/apply", ConfigApplyHandler())
+
+        server!!.createContext("/discs/read", DiscsReadHandler())
+        server!!.createContext("/discs/apply", DiscsApplyHandler())
+
+        server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
     }
 
     private fun start() {
@@ -59,17 +73,7 @@ internal class JextWebServer {
                 }
 
                 if(apiEnabled) {
-                    server!!.createContext("/connect", ConnectHandler())
-                    server!!.createContext("/disconnect", DisconnectHandler())
-                    server!!.createContext("/health", HealthHandler())
-
-                    server!!.createContext("/config/read", ConfigReadHandler())
-                    server!!.createContext("/config/apply", ConfigApplyHandler())
-
-                    server!!.createContext("/discs/read", DiscsReadHandler())
-                    server!!.createContext("/discs/apply", DiscsApplyHandler())
-
-                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+                    createContext()
                 }
             }
         }
@@ -103,17 +107,7 @@ internal class JextWebServer {
                 }
 
                 if(apiEnabled) {
-                    server!!.createContext("/connect", ConnectHandler())
-                    server!!.createContext("/disconnect", DisconnectHandler())
-                    server!!.createContext("/health", HealthHandler())
-
-                    server!!.createContext("/config/read", ConfigReadHandler())
-                    server!!.createContext("/config/apply", ConfigApplyHandler())
-
-                    server!!.createContext("/discs/read", DiscsReadHandler())
-                    server!!.createContext("/discs/apply", DiscsApplyHandler())
-
-                    server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+                    createContext()
                 } else {
                     server!!.removeContext("/connect")
                     server!!.removeContext("/disconnect")

@@ -1,21 +1,19 @@
 package me.spartacus04.jext.listeners
 
 internal object ListenerRegistrant {
-    fun registerListeners() {
+    private val listeners = listOf(
+        RecordPacketEvent(),
+        ChestOpenEvent(),
+        CreeperDeathEvent(),
+        DiscUpdateEvent(),
+        JukeboxClickEvent(),
+        PlayerJoinEvent(),
+        ResourceStatusEvent(),
+        PrepareCraftingEvent(),
+        InventoryMoveItemEvent(),
+        BlockBrushEvent()
+    )
 
-        RecordPacketEvent().register()
-
-        ChestOpenEvent().register()
-        CreeperDeathEvent().register()
-        DiscUpdateEvent().register()
-        JukeboxClickEvent().register()
-        PlayerJoinEvent().register()
-        ResourceStatusEvent().register()
-
-        PrepareCraftingEvent().register()
-
-        InventoryMoveItemEvent().register()
-
-        BlockBrushEvent().register()
-    }
+    fun registerListeners() =
+        listeners.forEach { it.register() }
 }

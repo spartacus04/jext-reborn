@@ -1,16 +1,14 @@
 package me.spartacus04.jext.discs.sources.file
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.State.LANG
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.discs.DiscPersistentDataContainer
+import me.spartacus04.jext.discs.DiscUtils
+import me.spartacus04.jext.discs.discplaying.DefaultDiscPlayingMethod
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_MATERIAL
-import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
-import org.bukkit.inventory.ItemFlag
-import org.bukkit.inventory.ItemStack
 
 internal data class FileDisc(
     @SerializedName("title")
@@ -40,68 +38,25 @@ internal data class FileDisc(
     @SerializedName("fragment-loot-tables")
     val FRAGMENT_LOOT_TABLES: HashMap<String, Int> = HashMap(),
 ) {
-    private fun getProcessedLore(): ArrayList<String> {
-        val lore = ArrayList<String>()
-
-        if(AUTHOR != "")
-            lore.add("${ChatColor.GRAY}$AUTHOR - $TITLE")
-        else {
-            lore.add("${ChatColor.GRAY}$TITLE")
-        }
-
-        lore.addAll(LORE)
-
-        return lore
-    }
-
-    private fun getDiscItemStack(): ItemStack {
-        val disc = ItemStack(JEXT_DISC_MATERIAL)
-        val meta = disc.itemMeta
-
-        meta!!.addItemFlags(if(VERSION >= "1.19.5")
-            ItemFlag.HIDE_ADDITIONAL_TOOLTIP
-        else
-            ItemFlag.valueOf("HIDE_POTION_EFFECTS")
-        )
-
-        meta.setCustomModelData(MODEL_DATA)
-
-        // Store custom disc data
-        val helper = DiscPersistentDataContainer(meta)
-        helper.namespaceID = DISC_NAMESPACE
-        helper.setIdentifier()
-
-        meta.lore = getProcessedLore()
-        disc.itemMeta = meta
-        return disc
-    }
-
-    private fun getFragmentItemStack(): ItemStack {
-        val fragment = ItemStack(JEXT_FRAGMENT_MATERIAL!!)
-        val meta = fragment.itemMeta
-
-        meta!!.setCustomModelData(MODEL_DATA)
-        meta.addItemFlags(if(VERSION >= "1.19.5")
-            ItemFlag.HIDE_ADDITIONAL_TOOLTIP
-        else
-            ItemFlag.valueOf("HIDE_POTION_EFFECTS")
-        )
-
-        val helper = DiscPersistentDataContainer(meta)
-        helper.namespaceID = DISC_NAMESPACE
-        helper.setIdentifier()
-
-        meta.lore = getProcessedLore()
-        fragment.itemMeta = meta
-
-        return fragment
-    }
-
     fun toJextDisc() : Disc {
         return Disc(
-            "JEXT_FILE_SOURCE",
-            getDiscItemStack(),
-            if(VERSION >= "1.19") getFragmentItemStack() else null,
+            "jext",
+            DiscUtils.buildCustomItemstack(
+                JEXT_DISC_MATERIAL,
+                MODEL_DATA,
+                DISC_NAMESPACE,
+                LORE,
+                TITLE,
+                AUTHOR
+            ),
+            if(VERSION >= "1.19") DiscUtils.buildCustomItemstack(
+                JEXT_FRAGMENT_MATERIAL!!,
+                MODEL_DATA,
+                DISC_NAMESPACE,
+                LORE,
+                TITLE,
+                AUTHOR
+            ) else null,
             DISC_NAMESPACE,
             if(AUTHOR.isNotEmpty()) {
                 LANG.getKey(Bukkit.getConsoleSender(), "disc-name", hashMapOf(
@@ -116,7 +71,8 @@ internal data class FileDisc(
             DURATION,
             CREEPER_DROP,
             LOOT_TABLES,
-            FRAGMENT_LOOT_TABLES
+            FRAGMENT_LOOT_TABLES,
+            DefaultDiscPlayingMethod()
         )
     }
 }

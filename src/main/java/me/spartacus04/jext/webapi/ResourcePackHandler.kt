@@ -1,7 +1,7 @@
 package me.spartacus04.jext.webapi
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class ResourcePackHandler : JextHttpHandler(false) {
