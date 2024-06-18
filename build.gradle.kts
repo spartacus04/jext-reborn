@@ -2,6 +2,7 @@ import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import proguard.gradle.ProGuardTask
 import io.papermc.hangarpublishplugin.model.Platforms
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
@@ -45,6 +46,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.14")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.2")
     compileOnly("org.geysermc.geyser:api:2.4.0-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
@@ -99,8 +101,8 @@ tasks {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
     }
 }
 
