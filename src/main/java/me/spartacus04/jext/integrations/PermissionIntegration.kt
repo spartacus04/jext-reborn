@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
  * The "Integration" interface represents an integration with another plugin.
  * It is used to check if a player can interact with a jukebox GUI or a jukebox block.
  */
-interface Integration {
+interface PermissionIntegration {
     /**
      * The "id" property represents the id of the integration. It must be unique across all integrations.
      */
