@@ -1,15 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind variants;
 
-html,
-body {
-	@apply h-full overflow-hidden;
+html, body {
+    @apply h-full p-0 bg-surface;
 }
 
-img,
-div {
+img, div {
 	image-rendering: optimizeSpeed;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: -o-crisp-edges;
@@ -17,10 +14,6 @@ div {
 	image-rendering: pixelated;
 	image-rendering: optimize-contrast;
 	-ms-interpolation-mode: nearest-neighbor;
-}
-
-a {
-	@apply text-blue-500 hover:text-blue-600;
 }
 
 @layer base {
@@ -44,12 +37,4 @@ a {
 		font-weight: 700;
 		src: url('/fonts/Minecrafter.Reg.ttf') format('truetype');
 	}
-}
-
-::selection {
-	@apply bg-blue-500 text-white;
-}
-
-::-moz-selection {
-	@apply bg-blue-500 text-white;
 }
