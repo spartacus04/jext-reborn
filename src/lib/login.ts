@@ -7,12 +7,6 @@ import {
 } from '@skeletonlabs/skeleton';
 import { get } from 'svelte/store';
 
-const proxyBase = 'https://corsproxy.io/?';
-
-const isLocalHost = (ip: string) => {
-	return ip == '127.0.0.1' || ip == 'localhost';
-};
-
 export const LoginStore = localStorageStore<{ ip: string; token: string } | null>('login', null);
 
 export const login = async (
@@ -21,7 +15,7 @@ export const login = async (
 	ErrorPopup: any,
 	data: { ip: string | undefined | null; port: number | undefined | null }
 ): Promise<boolean> => {
-	const preIp =
+	let preIp =
 		data.ip ??
 		(await new Promise<string>((resolve) => {
 			modalStore.trigger({
@@ -34,7 +28,11 @@ export const login = async (
 			});
 		}));
 
-	const ip = isLocalHost(preIp) ? `http://${preIp}` : `${proxyBase}${encodeURIComponent(preIp)}`;
+	if (!/^https?:\/\//i.test(preIp)) {
+		preIp = 'http://' + preIp;
+	}
+	const urlObj = new URL(preIp);
+	const ip = `${urlObj.protocol}//${urlObj.hostname}`;
 
 	if (!ip) return false;
 
