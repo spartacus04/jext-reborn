@@ -34,7 +34,7 @@ export const login = async (
 			});
 		}));
 
-	const ip = isLocalHost(preIp) ? preIp : `${proxyBase}${encodeURIComponent(preIp)}`;
+	const ip = isLocalHost(preIp) ? `http://${preIp}` : `${proxyBase}${encodeURIComponent(preIp)}`;
 
 	if (!ip) return false;
 
@@ -66,9 +66,7 @@ export const login = async (
 
 	if (password == null) return false;
 
-	
-
-	const response = await fetch(`http://${ip}:${port}/connect`, {
+	const response = await fetch(`${ip}:${port}/connect`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'text/plain' },
 		body: password
