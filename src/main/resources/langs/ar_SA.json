@@ -38,5 +38,5 @@
   "command-not-supported": "§cالأمر §6%command% §cis غير مدعوم: §6%reason%§c.",
   "webui": "§aWeb واجهة المستخدم متوفرة في §2%url%",
   "webui-disabled": "§cواجهة المستخدم معطلة حاليًا!",
-  "usage": "[Usage]: §6/%command%"
+  "usage": ""
 }

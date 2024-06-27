@@ -38,5 +38,5 @@
   "command-not-supported": "§cEl comando §6%command% §cis no es compatible: §6%reason%§c.",
   "webui": "§aUI web disponible en §2%url%",
   "webui-disabled": "§c¡La interfaz web está deshabilitada!",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "[Uso]: §6/%command%"
 }
