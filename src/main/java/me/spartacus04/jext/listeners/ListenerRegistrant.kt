@@ -11,7 +11,8 @@ internal object ListenerRegistrant {
         ResourceStatusEvent(),
         PrepareCraftingEvent(),
         InventoryMoveItemEvent(),
-        BlockBrushEvent()
+        BlockBrushEvent(),
+        DecoratedPotEvent()
     )
 
     fun registerListeners() =

@@ -17,8 +17,8 @@ import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
 object JextState {
-    internal val BASE_URL = BaseUrl()
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
+    internal val BASE_URL = BaseUrl()
 
     internal val GSON: Gson = GsonBuilder().setStrictness(Strictness.LENIENT).setPrettyPrinting().create()
     internal val ASSETS_MANAGER = AssetsManager()

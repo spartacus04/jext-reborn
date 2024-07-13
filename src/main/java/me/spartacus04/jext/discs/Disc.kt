@@ -4,6 +4,7 @@ import io.github.bananapuncher714.nbteditor.NBTEditor
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.SCHEDULER
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.discplaying.DiscPlayingMethod
 import me.spartacus04.jext.discs.sources.file.FileDisc
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
@@ -71,8 +72,15 @@ open class Disc(
                 )
             }
 
-            val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
-            NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
+            if(location.block.type == Material.JUKEBOX) {
+                if(VERSION <= "1.21") {
+                    val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
+
+                    NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
+                } else {
+                    NBTEditor.set(location.block, (72 - duration) * 20 + 5)
+                }
+            }
         }, 5)
     }
 
