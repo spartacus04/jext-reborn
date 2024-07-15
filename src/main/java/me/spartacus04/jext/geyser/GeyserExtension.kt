@@ -32,6 +32,10 @@ internal class GeyserExtension : Extension {
 
                 val mappingsFile = dataFolder().resolve("../../custom_mappings/mappings.json")
                 mappingsFile.writeBytes(zip.getInputStream(entry).readBytes())
+            } else if(it.startsWith("OK")) {
+                println("Geyser found!")
+
+                ipc.send(GeyserIPC.GeyserIPCCommand.OK)
             }
         }
     }

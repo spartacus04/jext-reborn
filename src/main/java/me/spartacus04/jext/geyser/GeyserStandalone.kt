@@ -1,12 +1,15 @@
 package me.spartacus04.jext.geyser
 
-import me.spartacus04.jext.JextState.SCHEDULER
 import java.util.UUID
 import java.util.Base64
 
 
 internal class GeyserStandalone : GeyserMode {
     private val ipcCommunicator = GeyserIPC()
+
+    init {
+        ipcCommunicator.sendAndReceive(GeyserIPC.GeyserIPCCommand.OK) ?: throw IllegalStateException("Geyser not found")
+    }
 
     override fun isBedrockPlayer(player: UUID): Boolean {
         ipcCommunicator.sendAndReceive(GeyserIPC.GeyserIPCCommand.IS_BEDROCK, player.toString())?.let {

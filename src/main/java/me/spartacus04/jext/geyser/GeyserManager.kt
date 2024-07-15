@@ -13,7 +13,7 @@ internal class GeyserManager {
         } catch (_ : NoClassDefFoundError) {
             try {
                 GeyserStandalone()
-            } catch (_ : IllegalAccessError) {
+            } catch (_ : IllegalStateException) {
                 null
             }
         }
@@ -25,7 +25,7 @@ internal class GeyserManager {
         } catch (_ : NoClassDefFoundError) {
             try {
                 GeyserStandalone()
-            } catch (_ : IllegalAccessError) {
+            } catch (_ : IllegalStateException) {
                 null
             }
         }
