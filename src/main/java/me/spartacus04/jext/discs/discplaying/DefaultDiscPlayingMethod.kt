@@ -5,6 +5,9 @@ import org.bukkit.Location
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
 
+/**
+ * The class `DefaultDiscPlayingMethod` is a implementation of the `DiscPlayingMethod` interface that plays discs from the resource pack.
+ */
 class DefaultDiscPlayingMethod : DiscPlayingMethod {
     override fun playLocation(location: Location, namespace: String, volume : Float, pitch : Float) {
         location.world!!.players.forEach {

@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack
  * @property value The `value` property is a string that represents the value of the jukebox entry. It can be either a disc namespace or a material name.
  * @constructor Creates a new jukebox entry.
  */
-data class JukeboxEntry(
+internal data class JukeboxEntry(
     var type: String,
     var value: String
 ) {

@@ -4,7 +4,7 @@ import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
 /**
- * The "Integration" interface represents an integration with another plugin.
+ * The "PermissionIntegration" interface represents an integration with another plugin.
  * It is used to check if a player can interact with a jukebox GUI or a jukebox block.
  */
 interface PermissionIntegration {
@@ -17,6 +17,8 @@ interface PermissionIntegration {
      *
      * @param player The player parameter represents the player who is trying to interact with the jukebox GUI.
      * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
+     * 
+     * @return Returns true if the player can interact with the jukebox GUI, otherwise false.
      */
     fun hasJukeboxGuiAccess(player: Player, block: Block): Boolean
     /**
@@ -24,6 +26,8 @@ interface PermissionIntegration {
      *
      * @param player The player parameter represents the player who wants to interact with the jukebox.
      * @param block The "block" parameter represents the jukebox block that the player is trying to interact with.
+     * 
+     * @return Returns true if the player can interact with the jukebox block, otherwise false.
      */
     fun hasJukeboxAccess(player: Player, block: Block): Boolean
 }

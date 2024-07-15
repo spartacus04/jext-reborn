@@ -6,6 +6,9 @@ import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
+/**
+ * The object `DiscUtils` is a utility object that's used to build custom itemstacks for the discs.
+ */
 object DiscUtils {
     private fun getProcessedLores(lores: List<String>, title: String, author: String): ArrayList<String> {
         val lore = ArrayList<String>()
@@ -21,6 +24,18 @@ object DiscUtils {
         return lore
     }
 
+    /**
+     * Builds a custom itemstack for the disc.
+     * 
+     * @param material The material of the itemstack.
+     * @param modelData The model data of the itemstack.
+     * @param namespace The namespace of the disc.
+     * @param lores The lores of the itemstack.
+     * @param title The title of the itemstack.
+     * @param author The author of the itemstack.
+     * 
+     * @return The custom itemstack.
+     */
     fun buildCustomItemstack(material: Material, modelData: Int, namespace: String, lores: List<String>, title: String, author: String): ItemStack {
         val disc = ItemStack(material)
         val meta = disc.itemMeta

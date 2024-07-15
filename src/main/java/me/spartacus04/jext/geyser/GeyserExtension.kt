@@ -8,7 +8,7 @@ import java.util.*
 import java.util.zip.ZipFile
 import kotlin.io.path.writeBytes
 
-class GeyserExtension : Extension {
+internal class GeyserExtension : Extension {
     private val ipc = GeyserIPC()
 
     @Subscribe

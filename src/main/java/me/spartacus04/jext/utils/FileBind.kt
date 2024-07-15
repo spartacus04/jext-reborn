@@ -4,7 +4,7 @@ import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.PLUGIN
 
 
-open class FileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>) {
+internal open class FileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>) {
     fun read() {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
 

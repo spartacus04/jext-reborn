@@ -8,6 +8,9 @@ import org.bukkit.Location
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
 
+/**
+ * The class `DefaultDiscStoppingMethod` is a implementation of the `DiscStoppingMethod` interface that stops discs played from the resource pack.
+ */
 class DefaultDiscStoppingMethod : DiscStoppingMethod {
     override val requires = listOf<String>()
 

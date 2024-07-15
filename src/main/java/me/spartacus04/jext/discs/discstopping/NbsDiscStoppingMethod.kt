@@ -5,6 +5,9 @@ import com.xxmicloxx.NoteBlockAPI.songplayer.PositionSongPlayer
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
+/**
+ * The class `NbsDiscStoppingMethod` is a implementation of the `DiscStoppingMethod` interface that stops discs from the nbs directory.
+ */
 class NbsDiscStoppingMethod : DiscStoppingMethod {
     override val requires = listOf("NoteBlockAPI")
 

@@ -15,6 +15,20 @@ import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
+/**
+ * The class `Disc` is a data class that represents a custom disc in the plugin.
+ * 
+ * @param sourceId The id of the disc source.
+ * @param discItemStack The itemstack of the disc.
+ * @param fragmentItemStack The itemstack of the disc fragment.
+ * @param namespace The namespace of the disc.
+ * @param displayName The display name of the disc.
+ * @param duration The duration of the disc.
+ * @param creeperDrop Whether the disc can be dropped by creepers.
+ * @param lootTables The loot tables of the disc.
+ * @param fragmentLootTables The loot tables of the disc fragment.
+ * @param discPlayingMethod The method used to play the disc.
+ */
 open class Disc(
     val sourceId: String,
     val discItemStack: ItemStack,
@@ -27,8 +41,20 @@ open class Disc(
     val fragmentLootTables: HashMap<String, Int>,
     private val discPlayingMethod: DiscPlayingMethod
 ) {
+    /**
+     * Returns the display name of the disc.
+     * 
+     * @return The display name of the disc.
+     */
     override fun toString() = displayName
 
+    /**
+     * Compares disc objects based on their hash codes.
+     * 
+     * @param other The other object to compare.
+     * 
+     * @return Whether the objects are equal.
+     */
     override operator fun equals(other: Any?): Boolean {
         other ?: return false
 
@@ -39,6 +65,11 @@ open class Disc(
         }
     }
 
+    /**
+     * Returns the hash code of the disc.
+     * 
+     * @return The hash code of the disc.
+     */
     override fun hashCode(): Int {
         var result = discItemStack.hashCode()
         result = 31 * result + namespace.hashCode()
@@ -100,6 +131,13 @@ open class Disc(
     }
 
     companion object {
+        /**
+         * Checks if the itemstack is a custom disc.
+         * 
+         * @param disc The itemstack
+         * 
+         * @return Whether the itemstack is a custom disc
+         */
         fun isCustomDisc(disc: ItemStack): Boolean {
             if (!disc.hasItemMeta()) {
                 return false
@@ -119,6 +157,13 @@ open class Disc(
             return true
         }
 
+        /**
+         * Gets the custom disc from the itemstack.
+         * 
+         * @param itemStack The itemstack
+         * 
+         * @return The custom disc
+         */
         fun fromItemstack(itemStack: ItemStack) : Disc? {
             if (isCustomDisc(itemStack)) {
                 val meta = itemStack.itemMeta!!

@@ -6,6 +6,6 @@ import org.bukkit.entity.Player
 
 internal class ExecutorAdminGui : ExecutorAdapter("jextadmingui", "admingui") {
     override fun executePlayer(sender: Player, args: Array<String>) {
-        AdminGui(sender)
+        AdminGui.open(sender)
     }
 }

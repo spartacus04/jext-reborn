@@ -6,6 +6,9 @@ import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import me.spartacus04.jext.utils.FileBind
 
+/**
+ * The data class `Config` is used to store the plugin's configuration settings.
+ */
 data class Config(
     // behaviour settings
 

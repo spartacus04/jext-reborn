@@ -25,12 +25,9 @@ import xyz.xenondevs.invui.inventory.event.UpdateReason
 import java.util.*
 
 internal class JukeboxGui : BaseGui {
-    override val inventory = getInv(inventoryId)
-    override val inventoryName = LANG.getKey(targetPlayer, "jukebox")
+    private constructor(player: Player, inventory: VirtualInventory, inventoryName: String) : super(player, inventory, inventoryName)
 
-    constructor(player: Player) : super(player)
-
-    constructor(player: Player, block: Block) : super(player, block)
+    private constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String) : super(player, block, inventory, inventoryName)
 
 
     override fun onInit() {
@@ -186,6 +183,19 @@ internal class JukeboxGui : BaseGui {
 
 
     companion object {
+        fun open(player: Player) = JukeboxGui(
+            player,
+            getInv(player.uniqueId.toString()),
+            LANG.getKey(player, "jukebox")
+        )
+
+        fun open(player: Player, block: Block) = JukeboxGui(
+            player,
+            block,
+            getInv("${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"),
+            LANG.getKey(player, "jukebox"),
+        )
+
         private val inventories = HashMap<String, VirtualInventory>()
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()

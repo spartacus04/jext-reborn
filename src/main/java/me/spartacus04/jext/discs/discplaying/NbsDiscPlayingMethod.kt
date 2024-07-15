@@ -8,6 +8,9 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import kotlin.math.roundToInt
 
+/**
+ * The class `NbsDiscPlayingMethod` is a implementation of the `DiscPlayingMethod` interface that plays discs from the nbs directory.
+ */
 class NbsDiscPlayingMethod(private val song: Song) : DiscPlayingMethod {
 
     override fun playLocation(location: Location, namespace: String, volume: Float, pitch: Float) {

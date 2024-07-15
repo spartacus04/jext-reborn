@@ -60,10 +60,12 @@ internal class JukeboxClickEvent : JextListener() {
 
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
+
         if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) {
             return
         }
-        JukeboxGui(event.player, block)
+
+        JukeboxGui.open(event.player, block)
     }
 
     @EventHandler(ignoreCancelled = true)

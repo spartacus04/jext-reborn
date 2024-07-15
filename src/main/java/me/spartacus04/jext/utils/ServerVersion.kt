@@ -6,7 +6,7 @@ package me.spartacus04.jext.utils
  * @param versionString The `versionString` parameter is a `String` representing the version of a server.
  * @constructor Creates a new server version object.
  */
-class ServerVersion(versionString: String) {
+internal class ServerVersion(versionString: String) {
     private val majorVersion = versionString.split(".")[0].toInt()
     private val minorVersion = versionString.split(".")[1].toInt()
     private val patchVersion = try {

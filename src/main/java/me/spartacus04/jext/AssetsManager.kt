@@ -16,16 +16,30 @@ import java.io.FileOutputStream
 import java.net.URI
 import java.util.zip.ZipFile
 
+/**
+ * The class `AssetsManager` is a utility class that's used to import, read, save and export assets from the server's resource pack.
+ */
 class AssetsManager {
     private val localToRpMap = hashMapOf(
         "discs" to "",
         "nbs" to "nbs",
     )
 
+    /**
+     * Registers a config file to be imported from the resource pack.
+     * 
+     * @param id The id and path of the config file.
+     */
     fun registerConfigFile(id: String) {
         localToRpMap[id] = id
     }
 
+    /**
+     * Registers an asset to be imported from the resource pack.
+     * 
+     * @param id The id and name of the asset.
+     * @param path The path of the asset in the resource pack.
+     */
     fun registerAsset(id: String, path: String) {
         localToRpMap[id] = path
     }
@@ -139,6 +153,13 @@ class AssetsManager {
         "json"
     ).filter { it.isNotBlank() }.joinToString(".")
 
+    /**
+     * Gets an asset from the server's resource pack.
+     * 
+     * @param id The id of the asset.
+     * 
+     * @return The asset.
+     */
     fun getAsset(id: String) : FileInputStream? {
         val file = PLUGIN.dataFolder.resolve("$id.json")
 
@@ -147,6 +168,12 @@ class AssetsManager {
         } else null
     }
 
+    /**
+     * Saves an asset to the server's resource pack.
+     * 
+     * @param id The id of the asset.
+     * @param content The content of the asset.
+     */
     fun saveAsset(id: String, content: String) {
         val file = PLUGIN.dataFolder.resolve("$id.json")
 
@@ -166,7 +193,7 @@ class AssetsManager {
             propertiesFile.readLines().find { it.startsWith("resource-pack=") }!!.substringAfter("resource-pack=")
         }
 
-    val resourcePackHash: String
+    internal val resourcePackHash: String
         get() = try {
             Bukkit.getServer().resourcePackHash
         } catch (_: NoSuchMethodError) {
@@ -175,6 +202,11 @@ class AssetsManager {
             propertiesFile.readLines().find { it.startsWith("resource-pack-sha1=") }!!.substringAfter("resource-pack-sha1=")
         }
 
+    /**
+     * Exports the server's resource pack to a zip file.
+     * 
+     * @return Whether the export was successful.
+     */
     suspend fun tryExportResourcePack() : Boolean {
         val file = getResourcePack() ?: return false
 

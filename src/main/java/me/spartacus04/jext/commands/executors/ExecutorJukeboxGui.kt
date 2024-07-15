@@ -17,6 +17,6 @@ internal class ExecutorJukeboxGui : ExecutorAdapter("jukeboxgui") {
      * @param args The arguments that were passed to the command.
      */
     override fun executePlayer(sender: Player, args: Array<String>){
-        JukeboxGui(sender)
+        JukeboxGui.open(sender)
     }
 }

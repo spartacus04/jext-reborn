@@ -16,6 +16,9 @@ import me.spartacus04.jext.utils.ServerVersion
 import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The object `JextState` is a singleton object that holds all the global variables and objects used by the plugin.
+ */
 object JextState {
     val PLUGIN: JavaPlugin = JavaPlugin.getPlugin(Jext::class.java)
     internal val BASE_URL = BaseUrl()
