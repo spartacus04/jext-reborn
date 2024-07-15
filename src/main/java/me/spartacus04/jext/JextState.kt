@@ -26,8 +26,8 @@ object JextState {
     internal val GSON: Gson = GsonBuilder().setStrictness(Strictness.LENIENT).setPrettyPrinting().create()
     internal val ASSETS_MANAGER = AssetsManager()
     internal val SCHEDULER: TaskScheduler = UniversalScheduler.getScheduler(PLUGIN)
+    internal val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
 
-    val VERSION = ServerVersion(PLUGIN.server.bukkitVersion.split("-")[0])
     val CONFIG: Config = ConfigFactory.createConfigObject()
     val LANG = LanguageManager()
     val DISCS = DiscManager()
