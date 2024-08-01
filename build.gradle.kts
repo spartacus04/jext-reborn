@@ -45,7 +45,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.14")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
-    compileOnly("org.geysermc.geyser:api:2.4.0-SNAPSHOT") {
+    compileOnly("org.geysermc.geyser:api:2.4.1-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
         }
