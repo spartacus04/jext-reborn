@@ -1,5 +1,5 @@
 {
-  "now-playing": "§6Now playing: §a%name%",
+  "now-playing": "§6正在播放： §a%name%",
   "disc-name": "§a%author% §7- §a%title%",
   "disc-name-simple": "§a%title%",
   "update-available": "有新的更新可用！",
@@ -34,9 +34,9 @@
   "stopped-music-for-no-one": "§f停止为玩家播放音乐，发生了一些错误!",
   "reloaded": "§c已重新载入!",
   "missing-permission": "§c你没有权限使用此命令!",
-  "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
-  "command-not-supported": "§cThe command §6%command% §cis not supported: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
+  "invalid-runner": "§c本命令不能被 §6%runner%§c 运行。",
+  "command-not-supported": "§c命令 §6%command% §c不支持，因为 §6%reason%§c。",
+  "webui": "§aWeb 界面已在 §2%url% 启用",
   "webui-disabled": "§c网页界面目前已禁用!",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "[使用方法]: §6/%command%"
 }
