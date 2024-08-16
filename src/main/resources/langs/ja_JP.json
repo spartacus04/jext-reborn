@@ -38,5 +38,5 @@
   "command-not-supported": "§6%command% §cコマンドはサポートされていません: §6%reason%§c.",
   "webui": "§aWeb UI は §2%url% で利用できます",
   "webui-disabled": "§cWeb UIは現在無効になっています！",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "[使用方法]: §6/%command%"
 }
