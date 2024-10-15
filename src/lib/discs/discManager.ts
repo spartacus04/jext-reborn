@@ -3,6 +3,7 @@ import type { BaseDisc } from "./baseDisc";
 import { MusicDisc } from "./musicDisc";
 
 export const discsStore = writable<BaseDisc[]>([]);
+export const selectedDiscs = writable<BaseDisc[]>([]);
 
 export function addDisc(disc: BaseDisc) {
     console.debug(disc);
@@ -29,4 +30,12 @@ export function createNewDisc(files: File[] | undefined) {
             // TODO: setup nbs file handling
         }
     })
+}
+
+export function removeDisc(disc: BaseDisc) {
+    discsStore.update((discs) => discs.filter(d => d !== disc));
+}
+
+export function editDiscs(...discs: BaseDisc[]) {
+    
 }

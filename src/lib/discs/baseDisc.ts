@@ -85,6 +85,10 @@ export class BaseDisc {
                 .replaceAll('8', 'eight')
                 .replaceAll('9', 'nine')
                 .replaceAll('0', 'zero');
-        } 
+        }
+
+        while(get(discsStore).map(disc => disc.namespace).includes(this.namespace)) {
+            this.namespace = `${this.namespace}zero`;
+        }
     }
 }
