@@ -1,38 +1,35 @@
-# create-svelte
+# Jukebox Extended Reborn | Web UI
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+> The webui allows the user to configure the plugin in the browser with ease
 
-## Creating a project
+### Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Disc management
+- Resource pack merging
+- Apply discs and resourcepack directly on the server
+- Remote configuration
+- Documentation for both users and developers
+- Desktop app for faster disc management
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### How to run
 
-# create a new project in my-app
-npm create svelte@latest my-app
+You can either open the https://spartacus04.github.io/jext-reborn/ webpage or build it yourself locally.
+
+##### Building locally
+
+First git clone the repo:
+
+```
+git clone https://github.com/spartacus04/jext-reborn
+git checkout gh-pages
 ```
 
-## Developing
+Then install the dependencies (here i'm using bun, you can use any node package manager):
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```
+bun install
 ```
 
-## Building
+You can run a live preview by running `bun run dev` or you can build the website by running `bun run build`
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+You can run a live preview of the desktop app by running `bun run tauri dev` (note: this requires rust), or you can build it by running `bun run tauri build`

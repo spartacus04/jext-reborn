@@ -23,22 +23,28 @@
 			category: 'For Server Owners'
 		},
 		{
-			title: 'Manual setup',
-			description: 'Manually set up the music resource pack.',
-			url: '/docs/manual-setup',
-			category: 'Advanced setup'
+			title: 'Disc manager tips & tricks',
+			description: 'Learn how to use the disc manager to its full potential.',
+			url: '/docs/disc-manager-tips',
+			category: 'For Server Owners'
 		},
 		{
 			title: 'Desktop app & remote control',
 			description: 'Control both the resource pack and the plugin from the desktop app.',
 			url: '/docs/desktop-app',
-			category: 'Advanced setup'
+			category: 'For Server Owners'
 		},
 		{
 			title: 'Bulk import',
 			description: 'Import a large amount of music at once.',
 			url: '/docs/bulk-import',
-			category: 'Advanced setup'
+			category: 'For Server Owners'
+		},
+		{
+			title: 'Manual resource pack building',
+			description: 'Manually set up the music resource pack.',
+			url: '/docs/manual-setup',
+			category: 'For Developers'
 		},
 		{
 			title: 'Permission integrations',
@@ -50,12 +56,6 @@
 			title: 'Custom disc sources',
 			description: 'Add custom disc sources to Jext Reborn.',
 			url: '/docs/custom-disc-sources',
-			category: 'For Developers'
-		},
-		{
-			title: 'Other API uses',
-			description: 'Other ways to interact with the Jext Reborn API.',
-			url: '/docs/other-api-uses',
 			category: 'For Developers'
 		},
 		{
@@ -117,5 +117,11 @@
 				{/if}
 			{/key}
 		{/each}
+
+        {#key query}
+            {#if pages.filter(filter).length === 0}
+                <p class="text-white text-center mt-8">No results found.</p>
+            {/if}
+        {/key}
 	</div>
 </div>
