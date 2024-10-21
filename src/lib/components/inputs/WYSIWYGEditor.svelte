@@ -1,5 +1,6 @@
 <script lang="ts">
 	import MCText from 'minecraft-text-js';
+	import { onDestroy } from 'svelte';
 
 	import { slide } from 'svelte/transition';
 
@@ -14,11 +15,14 @@
 	// Workaround for library handling & when not necessary and not handling new line
 	$: typeof text == 'string' && (output = MCText.toHTML(
 		text
-			.replaceAll('&', 'amp;')
+			.replace('<div>', '')	// replace first div to avoid empty line at the beginning
+			.replaceAll('&', '')	// remove all & to avoid double escaping
 			.replaceAll('<div>', '\\n')
 			.replaceAll('</div>', '')
 			.replaceAll('<br>', '')
 	).replaceAll('amp;', '&')) && (() => {
+		console.debug('text', text);
+		console.debug('output', output);
 		clearTimeout(timeout);
 		timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 	})();
@@ -30,6 +34,8 @@
 			'';
 		document.execCommand('insertText', false, text);
 	};
+
+	onDestroy(() => clearTimeout(timeout));
 
 	const insertSymbol = (symbol: string) => {
 		document.execCommand('insertText', false, `§${symbol}`);
