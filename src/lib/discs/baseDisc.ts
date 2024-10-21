@@ -16,9 +16,9 @@ export class BaseDisc {
 
     public tooltip: string = "";
 
-    public redstonePower: number = 0;
+    public redstonePower: number = 1;
 
-    public creeperDroppable: boolean = false;
+    public creeperDroppable: boolean = true;
     public discLootTables: { [key: string]: string[] } = {};
     public fragmentLootTables: { [key: string]: string[] } = {};
 
@@ -56,6 +56,11 @@ export class BaseDisc {
         this.fragmentTextureURL = URL.createObjectURL(blob);
     }
 
+    refreshTextures() {
+        this.setDiscTexture(this.discTexture);
+        this.setFragmentTexture(this.fragmentTexture);
+    }
+
     autoSetNamespace() {
         this.namespace = `${this.title}${this.author}`
             .replace(/[^a-zA-Z0-9]/g, '')
@@ -87,7 +92,8 @@ export class BaseDisc {
                 .replaceAll('0', 'zero');
         }
 
-        while(get(discsStore).map(disc => disc.namespace).includes(this.namespace)) {
+
+        while(get(discsStore).filter(disc => disc.namespace == this.namespace).length > 1) {
             this.namespace = `${this.namespace}zero`;
         }
     }

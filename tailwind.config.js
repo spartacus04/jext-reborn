@@ -10,7 +10,10 @@ export default {
 				surface: '#303030',
 				'surface-background': '#1E1E1E',
 				'surface-background-variant': '#353535',
-				'surface-separator': '#393939'
+				'surface-separator': '#393939',
+				'mc-light-gray': '#d3d3d3',
+				'mc-light-green': '#55ff55',
+				'mc-aqua': '#55ffff'
 			},
 			fontFamily: {
 				cascadia: 'Cascadia Code',

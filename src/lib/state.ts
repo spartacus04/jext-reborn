@@ -1,4 +1,5 @@
 import '@tauri-apps/api';
+import { writable } from 'svelte/store';
 
 export const isTauri = window.__TAURI__ !== undefined;
 
@@ -21,3 +22,5 @@ export const os = (() => {
 
 	return 'unknown';
 })();
+
+export const baseElement = writable<Element|undefined>(undefined);

@@ -3,6 +3,7 @@
 	import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
 	import '../app.postcss';
 	import '../global.d.ts';
+	import { baseElement } from '$lib/state';
 
 	const media = matchMedia('(max-width: 768px)');
 
@@ -28,7 +29,7 @@
 	};
 </script>
 
-<div class="w-full h-full" use:swipe on:swipe={swipeHandler}>
+<div class="w-full h-full" bind:this={$baseElement} use:swipe on:swipe={swipeHandler}>
 	<SidebarContainer bind:isOpen>
 		<slot />
 	</SidebarContainer>

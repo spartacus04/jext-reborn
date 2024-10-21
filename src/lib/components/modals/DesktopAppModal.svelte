@@ -11,7 +11,6 @@
 
 	const onClick = (e: MouseEvent) => {
 		const id = (e.target as HTMLElement).id;
-		console.debug(id);
 
 		if (id === 'backdrop') close();
 		else e.stopPropagation();

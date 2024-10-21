@@ -45,7 +45,7 @@
 <div class="flex h-full w-full">
 	{#if isOpen}
 		<div
-			class="z-10 min-w-64 w-64 bg-surface-background h-full flex flex-col fixed md:relative"
+			class="z-50 min-w-64 w-64 bg-surface-background h-full flex flex-col fixed md:relative"
 			transition:fly={{ x: '-16rem' }}
 		>
 			<!-- Top sidebar entries -->

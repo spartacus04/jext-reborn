@@ -1,6 +1,7 @@
 <script lang="ts">
     import LauncherButton from "../buttons/LauncherButton.svelte";
-    import { discsStore, removeDisc, selectedDiscs } from "$lib/discs/discManager";
+    import { discsStore, editDiscs, removeDisc, selectedDiscs } from "$lib/discs/discManager";
+	import { get } from "svelte/store";
 
     const selectAll = () => {
         selectedDiscs.update((discs) => {
@@ -29,7 +30,7 @@
     {#if $selectedDiscs.length > 0}
         <LauncherButton text="Deselect All" type="tertiary" on:click={deselectAll} />
         <LauncherButton text="Delete Selected" type="danger" on:click={deleteSelected} />
-        <LauncherButton text="Edit Selected" type="primary" />
+        <LauncherButton text="Edit Selected" type="primary" on:click={() => editDiscs(...get(selectedDiscs))}/>
     {:else}
         <LauncherButton text="Select All" type="tertiary" on:click={selectAll}/>
     {/if}

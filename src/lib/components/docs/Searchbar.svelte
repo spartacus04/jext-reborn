@@ -6,8 +6,6 @@
 	const focus = (e: MouseEvent) => {
 		const id = (e.target as HTMLElement).id;
 
-		console.debug(id);
-
 		if (id === 'reset') {
 			query = '';
 		}
@@ -35,7 +33,7 @@
 		bind:this={input}
 		bind:value={query}
 		type="text"
-		class="-ml-7 w-full px-8 pt-0.5 pb-1 text-sm text-white bg-[#0e0e0e] border-2 border-[#0dd166] rounded-sm"
+		class="-ml-7 w-full px-8 pt-0.5 pb-1 text-sm text-white bg-[#0e0e0e] border-2 border-[#0dd166] rounded-sm outline-none focus:border-white"
 		placeholder="What do you seek?"
 	/>
 	{#if query != ''}
