@@ -7,4 +7,7 @@ export default defineConfig({
 		sourcemap: true,
 	},
 	base: '/jext-reborn/',
+	optimizeDeps: {
+		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core'],
+	}
 });

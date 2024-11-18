@@ -86,12 +86,19 @@ export const convertAudio = async (
 	}
 };
 
+const ffmpegStore = writable<FFmpeg | null>(null);
+
 export const loadFFmpeg = async (): Promise<FFmpeg | null> => {
+	updateSteps(0, 'Loading FFmpeg', 0, 3);
+	if(get(ffmpegStore) !== null) {
+		updateSteps(0, 'FFmpeg loaded', 3, 3);
+		removeStep(1);
+		return get(ffmpegStore);
+	}
+	
 	const ffmpeg = new FFmpeg();
 
 	if (window.__TAURI__ || ffmpeg.loaded) return null;
-
-	updateSteps(0, 'Loading FFmpeg', 0, 3);
 
 	updateSteps(1, 'Downloading ffmpeg-core.js', 0, 3);
 	const coreURL = await fetchData(crossOriginIsolated ? `${baseMTURL}/ffmpeg-core.js` : `${baseURL}/ffmpeg-core.js`);
@@ -104,6 +111,8 @@ export const loadFFmpeg = async (): Promise<FFmpeg | null> => {
 		coreURL,
 		wasmURL
 	});
+
+	ffmpegStore.set(ffmpeg);
 
 	updateSteps(0, 'FFmpeg loaded', 3, 3);
 	removeStep(1);

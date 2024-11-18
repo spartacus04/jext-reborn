@@ -1,4 +1,4 @@
-interface ExporterOuput {
+export interface ExporterOuput {
     javaRP: Blob;
     bedrockRP: Blob|undefined;
 }
