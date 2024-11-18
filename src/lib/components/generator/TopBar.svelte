@@ -19,7 +19,7 @@
     <div class="flex w-full items center gap-2 overflow-x-auto mt-1">
         {#each Object.keys(pages) as page}
             {#if (pages[page] && isTauri) || (!pages[page])}
-                <TopBarItem active={ currentPage === page} {page} on:click={() => currentPage = page} />
+                <TopBarItem active={currentPage === page} {page} on:click={() => currentPage = page} />
             {/if}
         {/each}
     </div>

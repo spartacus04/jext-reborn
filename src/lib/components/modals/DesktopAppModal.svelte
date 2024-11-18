@@ -39,7 +39,7 @@
 	bind:this={dialog}
 	id="backdrop"
 	on:click={onClick}
-	class="bg-surface-background md:bg-transparent p-0"
+	class="bg-surface-background md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
 		class="m-0 md:m-auto md:w-[32rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"

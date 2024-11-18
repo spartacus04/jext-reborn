@@ -16,6 +16,7 @@
 	import SidebarEntryButton from './SidebarEntryButton.svelte';
 	import { fly, fade } from 'svelte/transition';
 	import DesktopAppModal from '../modals/DesktopAppModal.svelte';
+	import { base } from '$app/paths';
 
 	const osIcon = (() => {
 		switch (os) {
@@ -49,11 +50,11 @@
 			transition:fly={{ x: '-16rem' }}
 		>
 			<!-- Top sidebar entries -->
-			<SidebarEntryLink href="/" icon={default_disc} title="Disc manager" />
+			<SidebarEntryLink href="{base}/" icon={default_disc} title="Disc manager" />
 			{#if isTauri}
-				<SidebarEntryLink href="/config" icon={cog} title="Config manager" />
+				<SidebarEntryLink href="{base}/config" icon={cog} title="Config manager" />
 			{/if}
-			<SidebarEntryLink href="/docs" icon={knowledge_book} title="Documentation" />
+			<SidebarEntryLink href="{base}/docs" icon={knowledge_book} title="Documentation" />
 
 			<div class="flex-grow" />
 

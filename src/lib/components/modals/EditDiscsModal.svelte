@@ -3,16 +3,15 @@
 
 	// This is going to be extremely ugly, but I want to get this done ASAP
 	import type { BaseDisc } from '$lib/discs/baseDisc';
-	import { MusicDisc } from '$lib/discs/musicDisc';
 	import { cConfirm } from '$lib/utils';
-	import { save } from '@tauri-apps/api/dialog';
 	import LauncherButton from '../buttons/LauncherButton.svelte';
 	import LauncherCheckbox from '../inputs/LauncherCheckbox.svelte';
 	import LauncherNumbox from '../inputs/LauncherNumbox.svelte';
 	import LauncherTextbox from '../inputs/LauncherTextbox.svelte';
 	import WysiwygEditor from '../inputs/WYSIWYGEditor.svelte';
-	import { isMusicDisc } from '$lib/discs/discManager';
+	import { editLootTables, isMusicDisc } from '$lib/discs/discManager';
 	import LauncherCombobox from '../inputs/LauncherCombobox.svelte';
+	import { onDestroy } from 'svelte';
 
 	export let discs: BaseDisc[] = [];
 	let dialog: HTMLDialogElement;
@@ -53,51 +52,50 @@
 		redstonePower: {
 			value: discs.every((disc) => disc.redstonePower === discs[0].redstonePower)
 				? discs[0].redstonePower
-				: '',
+				: 1,
 			edited: false
 		},
 		creeperDroppable: {
 			value: discs.every((disc) => disc.creeperDroppable === discs[0].creeperDroppable)
 				? discs[0].creeperDroppable
-				: '',
+				: false,
 			edited: false
 		},
 		discLootTables: {
 			value: discs.every((disc) => disc.discLootTables === discs[0].discLootTables)
 				? discs[0].discLootTables
-				: '',
+				: {},
 			edited: false
 		},
 		fragmentLootTables: {
 			value: discs.every((disc) => disc.fragmentLootTables === discs[0].fragmentLootTables)
 				? discs[0].fragmentLootTables
-				: '',
+				: {},
 			edited: false
 		}
 	};
 
 	if (discs.some(isMusicDisc)) {
-		console.debug('Music disc detected');
 		const musicDiscs = discs.filter(isMusicDisc);
 
 		changes['monoChannel'] = {
 			value: musicDiscs.every((disc) => disc.monoChannel === musicDiscs[0].monoChannel)
 				? musicDiscs[0].monoChannel
-				: '',
+				: true,
 			edited: false
 		};
 
 		changes['normalizeVolume'] = {
 			value: musicDiscs.every((disc) => disc.normalizeVolume === musicDiscs[0].normalizeVolume)
 				? musicDiscs[0].normalizeVolume
-				: '',
+				: true,
 			edited: false
 		};
 
 		changes['qualityPreset'] = {
 			value: musicDiscs.every((disc) => disc.qualityPreset === musicDiscs[0].qualityPreset)
 				? musicDiscs[0].qualityPreset
-				: '',
+				: 'none',
 			edited: false
 		};
 	}
@@ -170,8 +168,31 @@
 		}
 	}
 
+	async function editDiscLt() {
+		const data = await editLootTables(changes.discLootTables.value);
+
+		if (data) {
+			changes['discLootTables'].value = data;
+			changes['discLootTables'].edited = true;
+		}
+	}
+
+	async function editFragmentLt() {
+		const data = await editLootTables(changes.fragmentLootTables.value);
+
+		if (data) {
+			changes['fragmentLootTables'].value = data;
+			changes['fragmentLootTables'].edited = true;
+		}
+	}
+
 	let textureUrl = URL.createObjectURL(changes.discTexture.value);
 	let fragmentTextureUrl = URL.createObjectURL(changes.fragmentTexture.value);
+
+	onDestroy(() => {
+		URL.revokeObjectURL(textureUrl);
+		URL.revokeObjectURL(fragmentTextureUrl);
+	});
 
 	export let onFinish: (changes: { [key: string]: any }) => unknown;
 
@@ -184,7 +205,7 @@
 	bind:this={dialog}
 	id="backdrop"
 	on:click={onClick}
-	class="bg-surface-background md:bg-transparent p-0"
+	class="bg-surface-background md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
 		class="m-0 md:m-auto md:w-[50rem] h-fit rounded-md bg-surface-background animate-slide-down block p-4"
@@ -280,8 +301,8 @@
 
 			
 			<div class="flex flex-1 flex-col gap-4 justify-between sm:flex-row w-full">
-				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit disc loot tables" type="primary" />
-				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit fragment loot tables" type="primary" />
+				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit disc loot tables" type="primary" on:click={editDiscLt} />
+				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit fragment loot tables" type="primary" on:click={editFragmentLt} />
 			</div>
 		</div>
 

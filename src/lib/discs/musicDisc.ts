@@ -1,17 +1,18 @@
 import { BaseDisc } from "./baseDisc";
 
 export class MusicDisc extends BaseDisc {
-    private audioFile: Blob = new Blob();
-    private cachedFinalAudioFile: Blob|null = null;
+    public audioFile: Blob = new Blob();
+    public cachedFinalAudioFile: Blob|null = null;
 
     public monoChannel: boolean = true;
     public normalizeVolume: boolean = true;
     public qualityPreset: 'none' | 'low' | 'medium' | 'high' = 'none';
 
-    constructor(file: File) {
+    constructor(file: File, isNew: boolean = true) {
         super();
 
         this.audioFile = file;
+        this.isNew = isNew;
 
         const splitName = file.name.replace(/\.[^.]+$/g, '').split(/ ?- ?/g);
 

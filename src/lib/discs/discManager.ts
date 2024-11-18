@@ -4,6 +4,7 @@ import { MusicDisc } from "./musicDisc";
 import EditDiscsModal from "$lib/components/modals/EditDiscsModal.svelte";
 import { baseElement } from "$lib/state";
 import { NbsDisc } from "./nbsDisc";
+import EditDungeonModal from "$lib/components/modals/EditDungeonModal.svelte";
 
 export const discsStore = writable<BaseDisc[]>([]);
 export const selectedDiscs = writable<BaseDisc[]>([]);
@@ -60,10 +61,31 @@ export async function editDiscs(...discs: BaseDisc[]) {
 
             // @ts-expect-error this is fine
             discs[i][change] = changes[change];
-            discs[i].autoSetNamespace();
-            discs[i].refreshTextures();
+            if(discs[i].isNew) {
+                discs[i].autoSetNamespace();
+                discs[i].refreshTextures();
+            }
         }
     }
+}
+
+export async function editLootTables(data: { [key: string]: number }) {
+    const dataCopy = { ...data };
+
+    return await new Promise<{ [key: string]: number }|null>(resolve => {
+        const editDungeonModal = new EditDungeonModal({
+            target: get(baseElement)!,
+            props: {
+                onFinish: (changes) => {
+                    editDungeonModal.$destroy();
+                    resolve(changes);
+                },
+                dungeons: dataCopy,
+            }
+        });
+    
+        editDungeonModal.openModal();
+    });
 }
 
 export function isMusicDisc(disc: BaseDisc): disc is MusicDisc {

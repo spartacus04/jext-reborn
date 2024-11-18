@@ -2,11 +2,12 @@ import { BaseDisc } from "./baseDisc";
 import { fromArrayBuffer } from '@nbsjs/core';
 
 export class NbsDisc extends BaseDisc {
-    private nbsFile: Blob = new Blob();
+    public nbsFile: Blob = new Blob();
 
-    constructor(file: File, arrayBuffer: ArrayBuffer) {
+    constructor(file: File, arrayBuffer: ArrayBuffer, isNew: boolean = true) {
         super();
 
+        this.isNew = isNew;
         this.nbsFile = file;
 		this.title = file.name;
 

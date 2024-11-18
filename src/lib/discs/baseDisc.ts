@@ -2,7 +2,9 @@ import { get } from "svelte/store";
 import { randomTextures } from "./textures";
 import { discsStore } from "./discManager";
 
-export class BaseDisc {
+export abstract class BaseDisc {
+    public isNew: boolean = true;
+
     public title: string = "";
     public author: string = "Unknown artist";
 
@@ -18,9 +20,11 @@ export class BaseDisc {
 
     public redstonePower: number = 1;
 
+    public modelData: number = -1;
+
     public creeperDroppable: boolean = true;
-    public discLootTables: { [key: string]: string[] } = {};
-    public fragmentLootTables: { [key: string]: string[] } = {};
+    public discLootTables: { [key: string]: number } = {};
+    public fragmentLootTables: { [key: string]: number } = {};
 
     public setRedstonePower(power: number): void {
         this.redstonePower = power;

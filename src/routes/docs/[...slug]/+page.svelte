@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LauncherButton from "$lib/components/buttons/LauncherButton.svelte";
     import type { PageData } from "./$types";
+    import { base } from '$app/paths';
 
     export let data: PageData;
 </script>
@@ -13,7 +14,9 @@
             <div class="text-center">
                 <p class="text-4xl font-minecraft-launcher text-white">We couldn't find what you were searching for</p>
                 <p class="text-[#aeaeae] text-xs font-bold mb-2 font-sans">404 ERROR</p>
-                <LauncherButton text="Go back to documentation" type="primary" />
+                <a href="{base}/docs">
+                    <LauncherButton text="Go back to documentation" type="primary" />
+                </a>
             </div>
         </div>
     {/if}

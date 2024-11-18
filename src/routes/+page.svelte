@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
+	import ResourcePackManagerTab from '$lib/components/generator/ResourcePackManagerTab.svelte';
 	import TopBar from '$lib/components/generator/TopBar.svelte';
 
 	let currentPage: string;
@@ -11,6 +12,8 @@
 	<div class="flex-1 flex flex-col h-[calc(100%-65px)]">
 		{#if currentPage == "Discs"}
 			<DiscsTab />
+		{:else if currentPage == "Resource pack manager"}
+			<ResourcePackManagerTab />
 		{/if}
 	</div>
 </div>

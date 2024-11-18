@@ -2,6 +2,7 @@
     import LauncherButton from "../buttons/LauncherButton.svelte";
     import { discsStore, editDiscs, removeDisc, selectedDiscs } from "$lib/discs/discManager";
 	import { get } from "svelte/store";
+	import { cConfirm } from "$lib/utils";
 
     const selectAll = () => {
         selectedDiscs.update((discs) => {
@@ -9,9 +10,15 @@
         });
     };
 
-    const deleteSelected = () => {
-        // ALERT: This will delete all selected discs
-        if(!confirm("Are you sure you want to delete all selected discs?")) return;
+    const deleteSelected = async () => {
+        const response = await cConfirm({
+				text: 'Are you sure you want to delete all selected discs?',
+                cancelText: undefined,
+				confirmText: 'Yes',
+				discardText: 'No'
+			});
+
+        if(response === 'discard') return;
 
         selectedDiscs.update((discs) => {
             discs.forEach((disc) => {

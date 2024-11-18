@@ -11,7 +11,7 @@
 	let active: boolean;
 
 	afterNavigate(() => {
-		active = !href.startsWith('http') && location.pathname.split('/')[1] === href.split('/')[1];
+		active = !href.startsWith('http') && location.pathname.split('/')[2] === href.split('/')[2];
 	});
 </script>
 

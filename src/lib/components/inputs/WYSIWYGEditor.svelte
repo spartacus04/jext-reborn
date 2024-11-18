@@ -21,8 +21,6 @@
 			.replaceAll('</div>', '')
 			.replaceAll('<br>', '')
 	).replaceAll('amp;', '&')) && (() => {
-		console.debug('text', text);
-		console.debug('output', output);
 		clearTimeout(timeout);
 		timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 	})();

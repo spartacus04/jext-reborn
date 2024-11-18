@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Searchbar, DocBubble } from '$lib/components/docs';
 
 	let query = '';
@@ -111,7 +112,7 @@
 
 					<div class="grid lg:grid-cols-3 gap-8">
 						{#each pages.filter((page) => page.category === category).filter(filter) as page}
-							<DocBubble title={page.title} description={page.description} url={page.url} />
+							<DocBubble title={page.title} description={page.description} url="{base}{page.url}" />
 						{/each}
 					</div>
 				{/if}

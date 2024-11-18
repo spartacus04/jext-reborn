@@ -34,10 +34,10 @@
 	bind:this={dialog}
 	id="backdrop"
 	on:click={onClick}
-	class="bg-surface-background p-0 "
+	class="bg-surface-background p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
-		class="border-2 border-black m-0 md:m-auto md:w-[32rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"
+		class="m-0 md:m-auto md:w-[32rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"
 	>
         <div class="p-4 font-minecraft text-white">
             <h1 class="font-minecraft text-xl mb-3">{text}</h1>
