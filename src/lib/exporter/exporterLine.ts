@@ -4,6 +4,7 @@ import { preProcessDiscs } from "./preprocessor";
 import type { BaseExporter } from "./baseExporter";
 import { ResourcePackData } from "$lib/discs/resourcePackManager";
 import { mergeResourcePacks } from "./rpmerger";
+import { discsStore } from "$lib/discs/discManager";
 
 export const exporterSteps = writable<({
     status: string,
@@ -40,6 +41,14 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 
     updateSteps(0, 'Building resource pack', 2, pack.packs.length > 0 ? 4 : 3);
     const output = await exporter.export();
+
+    discsStore.update(discs => {
+        discs.forEach(disc => {
+            disc.isNew = false;
+        });
+
+        return discs;
+    })
 
     if(pack.packs.length > 0) {
         updateSteps(0, 'Merging resource pack', 3, 4);

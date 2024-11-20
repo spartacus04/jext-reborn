@@ -1,3 +1,4 @@
+export { default as signalum_security_lock } from './signalum-security-lock.webp';
 export { default as dark_dirt_background } from './dark_dirt_background.webp';
 export { default as fragment_template } from './fragment_template.webp';
 export { default as button_highlight } from './button_highlight.webp';
@@ -11,6 +12,7 @@ export { default as default_disc } from './default_disc.webp';
 export { default as default_icon } from './default_icon.webp';
 export { default as generate_btn } from './generate_btn.webp';
 export { default as checkbox_on } from './checkbox_on.webp';
+export { default as delete_btn } from './delete_btn.webp';
 export { default as panorama_0 } from './panorama_0.webp';
 export { default as panorama_1 } from './panorama_1.webp';
 export { default as panorama_2 } from './panorama_2.webp';

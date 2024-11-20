@@ -18,26 +18,13 @@ export abstract class BaseDisc {
 
     public tooltip: string = "";
 
-    public redstonePower: number = 1;
-
     public modelData: number = -1;
 
     public creeperDroppable: boolean = true;
     public discLootTables: { [key: string]: number } = {};
     public fragmentLootTables: { [key: string]: number } = {};
 
-    public setRedstonePower(power: number): void {
-        this.redstonePower = power;
-
-        if(this.redstonePower < 1) {
-            this.redstonePower = 1;
-        } else if(this.redstonePower > 15) {
-            this.redstonePower = 15;
-        }
-    }
-
     public randomizeDiscData(): void {
-        this.redstonePower = Math.floor(Math.random() * 15) + 1;
         this.creeperDroppable = Math.random() < 0.5;
     }
 
@@ -66,6 +53,8 @@ export abstract class BaseDisc {
     }
 
     autoSetNamespace() {
+        if(!this.isNew) return;
+
         this.namespace = `${this.title}${this.author}`
             .replace(/[^a-zA-Z0-9]/g, '')
             .replaceAll('1', 'one')

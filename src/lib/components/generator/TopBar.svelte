@@ -6,7 +6,7 @@
         'Discs': false,
         'Resource pack manager': false,
         'Bulk import': true,
-        'Community packs': false,
+        'Community packs': true,
         'Recent exports': true,
     };
 

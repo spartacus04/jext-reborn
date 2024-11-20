@@ -49,12 +49,6 @@
 			value: discs.every((disc) => disc.tooltip === discs[0].tooltip) ? discs[0].tooltip : '',
 			edited: false
 		},
-		redstonePower: {
-			value: discs.every((disc) => disc.redstonePower === discs[0].redstonePower)
-				? discs[0].redstonePower
-				: 1,
-			edited: false
-		},
 		creeperDroppable: {
 			value: discs.every((disc) => disc.creeperDroppable === discs[0].creeperDroppable)
 				? discs[0].creeperDroppable
@@ -195,9 +189,6 @@
 	});
 
 	export let onFinish: (changes: { [key: string]: any }) => unknown;
-
-	$: changes.redstonePower.value > 15 && (changes.redstonePower.value = 15);
-	$: changes.redstonePower.value < 1 && (changes.redstonePower.value = 1);
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions a11y-click-events-have-key-events -->
@@ -287,16 +278,6 @@
 				on:change={() => setUpdatedPropery('creeperDroppable')}
 				label="Can be dropped by creepers"
 				/>
-				<div class="flex flex-col w-full flex-1">
-					<b class="text-[#aeaeae] text-xs h-min">REDSTONE POWER</b>
-						<LauncherNumbox
-							placeholder="Insert the disc title"
-							bind:value={changes.redstonePower.value}
-							on:input={() => {
-								setUpdatedPropery('redstonePower');
-							}}
-						/>
-				</div>
 			</div>
 
 			

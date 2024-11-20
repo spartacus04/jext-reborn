@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isTauri } from '$lib/state';
 	import MCText from 'minecraft-text-js';
 	import { onDestroy } from 'svelte';
 
@@ -13,17 +14,32 @@
 	let timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 
 	// Workaround for library handling & when not necessary and not handling new line
-	$: typeof text == 'string' && (output = MCText.toHTML(
-		text
-			.replace('<div>', '')	// replace first div to avoid empty line at the beginning
-			.replaceAll('&', '')	// remove all & to avoid double escaping
-			.replaceAll('<div>', '\\n')
-			.replaceAll('</div>', '')
-			.replaceAll('<br>', '')
+	$: typeof text == 'string' && (output = MCText.toHTML((() => {
+		if(isTauri) {
+			return text
+				.replaceAll('&', '')	// remove all & to avoid double escaping
+				.replaceAll('<div>', '\\n')
+				.replaceAll('</div>', '')
+				.replaceAll('<br>', '')
+				.replaceAll('nbsp;', ' ')
+		} else {
+			return text
+				.replace('<div>', '')	// replace first div to avoid empty line at the beginning
+				.replaceAll('&', '')	// remove all & to avoid double escaping
+				.replaceAll('<div>', '\\n')
+				.replaceAll('</div>', '')
+				.replaceAll('<br>', '')
+				.replaceAll('nbsp;', ' ')
+		}
+	})()
+		
 	).replaceAll('amp;', '&')) && (() => {
+		console.log(text);
+		console.debug(output);
 		clearTimeout(timeout);
 		timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 	})();
+
 
 	const pasteHandler = (e: ClipboardEvent | Event) => {
 		e.preventDefault();
@@ -135,7 +151,7 @@
 
 	<div class="grid grid-cols-1 sm:grid-cols-2 mb-2">
 		<div
-			class="overflow-x-auto h-full bg-transparent resize-none border-0 shadow-none outline-none border-none m-1 p-2 before:empty:content-[attr(placeholder)] before:empty:focus:content-[''] text-mc-light-gray"
+			class="overflow-x-auto bg-transparent resize-none border-0 shadow-none outline-none border-none p-3 before:empty:content-[attr(placeholder)] before:empty:focus:content-[''] text-mc-light-gray"
 			contenteditable="true"
 			bind:innerHTML={text}
 			on:paste={pasteHandler}
@@ -144,7 +160,7 @@
 		/>
 		<div
 			bind:this={previewDiv}
-			class="overflow-x-auto font-minecraft text-white p-2 bg-[#0f0110] -mb-2 rounded-b-md sm:rounded-bl-none"
+			class="overflow-x-auto h-min font-minecraft text-white p-2 bg-[#0f0110] -mb-2 rounded-b-md sm:rounded-bl-none"
 		>
 			<p class="text-mc-aqua h5 font-minecraft">Music disc</p>
 			{#if firstline != ''}

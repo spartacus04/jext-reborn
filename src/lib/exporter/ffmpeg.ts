@@ -2,7 +2,7 @@ import { get, writable } from 'svelte/store';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 
 import { listen } from '@tauri-apps/api/event';
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 import { arrayBufferToBase64, base64ToArrayBuffer, blobToArraBuffer, downloadWithProgress, getDuration } from '../utils';
 import { removeStep, updateSteps } from './exporterLine';
 import type { MusicDisc } from '$lib/discs/musicDisc';

@@ -18,7 +18,7 @@ export const mergeResourcePacks = async (base: Blob) => {
 
 			if (!file.dir) {
 				if (
-					(file.name.endsWith('.json') && !file.name.endsWith('jext.json')) ||
+					(file.name.endsWith('.json') && !file.name.endsWith('jext.json') && !file.name.endsWith('jext.nbs.json')) ||
 					file.name.endsWith('.mcmeta')
 				) {
 					console.log(mergedJsonFiles);

@@ -126,7 +126,7 @@
 	bind:this={dialog}
 	id="backdrop"
 	on:click={onClick}
-	class="bg-surface-background md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
+	class="bg-surface-background md:w-[51rem] md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
 		class="m-0 md:m-auto md:w-[50rem] h-fit rounded-md bg-surface-background animate-slide-down block p-4 font-minecraft text-white shadow-md"

@@ -1,6 +1,8 @@
 import { get } from "svelte/store";
-import { ConfirmModal } from "./components/modals";
-import { baseElement } from "./state";
+import { AlertModal, ConfirmModal } from "./components/modals";
+import { baseElement, isTauri } from "./state";
+import { save } from "@tauri-apps/plugin-dialog";
+import { writeFile } from "@tauri-apps/plugin-fs";
 
 export const cConfirm = async (options: {
     text: string,
@@ -22,6 +24,24 @@ export const cConfirm = async (options: {
 
         confirmModal.openModal();
     });
+}
+
+export const cAlert = async (text: string, confirmText: string = 'Ok') => {
+	return await new Promise<void>((resolve) => {
+		const alertModal = new AlertModal({
+			target: get(baseElement)!,
+			props: {
+				text,
+				confirmText,
+				onFinish: () => {
+					alertModal.$destroy();
+					resolve();
+				},
+			},
+		});
+
+		alertModal.openModal();
+	});
 }
 
 export const blobToArraBuffer = (blob: Blob): Promise<ArrayBuffer> => {
@@ -51,10 +71,24 @@ export const base64ToArrayBuffer = (base64: string) => {
 };
 
 export const saveAs = (blob: Blob | undefined, filename: string) => {
-	const link = document.createElement('a');
-	link.href = URL.createObjectURL(blob!);
-	link.download = filename;
-	link.click();
+	if(isTauri) {
+		save({
+			canCreateDirectories: true,
+			title: 'Save File',
+			filters: [{ name: 'All Files', extensions: [filename.split('.').pop()!] }],
+		}).then(async (result) => {
+			if(result == null) return;
+
+			const uint8Array = new Uint8Array(await blob!.arrayBuffer());
+
+			writeFile(result, uint8Array);
+		});
+	} else {
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob!);
+		link.download = filename;
+		link.click();
+	}
 };
 
 export const getVersionFromTime = () => {
@@ -140,6 +174,8 @@ export const downloadWithProgress = async (
 export const getDuration = async (blob: Blob): Promise<number> => {
 	return new Promise((resolve) => {
 		const audio = document.createElement('audio');
+
+		console.debug('blob', blob);
 
 		audio.src = URL.createObjectURL(blob);
 

@@ -6,6 +6,16 @@
     export let data: PageData;
 </script>
 
+<svelte:head>
+    {#if data.isFound}
+        <title>Jext | Documentation</title>
+        <meta name="description" content="Documentation for the Jext Reborn Minecraft plugin." />
+    {:else}
+        <title>JEXT | 404</title>
+        <meta name="description" content="404 error page for the Jext Reborn Minecraft plugin." />
+    {/if}
+</svelte:head>
+
 <div class="p-4 w-full h-full">
     {#if data.isFound}
         {@html data.text}

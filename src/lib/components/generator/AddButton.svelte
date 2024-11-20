@@ -4,8 +4,8 @@
 	import { isTauri } from "$lib/state";
 </script>
 
-<div class="flex p-3">
-    <button class="flex-1 text-[#aeaeae] bg-[#404040] hover:bg-[#505050] mb-2 p-2 flex justify-center border-black border-2" use:inputFile={{
+<div class="flex p-3 mb-2">
+    <button class="flex-1 text-[#aeaeae] bg-[#404040] hover:bg-[#505050] p-2 flex justify-center border-black border-2" use:inputFile={{
         accept: ".zip,.nbs,.mp3,.wav,.ogg,.aac,.flac",
         multiple: true,
         cb: createNewDisc,

@@ -22,5 +22,5 @@ export class MusicDisc extends BaseDisc {
         if (splitName.length >= 1) this.author = splitName.join(' - ');
 
         this.autoSetNamespace();
-    } 
+    }
 }

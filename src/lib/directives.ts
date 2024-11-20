@@ -1,3 +1,7 @@
+import { open } from '@tauri-apps/plugin-dialog';
+import { isTauri } from './state';
+import { exists, readFile } from '@tauri-apps/plugin-fs';
+
 export const dropFile = (
 	e: HTMLElement,
 	params: { accept: string; cb: ((files?: File[]) => void) | null; multiple?: boolean } = {
@@ -91,19 +95,43 @@ export const inputFile = (
 ) => {
 	const { accept, cb, multiple } = params;
 
-	const click = () => {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.accept = accept;
-		if (multiple) input.setAttribute('multiple', '');
+	const click = async () => {
+		if(isTauri) {
+			let filePaths = await open({
+				multiple: multiple,
+				directory: false,
+				title: 'Select a file',
+				filters: [{ name: 'Files', extensions: accept.replaceAll('.', '').split(',') }]
+			}) as string | string[] | null;
 
-		input.addEventListener('change', () => {
-            if(cb) {
-                cb(Array.from(input.files!))
-            }
-		});
+			if(filePaths == null) return;
+			else if(typeof filePaths === 'string') filePaths = [filePaths];
 
-		input.click();
+			const files = await Promise.all(filePaths.map(async (path) => {
+				if(!(await exists(path))) return null;
+				const contents = await readFile(path);
+
+				return new File([contents], path.split('/').pop()!);
+			}));
+
+			if(cb) {
+				console.log(files.filter((file) => file !== null));
+				cb(files.filter((file) => file !== null));
+			}
+		} else {
+			const input = document.createElement('input');
+			input.type = 'file';
+			input.accept = accept;
+			if (multiple) input.setAttribute('multiple', '');
+
+			input.addEventListener('change', () => {
+				if(cb) {
+					cb(Array.from(input.files!))
+				}
+			});
+
+			input.click();
+		}
 	};
 
 	e.addEventListener('click', click);

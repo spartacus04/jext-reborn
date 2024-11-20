@@ -1,6 +1,8 @@
 import { default_icon } from "$lib/assets";
 import { versions } from "$lib/constants";
+import JSZip from "jszip";
 import { writable } from "svelte/store";
+import { randomTextures } from "./textures";
 
 interface PackData {
     icon: Blob;
@@ -34,3 +36,23 @@ export const ResourcePackData = writable<ExportPackData>({
         return data;
     });
 })();
+
+export const addRP = async (files?: File[]) => {
+    if (files && files.length > 0 && files[0]) {
+        const zip = await new JSZip().loadAsync(files[0])
+
+        const icon = await zip.file('pack.png')?.async('blob') ?? (await randomTextures()).discTexture;
+
+        ResourcePackData.update(ResourcePackData => {
+            ResourcePackData.packs = [
+                ...ResourcePackData.packs,
+                {
+                    name: files[0].name,
+                    icon: icon,
+                    contents: files[0]
+                }
+            ];
+            return ResourcePackData;
+        });
+    }
+};

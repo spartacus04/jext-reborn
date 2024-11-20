@@ -146,19 +146,27 @@ export class PluginExporter extends BaseExporter {
         rp.file(
             'jext.json',
             JSON.stringify(
-                discs.filter(isMusicDisc).map(disc => {
+                await Promise.all(discs.filter(isMusicDisc).map(async disc => {
                     return {
                         title: disc.title,
                         author: disc.author,
-                        duration: getDuration(disc.cachedFinalAudioFile!),
+                        duration: await getDuration(disc.cachedFinalAudioFile!),
                         'disc-namespace': disc.namespace,
                         'model-data': disc.modelData,
                         'creeper-drop': disc.creeperDroppable,
-                        'lores': disc.tooltip.split('\n'),
+                        'lores': (() => {
+                            const lores = disc.tooltip.split('\n');
+
+                            if(lores.length == 1 && lores[0] == '') {
+                                return [];
+                            }
+
+                            return lores;
+                        })(),
                         'loot-tables': disc.discLootTables,
                         'fragment-loot-tables': disc.fragmentLootTables
                     }
-                }), null, 2
+                })), null, 2
             )
         );
 
@@ -171,7 +179,15 @@ export class PluginExporter extends BaseExporter {
                         author: disc.author,
                         'disc-namespace': disc.namespace,
                         'model-data': disc.modelData,
-                        'lores': disc.tooltip.split('\n'),
+                        'lores': (() => {
+                            const lores = disc.tooltip.split('\n');
+
+                            if(lores.length == 1 && lores[0] == '') {
+                                return [];
+                            }
+
+                            return lores;
+                        })(),
                         'loot-tables': disc.discLootTables,
                         'fragment-loot-tables': disc.fragmentLootTables
                     }

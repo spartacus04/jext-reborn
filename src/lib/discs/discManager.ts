@@ -5,6 +5,9 @@ import EditDiscsModal from "$lib/components/modals/EditDiscsModal.svelte";
 import { baseElement } from "$lib/state";
 import { NbsDisc } from "./nbsDisc";
 import EditDungeonModal from "$lib/components/modals/EditDungeonModal.svelte";
+import { areJextFilesValid, JextReader, RPChecker } from "$lib/exporter/importer";
+import { cAlert, cConfirm } from "$lib/utils";
+import { addRP } from "./resourcePackManager";
 
 export const discsStore = writable<BaseDisc[]>([]);
 export const selectedDiscs = writable<BaseDisc[]>([]);
@@ -16,15 +19,46 @@ export function addDisc(disc: BaseDisc) {
 export function createNewDisc(files: File[] | undefined) {
     if (!files) return;
 
+    const audioFiles = ['.mp3', '.wav', '.ogg', '.aac', '.flac'];
+
     files.forEach(async file => {
-        if(file.type.includes('audio')) {
+        if(audioFiles.some(ext => file.name.endsWith(ext))) {
             const audioDisc = new MusicDisc(file);
 
             audioDisc.RerollTextures().then(() => {
                 addDisc(audioDisc);
             })
-        } else if(file.type.endsWith('.zip')) {
-            // TODO: setup zip file handling
+        } else if(file.name.endsWith('.zip')) {
+            const type = await RPChecker(file);
+
+            switch(type) {
+                case 'JextRP':
+                    if(!areJextFilesValid(file)) {
+                        cAlert('Invalid Jext Files files');
+                        return;
+                    }
+
+                    (await JextReader(file)).forEach(disc => {
+                        addDisc(disc);
+                    });
+
+                    addRP([file]);
+
+                    break;
+                case 'RP':
+                    if(await cConfirm({
+                        text: 'This is a normal Resource Pack. Do you want to add it to the Resource Pack Manager?',
+                        confirmText: 'Yes',
+                        cancelText: undefined,
+                        discardText: 'No'
+                    }) == 'confirm') {
+                        addRP([file]);
+                    }
+                    break;
+                case 'NotValid':
+                    cAlert('Invalid Resource Pack');
+                    break;
+            }
         } else if(file.name.endsWith('.nbs')) {
             const nbsDisc = new NbsDisc(file, await file.arrayBuffer());
 

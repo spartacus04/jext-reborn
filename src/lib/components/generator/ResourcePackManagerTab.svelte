@@ -6,6 +6,7 @@
 	import LauncherTextbox from "../inputs/LauncherTextbox.svelte";
 	import LauncherCombobox from "../inputs/LauncherCombobox.svelte";
 	import { versions } from "$lib/constants";
+	import ResourcePackMerge from "./ResourcePackMerge.svelte";
 
     export let iconUrl = URL.createObjectURL(get(ResourcePackData).icon);
 
@@ -32,11 +33,11 @@
                 src={iconUrl}
                 alt="disc icon"
                 use:inputFile={{
-                    accept: 'image/*',
+                    accept: '.png,.avif,.webp,.jpg,jpeg,bmp,.tiff',
                     cb: setTexture
                 }}
                 use:dropFile={{
-                    accept: 'image/*',
+                    accept: '.png,.avif,.webp,.jpg,jpeg,bmp,.tiff',
                     cb: setTexture
                 }}
             />
@@ -60,4 +61,6 @@
             </div>
         </div>
     </div>
+
+    <ResourcePackMerge />
 </div>

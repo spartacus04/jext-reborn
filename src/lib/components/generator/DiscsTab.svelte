@@ -16,6 +16,6 @@
     <AddButton />
 </div>
 
-<div class="" transition:slide={{ duration: 50 }}>
+<div class="" in:slide={{ duration: 50 }}>
     <BottomBar />
 </div>
