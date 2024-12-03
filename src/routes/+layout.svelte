@@ -3,7 +3,9 @@
 	import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
 	import '../app.postcss';
 	import '../global.d.ts';
-	import { baseElement } from '$lib/state';
+	import { baseElement, isTauri } from '$lib/state';
+	import { invoke } from '@tauri-apps/api/core';
+	import { base64ToArrayBuffer, saveAs } from '$lib/utils';
 
 	const media = matchMedia('(max-width: 768px)');
 
@@ -17,6 +19,19 @@
 			isOpen = true;
 		}
 	});
+
+	if(isTauri) {
+		invoke('yt_download', {
+			url: 'O6JLkzn3X1s'
+		}).then((res) => {
+			const arbuf = base64ToArrayBuffer(res as string);
+			const blob = new Blob([arbuf], { type: 'audio/mpeg' });
+
+			saveAs(blob, 'test.mp3');
+		}).catch((err) => {
+			console.debug(err);
+		});
+	}
 
 	const swipeHandler = (event: SwipeCustomEvent) => {
 		if (!isMobile) return;

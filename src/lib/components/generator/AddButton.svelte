@@ -2,7 +2,12 @@
 	import { dropFile, inputFile } from "$lib/directives";
 	import { createNewDisc } from "$lib/discs/discManager";
 	import { isTauri } from "$lib/state";
+	import DownloadModal from "../modals/DownloadModal.svelte";
+
+    let downloadModal: DownloadModal;
 </script>
+
+<DownloadModal bind:this={downloadModal} />
 
 <div class="flex p-3 mb-2">
     <button class="flex-1 text-[#aeaeae] bg-[#404040] hover:bg-[#505050] p-2 flex justify-center border-black border-2" use:inputFile={{
@@ -29,7 +34,7 @@
     </button>
 
     {#if isTauri}
-        <button class="ml-4 aspect-square text-[#aeaeae] bg-[#404040] hover:bg-[#505050] p-2 flex justify-center border-black border-2">
+        <button class="ml-4 aspect-square text-[#aeaeae] bg-[#404040] hover:bg-[#505050] p-2 flex justify-center border-black border-2" on:click={() => downloadModal.openModal()}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-14 w-14"

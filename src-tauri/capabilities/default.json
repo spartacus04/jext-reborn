@@ -11,6 +11,7 @@
     "fs:allow-read-file",
     "fs:allow-app-meta-recursive",
     "fs:allow-write-file",
-    "dialog:allow-save"
+    "dialog:allow-save",
+    "shell:allow-open"
   ]
 }

@@ -19,12 +19,15 @@ export { default as panorama_2 } from './panorama_2.webp';
 export { default as panorama_3 } from './panorama_3.webp';
 export { default as panorama_4 } from './panorama_4.webp';
 export { default as panorama_5 } from './panorama_5.webp';
+export { default as soundcloud } from './soundcloud.webp';
 export { default as low_brush } from './low_brush.webp';
 export { default as low_chest } from './low_chest.webp';
 export { default as low_trial } from './low_trial.webp';
 export { default as android } from './android.webp';
 export { default as low_pot } from './low_pot.webp';
+export { default as spotify } from './spotify.webp';
 export { default as windows } from './windows.webp';
+export { default as youtube } from './youtube.webp';
 export { default as button } from './button.webp';
 export { default as github } from './github.webp';
 export { default as logout } from './logout.webp';
@@ -32,6 +35,7 @@ export { default as linux } from './linux.webp';
 export { default as login } from './login.webp';
 export { default as macos } from './macos.webp';
 export { default as cog } from './cog.webp';
+
 
 export { default as external_link } from './external_link.svg';
 export { default as connectionless } from './earth-lock.svg';
