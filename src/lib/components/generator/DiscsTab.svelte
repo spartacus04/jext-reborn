@@ -9,7 +9,7 @@
 	import DownloadingDiscs from './DownloadingDiscs.svelte';
 </script>
 
-<div class="flex-grow overflow-y-auto" id="main">
+<div class="flex-grow overflow-y-auto overflow-x-hidden" id="main">
 	{#if $discsStore.length > 0}
 		<SelectionManager />
 		<hr class="mx-4 border-surface-separator" />

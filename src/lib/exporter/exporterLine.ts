@@ -110,7 +110,7 @@ const saveRecentExport = async (rp: Blob) => {
 		await remove(`${baseDir}/${oldest}`);
 	}
 
-	const name = `export-${new Date().toISOString().replaceAll(/:/g, '-').replaceAll('-', '+')}-${get(ResourcePackData).name}`;
+	const name = `export-${new Date().toISOString().replaceAll(':', '=').replaceAll('-', '+')}-${get(ResourcePackData).name}`;
 
 	await writeFile(`${baseDir}/${name}`, new Uint8Array(await rp.arrayBuffer()));
 }

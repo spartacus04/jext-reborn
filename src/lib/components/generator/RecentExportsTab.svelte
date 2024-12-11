@@ -17,7 +17,7 @@
         const recentExports = (await readDir(baseDir)).map(entry => entry.name);
 
         const getDateTime = (name: string) => {
-            const date = name.split('-')[1].replace(/:/g, '-');
+            const date = name.split('-')[1].replaceAll('+', '-').replaceAll('=', ':');
             return new Date(date);
         }
 
@@ -44,7 +44,8 @@
                 name,
                 description,
                 icon,
-                filename
+                filename,
+                date: getDateTime(filename)
             }
         }));
     }
@@ -81,13 +82,13 @@
                 <div
                     class="flex items-center justify-between p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
                 >
-                    <div class="flex flex-col lg:flex-row items-center w-full flex-1">
+                    <div class="flex flex-col lg:flex-row items-center w-full flex-shrink lg:max-w-[85%]">
                         <img src={`data:image/png;base64, ${exportRp.icon}`} alt={exportRp.filename} class="w-28 lg:w-20 lg:h-20 rounded-lg" />
-                        <div class="lg:ml-4 block w-full">
+                        <div class="lg:ml-4 block flex-shrink overflow-x-auto">
                             <h3
                                 class="h3 text-white font-bold font-minecraft text-lg lg:text-2xl w-full overflow-hidden whitespace-nowrap text-ellipsis"
                             >
-                                {exportRp.name}
+                                {exportRp.name} - {exportRp.date.toLocaleDateString()} {exportRp.date.toLocaleTimeString()}
                             </h3>
                             <p
                                 class="text-gray-400 font-minecraft w-full overflow-hidden whitespace-nowrap text-ellipsis"
