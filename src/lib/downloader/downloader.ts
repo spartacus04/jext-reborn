@@ -13,20 +13,65 @@ export interface DownloadQueueElement {
 	url: string;
 	status: string;
 	iconUrl: string;
+	overrides?: Overrides;
+}
+
+interface Overrides {
+	title?: string;
+	author?: string;
+	description?: string;
+	icon?: string;
+}
+
+export interface CommunityPack {
+	name: string;
+	description: string;
+	descriptionAsTooltip: boolean;
+	icon: string;
+	authors: string[];
+	downloads: {
+		url: string;
+		overrideName?: string;
+		overrideAuthor?: string;
+		overrideDescription?: string;
+		baseIcon?: string;
+	}[];
 }
 
 export const downloadQueue = writable<DownloadQueueElement[]>([]);
 
 let isDownloading = false;
 
-export const addDownloadQueueElement = async (url: string) => {
+export const addDownloadQueueElement = async (url: string, overrides?: Overrides) => {
 	const defaultDiscBlob = await fetch(default_disc).then((res) => res.blob());
 
 	downloadQueue.update((queue) => [
 		...queue,
-		{ url, status: 'Download pending...', iconUrl: URL.createObjectURL(defaultDiscBlob) }
+		{ url, status: 'Download pending...', iconUrl: URL.createObjectURL(defaultDiscBlob), overrides }
 	]);
 };
+
+export const addDownloadQueuePack = async (pack: CommunityPack) => {
+	const { discTexture } = await adaptImageToDisc(await tfetch(pack.icon).then((res) => res.blob()));
+
+	downloadQueue.update((queue) => [
+		...queue,
+		...pack.downloads.map((download) => {
+			return {
+				displayName: `${download.overrideName ?? pack.name} - ${download.overrideAuthor ?? pack.authors.join(', ')}`,
+				url: download.url,
+				status: 'Download pending...',
+				iconUrl: URL.createObjectURL(discTexture),
+				overrides: {
+					title: download.overrideName,
+					author: download.overrideAuthor,
+					icon: download.baseIcon,
+					description: download.overrideDescription ?? (pack.descriptionAsTooltip ? pack.description : undefined)
+				}
+			}
+		})
+	]);
+}
 
 export const setFirstDownloadQueueElementStatus = (status: string) => {
 	downloadQueue.update((queue) => {
@@ -35,7 +80,7 @@ export const setFirstDownloadQueueElementStatus = (status: string) => {
 	});
 };
 
-export const downloaderLine = async (url: string) => {
+export const downloaderLine = async (url: string, overrides?: Overrides) => {
 	if(url.trim() === '') return;
 
 	const urlData = (await invoke('yt_dlp_get_playlist_info', { url })) as any;
@@ -49,11 +94,11 @@ export const downloaderLine = async (url: string) => {
 				const entryUrl = entry.url;
 				console.log(entryUrl);
 
-				await addDownloadQueueElement(entryUrl);
+				await addDownloadQueueElement(entryUrl, overrides);
 			}
 		}
 	} else {
-		await addDownloadQueueElement(url);
+		await addDownloadQueueElement(url, overrides);
 	}
 
 	startDownloadQueue();
@@ -85,11 +130,9 @@ export const startDownloadQueue = async () => {
 
 	if (!details) return;
 
-	console.debug(details);
-
-	const author = details.uploader ?? '';
-	const title = details.title ?? 'Unknown';
-	const thumbnail = details.thumbnail ?? details.artwork_url ?? null;
+	const author = firstElement.overrides?.author ?? details.uploader ?? '';
+	const title = firstElement.overrides?.title ?? details.title ?? 'Unknown';
+	const thumbnail = firstElement.overrides?.icon ?? details.thumbnail ?? details.artwork_url ?? null;
 
 	downloadQueue.update((queue) => {
 		if (author != '') {
@@ -103,8 +146,6 @@ export const startDownloadQueue = async () => {
 	const textures = thumbnail
 		? await adaptImageToDisc(await tfetch(thumbnail).then((res) => res.blob()))
 		: await randomTextures();
-
-	console.debug(textures);
 
 	URL.revokeObjectURL(firstElement.iconUrl);
 	downloadQueue.update((queue) => {
@@ -124,6 +165,10 @@ export const startDownloadQueue = async () => {
 	const audioFile = new File([audioBlob], `${title} - ${author}.mp3`, { type: 'audio/mp3' });
 
 	const disc = new MusicDisc(audioFile);
+
+	if(firstElement.overrides?.description) {
+		disc.tooltip = firstElement.overrides.description;
+	}
 
 	disc.setDiscTexture(textures.discTexture);
 	disc.setFragmentTexture(textures.fragmentTexture);

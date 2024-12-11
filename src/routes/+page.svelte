@@ -1,5 +1,6 @@
 <script lang="ts">
-	import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
+	import CommunityPacksTab from '$lib/components/generator/CommunityPacksTab.svelte';
+import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
 	import RecentExportsTab from '$lib/components/generator/RecentExportsTab.svelte';
 	import ResourcePackManagerTab from '$lib/components/generator/ResourcePackManagerTab.svelte';
 	import TopBar from '$lib/components/generator/TopBar.svelte';
@@ -23,6 +24,8 @@
 			<DiscsTab />
 		{:else if currentPage == 'Resource pack manager'}
 			<ResourcePackManagerTab />
+		{:else if currentPage == 'Community packs'}
+			<CommunityPacksTab />
 		{:else if currentPage == 'Recent exports'}
 			<RecentExportsTab />
 		{/if}

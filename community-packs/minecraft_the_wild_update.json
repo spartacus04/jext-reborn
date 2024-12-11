@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+    "name": "Minecraft: The Wild Update",
+    "description": "A serene and adventurous soundtrack for Minecraft's The Wild Update.",
+    "descriptionAsTooltip": false,
+    "icon": "https://i.scdn.co/image/ab67616d0000b2731e96072f9313fa912b7ffbd3",
+    "authors": ["Lena Raine"], 
+    "downloads": [
+        {
+            "url": "https://youtu.be/DoUW5ZkblTs",
+            "overrideName": "Firebugs",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Wild Update soundtrack features a serene and adventurous collection of music tracks composed by Lena Raine, capturing the essence of the new biomes and features in Minecraft's The Wild Update.\n§2§o1st disc out of 3.",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2731e96072f9313fa912b7ffbd3"
+        },
+        {
+            "url": "https://youtu.be/FMJoOTOBcwE",
+            "overrideName": "Aerie",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Wild Update soundtrack features a serene and adventurous collection of music tracks composed by Lena Raine, capturing the essence of the new biomes and features in Minecraft's The Wild Update.\n§2§o2nd disc out of 3.",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2731e96072f9313fa912b7ffbd3"
+        },
+        {
+            "url": "https://youtu.be/daVhxk1Yx20",
+            "overrideName": "Labyrinthine",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Wild Update soundtrack features a serene and adventurous collection of music tracks composed by Lena Raine, capturing the essence of the new biomes and features in Minecraft's The Wild Update.\n§2§o3rd disc out of 3.",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2731e96072f9313fa912b7ffbd3"
+        }
+    ]
+}

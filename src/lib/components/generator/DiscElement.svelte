@@ -20,7 +20,7 @@
 </script>
 
 <div
-	class="flex items-center justify-between p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
+	class="flex items-center justify-start p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
 >
 	<input
 		type="checkbox"
@@ -30,9 +30,9 @@
 	/>
 
 	{#key update}
-		<div class="flex flex-col lg:flex-row items-center w-full flex-shrink lg:max-w-[85%]">
+		<div class="flex flex-col lg:flex-row items-center w-full flex-shrink lg:w-[85%]">
 			<img src={disc.discTextureURL} alt={disc.title} class="w-28 lg:w-20 lg:h-20 rounded-lg" />
-			<div class="lg:ml-4 block flex-shrink overflow-x-auto">
+			<div class="lg:ml-4 block flex-shrink overflow-x-auto w-full">
 				<h3
 					class="h3 text-white font-bold font-minecraft text-lg lg:text-2xl w-full overflow-hidden whitespace-nowrap text-ellipsis"
 				>
@@ -46,15 +46,18 @@
 			</div>
 		</div>
 	{/key}
-	<div class="lg:ml-4 flex gap-2 lg:flex-col">
-		<LauncherButton
-			text="Edit"
-			type="primary"
-			on:click={async () => {
-				await editDiscs(disc);
-				update = {};
-			}}
-		/>
-		<LauncherButton text="Delete" type="danger" on:click={() => removeDisc(disc)} />
+
+	<div class="w-full flex flex-row justify-end flex-1">
+		<div class="lg:ml-4 flex gap-2 lg:flex-col justify-self-end">
+			<LauncherButton
+				text="Edit"
+				type="primary"
+				on:click={async () => {
+					await editDiscs(disc);
+					update = {};
+				}}
+			/>
+			<LauncherButton text="Delete" type="danger" on:click={() => removeDisc(disc)} />
+		</div>
 	</div>
 </div>

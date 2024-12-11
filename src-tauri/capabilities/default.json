@@ -16,7 +16,7 @@
 		"shell:allow-open",
 		{
 			"identifier": "http:default",
-			"allow": [{ "url": "https://i.ytimg.com/*" }, { "url": "https://*.sndcdn.com/*" }]
+			"allow": [{ "url": "http://*" }, { "url": "https://*" }]
 		}
 	]
 }

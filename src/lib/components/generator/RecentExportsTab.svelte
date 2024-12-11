@@ -74,17 +74,17 @@
             <h1 class="font-minecraft text-white text-2xl">No recent exports found</h1>
         </div>
     {:else} 
-        <div class="flex w-full mt-4 items-center justify-center">
-            <h1 class="font-minecraft text-white text-2xl">Recent exports</h1>
-        </div>
-        <div class="grid p-4 pt-2 gap-2 grid-cols-1 xs:grid-cols-2 lg:grid-cols-1">
+        <div class="grid p-4 pt-2 gap-2 grid-cols-1 xs:grid-cols-2 lg:grid-cols-1 overflow-y-auto overflow-x-hidden">
+            <div class="flex w-full mt-4 items-center justify-center">
+                <h1 class="font-minecraft text-white text-2xl">Recent exports</h1>
+            </div>
             {#each recentExports as exportRp}
                 <div
                     class="flex items-center justify-between p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
                 >
                     <div class="flex flex-col lg:flex-row items-center w-full flex-shrink lg:max-w-[85%]">
                         <img src={`data:image/png;base64, ${exportRp.icon}`} alt={exportRp.filename} class="w-28 lg:w-20 lg:h-20 rounded-lg" />
-                        <div class="lg:ml-4 block flex-shrink overflow-x-auto">
+                        <div class="lg:ml-4 block flex-shrink overflow-x-auto w-full">
                             <h3
                                 class="h3 text-white font-bold font-minecraft text-lg lg:text-2xl w-full overflow-hidden whitespace-nowrap text-ellipsis"
                             >

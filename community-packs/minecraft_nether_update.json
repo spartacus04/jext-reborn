@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+    "name": "Minecraft: Nether Update",
+    "description": "Ambient and atmospheric tracks capturing the eerie essence of the Nether dimension.",
+    "descriptionAsTooltip": false,
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e5/72/cc/e572cc72-ff09-4918-8599-7134ddf8e97e/192641512063_Cover.jpg/1200x1200bb.jpg",
+    "authors": ["Lena Raine"], 
+    "downloads": [
+        {
+            "url": "https://youtu.be/qHDuedbZYbc",
+            "overrideName": "Chrysopoeia",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Nether Update soundtrack features a collection of ambient and atmospheric music tracks composed by Lena Raine, capturing the eerie and mysterious essence of the Nether dimension in Minecraft.\n§2§o1st disc out of 3.",
+            "baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e5/72/cc/e572cc72-ff09-4918-8599-7134ddf8e97e/192641512063_Cover.jpg/1200x1200bb.jpg"
+        },
+        {
+            "url": "https://youtu.be/HcvKHX6kK6M",
+            "overrideName": "Rubedo",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Nether Update soundtrack features a collection of ambient and atmospheric music tracks composed by Lena Raine, capturing the eerie and mysterious essence of the Nether dimension in Minecraft.\n§2§o2nd disc out of 3.",
+            "baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e5/72/cc/e572cc72-ff09-4918-8599-7134ddf8e97e/192641512063_Cover.jpg/1200x1200bb.jpg"
+        },
+        {
+            "url": "https://youtu.be/32jUaAgflXc",
+            "overrideName": "So Below",
+            "overrideAuthor": "Lena Raine",
+            "overrideDescription": "§6The Nether Update soundtrack features a collection of ambient and atmospheric music tracks composed by Lena Raine, capturing the eerie and mysterious essence of the Nether dimension in Minecraft.\n§2§o3rd disc out of 3.",
+            "baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e5/72/cc/e572cc72-ff09-4918-8599-7134ddf8e97e/192641512063_Cover.jpg/1200x1200bb.jpg"
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 use std::{path::PathBuf, process::Command};
 
-use reqwest::header::USER_AGENT;
+use tauri_plugin_http::reqwest::header::USER_AGENT;
+use tauri_plugin_http::reqwest::Client;
 use tauri::http::HeaderValue;
 
 use super::platform::{Architecture, Platform};
@@ -105,7 +106,7 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
     let asset = asset.unwrap();
     let download_url = asset.get("browser_download_url").and_then(|u| u.as_str()).unwrap_or("");
 
-    let client = reqwest::Client::new();
+    let client = Client::new();
 
     let response = match client.get(download_url).send().await {
         Ok(response) => response,
@@ -134,7 +135,7 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
 pub async fn get_yt_dlp_release_data() -> Result<serde_json::Value, String> {
     let url = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest";
 
-    let client = reqwest::Client::new();
+    let client = Client::new();
     let response = match client
         .get(url)
         .header(USER_AGENT, HeaderValue::from_static("rust-reqwest"))
