@@ -5,6 +5,8 @@
 	import DiscsList from './DiscsList.svelte';
 	import SelectionManager from './SelectionManager.svelte';
 	import { discsStore } from '$lib/discs/discManager';
+	import { isTauri } from '@tauri-apps/api/core';
+	import DownloadingDiscs from './DownloadingDiscs.svelte';
 </script>
 
 <div class="flex-grow overflow-y-auto" id="main">
@@ -13,6 +15,11 @@
 		<hr class="mx-4 border-surface-separator" />
 		<DiscsList />
 	{/if}
+
+	{#if isTauri()}
+		<DownloadingDiscs />
+	{/if}
+
 	<AddButton />
 </div>
 

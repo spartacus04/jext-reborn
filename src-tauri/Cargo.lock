@@ -102,27 +102,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4c95c10ba0b00a02636238b814946408b1322d5ac4760326e6fb8ec956d85775"
 
 [[package]]
-name = "app"
-version = "2.0.0"
-dependencies = [
- "base64 0.22.1",
- "ffmpeg-sidecar",
- "log",
- "reqwest",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-fs",
- "tauri-plugin-http",
- "tauri-plugin-log",
- "tauri-plugin-shell",
- "tokio",
- "url",
-]
-
-[[package]]
 name = "arbitrary"
 version = "1.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2127,6 +2106,27 @@ dependencies = [
  "gobject-sys",
  "libc",
  "system-deps",
+]
+
+[[package]]
+name = "jext-companion"
+version = "2.0.0"
+dependencies = [
+ "base64 0.22.1",
+ "ffmpeg-sidecar",
+ "log",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-fs",
+ "tauri-plugin-http",
+ "tauri-plugin-log",
+ "tauri-plugin-shell",
+ "tokio",
+ "url",
 ]
 
 [[package]]

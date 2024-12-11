@@ -53,8 +53,11 @@
 			<SidebarEntryLink href="{base}/" icon={default_disc} title="Disc manager" />
 			{#if isTauri}
 				<SidebarEntryLink href="{base}/config" icon={cog} title="Config manager" />
+				<SidebarEntryLink href="https://spartacus04.github.io/jext-reborn/docs" icon={knowledge_book} title="Documentation" external={true} />
+			{:else }
+				<SidebarEntryLink href="{base}/docs" icon={knowledge_book} title="Documentation" />
 			{/if}
-			<SidebarEntryLink href="{base}/docs" icon={knowledge_book} title="Documentation" />
+
 
 			<div class="flex-grow" />
 

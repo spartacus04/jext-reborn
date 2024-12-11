@@ -3,8 +3,9 @@ import { BaseExporter } from './baseExporter';
 import { get } from 'svelte/store';
 import { discsStore, isMusicDisc } from '$lib/discs/discManager';
 import type { NbsDisc } from '$lib/discs/nbsDisc';
-import { getDuration } from '$lib/utils';
+import { getDuration, getVersionFromTime } from '$lib/utils';
 import { ResourcePackData } from '$lib/discs/resourcePackManager';
+import { MusicDisc } from '$lib/discs/musicDisc';
 
 export class PluginExporter extends BaseExporter {
 	public name = 'JEXT Reborn';
@@ -213,6 +214,142 @@ export class PluginExporter extends BaseExporter {
 	}
 
 	private async buildBedrockRP(): Promise<Blob | undefined> {
-		return undefined;
+		const rp = new JSZip();
+
+		const discs = get(discsStore);
+		const resourcePackData = get(ResourcePackData);
+
+		// manifest.json
+
+		rp.file(
+			'manifest.json',
+			JSON.stringify(
+				{
+					format_version: 2,
+					header: {
+						description: resourcePackData.description,
+						min_engine_version: [1, 14, 0],
+						name: 'JEXT Custom Discs',
+						uuid: 'e60d0bb3-6d2a-4a15-b393-74666ce2e15f',
+						version: getVersionFromTime()
+					},
+					modules: [
+						{
+							description: resourcePackData.description,
+							type: 'resources',
+							uuid: 'd0b32a92-e81d-4b19-ab72-97d421ca0be8',
+							version: getVersionFromTime()
+						}
+					]
+				},
+				null,
+				2
+			)
+		);
+
+		rp.file('mappings.json', JSON.stringify({
+			'format_version': 2,
+			'items': {
+				'minecraft:music_disc_11': discs.map(disc => ({
+					name: `music_disc_${disc.namespace}`,
+					custom_model_data: disc.modelData,
+					display_name: 'Music Disc',
+				})),
+			}
+		}, null, 2));
+
+		// pack_icon.png
+
+		rp.file('pack_icon.png', resourcePackData.icon);
+
+		// item_texture.json
+
+		const itemTextures: {
+			[key: string]: {
+				textures: string[];
+			};
+		} = {};
+
+		for (const disc of discs) {
+			itemTextures[`music_disc_${disc.namespace}`] = {
+				textures: [`textures/items/music_disc_${disc.namespace}`]
+			};
+
+			itemTextures[`fragment_${disc.namespace}`] = {
+				textures: [`textures/items/fragment_${disc.namespace}`]
+			};
+		}
+
+		rp.file(
+			'textures/item_texture.json',
+			JSON.stringify(
+				{
+					resource_pack_name: 'JEXT Custom Discs',
+					texture_name: 'atlas.items',
+					texture_data: itemTextures
+				},
+				null,
+				2
+			)
+		);
+
+		// sound_definitions.json
+
+		const soundDefinitions: {
+			[key: string]: {
+				__use_legacy_max_distance: true;
+				category: 'record';
+				max_distance: 64.0;
+				sounds: {
+					name: string;
+					load_on_low_memory: true;
+					stream: boolean;
+					volume: 0.5;
+				}[];
+			};
+		} = {};
+
+		for (const disc of discs) {
+			soundDefinitions[disc.namespace] = {
+				__use_legacy_max_distance: true,
+				category: 'record',
+				max_distance: 64.0,
+				sounds: [
+					{
+						name: `sounds/jext/${disc.namespace}`,
+						load_on_low_memory: true,
+						stream: true,
+						volume: 0.5
+					}
+				]
+			};
+		}
+
+		rp.file(
+			'sounds/sound_definitions.json',
+			JSON.stringify(
+				{
+					format_version: '1.14.0',
+					sound_definitions: soundDefinitions
+				},
+				null,
+				2
+			)
+		);
+
+		// each disc's textures and sound
+		for (const disc of discs) {
+			rp.file(`textures/items/music_disc_${disc.namespace}.png`, disc.discTexture);
+			rp.file(
+				`textures/items/fragment_${disc.namespace}.png`,
+				disc.fragmentTexture
+			);
+
+			if(isMusicDisc(disc)) {
+				rp.file(`sounds/jext/${disc.namespace}.ogg`, (disc as MusicDisc).cachedFinalAudioFile);
+			}
+		}
+
+		return await rp.generateAsync({ type: 'blob' });
 	}
 }

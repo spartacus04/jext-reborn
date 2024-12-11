@@ -30,16 +30,16 @@
 	/>
 
 	{#key update}
-		<div class="flex flex-col lg:flex-row items-center w-full">
+		<div class="flex flex-col lg:flex-row items-center w-full flex-1">
 			<img src={disc.discTextureURL} alt={disc.title} class="w-28 lg:w-20 lg:h-20 rounded-lg" />
 			<div class="lg:ml-4 block w-full">
 				<h3
-					class="h3 text-white font-bold font-minecraft text-lg lg:text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-[calc(100%)]"
+					class="h3 text-white font-bold font-minecraft text-lg lg:text-2xl w-full overflow-hidden whitespace-nowrap text-ellipsis"
 				>
 					{disc.author.trim() != '' ? `${disc.title} - ${disc.author}` : disc.title}
 				</h3>
 				<p
-					class="text-gray-400 font-minecraft overflow-hidden whitespace-nowrap text-ellipsis w-[calc(100%)]"
+					class="text-gray-400 font-minecraft w-full overflow-hidden whitespace-nowrap text-ellipsis"
 				>
 					{disc.namespace}
 				</p>

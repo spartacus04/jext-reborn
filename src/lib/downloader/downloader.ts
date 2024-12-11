@@ -24,7 +24,7 @@ export const addDownloadQueueElement = async (url: string) => {
 
 	downloadQueue.update((queue) => [
 		...queue,
-		{ url, status: 'pending', iconUrl: URL.createObjectURL(defaultDiscBlob) }
+		{ url, status: 'Download pending...', iconUrl: URL.createObjectURL(defaultDiscBlob) }
 	]);
 };
 
@@ -36,6 +36,8 @@ export const setFirstDownloadQueueElementStatus = (status: string) => {
 };
 
 export const downloaderLine = async (url: string) => {
+	if(url.trim() === '') return;
+
 	const urlData = (await invoke('yt_dlp_get_playlist_info', { url })) as any;
 
 	if (urlData['_type'] === 'playlist') {

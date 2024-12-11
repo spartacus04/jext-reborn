@@ -5,6 +5,9 @@ import type { BaseExporter } from './baseExporter';
 import { ResourcePackData } from '$lib/discs/resourcePackManager';
 import { mergeResourcePacks } from './rpmerger';
 import { discsStore } from '$lib/discs/discManager';
+import { isTauri } from '$lib/state';
+import { exists, readDir, writeFile, mkdir, remove, stat } from '@tauri-apps/plugin-fs'
+import { appCacheDir } from '@tauri-apps/api/path';
 
 export const exporterSteps = writable<
 	(
@@ -62,6 +65,8 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 
 		updateSteps(0, 'Finishing up', 4, 4);
 
+		await saveRecentExport(merged);
+
 		return {
 			javaRP: merged,
 			bedrockRP: output.bedrockRP
@@ -70,5 +75,42 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 
 	updateSteps(0, 'Finishing up', 3, 3);
 
+	await saveRecentExport(output.javaRP);
+
 	return output;
 };
+
+const saveRecentExport = async (rp: Blob) => {
+	if(!isTauri) return;
+
+	const baseDir = `${await appCacheDir()}/recentExports`;
+
+	if(!(await exists(baseDir))) {
+		await mkdir(baseDir, {
+			recursive: true
+		});
+	}
+
+	const files = await readDir(baseDir);
+
+	if(files.length >= 15) {
+		let oldest = files[0];
+		let oldestStat = await stat(`${baseDir}/${oldest}`);
+
+		for(let i = 1; i < files.length; i++) {
+			const file = files[i];
+			const newStat = await stat(`${baseDir}/${file}`);
+
+			if(newStat.birthtime! < oldestStat.birthtime!) {
+				oldest = file;
+				oldestStat = newStat;
+			}
+		}
+
+		await remove(`${baseDir}/${oldest}`);
+	}
+
+	const name = `export-${new Date().toISOString().replaceAll(/:/g, '-').replaceAll('-', '+')}-${get(ResourcePackData).name}`;
+
+	await writeFile(`${baseDir}/${name}`, new Uint8Array(await rp.arrayBuffer()));
+}

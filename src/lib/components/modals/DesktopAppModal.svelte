@@ -52,10 +52,11 @@
 			<p>By downloading the desktop app you get access to some exclusive features such as:</p>
 			<ul class="list-disc ml-4 mb-2">
 				<li>Faster generation speed</li>
-				<li>Bulk importing</li>
 				<li>Direct download from Youtube/Soundcloud</li>
-				<li>Remote disc management</li>
-				<li>Remote configuration management</li>
+				<li>Remote disc/configuration management</li>
+				<li>Bulk importing</li>
+				<li>Community disc packs</li>
+				<li>Exports history</li>
 			</ul>
 			<hr class="-mx-4 border-surface-separator" />
 			<div class="flex pt-4 justify-end">

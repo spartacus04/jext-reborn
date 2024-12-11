@@ -5,14 +5,14 @@
 	import LauncherTextbox from '../inputs/LauncherTextbox.svelte';
 	let dialog: HTMLDialogElement;
 
-	export const open = () => dialog.show();
+	export const open = () => { url = ''; dialog.show(); };
 	export const close = () => {
 		dialog.close();
 	};
 
 	export const isOpen = () => dialog.open;
 	export const toggle = () => (dialog.open ? close() : open());
-	export const openModal = () => dialog.showModal();
+	export const openModal = () => { url = ''; dialog.showModal(); };
 
 	const onClick = (e: MouseEvent) => {
 		const id = (e.target as HTMLElement).id;
@@ -55,7 +55,7 @@
 
 			<div class="flex gap-2 pt-4 justify-end">
 				<LauncherButton text="Cancel" type="tertiary" on:click={() => close()} />
-				<LauncherButton text="Download!" type="primary" on:click={() => downloaderLine(url)} />
+				<LauncherButton text="Download!" type="primary" on:click={() => { downloaderLine(url); close() }} />
 			</div>
 		</div>
 	</div>
