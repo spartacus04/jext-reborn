@@ -23,4 +23,4 @@ export const os = (() => {
 	return 'unknown';
 })();
 
-export const baseElement = writable<Element|undefined>(undefined);
+export const baseElement = writable<Element | undefined>(undefined);

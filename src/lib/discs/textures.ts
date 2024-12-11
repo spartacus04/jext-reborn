@@ -88,3 +88,96 @@ export const randomTextures = async (): Promise<{ discTexture: Blob; fragmentTex
 		})
 	};
 };
+
+export const adaptImageToDisc = async (
+	image: Blob
+): Promise<{ discTexture: Blob; fragmentTexture: Blob }> => {
+	// scale image to 16x16
+	const getImageData = async (image: Blob): Promise<Uint8ClampedArray> => {
+		return await new Promise<Uint8ClampedArray>((resolve) => {
+			const canvas = document.createElement('canvas');
+			canvas.width = 16;
+			canvas.height = 16;
+
+			const ctx = canvas.getContext('2d')!;
+
+			const img = new Image();
+			img.src = URL.createObjectURL(image);
+
+			img.onload = () => {
+				ctx.drawImage(img, 0, 0, 16, 16);
+
+				const imgData = ctx.getImageData(0, 0, 16, 16);
+
+				resolve(imgData.data);
+			};
+		});
+	};
+
+	const thumbData = await getImageData(image);
+
+	return {
+		fragmentTexture: await new Promise(async (resolve) => {
+			const canvas = document.createElement('canvas');
+			canvas.width = 16;
+			canvas.height = 16;
+
+			const ctx = canvas.getContext('2d')!;
+
+			const img = new Image();
+			img.src = fragment_template;
+
+			img.onload = () => {
+				ctx.drawImage(img, 0, 0, 16, 16);
+
+				const imgData = ctx.getImageData(0, 0, 16, 16);
+				const data = imgData.data;
+
+				for (let i = 0; i < data.length; i += 4) {
+					if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0 && data[i + 3] === 0)
+						continue;
+
+					if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) {
+						data[i] = thumbData[i];
+						data[i + 1] = thumbData[i + 1];
+						data[i + 2] = thumbData[i + 2];
+					}
+				}
+
+				ctx.putImageData(imgData, 0, 0);
+				canvas.toBlob((blob) => resolve(blob!));
+			};
+		}),
+		discTexture: await new Promise(async (resolve) => {
+			const canvas = document.createElement('canvas');
+			canvas.width = 16;
+			canvas.height = 16;
+
+			const ctx = canvas.getContext('2d')!;
+
+			const img = new Image();
+			img.src = disc_template;
+
+			img.onload = () => {
+				ctx.drawImage(img, 0, 0, 16, 16);
+
+				const imgData = ctx.getImageData(0, 0, 16, 16);
+				const data = imgData.data;
+
+				for (let i = 0; i < data.length; i += 4) {
+					if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0 && data[i + 3] === 0)
+						continue;
+
+					if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) {
+						data[i] = thumbData[i];
+						data[i + 1] = thumbData[i + 1];
+						data[i + 2] = thumbData[i + 2];
+					}
+				}
+
+				ctx.putImageData(imgData, 0, 0);
+				canvas.toBlob((blob) => resolve(blob!));
+			};
+		})
+	};
+};

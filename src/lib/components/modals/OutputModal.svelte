@@ -162,7 +162,6 @@
 			</div>
 		</div>
 	{:else}
-
 		<div class="w-full fixed h-full flex flex-col items-center justify-center">
 			<div class="xl:w-[50%] lg:w-[60%] w-[100%] flex flex-col items-center justify-center p-4">
 				<div class="flex items-center justify-center gap-4 flex-col sm:flex-row mb-4">
@@ -177,7 +176,9 @@
 				</div>
 
 				{#if $exporterSteps[0] != undefined}
-					<p class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis">
+					<p
+						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+					>
 						{$exporterSteps[0].status}
 					</p>
 					<ForgeProgressBar
@@ -190,7 +191,9 @@
 				{/if}
 
 				{#if $exporterSteps[1] != undefined}
-					<p class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis">
+					<p
+						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+					>
 						{$exporterSteps[1].status}
 					</p>
 					<ForgeProgressBar
@@ -203,7 +206,9 @@
 				{/if}
 
 				{#if $exporterSteps[2] != undefined}
-					<p class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis">
+					<p
+						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+					>
 						{$exporterSteps[2].status}
 					</p>
 					<ForgeProgressBar

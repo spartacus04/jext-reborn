@@ -124,10 +124,10 @@
 			{/key}
 		{/each}
 
-        {#key query}
-            {#if pages.filter(filter).length === 0}
-                <p class="text-white text-center mt-8">No results found.</p>
-            {/if}
-        {/key}
+		{#key query}
+			{#if pages.filter(filter).length === 0}
+				<p class="text-white text-center mt-8">No results found.</p>
+			{/if}
+		{/key}
 	</div>
 </div>

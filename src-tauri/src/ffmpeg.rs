@@ -1,8 +1,14 @@
-use tauri::{Emitter, Manager};
-use base64::{engine::general_purpose::{self, STANDARD}, Engine};
+use base64::{
+    engine::general_purpose::{self, STANDARD},
+    Engine,
+};
 use ffmpeg_sidecar::event::FfmpegEvent;
-use std::{fs, io::{Read, Write}};
-use tauri_plugin_dialog::{MessageDialogButtons, DialogExt};
+use std::{
+    fs,
+    io::{Read, Write},
+};
+use tauri::{Emitter, Manager};
+use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
 
 #[tauri::command]
 pub fn try_download_ffmpeg(app: tauri::AppHandle) -> Result<bool, String> {
@@ -27,7 +33,11 @@ pub fn try_download_ffmpeg(app: tauri::AppHandle) -> Result<bool, String> {
 }
 
 #[tauri::command(async)]
-pub fn run_ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle) -> Result<String, String> {
+pub fn run_ffmpeg(
+    input: String,
+    args: Vec<String>,
+    app_handle: tauri::AppHandle,
+) -> Result<String, String> {
     let binary = STANDARD.decode(input).unwrap();
 
     if !ffmpeg_sidecar::command::ffmpeg_is_installed() {
@@ -69,27 +79,26 @@ pub fn run_ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle
         .spawn()
         .unwrap();
 
-    ffmpeg.iter().unwrap()
-        .for_each(|e| {
-        match e {
-            FfmpegEvent::Log(_level, msg) => {
-                println!("[ffmpeg] {msg}");
+    ffmpeg.iter().unwrap().for_each(|e| match e {
+        FfmpegEvent::Log(_level, msg) => {
+            println!("[ffmpeg] {msg}");
 
-                if !msg.contains("time=") || !msg.contains("speed=") {
-                    return;
-                }
-
-                let time = msg.split("time=").collect::<Vec<&str>>()[1].split(" ").collect::<Vec<&str>>()[0];
-
-                if time.starts_with("-") {
-                    return;
-                }
-
-                app_handle.emit("ffmpeg-progress", time).unwrap();
+            if !msg.contains("time=") || !msg.contains("speed=") {
+                return;
             }
-            _ => {}
+
+            let time = msg.split("time=").collect::<Vec<&str>>()[1]
+                .split(" ")
+                .collect::<Vec<&str>>()[0];
+
+            if time.starts_with("-") {
+                return;
+            }
+
+            app_handle.emit("ffmpeg-progress", time).unwrap();
         }
-        });
+        _ => {}
+    });
 
     let ffmpeg_result = ffmpeg.wait();
 
@@ -98,7 +107,7 @@ pub fn run_ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle
             if !exit.success() {
                 return Err(format!("Error running ffmpeg: {:?}", exit.code()));
             }
-        },
+        }
         Err(e) => {
             return Err(format!("Error running ffmpeg: {}", e));
         }
@@ -112,6 +121,6 @@ pub fn run_ffmpeg(input: String, args: Vec<String>, app_handle: tauri::AppHandle
     if let Err(e) = output_file.read_to_end(&mut output_data) {
         return Err(format!("Error reading output file: {}", e));
     }
-    
-    return Ok(general_purpose::STANDARD.encode(output_data))
+
+    return Ok(general_purpose::STANDARD.encode(output_data));
 }

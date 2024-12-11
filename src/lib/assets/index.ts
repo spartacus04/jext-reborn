@@ -36,7 +36,6 @@ export { default as login } from './login.webp';
 export { default as macos } from './macos.webp';
 export { default as cog } from './cog.webp';
 
-
 export { default as external_link } from './external_link.svg';
 export { default as connectionless } from './earth-lock.svg';
 export { default as hand_helping } from './hand_helping.svg';

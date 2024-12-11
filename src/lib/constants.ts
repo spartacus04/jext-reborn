@@ -6,7 +6,7 @@ export interface Loottable {
 	version: number;
 	img: string;
 	contents: string[];
-	mode: 'percentage' | 'weight'
+	mode: 'percentage' | 'weight';
 	group: 'chests/*' | 'pots/*' | 'trials/*' | 'archaeology/*';
 	defaultLoottableWeight?: number;
 	ignorePercentage?: number;
@@ -16,10 +16,10 @@ export const groups = {
 	'chests/*': low_chest,
 	'pots/*': low_pot,
 	'trials/*': low_trial,
-	'archaeology/*': low_brush,
+	'archaeology/*': low_brush
 };
 
-export const lootTables : Loottable[] = [
+export const lootTables: Loottable[] = [
 	{
 		displayName: 'Trial chambers',
 		img: 'loottable_icons/Trial_Chambers.webp',
@@ -29,68 +29,58 @@ export const lootTables : Loottable[] = [
 			'chests/trial_chambers/intersection_barrel',
 			'chests/trial_chambers/intersection',
 			'chests/trial_chambers/entrance',
-			'chests/trial_chambers/corridor',
+			'chests/trial_chambers/corridor'
 		],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Trial chambers',
 		subtitle: 'Decorated pots',
 		img: 'loottable_icons/Trial_Chambers.webp',
 		version: 34,
-		contents: [
-			'pots/trial_chambers/corridor',
-		],
+		contents: ['pots/trial_chambers/corridor'],
 		mode: 'weight',
 		group: 'pots/*',
-		defaultLoottableWeight: 351,
+		defaultLoottableWeight: 351
 	},
 	{
 		displayName: 'Vault',
 		img: 'loottable_icons/Vault.webp',
 		version: 34,
-		contents: [
-			'chests/trial_chambers/reward',
-		],
+		contents: ['chests/trial_chambers/reward'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 56,
+		defaultLoottableWeight: 56
 	},
 	{
 		displayName: 'Vault',
 		subtitle: 'Ominous',
 		img: 'loottable_icons/Vault_ominous.webp',
 		version: 34,
-		contents: [
-			'chests/trial_chambers/reward_ominous',
-		],
+		contents: ['chests/trial_chambers/reward_ominous'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 14,
+		defaultLoottableWeight: 14
 	},
 	{
 		displayName: 'Trial Spawner',
 		img: 'loottable_icons/Trial_Spawner.webp',
 		version: 34,
-		contents: [
-			'spawners/trial_chamber/consumables',
-		],
+		contents: ['spawners/trial_chamber/consumables'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 26,
+		defaultLoottableWeight: 26
 	},
 	{
 		displayName: 'Trial Spawner',
 		subtitle: 'Ominous',
 		img: 'loottable_icons/Trial_Spawner_ominous.webp',
 		version: 34,
-		contents: [
-			'spawners/ominous/trial_chamber/consumables',
-		],
+		contents: ['spawners/ominous/trial_chamber/consumables'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 110,
+		defaultLoottableWeight: 110
 	},
 	{
 		displayName: 'Ancient City',
@@ -98,7 +88,7 @@ export const lootTables : Loottable[] = [
 		version: 9,
 		contents: ['chests/ancient_city', 'chests/ancient_city_ice_box'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Bastion Remnant',
@@ -111,7 +101,7 @@ export const lootTables : Loottable[] = [
 			'chests/bastion_treasure'
 		],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Desert Pyramid',
@@ -119,7 +109,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/desert_pyramid'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Desert pyramid',
@@ -129,7 +119,7 @@ export const lootTables : Loottable[] = [
 		contents: ['archaeology/desert_pyramid'],
 		mode: 'weight',
 		group: 'archaeology/*',
-		defaultLoottableWeight: 8,
+		defaultLoottableWeight: 8
 	},
 	{
 		displayName: 'Dungeon',
@@ -137,7 +127,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/simple_dungeon'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'End City',
@@ -145,7 +135,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/end_city_treasure'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Igloo',
@@ -153,7 +143,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/igloo_chest'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Jungle Temple',
@@ -161,7 +151,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/jungle_temple'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Nether Fortress',
@@ -169,7 +159,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/nether_bridge'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Ruined Portal',
@@ -177,7 +167,7 @@ export const lootTables : Loottable[] = [
 		version: 5,
 		contents: ['chests/ruined_portal'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Pillager Outpost',
@@ -185,7 +175,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/pillager_outpost'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Shipwreck',
@@ -193,7 +183,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/shipwreck_map', 'chests/shipwreck_supply', 'chests/shipwreck_treasure'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Stronghold',
@@ -201,7 +191,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/stronghold_corridor', 'chests/stronghold_crossing'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Ocean Ruins',
@@ -209,7 +199,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/underwater_ruin_big', 'chests/underwater_ruin_small'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Ocean ruins',
@@ -219,7 +209,7 @@ export const lootTables : Loottable[] = [
 		contents: ['archaeology/ocean_ruin_cold', 'archaeology/ocean_ruin_warm'],
 		mode: 'weight',
 		group: 'archaeology/*',
-		defaultLoottableWeight: 15,
+		defaultLoottableWeight: 15
 	},
 	{
 		displayName: 'Village',
@@ -233,7 +223,7 @@ export const lootTables : Loottable[] = [
 			'chests/village/village_taiga_house'
 		],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Woodland Mansion',
@@ -241,7 +231,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/woodland_mansion'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Mineshaft',
@@ -249,7 +239,7 @@ export const lootTables : Loottable[] = [
 		version: 4,
 		contents: ['chests/abandoned_mineshaft'],
 		mode: 'percentage',
-		group: 'chests/*',
+		group: 'chests/*'
 	},
 	{
 		displayName: 'Trail ruins',
@@ -259,7 +249,7 @@ export const lootTables : Loottable[] = [
 		contents: ['archaeology/trail_ruins_common'],
 		mode: 'weight',
 		group: 'archaeology/*',
-		defaultLoottableWeight: 45,
+		defaultLoottableWeight: 45
 	},
 	{
 		displayName: 'Trail ruins',
@@ -269,7 +259,7 @@ export const lootTables : Loottable[] = [
 		contents: ['archaeology/trail_ruins_rare'],
 		mode: 'weight',
 		group: 'archaeology/*',
-		defaultLoottableWeight: 12,
+		defaultLoottableWeight: 12
 	},
 	{
 		displayName: 'Desert well',
@@ -278,7 +268,7 @@ export const lootTables : Loottable[] = [
 		contents: ['archaeology/desert_well'],
 		mode: 'weight',
 		group: 'archaeology/*',
-		defaultLoottableWeight: 8,
+		defaultLoottableWeight: 8
 	}
 ];
 
@@ -297,4 +287,5 @@ export const versions = new Map([
 	[32, '1.20.5 - 1.20.6'],
 	[34, '1.21 - 1.21.1'],
 	[43, '1.21.2 - 1.21.3'],
+	[46, '1.21.4']
 ]);

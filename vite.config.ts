@@ -4,10 +4,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit()],
 	build: {
-		sourcemap: true,
+		sourcemap: true
 	},
 	base: '/jext-reborn/',
 	optimizeDeps: {
-		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core'],
+		exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core']
 	}
 });

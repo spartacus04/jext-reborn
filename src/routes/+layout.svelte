@@ -20,19 +20,6 @@
 		}
 	});
 
-	if(isTauri) {
-		invoke('yt_download', {
-			url: 'O6JLkzn3X1s'
-		}).then((res) => {
-			const arbuf = base64ToArrayBuffer(res as string);
-			const blob = new Blob([arbuf], { type: 'audio/mpeg' });
-
-			saveAs(blob, 'test.mp3');
-		}).catch((err) => {
-			console.debug(err);
-		});
-	}
-
 	const swipeHandler = (event: SwipeCustomEvent) => {
 		if (!isMobile) return;
 

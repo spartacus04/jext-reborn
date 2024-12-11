@@ -61,13 +61,13 @@ export const dropFile = (
 			});
 		}
 
-        if(cb) {
-            if (multiple) {
-                cb(list);
-            } else {
-                cb([list[0]]);
-            }
-        }
+		if (cb) {
+			if (multiple) {
+				cb(list);
+			} else {
+				cb([list[0]]);
+			}
+		}
 	};
 
 	e.addEventListener('dragenter', mouseEnter);
@@ -96,25 +96,27 @@ export const inputFile = (
 	const { accept, cb, multiple } = params;
 
 	const click = async () => {
-		if(isTauri) {
-			let filePaths = await open({
+		if (isTauri) {
+			let filePaths = (await open({
 				multiple: multiple,
 				directory: false,
 				title: 'Select a file',
 				filters: [{ name: 'Files', extensions: accept.replaceAll('.', '').split(',') }]
-			}) as string | string[] | null;
+			})) as string | string[] | null;
 
-			if(filePaths == null) return;
-			else if(typeof filePaths === 'string') filePaths = [filePaths];
+			if (filePaths == null) return;
+			else if (typeof filePaths === 'string') filePaths = [filePaths];
 
-			const files = await Promise.all(filePaths.map(async (path) => {
-				if(!(await exists(path))) return null;
-				const contents = await readFile(path);
+			const files = await Promise.all(
+				filePaths.map(async (path) => {
+					if (!(await exists(path))) return null;
+					const contents = await readFile(path);
 
-				return new File([contents], path.split('/').pop()!);
-			}));
+					return new File([contents], path.split('/').pop()!);
+				})
+			);
 
-			if(cb) {
+			if (cb) {
 				console.log(files.filter((file) => file !== null));
 				cb(files.filter((file) => file !== null));
 			}
@@ -125,8 +127,8 @@ export const inputFile = (
 			if (multiple) input.setAttribute('multiple', '');
 
 			input.addEventListener('change', () => {
-				if(cb) {
-					cb(Array.from(input.files!))
+				if (cb) {
+					cb(Array.from(input.files!));
 				}
 			});
 

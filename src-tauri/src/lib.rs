@@ -1,4 +1,4 @@
-mod downloaders;
+mod yt_dlp;
 mod ffmpeg;
 
 // I've never used rust, if you are a rust developer, don't judge me, I'm just trying to make it work
@@ -6,6 +6,7 @@ mod ffmpeg;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
@@ -22,16 +23,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             ffmpeg::try_download_ffmpeg,
             ffmpeg::run_ffmpeg,
-            downloaders::youtube::yt_is_valid_url,
-            downloaders::youtube::yt_is_playlist_url,
-            downloaders::youtube::yt_get_info,
-            downloaders::youtube::yt_get_playlist_info,
-            downloaders::youtube::yt_download,
-            downloaders::soundcloud::sc_is_valid_url,
-            downloaders::soundcloud::sc_is_playlist_url,
-            downloaders::soundcloud::sc_get_info,
-            downloaders::soundcloud::sc_get_set_info,
-            downloaders::soundcloud::sc_download,
+            yt_dlp::yt_dlp_get_info,
+            yt_dlp::yt_dlp_get_playlist_info,
+            yt_dlp::yt_dlp_download,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

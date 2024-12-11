@@ -15,7 +15,7 @@ export {};
 /// <reference types="svelte-gestures" />
 
 declare global {
-    interface Window {
-        __TAURI__: Record<string, unknown>;
-    }
+	interface Window {
+		__TAURI__: Record<string, unknown>;
+	}
 }

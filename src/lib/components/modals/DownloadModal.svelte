@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { soundcloud, spotify, youtube } from '$lib/assets';
+	import { downloaderLine } from '$lib/downloader/downloader';
 	import LauncherButton from '../buttons/LauncherButton.svelte';
 	import LauncherTextbox from '../inputs/LauncherTextbox.svelte';
 	let dialog: HTMLDialogElement;
 
 	export const open = () => dialog.show();
 	export const close = () => {
-        dialog.close();
-    };
+		dialog.close();
+	};
 
 	export const isOpen = () => dialog.open;
 	export const toggle = () => (dialog.open ? close() : open());
@@ -17,9 +18,8 @@
 		const id = (e.target as HTMLElement).id;
 
 		if (id === 'backdrop') {
-            close();
-        }
-		else e.stopPropagation();
+			close();
+		} else e.stopPropagation();
 	};
 
 	let url = '';
@@ -35,29 +35,29 @@
 	<div
 		class="m-0 md:m-auto md:w-[32rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"
 	>
-        <div class="p-4 font-minecraft text-white">
-            <div class="font-minecraft text-xl mb-3 flex items-center gap-2">
-				Download from 
+		<div class="p-4 font-minecraft text-white">
+			<div class="font-minecraft text-xl mb-3 flex items-center gap-2">
+				Download from
 
-				<img src={youtube} alt="" class="h-8 aspect-square">
-				<img src={soundcloud} alt="" class="h-8 aspect-square">
-				<img src={spotify} alt="" class="h-8 aspect-square">
+				<img src={youtube} alt="" class="h-8 aspect-square" />
+				<img src={soundcloud} alt="" class="h-8 aspect-square" />
+				<!-- <img src={spotify} alt="" class="h-8 aspect-square"> -->
 			</div>
 
-            <hr class="-mx-4 border-surface-separator" />
+			<hr class="-mx-4 border-surface-separator" />
 
 			<div class="flex flex-col flex-1 my-4">
 				<b class="text-[#aeaeae] text-xs h-min">TRACK/PLAYLIST/ALBUM URL</b>
 				<LauncherTextbox placeholder="Track/Playlist/Album url" bind:value={url} />
 			</div>
 
-            <hr class="-mx-4 border-surface-separator" />
+			<hr class="-mx-4 border-surface-separator" />
 
-            <div class="flex gap-2 pt-4 justify-end">
+			<div class="flex gap-2 pt-4 justify-end">
 				<LauncherButton text="Cancel" type="tertiary" on:click={() => close()} />
-                <LauncherButton text="Download!" type="primary" on:click={() => close()} />
-            </div>
-        </div>
+				<LauncherButton text="Download!" type="primary" on:click={() => downloaderLine(url)} />
+			</div>
+		</div>
 	</div>
 </dialog>
 

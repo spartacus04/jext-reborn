@@ -17,7 +17,10 @@
 
 {#if active}
 	<div class="flex items-center">
-		<div class="w-1 h-5 bg-primary-variant bg-white -mr-1" in:scale={{ opacity: 1, duration: 200 }} />
+		<div
+			class="w-1 h-5 bg-primary-variant bg-white -mr-1"
+			in:scale={{ opacity: 1, duration: 200 }}
+		/>
 		<div class="p-2 pl-4 flex items-center">
 			<img class="min-w-12 w-12 aspect-square" src={icon} alt={title} />
 

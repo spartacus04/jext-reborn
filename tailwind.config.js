@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			screens: {
-				'xs': '380px',
+				xs: '380px'
 			},
 			colors: {
 				surface: '#303030',

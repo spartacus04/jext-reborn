@@ -14,32 +14,33 @@
 	let timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 
 	// Workaround for library handling & when not necessary and not handling new line
-	$: typeof text == 'string' && (output = MCText.toHTML((() => {
-		if(isTauri) {
-			return text
-				.replaceAll('&', '')	// remove all & to avoid double escaping
-				.replaceAll('<div>', '\\n')
-				.replaceAll('</div>', '')
-				.replaceAll('<br>', '')
-				.replaceAll('nbsp;', ' ')
-		} else {
-			return text
-				.replace('<div>', '')	// replace first div to avoid empty line at the beginning
-				.replaceAll('&', '')	// remove all & to avoid double escaping
-				.replaceAll('<div>', '\\n')
-				.replaceAll('</div>', '')
-				.replaceAll('<br>', '')
-				.replaceAll('nbsp;', ' ')
-		}
-	})()
-		
-	).replaceAll('amp;', '&')) && (() => {
-		console.log(text);
-		console.debug(output);
-		clearTimeout(timeout);
-		timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
-	})();
-
+	$: typeof text == 'string' &&
+		(output = MCText.toHTML(
+			(() => {
+				if (isTauri) {
+					return text
+						.replaceAll('&', '') // remove all & to avoid double escaping
+						.replaceAll('<div>', '\\n')
+						.replaceAll('</div>', '')
+						.replaceAll('<br>', '')
+						.replaceAll('nbsp;', ' ');
+				} else {
+					return text
+						.replace('<div>', '') // replace first div to avoid empty line at the beginning
+						.replaceAll('&', '') // remove all & to avoid double escaping
+						.replaceAll('<div>', '\\n')
+						.replaceAll('</div>', '')
+						.replaceAll('<br>', '')
+						.replaceAll('nbsp;', ' ');
+				}
+			})()
+		).replaceAll('amp;', '&')) &&
+		(() => {
+			console.log(text);
+			console.debug(output);
+			clearTimeout(timeout);
+			timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
+		})();
 
 	const pasteHandler = (e: ClipboardEvent | Event) => {
 		e.preventDefault();
@@ -73,7 +74,10 @@
 
 <div class="bg-[#0e0e0e] flex h-min flex-col border-[#0dd166] border-2 focus-within:border-white">
 	<div class="h-8 m-2 mb-0 pb-2 border-b border-mc-light-gray flex items-center gap-2">
-		<button class="[&>*]:pointer-events-none mr-4 mb-[2px]" on:click={() => colorPickerOpen = !colorPickerOpen}>
+		<button
+			class="[&>*]:pointer-events-none mr-4 mb-[2px]"
+			on:click={() => (colorPickerOpen = !colorPickerOpen)}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
@@ -85,7 +89,7 @@
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				class="lucide lucide-palette"
-				><path d="M11 2h2v2h2v4h2v4h2v6h-2v2h-2v2H9v-2H7v-2H5v-6h2V8h2V4h2V2z" fill="white"/>
+				><path d="M11 2h2v2h2v4h2v4h2v6h-2v2h-2v2H9v-2H7v-2H5v-6h2V8h2V4h2V2z" fill="white" />
 			</svg>
 		</button>
 
@@ -117,7 +121,10 @@
 				stroke-linejoin="round"
 				class="lucide lucide-palette"
 			>
-			<path d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z" fill="white"/>
+				<path
+					d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z"
+					fill="white"
+				/>
 			</svg>
 		</button>
 		<button class="[&>*]:pointer-events-none ml-4" on:click={() => insertSymbol('r')}>
@@ -128,7 +135,7 @@
 	{#if colorPickerOpen}
 		<div
 			class="m-2 mb-0 pb-2 border-b border-mc-light-gray flex items-center gap-2 flex-wrap [&>*]:w-4 [&>*]:aspect-square [&>*]:cursor-pointer [&>*]:border [&>*]:border-transparent"
-			transition:slide={{ duration: 200 }}	
+			transition:slide={{ duration: 200 }}
 		>
 			<button class="bg-[#000000] hover:border-white" on:click={() => insertSymbol('0')} />
 			<button class="bg-[#0000AA] hover:border-white" on:click={() => insertSymbol('1')} />

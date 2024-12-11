@@ -270,20 +270,29 @@
 		</div>
 
 		<div class="border-b-2 border-surface-separator my-2" />
-		
-		<div class="flex flex-col justify-between gap-4 sm:flex-row w-full ">
+
+		<div class="flex flex-col justify-between gap-4 sm:flex-row w-full">
 			<div class="flex gap-4">
 				<LauncherCheckbox
-				bind:value={changes.creeperDroppable.value}
-				on:change={() => setUpdatedPropery('creeperDroppable')}
-				label="Can be dropped by creepers"
+					bind:value={changes.creeperDroppable.value}
+					on:change={() => setUpdatedPropery('creeperDroppable')}
+					label="Can be dropped by creepers"
 				/>
 			</div>
 
-			
 			<div class="flex flex-1 flex-col gap-4 justify-between sm:flex-row w-full">
-				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit disc loot tables" type="primary" on:click={editDiscLt} />
-				<LauncherButton classes="font-minecraft font-bold text-white" text="Edit fragment loot tables" type="primary" on:click={editFragmentLt} />
+				<LauncherButton
+					classes="font-minecraft font-bold text-white"
+					text="Edit disc loot tables"
+					type="primary"
+					on:click={editDiscLt}
+				/>
+				<LauncherButton
+					classes="font-minecraft font-bold text-white"
+					text="Edit fragment loot tables"
+					type="primary"
+					on:click={editFragmentLt}
+				/>
 			</div>
 		</div>
 
@@ -316,18 +325,26 @@
 				</div>
 			</div>
 		{/if}
-		
+
 		<div class="border-b-2 border-surface-separator my-2" />
 
 		<div class="flex gap-2 pt-4 justify-end text-white font-minecraft font-bold">
-			<LauncherButton text="Discard" type="danger" on:click={() => {
-				onFinish({});
-				close();
-			}} />
-			<LauncherButton text="Save" type="primary" on:click={() => {
-				saveChanges();
-				close();
-			}} />
+			<LauncherButton
+				text="Discard"
+				type="danger"
+				on:click={() => {
+					onFinish({});
+					close();
+				}}
+			/>
+			<LauncherButton
+				text="Save"
+				type="primary"
+				on:click={() => {
+					saveChanges();
+					close();
+				}}
+			/>
 		</div>
 	</div>
 </dialog>

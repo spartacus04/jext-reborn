@@ -1,16 +1,16 @@
-import { ResourcePackData } from "$lib/discs/resourcePackManager";
-import { mergeDeep } from "$lib/utils";
-import JSZip from "jszip";
-import { get } from "svelte/store"
+import { ResourcePackData } from '$lib/discs/resourcePackManager';
+import { mergeDeep } from '$lib/utils';
+import JSZip from 'jszip';
+import { get } from 'svelte/store';
 
 export const mergeResourcePacks = async (base: Blob) => {
-    const packs = [base, ...get(ResourcePackData).packs.map(pack => pack.contents)];
+	const packs = [base, ...get(ResourcePackData).packs.map((pack) => pack.contents)];
 
-    const rp = new JSZip();
+	const rp = new JSZip();
 
-    const mergedJsonFiles: { [key: string]: unknown } = {};
+	const mergedJsonFiles: { [key: string]: unknown } = {};
 
-    for (const pack of packs.toReversed()) {
+	for (const pack of packs.toReversed()) {
 		const packZip = await JSZip.loadAsync(pack);
 
 		for (const path in packZip.files) {
@@ -18,7 +18,9 @@ export const mergeResourcePacks = async (base: Blob) => {
 
 			if (!file.dir) {
 				if (
-					(file.name.endsWith('.json') && !file.name.endsWith('jext.json') && !file.name.endsWith('jext.nbs.json')) ||
+					(file.name.endsWith('.json') &&
+						!file.name.endsWith('jext.json') &&
+						!file.name.endsWith('jext.nbs.json')) ||
 					file.name.endsWith('.mcmeta')
 				) {
 					console.log(mergedJsonFiles);
@@ -42,4 +44,4 @@ export const mergeResourcePacks = async (base: Blob) => {
 	}
 
 	return await rp.generateAsync({ type: 'blob' });
-}
+};

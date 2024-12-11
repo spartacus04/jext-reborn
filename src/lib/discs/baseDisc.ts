@@ -1,93 +1,92 @@
-import { get } from "svelte/store";
-import { randomTextures } from "./textures";
-import { discsStore } from "./discManager";
+import { get } from 'svelte/store';
+import { randomTextures } from './textures';
+import { discsStore } from './discManager';
 
 export abstract class BaseDisc {
-    public isNew: boolean = true;
+	public isNew: boolean = true;
 
-    public title: string = "";
-    public author: string = "Unknown artist";
+	public title: string = '';
+	public author: string = 'Unknown artist';
 
-    public namespace: string = "";
+	public namespace: string = '';
 
-    public discTexture: Blob = new Blob();
-    public fragmentTexture: Blob = new Blob();
+	public discTexture: Blob = new Blob();
+	public fragmentTexture: Blob = new Blob();
 
-    public discTextureURL: string = "";
-    public fragmentTextureURL: string = "";
+	public discTextureURL: string = '';
+	public fragmentTextureURL: string = '';
 
-    public tooltip: string = "";
+	public tooltip: string = '';
 
-    public modelData: number = -1;
+	public modelData: number = -1;
 
-    public creeperDroppable: boolean = true;
-    public discLootTables: { [key: string]: number } = {};
-    public fragmentLootTables: { [key: string]: number } = {};
+	public creeperDroppable: boolean = true;
+	public discLootTables: { [key: string]: number } = {};
+	public fragmentLootTables: { [key: string]: number } = {};
 
-    public randomizeDiscData(): void {
-        this.creeperDroppable = Math.random() < 0.5;
-    }
+	public randomizeDiscData(): void {
+		this.creeperDroppable = Math.random() < 0.5;
+	}
 
-    async RerollTextures() {
-        const textures = await randomTextures();
+	async RerollTextures() {
+		const textures = await randomTextures();
 
-        this.setDiscTexture(textures.discTexture);
-        this.setFragmentTexture(textures.fragmentTexture);
-    }
+		this.setDiscTexture(textures.discTexture);
+		this.setFragmentTexture(textures.fragmentTexture);
+	}
 
-    setDiscTexture(blob: Blob) {
-        URL.revokeObjectURL(this.discTextureURL);
-        this.discTexture = blob;
-        this.discTextureURL = URL.createObjectURL(blob);
-    }
+	setDiscTexture(blob: Blob) {
+		URL.revokeObjectURL(this.discTextureURL);
+		this.discTexture = blob;
+		this.discTextureURL = URL.createObjectURL(blob);
+	}
 
-    setFragmentTexture(blob: Blob) {
-        URL.revokeObjectURL(this.fragmentTextureURL);
-        this.fragmentTexture = blob;
-        this.fragmentTextureURL = URL.createObjectURL(blob);
-    }
+	setFragmentTexture(blob: Blob) {
+		URL.revokeObjectURL(this.fragmentTextureURL);
+		this.fragmentTexture = blob;
+		this.fragmentTextureURL = URL.createObjectURL(blob);
+	}
 
-    refreshTextures() {
-        this.setDiscTexture(this.discTexture);
-        this.setFragmentTexture(this.fragmentTexture);
-    }
+	refreshTextures() {
+		this.setDiscTexture(this.discTexture);
+		this.setFragmentTexture(this.fragmentTexture);
+	}
 
-    autoSetNamespace() {
-        if(!this.isNew) return;
+	autoSetNamespace() {
+		if (!this.isNew) return;
 
-        this.namespace = `${this.title}${this.author}`
-            .replace(/[^a-zA-Z0-9]/g, '')
-            .replaceAll('1', 'one')
-            .replaceAll('2', 'two')
-            .replaceAll('3', 'three')
-            .replaceAll('4', 'four')
-            .replaceAll('5', 'five')
-            .replaceAll('6', 'six')
-            .replaceAll('7', 'seven')
-            .replaceAll('8', 'eight')
-            .replaceAll('9', 'nine')
-            .replaceAll('0', 'zero')
-            .toLowerCase();
+		this.namespace = `${this.title}${this.author}`
+			.replace(/[^a-zA-Z0-9]/g, '')
+			.replaceAll('1', 'one')
+			.replaceAll('2', 'two')
+			.replaceAll('3', 'three')
+			.replaceAll('4', 'four')
+			.replaceAll('5', 'five')
+			.replaceAll('6', 'six')
+			.replaceAll('7', 'seven')
+			.replaceAll('8', 'eight')
+			.replaceAll('9', 'nine')
+			.replaceAll('0', 'zero')
+			.toLowerCase();
 
-        const count = get(discsStore).filter(disc => disc.namespace.includes(this.namespace)).length;
+		const count = get(discsStore).filter((disc) => disc.namespace.includes(this.namespace)).length;
 
-        if(count > 0) {
-            this.namespace = `${this.namespace}${count}`
-                .replaceAll('1', 'one')
-                .replaceAll('2', 'two')
-                .replaceAll('3', 'three')
-                .replaceAll('4', 'four')
-                .replaceAll('5', 'five')
-                .replaceAll('6', 'six')
-                .replaceAll('7', 'seven')
-                .replaceAll('8', 'eight')
-                .replaceAll('9', 'nine')
-                .replaceAll('0', 'zero');
-        }
+		if (count > 0) {
+			this.namespace = `${this.namespace}${count}`
+				.replaceAll('1', 'one')
+				.replaceAll('2', 'two')
+				.replaceAll('3', 'three')
+				.replaceAll('4', 'four')
+				.replaceAll('5', 'five')
+				.replaceAll('6', 'six')
+				.replaceAll('7', 'seven')
+				.replaceAll('8', 'eight')
+				.replaceAll('9', 'nine')
+				.replaceAll('0', 'zero');
+		}
 
-
-        while(get(discsStore).filter(disc => disc.namespace == this.namespace).length > 1) {
-            this.namespace = `${this.namespace}zero`;
-        }
-    }
+		while (get(discsStore).filter((disc) => disc.namespace == this.namespace).length > 1) {
+			this.namespace = `${this.namespace}zero`;
+		}
+	}
 }

@@ -1,30 +1,30 @@
-import { get } from "svelte/store";
-import { AlertModal, ConfirmModal } from "./components/modals";
-import { baseElement, isTauri } from "./state";
-import { save } from "@tauri-apps/plugin-dialog";
-import { writeFile } from "@tauri-apps/plugin-fs";
+import { get } from 'svelte/store';
+import { AlertModal, ConfirmModal } from './components/modals';
+import { baseElement, isTauri } from './state';
+import { save } from '@tauri-apps/plugin-dialog';
+import { writeFile } from '@tauri-apps/plugin-fs';
 
 export const cConfirm = async (options: {
-    text: string,
-    confirmText: string,
-    cancelText: string|undefined,
-    discardText: string,
+	text: string;
+	confirmText: string;
+	cancelText: string | undefined;
+	discardText: string;
 }) => {
-    return await new Promise<'discard' | 'confirm' | 'cancel'>((resolve) => {
-        const confirmModal = new ConfirmModal({
-            target: get(baseElement)!,
-            props: {
-                ...options,
-                onFinish: (result) => {
-                    confirmModal.$destroy();
-                    resolve(result);
-                }
-            }
-        });
+	return await new Promise<'discard' | 'confirm' | 'cancel'>((resolve) => {
+		const confirmModal = new ConfirmModal({
+			target: get(baseElement)!,
+			props: {
+				...options,
+				onFinish: (result) => {
+					confirmModal.$destroy();
+					resolve(result);
+				}
+			}
+		});
 
-        confirmModal.openModal();
-    });
-}
+		confirmModal.openModal();
+	});
+};
 
 export const cAlert = async (text: string, confirmText: string = 'Ok') => {
 	return await new Promise<void>((resolve) => {
@@ -36,13 +36,13 @@ export const cAlert = async (text: string, confirmText: string = 'Ok') => {
 				onFinish: () => {
 					alertModal.$destroy();
 					resolve();
-				},
-			},
+				}
+			}
 		});
 
 		alertModal.openModal();
 	});
-}
+};
 
 export const blobToArraBuffer = (blob: Blob): Promise<ArrayBuffer> => {
 	return new Promise((resolve, reject) => {
@@ -71,13 +71,13 @@ export const base64ToArrayBuffer = (base64: string) => {
 };
 
 export const saveAs = (blob: Blob | undefined, filename: string) => {
-	if(isTauri) {
+	if (isTauri) {
 		save({
 			canCreateDirectories: true,
 			title: 'Save File',
-			filters: [{ name: 'All Files', extensions: [filename.split('.').pop()!] }],
+			filters: [{ name: 'All Files', extensions: [filename.split('.').pop()!] }]
 		}).then(async (result) => {
-			if(result == null) return;
+			if (result == null) return;
 
 			const uint8Array = new Uint8Array(await blob!.arrayBuffer());
 
@@ -139,13 +139,13 @@ export const downloadWithProgress = async (
 
 			if (done) {
 				if (total != -1 && total !== received) throw new Error('failed to complete download');
-                if(cb) cb({ url, total, received, delta, done });
+				if (cb) cb({ url, total, received, delta, done });
 				break;
 			}
 
 			chunks.push(value);
 			received += delta;
-            if(cb) cb({ url, total, received, delta, done });
+			if (cb) cb({ url, total, received, delta, done });
 		}
 
 		const data = new Uint8Array(received);
@@ -159,13 +159,14 @@ export const downloadWithProgress = async (
 	} catch (e) {
 		console.log('failed to send download progress event: ', e);
 		buf = await resp.arrayBuffer();
-		if(cb) cb({
-            url,
-            total: buf.byteLength,
-            received: buf.byteLength,
-            delta: 0,
-            done: true
-        });
+		if (cb)
+			cb({
+				url,
+				total: buf.byteLength,
+				received: buf.byteLength,
+				delta: 0,
+				done: true
+			});
 	}
 
 	return buf;

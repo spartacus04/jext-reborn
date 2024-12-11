@@ -18,9 +18,9 @@
 	<TopBar bind:currentPage />
 
 	<div class="flex-1 flex flex-col h-[calc(100%-65px)]">
-		{#if currentPage == "Discs"}
+		{#if currentPage == 'Discs'}
 			<DiscsTab />
-		{:else if currentPage == "Resource pack manager"}
+		{:else if currentPage == 'Resource pack manager'}
 			<ResourcePackManagerTab />
 		{/if}
 	</div>

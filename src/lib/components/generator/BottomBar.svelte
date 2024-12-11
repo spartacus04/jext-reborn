@@ -7,15 +7,15 @@
 
 	const generate = () => {
 		const outputModal = new OutputModal({
-            target: get(baseElement)!,
-            props: {
-                onFinish: () => {
-                    outputModal.$destroy();
-                }
-            }
-        });
+			target: get(baseElement)!,
+			props: {
+				onFinish: () => {
+					outputModal.$destroy();
+				}
+			}
+		});
 
-        outputModal.openModal();
+		outputModal.openModal();
 	};
 </script>
 

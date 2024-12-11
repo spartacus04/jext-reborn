@@ -1,1 +1,21 @@
-{"default":{"identifier":"default","description":"enables the default permissions","local":true,"windows":["main"],"permissions":["core:default","dialog:allow-open","fs:allow-read-file","fs:allow-app-meta-recursive","fs:allow-write-file","dialog:allow-save","shell:allow-open"]}}
+{
+	"default": {
+		"identifier": "default",
+		"description": "enables the default permissions",
+		"local": true,
+		"windows": ["main"],
+		"permissions": [
+			"core:default",
+			"dialog:allow-open",
+			"fs:allow-read-file",
+			"fs:allow-app-meta-recursive",
+			"fs:allow-write-file",
+			"dialog:allow-save",
+			"shell:allow-open",
+			{
+				"identifier": "http:default",
+				"allow": [{ "url": "https://i.ytimg.com/*" }, { "url": "https://*.sndcdn.com/*" }]
+			}
+		]
+	}
+}
