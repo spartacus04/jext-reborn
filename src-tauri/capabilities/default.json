@@ -14,6 +14,7 @@
     "fs:allow-appcache-write-recursive",
     "fs:allow-appcache-read-recursive",
     "fs:allow-appcache-meta-recursive",
+    "fs:allow-read",
     "dialog:allow-save",
     "shell:allow-open",
     {

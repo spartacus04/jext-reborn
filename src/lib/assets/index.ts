@@ -44,6 +44,7 @@ export { default as modrinth } from './modrinth.svg';
 export { default as spigotmc } from './spigotmc.svg';
 export { default as workflow } from './workflow.svg';
 export { default as warning } from './warning.svg';
+export { default as folder } from './folder.svg';
 export { default as hangar } from './hangar.svg';
 export { default as wrench } from './wrench.svg';
 export { default as flame } from './flame.svg';

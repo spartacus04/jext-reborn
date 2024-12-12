@@ -30,7 +30,13 @@
             <div class="flex gap-4 items-start">
                 <img src={warning} alt="warning" />
                 <div id="popup">
-                    This walkthrough will not cover the creation of resource pack for Bedrock Edition. I'm sorry for the inconvenience, but you're on your own on that one...
+                    This walkthrough will not cover the creation of resource pack for Bedrock Edition. I'm sorry for the inconvenience, but you're on your own for that one...
+                    <br />
+                    If you are a bit experienced with code you can check out how to create a resource pack for Bedrock Edition from the <a
+                        href="https://github.com/spartacus04/jext-reborn/blob/dev/gh-pages/src/lib/exporter/pluginExporter.ts#L217"
+                        target="_blank"
+                        class="text-blue-400"
+                        rel="noopener noreferrer">source code</a>!
                 </div>
             </div>
         </div>

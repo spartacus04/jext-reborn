@@ -18,11 +18,6 @@
 	};
 </script>
 
-<svelte:head>
-	<title>JEXT | Documentation</title>
-	<meta name="description" content="Documentation for JukeboxExtendedReborn." />
-</svelte:head>
-
 <div class="flex flex-col w-full h-full">
 	<div class="flex flex-col bg-[#191919] w-full py-4 px-8">
 		<b class="text-[#aeaeae] text-xs">SEARCH</b>

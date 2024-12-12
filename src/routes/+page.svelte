@@ -1,8 +1,9 @@
 <script lang="ts">
 	import CommunityPacksTab from '$lib/components/generator/CommunityPacksTab.svelte';
-import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
+	import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
 	import RecentExportsTab from '$lib/components/generator/RecentExportsTab.svelte';
 	import ResourcePackManagerTab from '$lib/components/generator/ResourcePackManagerTab.svelte';
+	import BulkImportTab from '$lib/components/generator/BulkImportTab.svelte';
 	import TopBar from '$lib/components/generator/TopBar.svelte';
 
 	let currentPage: string;
@@ -24,6 +25,8 @@ import DiscsTab from '$lib/components/generator/DiscsTab.svelte';
 			<DiscsTab />
 		{:else if currentPage == 'Resource pack manager'}
 			<ResourcePackManagerTab />
+		{:else if currentPage == 'Bulk import'}
+			<BulkImportTab />
 		{:else if currentPage == 'Community packs'}
 			<CommunityPacksTab />
 		{:else if currentPage == 'Recent exports'}
