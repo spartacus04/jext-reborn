@@ -144,7 +144,7 @@ export class PluginExporter extends BaseExporter {
 
 			// track
 			if (isMusicDisc(disc)) {
-				rp.file(`assets/minecraft/sounds/records/${disc.namespace}.ogg`, disc.cachedFinalAudioFile);
+				rp.file(`assets/minecraft/sounds/records/${disc.namespace}.ogg`, disc.cachedFinalAudioFile!);
 			} else {
 				rp.file(`assets/jext/${disc.namespace}.nbs`, (disc as NbsDisc).nbsFile);
 			}
@@ -192,6 +192,7 @@ export class PluginExporter extends BaseExporter {
 							author: disc.author,
 							'disc-namespace': disc.namespace,
 							'model-data': disc.modelData,
+							'creeper-drop': disc.creeperDroppable,
 							lores: (() => {
 								const lores = disc.tooltip.split('\n');
 
@@ -346,7 +347,7 @@ export class PluginExporter extends BaseExporter {
 			);
 
 			if(isMusicDisc(disc)) {
-				rp.file(`sounds/jext/${disc.namespace}.ogg`, (disc as MusicDisc).cachedFinalAudioFile);
+				rp.file(`sounds/jext/${disc.namespace}.ogg`, (disc as MusicDisc).cachedFinalAudioFile!);
 			}
 		}
 

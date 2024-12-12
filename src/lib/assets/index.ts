@@ -46,4 +46,6 @@ export { default as workflow } from './workflow.svg';
 export { default as warning } from './warning.svg';
 export { default as hangar } from './hangar.svg';
 export { default as wrench } from './wrench.svg';
+export { default as flame } from './flame.svg';
+export { default as undo } from './undo.svg';
 export { default as java } from './java.svg';

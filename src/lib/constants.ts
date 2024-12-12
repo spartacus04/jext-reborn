@@ -289,3 +289,86 @@ export const versions = new Map([
 	[43, '1.21.2 - 1.21.3'],
 	[46, '1.21.4']
 ]);
+
+export const pages = [
+	{
+		title: 'Quick Start',
+		description: 'Get started with JukeboxExtendedReborn in a few simple steps.',
+		url: '/docs/quick-start',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Configuration',
+		description: 'Learn how to configure Jext Reborn to your liking.',
+		url: '/docs/configuration',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Commands & permissions',
+		description: 'A list of all commands and permissions available in Jext Reborn.',
+		url: '/docs/commands-permissions',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Disc manager tips & tricks',
+		description: 'Learn how to use the disc manager to its full potential.',
+		url: '/docs/disc-manager-tips',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Desktop app & remote control',
+		description: 'Control both the resource pack and the plugin from the desktop app.',
+		url: '/docs/desktop-app',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Bulk import',
+		description: 'Import a large amount of music at once.',
+		url: '/docs/bulk-import',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Manual resource pack building',
+		description: 'Manually set up the music resource pack.',
+		url: '/docs/manual-setup',
+		category: 'For Developers'
+	},
+	{
+		title: 'Permission integrations',
+		description: 'Integrate Jext Reborn with your permission plugins.',
+		url: '/docs/permission-integrations',
+		category: 'For Developers'
+	},
+	{
+		title: 'Custom disc sources',
+		description: 'Add custom disc sources to Jext Reborn.',
+		url: '/docs/custom-disc-sources',
+		category: 'For Developers'
+	},
+	{
+		title: 'REST API',
+		description: 'Use the Jext Reborn REST API to interact with the plugin.',
+		url: '/docs/rest-api',
+		category: 'For Developers'
+	},
+	{
+		title: 'Stable javadocs',
+		description: 'View the stable Jext Reborn javadocs.',
+		url: '/docs/stable-javadocs/index.html',
+		category: 'For Developers'
+	},
+	{
+		title: 'Development javadocs',
+		description: 'View the development Jext Reborn javadocs.',
+		url: '/docs/development-javadocs/index.html',
+		category: 'For Developers'
+	}
+] satisfies Page[];
+
+
+export interface Page {
+	title: string;
+	description: string;
+	url: string;
+	category: string;
+}
