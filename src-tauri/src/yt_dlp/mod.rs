@@ -3,8 +3,8 @@ use std::path::PathBuf;
 use tauri::{AppHandle, Manager};
 
 mod client;
-mod platform;
 mod download;
+mod platform;
 
 static mut YT_DLP: Option<client::YtDlp> = None;
 
@@ -32,7 +32,10 @@ pub async fn yt_dlp_get_info(url: String, handle: AppHandle) -> Result<serde_jso
 }
 
 #[tauri::command(async)]
-pub async fn yt_dlp_get_playlist_info(url: String, handle: AppHandle) -> Result<serde_json::Value, String> {
+pub async fn yt_dlp_get_playlist_info(
+    url: String,
+    handle: AppHandle,
+) -> Result<serde_json::Value, String> {
     let youtube = get_yt_dlp(handle.path().app_cache_dir().unwrap()).await?;
 
     let info = youtube.get_playlist_info(url).await?;

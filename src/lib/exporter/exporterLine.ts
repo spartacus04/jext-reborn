@@ -8,6 +8,7 @@ import { discsStore } from '$lib/discs/discManager';
 import { isTauri } from '$lib/state';
 import { exists, readDir, writeFile, mkdir, remove, stat } from '@tauri-apps/plugin-fs'
 import { appCacheDir } from '@tauri-apps/api/path';
+import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
 
 export const exporterSteps = writable<
 	(
@@ -35,6 +36,10 @@ export const updateSteps = (index: number, status: string, current: number, tota
 };
 
 export const exportResourcePack = async (exporter: BaseExporter) => {
+	if(!(await isPermissionGranted())) {
+		await requestPermission();
+	}
+
 	const pack = get(ResourcePackData);
 
 	exporterSteps.set([
@@ -65,6 +70,8 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 
 		updateSteps(0, 'Finishing up', 4, 4);
 
+		sendFinishNotification();
+
 		await saveRecentExport(merged);
 
 		return {
@@ -75,10 +82,21 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 
 	updateSteps(0, 'Finishing up', 3, 3);
 
+	sendFinishNotification();
+
 	await saveRecentExport(output.javaRP);
 
 	return output;
 };
+
+const sendFinishNotification = async () => {
+	if(await isPermissionGranted()) {
+		sendNotification({
+			title: 'JEXT Export complete',
+			body: 'Your export is ready'
+		})
+	}
+}
 
 const saveRecentExport = async (rp: Blob) => {
 	if(!isTauri) return;
@@ -95,11 +113,11 @@ const saveRecentExport = async (rp: Blob) => {
 
 	if(files.length >= 15) {
 		let oldest = files[0];
-		let oldestStat = await stat(`${baseDir}/${oldest}`);
+		let oldestStat = await stat(`${baseDir}/${oldest.name}`);
 
 		for(let i = 1; i < files.length; i++) {
 			const file = files[i];
-			const newStat = await stat(`${baseDir}/${file}`);
+			const newStat = await stat(`${baseDir}/${file.name}`);
 
 			if(newStat.birthtime! < oldestStat.birthtime!) {
 				oldest = file;
@@ -107,7 +125,7 @@ const saveRecentExport = async (rp: Blob) => {
 			}
 		}
 
-		await remove(`${baseDir}/${oldest}`);
+		await remove(`${baseDir}/${oldest.name}`);
 	}
 
 	const name = `export-${new Date().toISOString().replaceAll(':', '=').replaceAll('-', '+')}-${get(ResourcePackData).name}`;

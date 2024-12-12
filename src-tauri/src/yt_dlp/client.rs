@@ -1,8 +1,8 @@
 use std::{path::PathBuf, process::Command};
 
+use tauri::http::HeaderValue;
 use tauri_plugin_http::reqwest::header::USER_AGENT;
 use tauri_plugin_http::reqwest::Client;
-use tauri::http::HeaderValue;
 
 use super::platform::{Architecture, Platform};
 use std::os::unix::fs::PermissionsExt;
@@ -26,16 +26,12 @@ impl YtDlp {
             }
         }
 
-        Ok(Self {
-            yt_dlp_binary,
-        })
+        Ok(Self { yt_dlp_binary })
     }
 }
 
 pub async fn is_yt_dlp_updated(binary_path: &PathBuf) -> Result<bool, String> {
-    let output = match Command::new(binary_path)
-        .arg("--version")
-        .output() {
+    let output = match Command::new(binary_path).arg("--version").output() {
         Ok(output) => output,
         Err(e) => return Err(format!("Error getting yt-dlp version: {}", e)),
     };
@@ -76,22 +72,12 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
         let name = asset.get("name").and_then(|n| n.as_str()).unwrap_or("");
 
         match (platform.clone(), arch.clone()) {
-            (Platform::Windows, Architecture::X64) => {
-                name.contains("yt-dlp.exe")
-            }
-            (Platform::Windows, Architecture::X86) => {
-                name.contains("yt-dlp_x86.exe")
-            }
+            (Platform::Windows, Architecture::X64) => name.contains("yt-dlp.exe"),
+            (Platform::Windows, Architecture::X86) => name.contains("yt-dlp_x86.exe"),
 
-            (Platform::Linux, Architecture::X64) => {
-                name.contains("yt-dlp_linux")
-            }
-            (Platform::Linux, Architecture::Armv7l) => {
-                name.contains("yt-dlp_linux_armv7l")
-            }
-            (Platform::Linux, Architecture::Aarch64) => {
-                name.contains("yt-dlp_linux_aarch64")
-            }
+            (Platform::Linux, Architecture::X64) => name.contains("yt-dlp_linux"),
+            (Platform::Linux, Architecture::Armv7l) => name.contains("yt-dlp_linux_armv7l"),
+            (Platform::Linux, Architecture::Aarch64) => name.contains("yt-dlp_linux_aarch64"),
 
             (Platform::Mac, _) => name.contains("yt-dlp_macos"),
 
@@ -104,7 +90,10 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
     }
 
     let asset = asset.unwrap();
-    let download_url = asset.get("browser_download_url").and_then(|u| u.as_str()).unwrap_or("");
+    let download_url = asset
+        .get("browser_download_url")
+        .and_then(|u| u.as_str())
+        .unwrap_or("");
 
     let client = Client::new();
 
@@ -139,7 +128,9 @@ pub async fn get_yt_dlp_release_data() -> Result<serde_json::Value, String> {
     let response = match client
         .get(url)
         .header(USER_AGENT, HeaderValue::from_static("rust-reqwest"))
-        .send().await {
+        .send()
+        .await
+    {
         Ok(response) => response,
         Err(e) => return Err(format!("Error getting yt-dlp release: {}", e)),
     };
