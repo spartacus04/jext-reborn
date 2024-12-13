@@ -1,7 +1,7 @@
 import { default_icon } from '$lib/assets';
 import { versions } from '$lib/constants';
 import JSZip from 'jszip';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { randomTextures } from './textures';
 
 interface PackData {
@@ -25,6 +25,15 @@ export const ResourcePackData = writable<ExportPackData>({
 	version: Math.max(...Array.from(versions.keys())),
 	packs: []
 });
+
+export const areDefaultPackSettings = () => {
+	const rpdata = get(ResourcePackData);
+	
+	return rpdata.name == 'Jext Resources' &&
+		rpdata.description == 'Adds custom music discs to Minecraft!' &&
+		rpdata.version == Math.max(...Array.from(versions.keys())) &&
+		rpdata.packs.length == 0
+}
 
 // hack to load the default icon
 (async () => {

@@ -182,6 +182,7 @@ export const JextReader = async (blob: Blob): Promise<BaseDisc[]> => {
 	const text = await zip.file('jext.json')!.async('text');
 	const textNbs = (await zip.file('jext.nbs.json')?.async('text')) ?? '[]';
 	const packmcmeta = await zip.file('pack.mcmeta')!.async('text');
+
 	const { pack } = JSON.parse(packmcmeta);
 	const icon = await zip.file('pack.png')!.async('blob');
 

@@ -127,7 +127,7 @@ export class PluginConnector {
         }
     }
 
-    public async getDiscs() {
+    public async getDiscs() : Promise<Blob|null> {
         if(!this.bearerToken) {
             throw new Error('Cannot get discs without a bearer token');
         }
@@ -142,7 +142,7 @@ export class PluginConnector {
         });
 
         if(response.status != 200) {
-            throw new Error('Could not get the discs');
+            return null;
         }
 
         return await response.blob();
@@ -153,7 +153,7 @@ export class PluginConnector {
             throw new Error('Cannot set discs without a bearer token');
         }
 
-        const response = await fetch(`${this.serverAddress}/discs/write`, {
+        const response = await fetch(`${this.serverAddress}/discs/apply`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.bearerToken}`

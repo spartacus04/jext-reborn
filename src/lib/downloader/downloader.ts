@@ -134,6 +134,11 @@ export const startDownloadQueue = async () => {
 	const title = firstElement.overrides?.title ?? details.title ?? 'Unknown';
 	const thumbnail = firstElement.overrides?.icon ?? details.thumbnail ?? details.artwork_url ?? null;
 
+	if(get(downloadQueue).length == 0) {
+		isDownloading = false;
+		return;
+	}
+
 	downloadQueue.update((queue) => {
 		if (author != '') {
 			queue[0].displayName = `${title} - ${author}`;
@@ -146,6 +151,11 @@ export const startDownloadQueue = async () => {
 	const textures = thumbnail
 		? await adaptImageToDisc(await tfetch(thumbnail).then((res) => res.blob()))
 		: await randomTextures();
+
+	if(get(downloadQueue).length == 0) {
+		isDownloading = false;
+		return;
+	}
 
 	URL.revokeObjectURL(firstElement.iconUrl);
 	downloadQueue.update((queue) => {
@@ -172,6 +182,11 @@ export const startDownloadQueue = async () => {
 
 	disc.setDiscTexture(textures.discTexture);
 	disc.setFragmentTexture(textures.fragmentTexture);
+
+	if(get(downloadQueue).length == 0) {
+		isDownloading = false;
+		return;
+	}
 
 	addDisc(disc);
 

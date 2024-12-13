@@ -18,6 +18,8 @@
 	import MinecraftButton from '../buttons/MinecraftButton.svelte';
 	import type { ExporterOuput } from '$lib/exporter/baseExporter';
 	import { saveAs } from '$lib/utils';
+	import { isTauri } from '$lib/state';
+	import { pluginConnectorStore } from '$lib/pluginAccess/pluginConnector';
 
 	export let loaded = false;
 	export let onFinish: () => unknown;
@@ -115,6 +117,22 @@
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.render(scene, camera);
 	};
+
+	let idleUpload = true;
+
+	const uploadAssets = async () => {
+		if(output && $pluginConnectorStore) {
+			idleUpload = false;
+
+			await $pluginConnectorStore.applyDiscs(output.javaRP).catch(() => null);
+
+			if(output.bedrockRP) {
+				await $pluginConnectorStore.applyDiscsGeyser(output.bedrockRP).catch(() => null);
+			}
+
+			idleUpload = true;
+		}
+	}
 </script>
 
 <dialog
@@ -140,12 +158,18 @@
 				Your resourcepack is ready
 			</h1>
 			<div class="flex gap-4 flex-col w-[75%] sm:w-[50%]">
-				<div class="flex w-full gap-2">
+				{#if isTauri && $pluginConnectorStore}
 					<MinecraftButton
-						on:click={() => saveAs(output?.javaRP, `${get(ResourcePackData).name}.zip`)}
-						flex={true}>Download Resource Pack for Minecraft: Java Edition</MinecraftButton
+						bind:enabled={idleUpload}
+						on:click={uploadAssets}
 					>
-				</div>
+						{!idleUpload ? 'Uploading Resource Packs(s)...' : 'Apply Resource Pack(s) automatically'}
+					</MinecraftButton>
+				{/if}
+				<MinecraftButton
+					on:click={() => saveAs(output?.javaRP, `${get(ResourcePackData).name}.zip`)}
+					flex={true}>Download Resource Pack for Minecraft: Java Edition</MinecraftButton
+				>
 				<MinecraftButton
 					enabled={output?.bedrockRP != undefined}
 					on:click={() =>
