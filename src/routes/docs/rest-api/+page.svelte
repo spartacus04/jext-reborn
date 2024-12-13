@@ -724,7 +724,7 @@ TheSuperSecretJextBearerToken
             <h5 class="text-xl mt 4">Response</h5>
 
             <TabbedJsonBlock 
-                tabs={["200", "400", "401"]}
+                tabs={["200", "404", "401"]}
                 tabsContents={[
                     `
 (resource pack binary data)
@@ -801,11 +801,8 @@ TheSuperSecretJextBearerToken
             <h5 class="text-xl mt 4">Response</h5>
 
             <TabbedJsonBlock 
-                tabs={["200", "400", "401"]}
+                tabs={["200", "401"]}
                 tabsContents={[
-                    `
-(empty)
-                    `,
                     `
 (empty)
                     `,

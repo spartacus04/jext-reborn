@@ -10,13 +10,18 @@
 		windows,
 		macos,
 		linux,
-		android
+		android,
+
+		logout
+
 	} from '$lib/assets';
 	import { isTauri, os } from '$lib/state';
 	import SidebarEntryButton from './SidebarEntryButton.svelte';
 	import { fly, fade } from 'svelte/transition';
 	import DesktopAppModal from '../modals/DesktopAppModal.svelte';
 	import { base } from '$app/paths';
+	import LoginModal from '../modals/LoginModal.svelte';
+	import { pluginConnectorStore } from '$lib/pluginAccess/pluginConnector';
 
 	const osIcon = (() => {
 		switch (os) {
@@ -38,10 +43,22 @@
 	export let isOpen: boolean = true;
 
 	let openDesktopAppModal: () => void;
+	let openLoginModal: () => void;
+
+	const disconnect = async () => {
+		try {
+			await $pluginConnectorStore?.disconnect();
+		} catch (e: any) {
+			console.error(e);
+		}
+
+		$pluginConnectorStore = undefined;
+	};
 </script>
 
 <!-- desktop app popup -->
 <DesktopAppModal bind:openModal={openDesktopAppModal} />
+<LoginModal bind:openModal={openLoginModal} />
 
 <div class="flex h-full w-full">
 	{#if isOpen}
@@ -63,7 +80,11 @@
 
 			<!-- Bottom sidebar entries -->
 			{#if isTauri}
-				<SidebarEntryButton icon={login} title="Connect" />
+				{#if $pluginConnectorStore != undefined}
+					<SidebarEntryButton icon={logout} title="Disconnect" on:click={disconnect} />
+				{:else}
+					<SidebarEntryButton icon={login} title="Connect" on:click={openLoginModal} />
+				{/if}
 			{:else if osIcon}
 				<SidebarEntryButton icon={osIcon} title="Desktop App" on:click={openDesktopAppModal} />
 			{/if}

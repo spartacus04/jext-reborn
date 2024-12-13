@@ -3,6 +3,8 @@ import Ajv from 'ajv';
 import type { BaseDisc } from '$lib/discs/baseDisc';
 import { MusicDisc } from '$lib/discs/musicDisc';
 import { NbsDisc } from '$lib/discs/nbsDisc';
+import { get } from 'svelte/store';
+import { ResourcePackData } from '$lib/discs/resourcePackManager';
 
 const newBaseSchema = {
 	type: 'array',
@@ -179,6 +181,9 @@ export const JextReader = async (blob: Blob): Promise<BaseDisc[]> => {
 
 	const text = await zip.file('jext.json')!.async('text');
 	const textNbs = (await zip.file('jext.nbs.json')?.async('text')) ?? '[]';
+	const packmcmeta = await zip.file('pack.mcmeta')!.async('text');
+	const { pack } = JSON.parse(packmcmeta);
+	const icon = await zip.file('pack.png')!.async('blob');
 
 	const oldValidate = new Ajv().compile(oldBaseSchema);
 	const parsedMusicDiscs = JSON.parse(text) as any[];
@@ -260,6 +265,16 @@ export const JextReader = async (blob: Blob): Promise<BaseDisc[]> => {
 			return disc;
 		})
 	);
+
+	if(get(ResourcePackData).packs.length == 0) {
+		ResourcePackData.update(data => {
+			data.description = pack.description;
+			data.version = pack.pack_format;
+			data.icon = icon;
+
+			return data;
+		})
+	}
 
 	return [...musicDiscs, ...nbsDiscs];
 };
