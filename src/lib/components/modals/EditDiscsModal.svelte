@@ -6,7 +6,6 @@
 	import { cConfirm } from '$lib/utils';
 	import LauncherButton from '../buttons/LauncherButton.svelte';
 	import LauncherCheckbox from '../inputs/LauncherCheckbox.svelte';
-	import LauncherNumbox from '../inputs/LauncherNumbox.svelte';
 	import LauncherTextbox from '../inputs/LauncherTextbox.svelte';
 	import WysiwygEditor from '../inputs/WYSIWYGEditor.svelte';
 	import { editLootTables, isMusicDisc } from '$lib/discs/discManager';

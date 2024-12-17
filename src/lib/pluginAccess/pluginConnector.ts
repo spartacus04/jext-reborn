@@ -3,6 +3,15 @@ import { writable } from 'svelte/store';
 
 export const pluginConnectorStore = writable<PluginConnector|undefined>(undefined);
 
+export interface ConfigNode {
+    name: string;
+    id: string;
+    description: string;
+    value: any;
+    default: any;
+    enumValues?: string[] | string;
+}
+
 export class PluginConnector {
     private bearerToken: string|undefined;
     private serverAddress: string;
@@ -20,11 +29,14 @@ export class PluginConnector {
             throw new Error('Could not connect to the JEXT server');
         });
 
+
         if (response.status === 200) {
             this.bearerToken = await response.text();
-            console.log(this.bearerToken);
+
+            window.sessionStorage.setItem('bearerToken', this.bearerToken);
+            window.sessionStorage.setItem('serverAddress', this.serverAddress);
+
         } else {
-            console.log(response);
             throw new Error('The password is incorrect');
         }
     }
@@ -46,7 +58,9 @@ export class PluginConnector {
         if (response.status === 200) {
             this.bearerToken = undefined;
         } else {
-            console.log(response);
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('The bearer token is invalid');
         }
     }
@@ -59,6 +73,9 @@ export class PluginConnector {
         });
 
         if(response1.status != 200) {
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('Health check failed');
         }
 
@@ -75,14 +92,17 @@ export class PluginConnector {
             throw new Error('Could not connect to the JEXT server');
         });
 
-        if(response2.status != 200) {
+        if(response2.status == 200) {
             return true;
         }
 
+        pluginConnectorStore.set(undefined);
+        window.sessionStorage.removeItem('bearerToken');
+        window.sessionStorage.removeItem('serverAddress');
         throw new Error('The bearer token is invalid');
     }
 
-    public async getConfig() {
+    public async getConfig() : Promise<ConfigNode[]> {
         if(!this.bearerToken) {
             throw new Error('Cannot get config without a bearer token');
         }
@@ -97,10 +117,13 @@ export class PluginConnector {
         });
 
         if(response.status != 200) {
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('The bearer token is invalid');
         }
 
-        return response.json();
+        return await response.json();
     }
 
     public async applyConfig(config: any) {
@@ -108,7 +131,7 @@ export class PluginConnector {
             throw new Error('Cannot set config without a bearer token');
         }
 
-        const response = await fetch(`${this.serverAddress}/config/write`, {
+        const response = await fetch(`${this.serverAddress}/config/apply`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.bearerToken}`
@@ -119,6 +142,9 @@ export class PluginConnector {
         });
 
         if(response.status == 401) {
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('The bearer token is invalid');
         }
 
@@ -164,6 +190,9 @@ export class PluginConnector {
         });
 
         if(response.status == 401) {
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('The bearer token is invalid');
         }
     }
@@ -184,6 +213,9 @@ export class PluginConnector {
         });
 
         if(response.status == 401) {
+            pluginConnectorStore.set(undefined);
+            window.sessionStorage.removeItem('bearerToken');
+            window.sessionStorage.removeItem('serverAddress');
             throw new Error('The bearer token is invalid');
         }
     }

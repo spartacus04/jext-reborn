@@ -92,7 +92,6 @@ export const downloaderLine = async (url: string, overrides?: Overrides) => {
 
 			if (entry['_type'] === 'url') {
 				const entryUrl = entry.url;
-				console.log(entryUrl);
 
 				await addDownloadQueueElement(entryUrl, overrides);
 			}

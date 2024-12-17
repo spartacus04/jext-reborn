@@ -50,12 +50,12 @@ authRouter.get("/health", async (c) => {
     const ip = getConnInfo(c).remote.address!;
 
     if (token === undefined) {
-        c.status(200);
+        return c.text('', 200);
     } else {
         if (bearerTokenMap.get(ip) === token) {
-            c.status(200);
+            return c.text('', 200);
         } else {
-            c.status(401);
+            return c.text('', 401);
         }
     }
 });

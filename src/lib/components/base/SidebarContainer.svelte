@@ -22,6 +22,7 @@
 	import { base } from '$app/paths';
 	import LoginModal from '../modals/LoginModal.svelte';
 	import { pluginConnectorStore } from '$lib/pluginAccess/pluginConnector';
+	import { goto } from '$app/navigation';
 
 	const osIcon = (() => {
 		switch (os) {
@@ -44,6 +45,7 @@
 
 	let openDesktopAppModal: () => void;
 	let openLoginModal: () => void;
+	let isLoginModalOpen: () => boolean;
 
 	const disconnect = async () => {
 		try {
@@ -54,11 +56,26 @@
 
 		$pluginConnectorStore = undefined;
 	};
+
+	const openModalAndLink = async (modal: () => void, link: string) => {
+		modal();
+
+		await new Promise<void>(resolve => {
+			const unregister = setInterval(() => {
+				if(!isLoginModalOpen()) {
+					clearInterval(unregister);
+					resolve();
+				}
+			}, 10);
+		})
+		
+		goto(link);
+	}
 </script>
 
 <!-- desktop app popup -->
 <DesktopAppModal bind:openModal={openDesktopAppModal} />
-<LoginModal bind:openModal={openLoginModal} />
+<LoginModal bind:openModal={openLoginModal} bind:isOpen={isLoginModalOpen} />
 
 <div class="flex h-full w-full">
 	{#if isOpen}
@@ -69,7 +86,11 @@
 			<!-- Top sidebar entries -->
 			<SidebarEntryLink href="{base}/" icon={default_disc} title="Disc manager" />
 			{#if isTauri}
-				<SidebarEntryLink href="{base}/config" icon={cog} title="Config manager" />
+				{#if $pluginConnectorStore != undefined}
+					<SidebarEntryLink href="{base}/config" icon={cog} title="Config manager" />
+				{:else}
+					<SidebarEntryButton icon={cog} title="Config manager" on:click={() => openModalAndLink(openLoginModal, `${base}/config`)} />
+				{/if}
 				<SidebarEntryLink href="https://spartacus04.github.io/jext-reborn/docs" icon={knowledge_book} title="Documentation" external={true} />
 			{:else }
 				<SidebarEntryLink href="{base}/docs" icon={knowledge_book} title="Documentation" />

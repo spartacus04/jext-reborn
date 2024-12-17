@@ -15,6 +15,8 @@
 	export const toggle = () => (dialog.open ? close() : open());
 	export const openModal = () => dialog.showModal();
 
+	export let onFinish = () => {};
+
 	const onClick = (e: MouseEvent) => {
 		const id = (e.target as HTMLElement).id;
 
@@ -64,6 +66,8 @@
 			}
 
 			await cAlert('Discs imported successfully!');
+
+			onFinish();
         } catch(e: any) {
             await cAlert(e);
         }

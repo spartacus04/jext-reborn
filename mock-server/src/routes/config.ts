@@ -65,11 +65,13 @@ const configData = {
         "name": "Disc loot tables limit",
         "description": "Sets the maximum amount of discs that can be found in chests, the default amount is 2.",
         "default": {},
+        "enumValues": "chests/*",
     },
     "fragment-loottables-limit": {
         "name": "Disc fragments loot tables limit",
         "description": "Sets the maximum amount of disc fragments that can be found in chests, the default amount is 3.",
         "default": {},
+        "enumValues": "chests/*",
     },
     "force-resource-pack": {
         "name": "Force resource pack",
@@ -138,10 +140,14 @@ interface ConfigNode {
     description: string;
     value: any;
     default: any;
-    enumValues?: string[];
+    enumValues?: string[] | string;
 }
 
 const configRouter = new Hono();
+
+configRouter.get('/config/apply', async (c) => {
+    return c.text("Please use POST method");
+});
 
 configRouter.post('/config/apply', async (c) => {
     if(!isLoggedIn(c)) {
@@ -198,15 +204,13 @@ configRouter.post('/config/apply', async (c) => {
 
         fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
 
-        c.status(200);
-        return c.text("");
+        return c.text("", 200);
     } else {
-        c.status(400);
-        return c.text("400 Bad Request");
+        return c.text("400 Bad Request", 400);
     }
 });
 
-configRouter.post('/config/read', async (c) => {
+configRouter.get('/config/read', async (c) => {
     if(!isLoggedIn(c)) {
         c.status(401);
         return c.text("401 Unauthorized");
@@ -227,9 +231,7 @@ configRouter.post('/config/read', async (c) => {
         configNodes.push(node);
     }
 
-    c.json(configNodes);
-
-    c.status(200);
+    return c.json(configNodes, 200);
 });
 
 export default configRouter;

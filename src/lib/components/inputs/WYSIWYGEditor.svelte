@@ -36,8 +36,6 @@
 			})()
 		).replaceAll('amp;', '&')) &&
 		(() => {
-			console.log(text);
-			console.debug(output);
 			clearTimeout(timeout);
 			timeout = setTimeout(() => MCText.refeashObfuscate(previewDiv), 1);
 		})();

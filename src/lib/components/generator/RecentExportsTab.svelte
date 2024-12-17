@@ -65,9 +65,9 @@
 </script>
 
 {#await getRecentExportsPromise()}
-<div class="flex w-full h-full items-center justify-center">
-    <h1 class="font-minecraft text-white text-2xl">Fetching recent exports...</h1>
-</div>
+    <div class="flex w-full h-full items-center justify-center">
+        <h1 class="font-minecraft text-white text-2xl">Fetching recent exports...</h1>
+    </div>
 {:then recentExports} 
     {#if recentExports.length == 0}
         <div class="flex w-full h-full items-center justify-center">

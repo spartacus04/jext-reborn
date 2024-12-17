@@ -101,7 +101,7 @@ export const inputFile = (
 				multiple: multiple,
 				directory: false,
 				title: 'Select a file',
-				filters: [{ name: 'Files', extensions: accept.replaceAll('.', '').split(',') }]
+				filters: [{ name: 'Files', extensions: accept.replace(/\./g, '').split(',') }]
 			})) as string | string[] | null;
 
 			if (filePaths == null) return;
@@ -117,7 +117,6 @@ export const inputFile = (
 			);
 
 			if (cb) {
-				console.log(files.filter((file) => file !== null));
 				cb(files.filter((file) => file !== null));
 			}
 		} else {

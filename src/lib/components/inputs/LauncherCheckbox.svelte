@@ -6,12 +6,12 @@
 </script>
 
 <label class="flex items-center gap-2 {classes}">
-	<div id="container" class="appearance-none bg-surface-background">
+	<div id="container" class="appearance-none bg-surface-background aspect-square h-5">
 		<input
 			type="checkbox"
 			bind:checked={value}
 			on:change
-			class=" accent-[#0dd166] h-5 w-5 text-[#0dd166] border-2 border-[#0dd166] rounded-sm focus:outline-none"
+			class="accent-[#0dd166] h-5 w-5 text-[#0dd166] border-2 border-[#0dd166] rounded-sm focus:outline-none"
 		/>
 	</div>
 	<span class="text-white text-lg font-minecraft">{label}</span>
