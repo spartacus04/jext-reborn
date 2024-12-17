@@ -16,6 +16,14 @@ export const load: LayoutLoad = async () => {
 		try {
 			if(await connector.healthCheck()) {
 				pluginConnectorStore.set(connector);
+
+				const results = await connector.getDiscs()
+
+				return {
+					props: {
+						rp: results
+					}
+				}
 			}
 		} catch { 
 			console.error('Could not connect to the JEXT server');
