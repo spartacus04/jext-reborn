@@ -40,8 +40,10 @@ export const updateSteps = (index: number, status: string, current: number, tota
 };
 
 export const exportResourcePack = async (exporter: BaseExporter) => {
-	if (!(await isPermissionGranted())) {
-		await requestPermission();
+	if(isTauri) {
+		if (!(await isPermissionGranted())) {
+			await requestPermission();
+		}
 	}
 
 	const pack = get(ResourcePackData);
@@ -94,7 +96,7 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 };
 
 const sendFinishNotification = async () => {
-	if (await isPermissionGranted()) {
+	if (isTauri && await isPermissionGranted()) {
 		sendNotification({
 			title: 'JEXT Export complete',
 			body: 'Your export is ready'
