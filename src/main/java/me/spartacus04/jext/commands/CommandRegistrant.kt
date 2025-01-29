@@ -14,7 +14,8 @@ internal object CommandRegistrant {
         ExecutorReload(),
         ExecutorStopMusic(),
         ExecutorWebUi(),
-        ExecutorAdminGui()
+        ExecutorAdminGui(),
+        ExecutorExport()
     )
     fun registerCommands() {
         commandRegistry.forEach {
