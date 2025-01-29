@@ -217,3 +217,28 @@ export const mergeDeep = (...objects: any[]) => {
 };
 
 export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const convertToPng = async (blob: Blob) : Promise<Blob> => {
+	const img = new Image();
+	img.src = URL.createObjectURL(blob);
+
+	await new Promise((resolve) => {
+		img.onload = resolve;
+	});
+
+	const canvas = document.createElement('canvas');
+	canvas.width = img.width;
+	canvas.height = img.height;
+
+	const ctx = canvas.getContext('2d');
+	if (!ctx) throw new Error('failed to get canvas context');
+
+	ctx.drawImage(img, 0, 0);
+
+	return new Promise((resolve) => {
+		canvas.toBlob((blob) => {
+			if (!blob) throw new Error('failed to convert canvas to blob');
+			resolve(blob);
+		});
+	});
+}

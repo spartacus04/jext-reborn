@@ -3,7 +3,7 @@ import { BaseExporter } from './baseExporter';
 import { get } from 'svelte/store';
 import { discsStore, isMusicDisc } from '$lib/discs/discManager';
 import type { NbsDisc } from '$lib/discs/nbsDisc';
-import { getDuration, getVersionFromTime } from '$lib/utils';
+import { convertToPng, getDuration, getVersionFromTime } from '$lib/utils';
 import { ResourcePackData } from '$lib/discs/resourcePackManager';
 import { MusicDisc } from '$lib/discs/musicDisc';
 
@@ -40,7 +40,7 @@ export class PluginExporter extends BaseExporter {
 			)
 		);
 
-		rp.file('pack.png', packData.icon);
+		rp.file('pack.png', await convertToPng(packData.icon));
 
 		const sounds: { [key: string]: unknown } = {};
 
@@ -103,6 +103,60 @@ export class PluginExporter extends BaseExporter {
 			)
 		);
 
+		rp.file(
+			`assets/minecraft/items/music_disc_11.json`,
+			JSON.stringify(
+				{
+					model: {
+						type: 'range_dispatch',
+						property: 'custom_model_data',
+						fallback: {
+							type: 'model',
+							model: 'item/music_disc_11'
+						},
+						entries: discs.map((disc) => {
+							return {
+								threshold: disc.modelData,
+								model: {
+									type: 'model',
+									model: `item/music_disc_${disc.namespace}`
+								}
+							}
+						})
+					}
+				},
+				null,
+				2
+			)
+		);
+
+		rp.file(
+			`assets/minecraft/items/fragment_5.json`,
+			JSON.stringify(
+				{
+					model: {
+						type: 'range_dispatch',
+						property: 'custom_model_data',
+						fallback: {
+							type: 'model',
+							model: 'item/music_disc_5'
+						},
+						entries: discs.map((disc) => {
+							return {
+								when: disc.modelData,
+								model: {
+									type: 'model',
+									model: `item/fragment_${disc.namespace}`
+								}
+							}
+						})
+					}
+				},
+				null,
+				2
+			)
+		);
+
 		for (const disc of discs) {
 			rp.file(
 				`assets/minecraft/models/item/music_disc_${disc.namespace}.json`,
@@ -134,12 +188,12 @@ export class PluginExporter extends BaseExporter {
 			);
 
 			// disc texture
-			rp.file(`assets/minecraft/textures/item/music_disc_${disc.namespace}.png`, disc.discTexture);
+			rp.file(`assets/minecraft/textures/item/music_disc_${disc.namespace}.png`, await convertToPng(disc.discTexture));
 
 			// fragment texture
 			rp.file(
 				`assets/minecraft/textures/item/fragment_${disc.namespace}.png`,
-				disc.fragmentTexture
+				await convertToPng(disc.fragmentTexture)
 			);
 
 			// track
@@ -271,7 +325,7 @@ export class PluginExporter extends BaseExporter {
 
 		// pack_icon.png
 
-		rp.file('pack_icon.png', resourcePackData.icon);
+		rp.file('pack_icon.png', await convertToPng(resourcePackData.icon));
 
 		// item_texture.json
 
@@ -350,8 +404,8 @@ export class PluginExporter extends BaseExporter {
 
 		// each disc's textures and sound
 		for (const disc of discs) {
-			rp.file(`textures/items/music_disc_${disc.namespace}.png`, disc.discTexture);
-			rp.file(`textures/items/fragment_${disc.namespace}.png`, disc.fragmentTexture);
+			rp.file(`textures/items/music_disc_${disc.namespace}.png`, await convertToPng(disc.discTexture));
+			rp.file(`textures/items/fragment_${disc.namespace}.png`, await convertToPng(disc.fragmentTexture));
 
 			if (isMusicDisc(disc)) {
 				rp.file(`sounds/jext/${disc.namespace}.ogg`, (disc as MusicDisc).cachedFinalAudioFile!);
