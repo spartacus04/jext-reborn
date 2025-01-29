@@ -1,0 +1,38 @@
+{
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Trails & Tales",
+	"description": "Soundtrack capturing the essence of Minecraft's new biomes and features.",
+	"descriptionAsTooltip": false,
+	"icon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/a0/99/73/a0997358-8e45-8102-140c-f3dd4691b77d/196922443176_Cover.jpg/1200x1200bf-60.jpg",
+	"authors": ["Aaron Cherof"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/Uu3dshFseaU",
+			"overrideName": "Echo in the Wind",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6Trails & Tales captures the essence of Minecraft's new biomes and features with a collection of music tracks composed by Aaron Cherof.\n§2§o1st disc out of 4.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/a0/99/73/a0997358-8e45-8102-140c-f3dd4691b77d/196922443176_Cover.jpg/1200x1200bf-60.jpg"
+		},
+		{
+			"url": "https://youtu.be/ec9dLqGOcg0",
+			"overrideName": "A Familiar Room",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6Trails & Tales captures the essence of Minecraft's new biomes and features with a collection of music tracks composed by Aaron Cherof.\n§2§o2nd disc out of 4.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/a0/99/73/a0997358-8e45-8102-140c-f3dd4691b77d/196922443176_Cover.jpg/1200x1200bf-60.jpg"
+		},
+		{
+			"url": "https://youtu.be/TaXlw0OmSOg",
+			"overrideName": "Bromeliad",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6Trails & Tales captures the essence of Minecraft's new biomes and features with a collection of music tracks composed by Aaron Cherof.\n§2§o3rd disc out of 4.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/a0/99/73/a0997358-8e45-8102-140c-f3dd4691b77d/196922443176_Cover.jpg/1200x1200bf-60.jpg"
+		},
+		{
+			"url": "https://youtu.be/_lxjp54MMBg",
+			"overrideName": "Crescent Dunes",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6Trails & Tales captures the essence of Minecraft's new biomes and features with a collection of music tracks composed by Aaron Cherof.\n§2§o4th disc out of 4.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/a0/99/73/a0997358-8e45-8102-140c-f3dd4691b77d/196922443176_Cover.jpg/1200x1200bf-60.jpg"
+		}
+	]
+}

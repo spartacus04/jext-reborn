@@ -1,234 +1,134 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import LauncherCheckbox from '$lib/components/inputs/LauncherCheckbox.svelte';
+	import LauncherCombobox from '$lib/components/inputs/LauncherCombobox.svelte';
+	import LauncherNumbox from '$lib/components/inputs/LauncherNumbox.svelte';
+	import LauncherTextbox from '$lib/components/inputs/LauncherTextbox.svelte';
+	import { pluginConnectorStore, type ConfigNode } from '$lib/pluginAccess/pluginConnector';
+	import EditDungeonConfigModal from '$lib/components/modals/EditDungeonConfigModal.svelte';
+	import { get } from 'svelte/store';
+	import { baseElement } from '$lib/state';
+	import LauncherButton from '$lib/components/buttons/LauncherButton.svelte';
+	import { cAlert } from '$lib/utils';
+	import { goto } from '$app/navigation';
 
-	import { dark_dirt_background } from '$lib/assets';
+	let currentConfig: any = {};
 
-	import {
-		AppBar,
-		AppShell,
-		ProgressRadial,
-		getModalStore,
-		getToastStore
-	} from '@skeletonlabs/skeleton';
-	import { get, writable } from 'svelte/store';
-	import { onMount } from 'svelte';
+	const getConfig = async () => {
+		const results = await $pluginConnectorStore!.getConfig();
 
-	import { ConfigNode, MinecraftLaunchButton, ErrorPopup } from '$lib/components';
+		results.forEach((node) => {
+			currentConfig[node.id] = node.value;
+		});
 
-	import {
-		fetchAuthed,
-		isLoggedIn,
-		login,
-		healthCheck,
-		logout,
-		type ConfigNode as CfgNode
-	} from '$lib/index';
+		return results;
+	};
 
-	export let data: PageData;
-	const modalStore = getModalStore();
-	const toastStore = getToastStore();
+	const openDungeonSelector = async (target: string) => {
+		const values = { ...currentConfig[target] };
 
-	const configStore = writable<
-		CfgNode<boolean | number | string | { [key: string]: number }>[] | null
-	>(null);
-	let configSnapshot: any[] = [];
-
-	onMount(async () => {
-		if (isLoggedIn()) {
-			if (data.server.connect) {
-				if (
-					await new Promise<boolean>((resolve) => {
-						modalStore.trigger({
-							type: 'confirm',
-							title: 'Already logged in',
-							body: 'You are already logged in. Do you want to connect to this server?',
-							response: (response) => resolve(response)
-						});
-					})
-				) {
-					const connected = await login(modalStore, toastStore, ErrorPopup, {
-						ip: data.server.ip,
-						port: data.server.port
-					});
-
-					if (!connected) return;
-
-					const url = new URL(window.location.href);
-					url.search = '';
-
-					window.location.href = url.toString();
+		currentConfig[target] = await new Promise<{ [key: string]: number } | null>((resolve) => {
+			const editDungeonModal = new EditDungeonConfigModal({
+				target: get(baseElement)!,
+				props: {
+					onFinish: (changes) => {
+						editDungeonModal.$destroy();
+						resolve(changes);
+					},
+					dungeons: values,
+					defaultValue: target == 'disc-loottables-limit' ? 2 : 3
 				}
-			}
-
-			if (!(await healthCheck())) {
-				logout(true);
-			}
-		} else {
-			const connected = await login(modalStore, toastStore, ErrorPopup, {
-				ip: data.server.ip,
-				port: data.server.port
 			});
 
-			if (!connected) return;
-
-			window.location.reload();
-		}
-	});
-
-	const fetchPageSettingsPromise = new Promise<
-		CfgNode<boolean | number | string | { [key: string]: number }>[] | null
-	>((resolve) => {
-		if (isLoggedIn()) {
-			fetchAuthed('config/read').then(async (response) => {
-				const json = await response.json();
-
-				resolve(json);
-			});
-		} else {
-			resolve(null);
-		}
-	});
-
-	const fetchPageSettings = async () => {
-		configStore.set(await fetchPageSettingsPromise);
-
-		configSnapshot = [];
-
-		if (get(configStore) == null) return get(configStore);
-
-		get(configStore)!.forEach((node) => {
-			configSnapshot.push({
-				id: node.id,
-				value: node.value
-			});
+			editDungeonModal.openModal();
 		});
-
-		return get(configStore);
 	};
 
-	const reload = async () => await fetchPageSettings();
-
-	const applySettings = async () => {
-		const settings = get(configStore)!;
-
-		const data: { [key: string]: any } = {};
-
-		for (const node of settings) {
-			data[node.id] = node.value;
-		}
-
-		const response = await fetchAuthed('config/apply', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
+	const reset = (config: ConfigNode[]) => {
+		config.forEach((configNode) => {
+			currentConfig[configNode.id] = configNode.default;
 		});
-
-		if (response.status !== 200) {
-			modalStore.trigger({
-				type: 'alert',
-				title: 'Failed to apply settings',
-				body: 'The settings could not be applied. Check the server logs for more information',
-				buttonTextCancel: 'Ok'
-			});
-
-			return;
-		} else {
-			modalStore.trigger({
-				type: 'alert',
-				title: 'Settings applied',
-				buttonTextCancel: 'Ok',
-				body: 'The settings have been applied successfully.'
-			});
-
-			await reload();
-		}
 	};
 
-	$: canApply =
-		$configStore != null &&
-		$configStore.some((node) => {
-			return (
-				JSON.stringify(node.value) !==
-				JSON.stringify(configSnapshot!.find((snapshotNode) => snapshotNode.id == node.id)!.value)
-			);
-		});
+	const apply = async () => {
+		await $pluginConnectorStore!.applyConfig(currentConfig);
+
+		cAlert('Config applied successfully!');
+	};
+
+	$: $pluginConnectorStore ?? goto('../');
 </script>
 
 <svelte:head>
-	<title>JEXT Config Manager</title>
+	<title>JEXT | Companion App</title>
 	<meta
 		name="description"
-		content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the plugin configuration remotely with ease!"
+		content="Web GUI for the Jext Reborn Minecraft plugin. Here you can manage the resourcepack and music discs with ease!"
 	/>
 </svelte:head>
 
-{#await fetchPageSettings()}
-	<div class="h-full w-full flex items-center justify-center">
-		<ProgressRadial />
+{#await getConfig()}
+	<div class="flex w-full h-full items-center justify-center">
+		<h1 class="font-minecraft text-white text-2xl">Fetching config...</h1>
 	</div>
-{:then _}
-	{#if $configStore == null}
-		<div class="flex flex-col items-center justify-center h-screen">
-			<h1 class="text-4xl font-bold">You are not connected to the plugin</h1>
-			<p class="text-xl">Please connect to continue</p>
-
-			<button
-				on:click={async () => {
-					const connected = await login(modalStore, toastStore, ErrorPopup, {
-						ip: data.server.ip,
-						port: data.server.port
-					});
-
-					if (!connected) return;
-
-					const url = new URL(window.location.href);
-					url.search = '';
-
-					window.location.href = url.toString();
-				}}
-				class="btn variant-filled">Connect</button
-			>
+{:then config}
+	<div class="flex h-full flex-col w-full">
+		<div class="flex flex-row bg-surface-background w-full py-4 px-8">
+			<b class="text-white text-xs uppercase">CONFIG MANAGER</b>
 		</div>
-	{:else}
-		<AppShell>
-			<svelte:fragment slot="header">
-				<AppBar
-					regionRowMain="grid-cols-[1fr] sm:grid-cols-[auto_1fr_auto]"
-					slotTrail="-mt-6  justify-self-center"
+		<div class="overflow-y-auto overflow-x-auto">
+			{#each config as configNode}
+				<div
+					class="first:border-t-0 border-t border-surface-background flex flex-col md:flex-row w-full p-4 gap-4 font-minecraft bg-surface-background-variant flex-1 items-center md:items-start"
 				>
-					<svelte:fragment slot="lead">
-						<div>
-							<h1 class="text-2xl font-bold">Plugin configurator</h1>
-							<p class="text-sm">Here you can change the settings of the JEXT-plugin</p>
-						</div>
-					</svelte:fragment>
-					<svelte:fragment slot="trail">
-						<button
-							class="btn variant-filled hover:bg-blue-500 hover:text-white"
-							on:click={() => logout(true)}
-						>
-							Log out
-						</button>
-					</svelte:fragment>
-				</AppBar>
-			</svelte:fragment>
-			<div
-				style:background-image="url({dark_dirt_background})"
-				class="bg-[length:64px_64px] flex flex-col gap-4 py-2"
-			>
-				{#each $configStore as configNode}
-					<ConfigNode bind:node={configNode} />
-				{/each}
-			</div>
-			<svelte:fragment slot="footer">
-				<div class="flex justify-center w-full bg-surface-500 p-2">
-					<MinecraftLaunchButton on:click={applySettings} highlight={true} bind:enabled={canApply}
-						>Apply</MinecraftLaunchButton
-					>
+					<div id="shadow" class="flex flex-col w-full">
+						<b class="text-white text-lg">{configNode.name}</b>
+						<p class="text-white text-sm">{configNode.description}</p>
+					</div>
+
+					<div class="justify-self-end w-80" title={configNode.name}>
+						{#if typeof configNode.default === 'boolean'}
+							<LauncherCheckbox bind:value={currentConfig[configNode.id]} label={configNode.name} />
+						{:else if typeof configNode.default === 'number'}
+							<LauncherNumbox
+								min={0}
+								max={65536}
+								placeholder="Num"
+								bind:value={currentConfig[configNode.id]}
+							/>
+						{:else if typeof configNode.default === 'object'}
+							<LauncherButton
+								text={configNode.name}
+								type="primary"
+								classes="w-full text-white"
+								on:click={() => openDungeonSelector(configNode.id)}
+							/>
+						{:else if configNode.enumValues && Array.isArray(configNode.enumValues)}
+							<LauncherCombobox
+								bind:value={currentConfig[configNode.id]}
+								options={configNode.enumValues}
+							/>
+						{:else}
+							<LauncherTextbox
+								placeholder={configNode.name}
+								bind:value={currentConfig[configNode.id]}
+							/>
+						{/if}
+					</div>
 				</div>
-			</svelte:fragment>
-		</AppShell>
-	{/if}
+			{/each}
+
+			<div
+				class="flex items-center justify-center flex-col md:flex-row gap-4 [&>*]:w-40 text-white p-4"
+			>
+				<LauncherButton text="Apply" type="primary" on:click={apply} />
+				<LauncherButton text="Reset" type="danger" on:click={() => reset(config)} />
+			</div>
+		</div>
+	</div>
 {/await}
+
+<style>
+	#shadow {
+		text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	}
+</style>

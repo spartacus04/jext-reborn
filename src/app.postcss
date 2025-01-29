@@ -1,14 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind variants;
 
 html,
 body {
-	@apply h-full overflow-hidden;
+	@apply h-full p-0 bg-surface;
 }
 
 img,
+svg,
 div {
 	image-rendering: optimizeSpeed;
 	image-rendering: -moz-crisp-edges;
@@ -17,10 +17,6 @@ div {
 	image-rendering: pixelated;
 	image-rendering: optimize-contrast;
 	-ms-interpolation-mode: nearest-neighbor;
-}
-
-a {
-	@apply text-blue-500 hover:text-blue-600;
 }
 
 @layer base {
@@ -46,10 +42,65 @@ a {
 	}
 }
 
-::selection {
-	@apply bg-blue-500 text-white;
+::-webkit-scrollbar {
+	width: 10px;
 }
 
-::-moz-selection {
-	@apply bg-blue-500 text-white;
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #262626;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #3c3c3c;
+}
+
+.hljs-punctuation {
+	color: #ffd700;
+}
+
+.hljs-attr {
+	color: #9cdcfe;
+}
+
+.hljs-string {
+	color: #ce9178;
+}
+
+.hljs-number {
+	color: #b5cea8;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-name {
+	color: #569cd6;
+}
+
+.hljs-comment {
+	color: #6a9955;
+}
+
+.hljs-title.class_,
+.hljs-type,
+.hljs-built_in {
+	color: #4ec9b0;
+}
+
+.hljs-title.function_,
+.hljs-title {
+	color: #dcdcaa;
+}
+
+.hljs-meta {
+	color: #4ec9b0;
+
+	&::first-letter {
+		color: white;
+	}
+}
+
+.hljs-tag {
+	color: #808080;
 }

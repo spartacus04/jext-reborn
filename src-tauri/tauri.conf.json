@@ -1,77 +1,38 @@
 {
-	"$schema": "../node_modules/@tauri-apps/cli/schema.json",
+	"$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+	"productName": "Jext Plugin Manager",
+	"version": "2.0.0",
+	"identifier": "com.spartacus04.jext-tool",
 	"build": {
-		"beforeBuildCommand": "npm run build",
-		"beforeDevCommand": "npm run dev",
-		"devPath": "http://localhost:5173/jext-reborn/",
-		"distDir": "../build"
+		"frontendDist": "../build",
+		"devUrl": "http://localhost:5173",
+		"beforeDevCommand": "bun run dev",
+		"beforeBuildCommand": "bun run build"
 	},
-	"package": {
-		"productName": "Jext Plugin Manager",
-		"version": "1.0.0"
-	},
-	"tauri": {
-		"allowlist": {
-			"window": {
-				"requestUserAttention": true,
-				"setFocus": true
-			},
-			"dialog": {
-				"confirm": true
-			},
-			"shell": {
-				"open": true
-			},
-			"all": false
-		},
-		"bundle": {
-			"active": true,
-			"category": "DeveloperTool",
-			"copyright": "MIT",
-			"deb": {
-				"depends": []
-			},
-			"externalBin": [],
-			"icon": [
-				"icons/32x32.png",
-				"icons/128x128.png",
-				"icons/128x128@2x.png",
-				"icons/icon.icns",
-				"icons/icon.ico"
-			],
-			"identifier": "com.spartacus04.jext-tool",
-			"longDescription": "",
-			"macOS": {
-				"entitlements": null,
-				"exceptionDomain": "",
-				"frameworks": [],
-				"providerShortName": null,
-				"signingIdentity": null
-			},
-			"resources": ["assets/*"],
-			"shortDescription": "",
-			"targets": "all",
-			"windows": {
-				"certificateThumbprint": null,
-				"digestAlgorithm": "sha256",
-				"timestampUrl": ""
-			}
-		},
-		"security": {
-			"csp": null,
-			"dangerousUseHttpScheme": true
-		},
-		"updater": {
-			"active": false
-		},
+	"app": {
+		"withGlobalTauri": true,
 		"windows": [
 			{
-				"fullscreen": false,
-				"height": 600,
+				"title": "JEXT Companion",
+				"width": 1600,
+				"height": 900,
 				"resizable": true,
-				"title": "Jext Plugin Manager",
-				"width": 800
+				"fullscreen": false
 			}
+		],
+		"security": {
+			"csp": null
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": "all",
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
 		]
 	}
 }

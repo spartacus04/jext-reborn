@@ -1,6 +1,6 @@
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
+# Package Managers
 package-lock.json
+pnpm-lock.yaml
 yarn.lock
 
-/src-tauri/target/**/*
+src-tauri/target/

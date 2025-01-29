@@ -1,0 +1,20 @@
+{
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "enables the default permissions",
+	"windows": ["main"],
+	"permissions": [
+		"core:default",
+		"dialog:allow-open",
+		"fs:allow-read-file",
+		"fs:allow-app-meta-recursive",
+		"fs:allow-write-file",
+		"fs:allow-appcache-write-recursive",
+		"fs:allow-appcache-read-recursive",
+		"fs:allow-appcache-meta-recursive",
+		"fs:allow-read",
+		"dialog:allow-save",
+		"shell:allow-open",
+		"notification:default"
+	]
+}

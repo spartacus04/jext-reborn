@@ -1,3 +1,49 @@
+import { get } from 'svelte/store';
+import { AlertModal, ConfirmModal } from './components/modals';
+import { baseElement, isTauri } from './state';
+import { save } from '@tauri-apps/plugin-dialog';
+import { writeFile } from '@tauri-apps/plugin-fs';
+
+export const cConfirm = async (options: {
+	text: string;
+	confirmText: string;
+	cancelText: string | undefined;
+	discardText: string;
+}) => {
+	return await new Promise<'discard' | 'confirm' | 'cancel'>((resolve) => {
+		const confirmModal = new ConfirmModal({
+			target: get(baseElement)!,
+			props: {
+				...options,
+				onFinish: (result) => {
+					confirmModal.$destroy();
+					resolve(result);
+				}
+			}
+		});
+
+		confirmModal.openModal();
+	});
+};
+
+export const cAlert = async (text: string, confirmText: string = 'Ok') => {
+	return await new Promise<void>((resolve) => {
+		const alertModal = new AlertModal({
+			target: get(baseElement)!,
+			props: {
+				text,
+				confirmText,
+				onFinish: () => {
+					alertModal.$destroy();
+					resolve();
+				}
+			}
+		});
+
+		alertModal.openModal();
+	});
+};
+
 export const blobToArraBuffer = (blob: Blob): Promise<ArrayBuffer> => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -25,10 +71,24 @@ export const base64ToArrayBuffer = (base64: string) => {
 };
 
 export const saveAs = (blob: Blob | undefined, filename: string) => {
-	const link = document.createElement('a');
-	link.href = URL.createObjectURL(blob!);
-	link.download = filename;
-	link.click();
+	if (isTauri) {
+		save({
+			canCreateDirectories: true,
+			title: 'Save File',
+			filters: [{ name: 'All Files', extensions: [filename.split('.').pop()!] }]
+		}).then(async (result) => {
+			if (result == null) return;
+
+			const uint8Array = new Uint8Array(await blob!.arrayBuffer());
+
+			writeFile(result, uint8Array);
+		});
+	} else {
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob!);
+		link.download = filename;
+		link.click();
+	}
 };
 
 export const getVersionFromTime = () => {
@@ -79,13 +139,13 @@ export const downloadWithProgress = async (
 
 			if (done) {
 				if (total != -1 && total !== received) throw new Error('failed to complete download');
-				cb && cb({ url, total, received, delta, done });
+				if (cb) cb({ url, total, received, delta, done });
 				break;
 			}
 
 			chunks.push(value);
 			received += delta;
-			cb && cb({ url, total, received, delta, done });
+			if (cb) cb({ url, total, received, delta, done });
 		}
 
 		const data = new Uint8Array(received);
@@ -99,7 +159,7 @@ export const downloadWithProgress = async (
 	} catch (e) {
 		console.log('failed to send download progress event: ', e);
 		buf = await resp.arrayBuffer();
-		cb &&
+		if (cb)
 			cb({
 				url,
 				total: buf.byteLength,
@@ -111,3 +171,49 @@ export const downloadWithProgress = async (
 
 	return buf;
 };
+
+export const getDuration = async (blob: Blob): Promise<number> => {
+	return new Promise((resolve) => {
+		const audio = document.createElement('audio');
+
+		console.debug('blob', blob);
+
+		audio.src = URL.createObjectURL(blob);
+
+		audio.onloadedmetadata = () => {
+			URL.revokeObjectURL(audio.src);
+			resolve(Math.ceil(audio.duration));
+		};
+	});
+};
+
+export const mergeDeep = (...objects: any[]) => {
+	const isObject = (obj: unknown) => obj && typeof obj == 'object';
+
+	if (Array.isArray(objects[0]) || Array.isArray(objects[1])) {
+		return objects.reduce((prev, obj) => {
+			if (obj === undefined) return prev;
+			return prev.concat(...obj);
+		}, []);
+	}
+
+	return objects.reduce((prev, obj) => {
+		if (obj === undefined) return prev;
+		Object.keys(obj).forEach((key) => {
+			const pVal = prev[key];
+			const oVal = obj[key];
+
+			if (Array.isArray(pVal) && Array.isArray(oVal)) {
+				prev[key] = pVal.concat(...oVal);
+			} else if (isObject(pVal) && isObject(oVal)) {
+				prev[key] = mergeDeep(pVal, oVal);
+			} else {
+				prev[key] = oVal;
+			}
+		});
+
+		return prev;
+	}, {});
+};
+
+export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

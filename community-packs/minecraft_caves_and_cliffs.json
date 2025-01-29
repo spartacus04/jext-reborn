@@ -1,0 +1,73 @@
+{
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Caves & Cliffs",
+	"description": "Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.",
+	"descriptionAsTooltip": false,
+	"icon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg",
+	"authors": ["Lena Raine", "Kumi Tanioka"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/OuYA_siR8Hc",
+			"overrideName": "Stand Tall",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o1st disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/hb5TsZcAiJQ",
+			"overrideName": "Left to Bloom",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o2nd disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/TzcwvQ0MDCo",
+			"overrideName": "Ancestry",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o3rd disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/uPM--9Gar60",
+			"overrideName": "Wending",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o4th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/y-f8pEX1Q1M",
+			"overrideName": "Infinite Amethyst",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o5th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/Y5KFnQYCdsk",
+			"overrideName": "One More Day",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o6th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/CG7bdkACNKM",
+			"overrideName": "Floating Dream",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o7th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/k79dMVVmvA8",
+			"overrideName": "Comforting Memories",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o8th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		},
+		{
+			"url": "https://youtu.be/VSuIdgr66ho",
+			"overrideName": "An Ordinary Day",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6Soundtrack for Minecraft's terrain update with enhanced caves and cliffs.\n§2§o9th disc out of 9.",
+			"baseIcon": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/1200x1200bb.jpg"
+		}
+	]
+}
