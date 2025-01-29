@@ -118,13 +118,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: stabledocs
-          path: static/javadocs/stable-javadocs
+          path: static/docs/stable-javadocs
 
       - name: Download dev docs
         uses: actions/download-artifact@v4
         with:
           name: devdocs
-          path: static/javadocs/development-javadocs
+          path: static/docs/development-javadocs
 
       - uses: oven-sh/setup-bun@v1
 
