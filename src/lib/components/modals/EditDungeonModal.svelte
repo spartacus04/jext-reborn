@@ -117,7 +117,7 @@
 			result =
 				Math.round(
 					(value /
-						((group.defaultLoottableWeight! + value) * (1 - (group.ignorePercentage ?? 0)))) *
+						(group.defaultLoottableWeight! * (1 - (group.ignorePercentage ?? 0)) + value)) *
 						1000
 				) / 10;
 		}
