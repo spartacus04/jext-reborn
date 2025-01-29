@@ -5,7 +5,11 @@ use tauri_plugin_http::reqwest::header::USER_AGENT;
 use tauri_plugin_http::reqwest::Client;
 
 use super::platform::{Architecture, Platform};
+
+#[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
+#[cfg(windows)]
+use std::os::windows::fs::PermissionsExt;
 
 #[derive(Clone, Debug)]
 pub struct YtDlp {
@@ -109,14 +113,30 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
 
     std::fs::write(binary_path, bytes).unwrap();
 
-    let mut perms = std::fs::metadata(binary_path)
-        .map_err(|e| format!("Error getting metadata: {}", e))?
-        .permissions();
+    #[cfg(unix)]
+    {
+        let mut perms = std::fs::metadata(binary_path)
+            .map_err(|e| format!("Error getting metadata: {}", e))?
+            .permissions();
 
-    perms.set_mode(0o755);
+        perms.set_mode(0o755);
 
-    std::fs::set_permissions(binary_path, perms)
-        .map_err(|e| format!("Error setting permissions: {}", e))?;
+        std::fs::set_permissions(binary_path, perms)
+            .map_err(|e| format!("Error setting permissions: {}", e))?;
+    }
+
+    #[cfg(windows)]
+    {
+
+        let mut perms = std::fs::metadata(binary_path)
+            .map_err(|e| format!("Error getting metadata: {}", e))?
+            .permissions();
+
+        perms.set_readonly(false);
+
+        std::fs::set_permissions(binary_path, perms)
+            .map_err(|e| format!("Error setting permissions: {}", e))?;
+    }
 
     Ok(())
 }
