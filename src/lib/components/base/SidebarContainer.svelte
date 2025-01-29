@@ -115,7 +115,7 @@
 				title="Project page"
 				external={true}
 			/>
-			<SidebarEntryButton icon={settings_icon} title="Web UI settings" />
+			<!-- <SidebarEntryButton icon={settings_icon} title="Web UI settings" /> -->
 		</div>
 
 		<button
