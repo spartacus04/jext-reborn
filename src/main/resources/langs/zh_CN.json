@@ -34,7 +34,7 @@
   "stopped-music-for-no-one": "§f停止为玩家播放音乐，发生了一些错误!",
   "export-start": "§fExporting resourcepack to §6%file%§f...",
   "export-success": "§fResourcepack exported to §6%file%§f!",
-  "export-fail": "§cResourcepack export failed!",
+  "export-fail": "§cResourcepack导出失败！",
   "reloaded": "§c已重新载入!",
   "missing-permission": "§c你没有权限使用此命令!",
   "invalid-runner": "§c本命令不能被 §6%runner%§c 运行。",
