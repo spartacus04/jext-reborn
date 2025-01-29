@@ -59,7 +59,7 @@ dependencies {
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 }
 
 group = "me.spartacus04.jext"
