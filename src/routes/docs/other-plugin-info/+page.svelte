@@ -15,6 +15,7 @@
 		<p>
 			If the <code>resource-pack-host</code> config option is enabled, the plugin will try to serve
 			the resource pack from the <code>resource-pack.zip</code> file in the plugin directory.
+			Since the plugin may edit the resource-pack, you must use <code>/jext export</code> command to create a resource pack with the changes.
 		</p>
 
 		<h2 class="text-4xl mb-4">Asset loading</h2>
