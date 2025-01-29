@@ -32,11 +32,14 @@
   "stopped-music-for-multiple": "§f§6%playercount% §fプレイヤーの音楽を停止しました！",
   "stopped-music-for": "§f音楽を§6%player%§f停止しました！",
   "stopped-music-for-no-one": "§fプレイヤーなしで音楽を停止しました。何か問題が発生しました！",
+  "export-start": "§fExporting resourcepack to §6%file%§f...",
+  "export-success": "§fResourcepack exported to §6%file%§f!",
+  "export-fail": "§cResourcepack export failed!",
   "reloaded": "§c再読み込みしました！",
   "missing-permission": "§cこのコマンドを使用する権限がありません！",
   "invalid-runner": "§cこのコマンドは§6%runner%§cでのみ実行できます。",
   "command-not-supported": "§6%command% §cコマンドはサポートされていません: §6%reason%§c.",
   "webui": "§aWeb UI は §2%url% で利用できます",
   "webui-disabled": "§cWeb UIは現在無効になっています！",
-  "usage": "[Usage]: §6/%command%"
+  "usage": "[使用方法]: §6/%command%"
 }
