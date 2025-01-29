@@ -51,7 +51,8 @@ export const lootTables: Loottable[] = [
 		contents: ['chests/trial_chambers/reward'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 56
+		defaultLoottableWeight: 48,
+		ignorePercentage: 0.25,
 	},
 	{
 		displayName: 'Vault',
@@ -61,7 +62,8 @@ export const lootTables: Loottable[] = [
 		contents: ['chests/trial_chambers/reward_ominous'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 14
+		defaultLoottableWeight: 40,
+		ignorePercentage: 0.75,
 	},
 	{
 		displayName: 'Trial Spawner',
@@ -70,7 +72,8 @@ export const lootTables: Loottable[] = [
 		contents: ['spawners/trial_chamber/consumables'],
 		mode: 'weight',
 		group: 'trials/*',
-		defaultLoottableWeight: 26
+		defaultLoottableWeight: 20,
+		ignorePercentage: 0.5,
 	},
 	{
 		displayName: 'Trial Spawner',
@@ -310,12 +313,6 @@ export const pages = [
 		category: 'For Server Owners'
 	},
 	{
-		title: 'Disc manager tips & tricks',
-		description: 'Learn how to use the disc manager to its full potential.',
-		url: '/docs/disc-manager-tips',
-		category: 'For Server Owners'
-	},
-	{
 		title: 'Desktop app & remote control',
 		description: 'Control both the resource pack and the plugin from the desktop app.',
 		url: '/docs/desktop-app',
@@ -325,6 +322,12 @@ export const pages = [
 		title: 'Bulk import',
 		description: 'Import a large amount of music at once.',
 		url: '/docs/bulk-import',
+		category: 'For Server Owners'
+	},
+	{
+		title: 'Other plugin documentation',
+		description: 'Documentation regarding how the plugin behaves under certain conditions. (Asset loading, Jukebox GUI, NoteblockAPI support, Geyser support)',
+		url: '/docs/other-plugin-info',
 		category: 'For Server Owners'
 	},
 	{

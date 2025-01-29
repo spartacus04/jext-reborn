@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import { json } from '@sveltejs/kit';
 
+export const prerender = true;
+
 export const GET = async () => {
     const packFileNames = fs.readdirSync('community-packs');
 
