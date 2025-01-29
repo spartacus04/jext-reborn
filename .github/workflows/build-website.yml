@@ -1,4 +1,4 @@
-name: Build & publish
+name: Build Website
 
 on:
   schedule:
