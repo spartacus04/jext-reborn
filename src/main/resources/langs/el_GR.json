@@ -34,7 +34,7 @@
   "stopped-music-for-no-one": "§fStopped μουσική για κανένα παίκτη, κάτι πήγε στραβά!",
   "export-start": "§fExporting resourcepack to §6%file%§f...",
   "export-success": "§fResourcepack exported to §6%file%§f!",
-  "export-fail": "§cResourcepack export failed!",
+  "export-fail": "§cResourcepack εξαγωγή απέτυχε!",
   "reloaded": "§cReloaded!",
   "missing-permission": "§cΔεν έχεις άδεια να χρησιμοποιήσεις αυτήν την εντολή!",
   "invalid-runner": "§cThis command can only be run by §6%runner%§c.",
