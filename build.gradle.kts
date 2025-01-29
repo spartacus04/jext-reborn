@@ -42,7 +42,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
-    compileOnly("org.scala-lang:scala-library:2.13.14")
+    compileOnly("org.scala-lang:scala-library:2.13.16")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.2")
     compileOnly("org.geysermc.geyser:api:2.6.0-SNAPSHOT") {
