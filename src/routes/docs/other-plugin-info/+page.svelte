@@ -10,10 +10,18 @@
 		<b class="text-white text-xs uppercase">OTHER PLUGIN INFO</b>
 	</div>
 	<div class="p-4 flex-col flex text-white overflow-y-auto w-full">
+		<h2 class="text-4xl mb-4">WebServer</h2>
+
+		<p>
+			If you are using the Webserver or the Resource pack host in a public server, you will need to specify to IP address of the server in either the
+			<code>override-web-interface-url</code> config option or in the <code>ip</code> property in the <code>server.properties</code> server file.
+		</p>
+
+
 		<h2 class="text-4xl mb-4">Resource pack host</h2>
 
 		<p>
-			If the <code>resource-pack-host</code> config option is enabled, the plugin will try to serve
+			If the <code>enable-resource-pack-host</code> config option is enabled, the plugin will try to serve
 			the resource pack from the <code>resource-pack.zip</code> file in the plugin directory.
 			Since the plugin may edit the resource-pack, you must use <code>/jext export</code> command to create a resource pack with the changes.
 		</p>
@@ -21,7 +29,7 @@
 		<h2 class="text-4xl mb-4">Asset loading</h2>
 
 		<p>
-			If the <code>resource-pack-host</code> config option is enabled, the plugin will try to fetch
+			If the <code>enable-resource-pack-host</code> config option is enabled, the plugin will try to fetch
 			the data from the <code>resource-pack.zip</code> file in the plugin directory. If not, the
 			plugin will try to download the resource pack specified in the <code>server.properties</code>
 			file in the <code>caches</code> directory. If a <code>resource-pack-sha1</code> is not
