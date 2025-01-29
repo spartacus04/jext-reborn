@@ -1,233 +1,231 @@
 import { fetch } from '@tauri-apps/plugin-http';
 import { writable } from 'svelte/store';
 
-export const pluginConnectorStore = writable<PluginConnector|undefined>(undefined);
+export const pluginConnectorStore = writable<PluginConnector | undefined>(undefined);
 
 export interface ConfigNode {
-    name: string;
-    id: string;
-    description: string;
-    value: any;
-    default: any;
-    enumValues?: string[] | string;
+	name: string;
+	id: string;
+	description: string;
+	value: any;
+	default: any;
+	enumValues?: string[] | string;
 }
 
 export class PluginConnector {
-    private bearerToken: string|undefined;
-    private serverAddress: string;
+	private bearerToken: string | undefined;
+	private serverAddress: string;
 
-    private constructor(serverAddress: string, bearerToken?: string) {
-        this.serverAddress = serverAddress;
-        this.bearerToken = bearerToken;
-    }
+	private constructor(serverAddress: string, bearerToken?: string) {
+		this.serverAddress = serverAddress;
+		this.bearerToken = bearerToken;
+	}
 
-    public async loginWithPassword(password: string) {
-        const response = await fetch(`${this.serverAddress}/connect`, {
-            method: 'POST',
-            body: password
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+	public async loginWithPassword(password: string) {
+		const response = await fetch(`${this.serverAddress}/connect`, {
+			method: 'POST',
+			body: password
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
+		if (response.status === 200) {
+			this.bearerToken = await response.text();
 
-        if (response.status === 200) {
-            this.bearerToken = await response.text();
+			window.sessionStorage.setItem('bearerToken', this.bearerToken);
+			window.sessionStorage.setItem('serverAddress', this.serverAddress);
+		} else {
+			throw new Error('The password is incorrect');
+		}
+	}
 
-            window.sessionStorage.setItem('bearerToken', this.bearerToken);
-            window.sessionStorage.setItem('serverAddress', this.serverAddress);
+	public async disconnect() {
+		if (!this.bearerToken) {
+			throw new Error('Cannot disconnect without a bearer token');
+		}
 
-        } else {
-            throw new Error('The password is incorrect');
-        }
-    }
+		const response = await fetch(`${this.serverAddress}/disconnect`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			}
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async disconnect() {
-        if(!this.bearerToken) {
-            throw new Error('Cannot disconnect without a bearer token');
-        }
+		if (response.status === 200) {
+			this.bearerToken = undefined;
+		} else {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('The bearer token is invalid');
+		}
+	}
 
-        const response = await fetch(`${this.serverAddress}/disconnect`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            }
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+	public async healthCheck(): Promise<boolean> {
+		const response1 = await fetch(`${this.serverAddress}/health`, {
+			method: 'GET'
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-        if (response.status === 200) {
-            this.bearerToken = undefined;
-        } else {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('The bearer token is invalid');
-        }
-    }
+		if (response1.status != 200) {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('Health check failed');
+		}
 
-    public async healthCheck() : Promise<boolean> {
-        const response1 = await fetch(`${this.serverAddress}/health`, {
-            method: 'GET'
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+		if (!this.bearerToken) {
+			return false;
+		}
 
-        if(response1.status != 200) {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('Health check failed');
-        }
+		const response2 = await fetch(`${this.serverAddress}/health`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			}
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-        if(!this.bearerToken) {
-            return false;
-        }
+		if (response2.status == 200) {
+			return true;
+		}
 
-        const response2 = await fetch(`${this.serverAddress}/health`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            }
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+		pluginConnectorStore.set(undefined);
+		window.sessionStorage.removeItem('bearerToken');
+		window.sessionStorage.removeItem('serverAddress');
+		throw new Error('The bearer token is invalid');
+	}
 
-        if(response2.status == 200) {
-            return true;
-        }
+	public async getConfig(): Promise<ConfigNode[]> {
+		if (!this.bearerToken) {
+			throw new Error('Cannot get config without a bearer token');
+		}
 
-        pluginConnectorStore.set(undefined);
-        window.sessionStorage.removeItem('bearerToken');
-        window.sessionStorage.removeItem('serverAddress');
-        throw new Error('The bearer token is invalid');
-    }
+		const response = await fetch(`${this.serverAddress}/config/read`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			}
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async getConfig() : Promise<ConfigNode[]> {
-        if(!this.bearerToken) {
-            throw new Error('Cannot get config without a bearer token');
-        }
+		if (response.status != 200) {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('The bearer token is invalid');
+		}
 
-        const response = await fetch(`${this.serverAddress}/config/read`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            }
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+		return await response.json();
+	}
 
-        if(response.status != 200) {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('The bearer token is invalid');
-        }
+	public async applyConfig(config: any) {
+		if (!this.bearerToken) {
+			throw new Error('Cannot set config without a bearer token');
+		}
 
-        return await response.json();
-    }
+		const response = await fetch(`${this.serverAddress}/config/apply`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			},
+			body: JSON.stringify(config)
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async applyConfig(config: any) {
-        if(!this.bearerToken) {
-            throw new Error('Cannot set config without a bearer token');
-        }
+		if (response.status == 401) {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('The bearer token is invalid');
+		}
 
-        const response = await fetch(`${this.serverAddress}/config/apply`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            },
-            body: JSON.stringify(config)
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+		if (response.status == 400) {
+			throw new Error('The config is invalid');
+		}
+	}
 
-        if(response.status == 401) {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('The bearer token is invalid');
-        }
+	public async getDiscs(): Promise<Blob | null> {
+		if (!this.bearerToken) {
+			throw new Error('Cannot get discs without a bearer token');
+		}
 
-        if(response.status == 400) {
-            throw new Error('The config is invalid');
-        }
-    }
+		const response = await fetch(`${this.serverAddress}/discs/read`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			}
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async getDiscs() : Promise<Blob|null> {
-        if(!this.bearerToken) {
-            throw new Error('Cannot get discs without a bearer token');
-        }
+		if (response.status != 200) {
+			return null;
+		}
 
-        const response = await fetch(`${this.serverAddress}/discs/read`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            }
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+		return await response.blob();
+	}
 
-        if(response.status != 200) {
-            return null;
-        }
+	public async applyDiscs(discs: Blob) {
+		if (!this.bearerToken) {
+			throw new Error('Cannot set discs without a bearer token');
+		}
 
-        return await response.blob();
-    }
+		const response = await fetch(`${this.serverAddress}/discs/apply`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			},
+			body: discs
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async applyDiscs(discs: Blob) {
-        if(!this.bearerToken) {
-            throw new Error('Cannot set discs without a bearer token');
-        }
+		if (response.status == 401) {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('The bearer token is invalid');
+		}
+	}
 
-        const response = await fetch(`${this.serverAddress}/discs/apply`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            },
-            body: discs
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+	public async applyDiscsGeyser(discs: Blob) {
+		if (!this.bearerToken) {
+			throw new Error('Cannot set discs without a bearer token');
+		}
 
-        if(response.status == 401) {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('The bearer token is invalid');
-        }
-    }
+		const response = await fetch(`${this.serverAddress}/discs/applygeyser`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${this.bearerToken}`
+			},
+			body: discs
+		}).catch(() => {
+			throw new Error('Could not connect to the JEXT server');
+		});
 
-    public async applyDiscsGeyser(discs: Blob) {
-        if(!this.bearerToken) {
-            throw new Error('Cannot set discs without a bearer token');
-        }
+		if (response.status == 401) {
+			pluginConnectorStore.set(undefined);
+			window.sessionStorage.removeItem('bearerToken');
+			window.sessionStorage.removeItem('serverAddress');
+			throw new Error('The bearer token is invalid');
+		}
+	}
 
-        const response = await fetch(`${this.serverAddress}/discs/applygeyser`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${this.bearerToken}`
-            },
-            body: discs
-        }).catch(() => {
-            throw new Error('Could not connect to the JEXT server');
-        });
+	static fromBearerToken(serverAddress: string, bearerToken: string) {
+		return new PluginConnector(serverAddress, bearerToken);
+	}
 
-        if(response.status == 401) {
-            pluginConnectorStore.set(undefined);
-            window.sessionStorage.removeItem('bearerToken');
-            window.sessionStorage.removeItem('serverAddress');
-            throw new Error('The bearer token is invalid');
-        }
-    }
+	static async fromPassword(serverAddress: string, password: string) {
+		const connector = new PluginConnector(serverAddress);
 
-    static fromBearerToken(serverAddress: string, bearerToken: string) {
-        return new PluginConnector(serverAddress, bearerToken);
-    }
-
-    static async fromPassword(serverAddress: string, password: string) {
-        const connector = new PluginConnector(serverAddress);
-
-        await connector.loginWithPassword(password);
-        return connector;
-    }
+		await connector.loginWithPassword(password);
+		return connector;
+	}
 }

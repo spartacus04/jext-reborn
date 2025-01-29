@@ -1,73 +1,73 @@
 {
-    "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
-    "name": "Minecraft: Tricky Trials",
-    "description": "A collection of tracks capturing the essence of the new Trial Chambers.",
-    "descriptionAsTooltip": false,
-    "icon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg",
-    "authors": ["Aaron Cherof", "Kumi Tanioka", "Lena Raine"], 
-    "downloads": [
-        {
-            "url": "https://youtu.be/SLS9tUa2GXI",
-            "overrideName": "Featherfall",
-            "overrideAuthor": "Aaron Cherof",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o1st disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/CcAV71mXg_8",
-            "overrideName": "Watcher",
-            "overrideAuthor": "Aaron Cherof",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o2nd disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/ray1Svv6Sl8",
-            "overrideName": "Puzzlebox",
-            "overrideAuthor": "Aaron Cherof",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o3rd disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/Y9menjGA86s",
-            "overrideName": "Komorebi",
-            "overrideAuthor": "Kumi Tanioka",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o4th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/8ravZ03m55A",
-            "overrideName": "Pokopoko",
-            "overrideAuthor": "Kumi Tanioka",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o5th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/Vaak5b8RRaY",
-            "overrideName": "Yakusoku",
-            "overrideAuthor": "Kumi Tanioka",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o6th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/6B7PqW2NKeQ",
-            "overrideName": "Deeper",
-            "overrideAuthor": "Lena Raine",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o7th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/G49EncT1T14",
-            "overrideName": "Eld Unknown",
-            "overrideAuthor": "Lena Raine",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o8th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        },
-        {
-            "url": "https://youtu.be/TRY0tH78Tjk",
-            "overrideName": "Endless",
-            "overrideAuthor": "Lena Raine",
-            "overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o9th disc out of 9.",
-            "baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
-        }
-    ]
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Tricky Trials",
+	"description": "A collection of tracks capturing the essence of the new Trial Chambers.",
+	"descriptionAsTooltip": false,
+	"icon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg",
+	"authors": ["Aaron Cherof", "Kumi Tanioka", "Lena Raine"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/SLS9tUa2GXI",
+			"overrideName": "Featherfall",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o1st disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/CcAV71mXg_8",
+			"overrideName": "Watcher",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o2nd disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/ray1Svv6Sl8",
+			"overrideName": "Puzzlebox",
+			"overrideAuthor": "Aaron Cherof",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o3rd disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/Y9menjGA86s",
+			"overrideName": "Komorebi",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o4th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/8ravZ03m55A",
+			"overrideName": "Pokopoko",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o5th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/Vaak5b8RRaY",
+			"overrideName": "Yakusoku",
+			"overrideAuthor": "Kumi Tanioka",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o6th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/6B7PqW2NKeQ",
+			"overrideName": "Deeper",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o7th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/G49EncT1T14",
+			"overrideName": "Eld Unknown",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o8th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		},
+		{
+			"url": "https://youtu.be/TRY0tH78Tjk",
+			"overrideName": "Endless",
+			"overrideAuthor": "Lena Raine",
+			"overrideDescription": "§6A collection of tracks capturing the essence of the new Trial Chambers.\n§2§o9th disc out of 9.",
+			"baseIcon": "https://cdn-images.dzcdn.net/images/cover/821c84c70c502f1bdd11d79a6ab2b83d/0x1900-000000-80-0-0.jpg"
+		}
+	]
 }

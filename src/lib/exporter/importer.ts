@@ -267,14 +267,14 @@ export const JextReader = async (blob: Blob): Promise<BaseDisc[]> => {
 		})
 	);
 
-	if(get(ResourcePackData).packs.length == 0) {
-		ResourcePackData.update(data => {
+	if (get(ResourcePackData).packs.length == 0) {
+		ResourcePackData.update((data) => {
 			data.description = pack.description;
 			data.version = pack.pack_format;
 			data.icon = icon;
 
 			return data;
-		})
+		});
 	}
 
 	return [...musicDiscs, ...nbsDiscs];

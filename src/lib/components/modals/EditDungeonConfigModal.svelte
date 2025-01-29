@@ -44,15 +44,17 @@
 	}
 
 	export let dungeons: { [key: string]: number };
-    export let defaultValue: number;
+	export let defaultValue: number;
 
-	lootTables.filter(lootTable => lootTable.group == "chests/*").forEach((lootTable) => {
-		lootTable.contents.forEach((name) => {
-			if (!dungeons[name]) {
-				dungeons[name] = defaultValue;
-			}
+	lootTables
+		.filter((lootTable) => lootTable.group == 'chests/*')
+		.forEach((lootTable) => {
+			lootTable.contents.forEach((name) => {
+				if (!dungeons[name]) {
+					dungeons[name] = defaultValue;
+				}
+			});
 		});
-	});
 
 	let advancedMenuOpen = false;
 	let flag = true;
@@ -137,7 +139,7 @@
 		<div>
 			{#if !advancedMenuOpen}
 				<div class="grid sm:grid-cols-4 xs:grid-cols-2 p-2 gap-2">
-					{#each lootTables.filter(lootTable => lootTable.group == 'chests/*') as lootTable}
+					{#each lootTables.filter((lootTable) => lootTable.group == 'chests/*') as lootTable}
 						<div class="flex flex-col p-4 bg-surface-background-variant">
 							<div class="flex items-center justify-center w-full aspect-[9/10]">
 								<img src={`../${lootTable.img}`} alt="dungeon" class="w-full" />

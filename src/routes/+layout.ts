@@ -10,22 +10,22 @@ export const load: LayoutLoad = async () => {
 	const address = window.sessionStorage.getItem('serverAddress');
 	const token = window.sessionStorage.getItem('bearerToken');
 
-	if(address && token && !get(pluginConnectorStore)) {
+	if (address && token && !get(pluginConnectorStore)) {
 		const connector = PluginConnector.fromBearerToken(address, token);
 
 		try {
-			if(await connector.healthCheck()) {
+			if (await connector.healthCheck()) {
 				pluginConnectorStore.set(connector);
 
-				const results = await connector.getDiscs()
+				const results = await connector.getDiscs();
 
 				return {
 					props: {
 						rp: results
 					}
-				}
+				};
 			}
-		} catch { 
+		} catch {
 			console.error('Could not connect to the JEXT server');
 		}
 	}

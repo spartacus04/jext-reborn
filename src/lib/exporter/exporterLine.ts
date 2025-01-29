@@ -6,9 +6,13 @@ import { ResourcePackData } from '$lib/discs/resourcePackManager';
 import { mergeResourcePacks } from './rpmerger';
 import { discsStore } from '$lib/discs/discManager';
 import { isTauri } from '$lib/state';
-import { exists, readDir, writeFile, mkdir, remove, stat } from '@tauri-apps/plugin-fs'
+import { exists, readDir, writeFile, mkdir, remove, stat } from '@tauri-apps/plugin-fs';
 import { appCacheDir } from '@tauri-apps/api/path';
-import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
+import {
+	isPermissionGranted,
+	requestPermission,
+	sendNotification
+} from '@tauri-apps/plugin-notification';
 
 export const exporterSteps = writable<
 	(
@@ -36,7 +40,7 @@ export const updateSteps = (index: number, status: string, current: number, tota
 };
 
 export const exportResourcePack = async (exporter: BaseExporter) => {
-	if(!(await isPermissionGranted())) {
+	if (!(await isPermissionGranted())) {
 		await requestPermission();
 	}
 
@@ -90,20 +94,20 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 };
 
 const sendFinishNotification = async () => {
-	if(await isPermissionGranted()) {
+	if (await isPermissionGranted()) {
 		sendNotification({
 			title: 'JEXT Export complete',
 			body: 'Your export is ready'
-		})
+		});
 	}
-}
+};
 
 const saveRecentExport = async (rp: Blob) => {
-	if(!isTauri) return;
+	if (!isTauri) return;
 
 	const baseDir = `${await appCacheDir()}/recentExports`;
 
-	if(!(await exists(baseDir))) {
+	if (!(await exists(baseDir))) {
 		await mkdir(baseDir, {
 			recursive: true
 		});
@@ -111,15 +115,15 @@ const saveRecentExport = async (rp: Blob) => {
 
 	const files = await readDir(baseDir);
 
-	if(files.length >= 15) {
+	if (files.length >= 15) {
 		let oldest = files[0];
 		let oldestStat = await stat(`${baseDir}/${oldest.name}`);
 
-		for(let i = 1; i < files.length; i++) {
+		for (let i = 1; i < files.length; i++) {
 			const file = files[i];
 			const newStat = await stat(`${baseDir}/${file.name}`);
 
-			if(newStat.birthtime! < oldestStat.birthtime!) {
+			if (newStat.birthtime! < oldestStat.birthtime!) {
 				oldest = file;
 				oldestStat = newStat;
 			}
@@ -131,4 +135,4 @@ const saveRecentExport = async (rp: Blob) => {
 	const name = `export-${new Date().toISOString().replaceAll(':', '=').replaceAll('-', '+')}-${get(ResourcePackData).name}`;
 
 	await writeFile(`${baseDir}/${name}`, new Uint8Array(await rp.arrayBuffer()));
-}
+};

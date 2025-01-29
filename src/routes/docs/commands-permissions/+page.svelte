@@ -92,89 +92,88 @@
 			</tbody>
 		</table>
 
-        <h2 class="text-4xl mb-4 mt-8">Permissions</h2>
+		<h2 class="text-4xl mb-4 mt-8">Permissions</h2>
 
-
-        <table class="w-full border border-white">
-            <thead>
-                <tr>
-                    <th class="text-left border border-white p-2">Permission</th>
-                    <th class="text-left border border-white p-2">Description</th>
-                    <th class="text-left border border-white p-2">Default</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="border border-white p-2">jext.*</td>
-                    <td class="border border-white p-2">Gives access to all Jukebox Extended commands.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.disc</td>
-                    <td class="border border-white p-2">Allows player to access all custom disc.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.disc.give</td>
-                    <td class="border border-white p-2">Allows player to give others custom disc.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.playmusic</td>
-                    <td class="border border-white p-2">Allows player to play custom music to players.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.playat</td>
-                    <td class="border border-white p-2">Allows player to play custom music to a location.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.stopmusic</td>
-                    <td class="border border-white p-2">Allows player to stop custom music.</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.reload</td>
-                    <td class="border border-white p-2">Allows player to reload the plugin</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.notifyupdate</td>
-                    <td class="border border-white p-2">Notifies player of new update on join</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.jukeboxgui</td>
-                    <td class="border border-white p-2">Allows player to open the jukebox gui</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.fragment</td>
-                    <td class="border border-white p-2">Allows player to access all custom fragments</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.fragment.give</td>
-                    <td class="border border-white p-2">Allows player to give others custom fragments</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.webui</td>
-                    <td class="border border-white p-2">Allows player to access webui</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.usejukebox</td>
-                    <td class="border border-white p-2">Allows player to use jukeboxes.</td>
-                    <td class="border border-white p-2">true</td>
-                </tr>
-                <tr>
-                    <td class="border border-white p-2">jext.admingui</td>
-                    <td class="border border-white p-2">Allows player to access admin gui</td>
-                    <td class="border border-white p-2">op</td>
-                </tr>
-            </tbody>
-        </table>
+		<table class="w-full border border-white">
+			<thead>
+				<tr>
+					<th class="text-left border border-white p-2">Permission</th>
+					<th class="text-left border border-white p-2">Description</th>
+					<th class="text-left border border-white p-2">Default</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="border border-white p-2">jext.*</td>
+					<td class="border border-white p-2">Gives access to all Jukebox Extended commands.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.disc</td>
+					<td class="border border-white p-2">Allows player to access all custom disc.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.disc.give</td>
+					<td class="border border-white p-2">Allows player to give others custom disc.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.playmusic</td>
+					<td class="border border-white p-2">Allows player to play custom music to players.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.playat</td>
+					<td class="border border-white p-2">Allows player to play custom music to a location.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.stopmusic</td>
+					<td class="border border-white p-2">Allows player to stop custom music.</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.reload</td>
+					<td class="border border-white p-2">Allows player to reload the plugin</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.notifyupdate</td>
+					<td class="border border-white p-2">Notifies player of new update on join</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.jukeboxgui</td>
+					<td class="border border-white p-2">Allows player to open the jukebox gui</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.fragment</td>
+					<td class="border border-white p-2">Allows player to access all custom fragments</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.fragment.give</td>
+					<td class="border border-white p-2">Allows player to give others custom fragments</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.webui</td>
+					<td class="border border-white p-2">Allows player to access webui</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.usejukebox</td>
+					<td class="border border-white p-2">Allows player to use jukeboxes.</td>
+					<td class="border border-white p-2">true</td>
+				</tr>
+				<tr>
+					<td class="border border-white p-2">jext.admingui</td>
+					<td class="border border-white p-2">Allows player to access admin gui</td>
+					<td class="border border-white p-2">op</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>

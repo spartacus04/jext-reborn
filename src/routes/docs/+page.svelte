@@ -4,7 +4,7 @@
 	import { pages, type Page } from '$lib/constants';
 
 	let query = '';
-	
+
 	const categories = pages
 		.map((page) => page.category)
 		.filter((value, index, self) => self.indexOf(value) === index);

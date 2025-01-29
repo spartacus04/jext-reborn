@@ -21,46 +21,42 @@
 		const id = (e.target as HTMLElement).id;
 
 		if (id === 'backdrop') {
-			close()
+			close();
 		} else e.stopPropagation();
 	};
 
-    const connect = async () => {
-        if(address.trim() === '') {
-            await cAlert('Please enter a valid address');
-            return;
-        }
-
-		if(
-			$discsStore.length != 0 ||
-			!areDefaultPackSettings() ||
-			$downloadQueue.length != 0
-		) {
-			const result = await cConfirm({
-				text: "Warning: connecting to the JEXT server will reset all the progress in the disc manager. Do you still wish to continue?",
-				confirmText: "Yes",
-				discardText: "No",
-				cancelText: undefined
-			})
-
-			if(result == 'discard') return;
+	const connect = async () => {
+		if (address.trim() === '') {
+			await cAlert('Please enter a valid address');
+			return;
 		}
 
-        try {
-            const connector = await PluginConnector.fromPassword(address, password);
-            $pluginConnectorStore = connector;
-            close();
-            await cAlert('Connected to JEXT WebAPI Successfully! Importing discs form Server...');
+		if ($discsStore.length != 0 || !areDefaultPackSettings() || $downloadQueue.length != 0) {
+			const result = await cConfirm({
+				text: 'Warning: connecting to the JEXT server will reset all the progress in the disc manager. Do you still wish to continue?',
+				confirmText: 'Yes',
+				discardText: 'No',
+				cancelText: undefined
+			});
 
-			const results = await $pluginConnectorStore.getDiscs()
+			if (result == 'discard') return;
+		}
+
+		try {
+			const connector = await PluginConnector.fromPassword(address, password);
+			$pluginConnectorStore = connector;
+			close();
+			await cAlert('Connected to JEXT WebAPI Successfully! Importing discs form Server...');
+
+			const results = await $pluginConnectorStore.getDiscs();
 
 			$discsStore = [];
 			$downloadQueue = [];
 
-			if(results != null) {
+			if (results != null) {
 				const discs = await JextReader(results);
 
-				discs.forEach(disc => {
+				discs.forEach((disc) => {
 					addDisc(disc);
 				});
 			}
@@ -68,13 +64,13 @@
 			await cAlert('Discs imported successfully!');
 
 			onFinish();
-        } catch(e: any) {
-            await cAlert(e);
-        }
-    }
+		} catch (e: any) {
+			await cAlert(e);
+		}
+	};
 
-    let address: string;
-    let password: string;
+	let address: string;
+	let password: string;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions a11y-click-events-have-key-events -->
@@ -89,15 +85,15 @@
 	>
 		<div class="p-4 text-white flex flex-col gap-4">
 			<h1 class="font-minecraft text-xl">Connect to the JEXT WebAPI</h1>
-            <div class="flex flex-col flex-1">
-                <b class="text-[#aeaeae] text-xs h-min">JEXT SERVER ADDRESS</b>
-                <LauncherTextbox bind:value={address} placeholder="http://localhost:9871" />
-            </div>
+			<div class="flex flex-col flex-1">
+				<b class="text-[#aeaeae] text-xs h-min">JEXT SERVER ADDRESS</b>
+				<LauncherTextbox bind:value={address} placeholder="http://localhost:9871" />
+			</div>
 
-            <div class="flex flex-col flex-1">
-                <b class="text-[#aeaeae] text-xs h-min">JEXT SERVER PASSWORD</b>
-                <LauncherTextbox bind:value={password} placeholder="Password: Leave empty if unset" />
-            </div>
+			<div class="flex flex-col flex-1">
+				<b class="text-[#aeaeae] text-xs h-min">JEXT SERVER PASSWORD</b>
+				<LauncherTextbox bind:value={password} placeholder="Password: Leave empty if unset" />
+			</div>
 
 			<hr class="-mx-4 border-surface-separator" />
 

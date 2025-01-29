@@ -6,8 +6,8 @@
 	export let elem: DownloadQueueElement;
 
 	const removeElem = (elem: DownloadQueueElement) => {
-        downloadQueue.update((queue) => queue.filter((e) => e !== elem));
-    };
+		downloadQueue.update((queue) => queue.filter((e) => e !== elem));
+	};
 
 	let update = {};
 </script>
@@ -39,8 +39,8 @@
 		</div>
 	{/key}
 	<div class="lg:ml-4 flex gap-2 lg:flex-col">
-        {#if elem.status == 'Download pending...'}
-		    <LauncherButton text="Stop downloading" type="danger" on:click={() => removeElem(elem)} />
-        {/if}
+		{#if elem.status == 'Download pending...'}
+			<LauncherButton text="Stop downloading" type="danger" on:click={() => removeElem(elem)} />
+		{/if}
 	</div>
 </div>

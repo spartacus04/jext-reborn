@@ -121,18 +121,18 @@
 	let idleUpload = true;
 
 	const uploadAssets = async () => {
-		if(output && $pluginConnectorStore) {
+		if (output && $pluginConnectorStore) {
 			idleUpload = false;
 
 			await $pluginConnectorStore.applyDiscs(output.javaRP).catch(() => null);
 
-			if(output.bedrockRP) {
+			if (output.bedrockRP) {
 				await $pluginConnectorStore.applyDiscsGeyser(output.bedrockRP).catch(() => null);
 			}
 
 			idleUpload = true;
 		}
-	}
+	};
 </script>
 
 <dialog
@@ -159,11 +159,10 @@
 			</h1>
 			<div class="flex gap-4 flex-col w-[75%] sm:w-[50%]">
 				{#if isTauri && $pluginConnectorStore}
-					<MinecraftButton
-						bind:enabled={idleUpload}
-						on:click={uploadAssets}
-					>
-						{!idleUpload ? 'Uploading Resource Packs(s)...' : 'Apply Resource Pack(s) automatically'}
+					<MinecraftButton bind:enabled={idleUpload} on:click={uploadAssets}>
+						{!idleUpload
+							? 'Uploading Resource Packs(s)...'
+							: 'Apply Resource Pack(s) automatically'}
 					</MinecraftButton>
 				{/if}
 				<MinecraftButton

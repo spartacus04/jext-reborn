@@ -144,7 +144,10 @@ export class PluginExporter extends BaseExporter {
 
 			// track
 			if (isMusicDisc(disc)) {
-				rp.file(`assets/minecraft/sounds/records/${disc.namespace}.ogg`, disc.cachedFinalAudioFile!);
+				rp.file(
+					`assets/minecraft/sounds/records/${disc.namespace}.ogg`,
+					disc.cachedFinalAudioFile!
+				);
 			} else {
 				rp.file(`assets/jext/${disc.namespace}.nbs`, (disc as NbsDisc).nbsFile);
 			}
@@ -248,16 +251,23 @@ export class PluginExporter extends BaseExporter {
 			)
 		);
 
-		rp.file('mappings.json', JSON.stringify({
-			'format_version': 2,
-			'items': {
-				'minecraft:music_disc_11': discs.map(disc => ({
-					name: `music_disc_${disc.namespace}`,
-					custom_model_data: disc.modelData,
-					display_name: 'Music Disc',
-				})),
-			}
-		}, null, 2));
+		rp.file(
+			'mappings.json',
+			JSON.stringify(
+				{
+					format_version: 2,
+					items: {
+						'minecraft:music_disc_11': discs.map((disc) => ({
+							name: `music_disc_${disc.namespace}`,
+							custom_model_data: disc.modelData,
+							display_name: 'Music Disc'
+						}))
+					}
+				},
+				null,
+				2
+			)
+		);
 
 		// pack_icon.png
 
@@ -341,12 +351,9 @@ export class PluginExporter extends BaseExporter {
 		// each disc's textures and sound
 		for (const disc of discs) {
 			rp.file(`textures/items/music_disc_${disc.namespace}.png`, disc.discTexture);
-			rp.file(
-				`textures/items/fragment_${disc.namespace}.png`,
-				disc.fragmentTexture
-			);
+			rp.file(`textures/items/fragment_${disc.namespace}.png`, disc.fragmentTexture);
 
-			if(isMusicDisc(disc)) {
+			if (isMusicDisc(disc)) {
 				rp.file(`sounds/jext/${disc.namespace}.ogg`, (disc as MusicDisc).cachedFinalAudioFile!);
 			}
 		}

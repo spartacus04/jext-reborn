@@ -33,12 +33,12 @@
 
 	export let data: LayoutData;
 
-	if(data.props?.rp) {
+	if (data.props?.rp) {
 		JextReader(data.props.rp).then((results) => {
-			if(results) {
-				results.forEach(result => addDisc(result));
+			if (results) {
+				results.forEach((result) => addDisc(result));
 			}
-		})
+		});
 	}
 </script>
 

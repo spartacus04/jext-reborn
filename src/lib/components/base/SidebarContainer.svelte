@@ -11,9 +11,7 @@
 		macos,
 		linux,
 		android,
-
 		logout
-
 	} from '$lib/assets';
 	import { isTauri, os } from '$lib/state';
 	import SidebarEntryButton from './SidebarEntryButton.svelte';
@@ -60,17 +58,17 @@
 	const openModalAndLink = async (modal: () => void, link: string) => {
 		modal();
 
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			const unregister = setInterval(() => {
-				if(!isLoginModalOpen()) {
+				if (!isLoginModalOpen()) {
 					clearInterval(unregister);
 					resolve();
 				}
 			}, 10);
-		})
-		
+		});
+
 		goto(link);
-	}
+	};
 </script>
 
 <!-- desktop app popup -->
@@ -89,13 +87,21 @@
 				{#if $pluginConnectorStore != undefined}
 					<SidebarEntryLink href="{base}/config" icon={cog} title="Config manager" />
 				{:else}
-					<SidebarEntryButton icon={cog} title="Config manager" on:click={() => openModalAndLink(openLoginModal, `${base}/config`)} />
+					<SidebarEntryButton
+						icon={cog}
+						title="Config manager"
+						on:click={() => openModalAndLink(openLoginModal, `${base}/config`)}
+					/>
 				{/if}
-				<SidebarEntryLink href="https://spartacus04.github.io/jext-reborn/docs" icon={knowledge_book} title="Documentation" external={true} />
-			{:else }
+				<SidebarEntryLink
+					href="https://spartacus04.github.io/jext-reborn/docs"
+					icon={knowledge_book}
+					title="Documentation"
+					external={true}
+				/>
+			{:else}
 				<SidebarEntryLink href="{base}/docs" icon={knowledge_book} title="Documentation" />
 			{/if}
-
 
 			<div class="flex-grow" />
 

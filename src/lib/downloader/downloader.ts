@@ -66,12 +66,14 @@ export const addDownloadQueuePack = async (pack: CommunityPack) => {
 					title: download.overrideName,
 					author: download.overrideAuthor,
 					icon: download.baseIcon,
-					description: download.overrideDescription ?? (pack.descriptionAsTooltip ? pack.description : undefined)
+					description:
+						download.overrideDescription ??
+						(pack.descriptionAsTooltip ? pack.description : undefined)
 				}
-			}
+			};
 		})
 	]);
-}
+};
 
 export const setFirstDownloadQueueElementStatus = (status: string) => {
 	downloadQueue.update((queue) => {
@@ -81,7 +83,7 @@ export const setFirstDownloadQueueElementStatus = (status: string) => {
 };
 
 export const downloaderLine = async (url: string, overrides?: Overrides) => {
-	if(url.trim() === '') return;
+	if (url.trim() === '') return;
 
 	const urlData = (await invoke('yt_dlp_get_playlist_info', { url })) as any;
 
@@ -131,9 +133,10 @@ export const startDownloadQueue = async () => {
 
 	const author = firstElement.overrides?.author ?? details.uploader ?? '';
 	const title = firstElement.overrides?.title ?? details.title ?? 'Unknown';
-	const thumbnail = firstElement.overrides?.icon ?? details.thumbnail ?? details.artwork_url ?? null;
+	const thumbnail =
+		firstElement.overrides?.icon ?? details.thumbnail ?? details.artwork_url ?? null;
 
-	if(get(downloadQueue).length == 0) {
+	if (get(downloadQueue).length == 0) {
 		isDownloading = false;
 		return;
 	}
@@ -151,7 +154,7 @@ export const startDownloadQueue = async () => {
 		? await adaptImageToDisc(await tfetch(thumbnail).then((res) => res.blob()))
 		: await randomTextures();
 
-	if(get(downloadQueue).length == 0) {
+	if (get(downloadQueue).length == 0) {
 		isDownloading = false;
 		return;
 	}
@@ -175,14 +178,14 @@ export const startDownloadQueue = async () => {
 
 	const disc = new MusicDisc(audioFile);
 
-	if(firstElement.overrides?.description) {
+	if (firstElement.overrides?.description) {
 		disc.tooltip = firstElement.overrides.description;
 	}
 
 	disc.setDiscTexture(textures.discTexture);
 	disc.setFragmentTexture(textures.fragmentTexture);
 
-	if(get(downloadQueue).length == 0) {
+	if (get(downloadQueue).length == 0) {
 		isDownloading = false;
 		return;
 	}

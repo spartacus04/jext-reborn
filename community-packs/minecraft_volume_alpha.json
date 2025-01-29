@@ -1,164 +1,164 @@
 {
-    "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
-    "name": "Minecraft: Volume Alpha",
-    "description": "This is the official, first and most popular Minecraft soundtrack.",
-    "descriptionAsTooltip": false,
-    "icon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg",
-    "authors": ["C418"], 
-    "downloads": [
-        {
-            "url": "https://youtu.be/6wv84OUmnwg",
-            "overrideName": "Key",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o1st disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/Wv9P6hnNKIo",
-            "overrideName": "Door",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o2nd disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/o3_InDEtpLA",
-            "overrideName": "Subwoofer Lullaby",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o3rd disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/gGHU9TSUdVQ",
-            "overrideName": "Death",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o4th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/aQKGqzjno2g",
-            "overrideName": "Living Mice",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o5th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/Wu-hE0InpLw",
-            "overrideName": "Moog City",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o6th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/D09Okc11afI",
-            "overrideName": "Haggstrom",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o7th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/vxmOcAde_0s",
-            "overrideName": "Minecraft",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o8th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/m7OqQkkm2P0",
-            "overrideName": "Oxygene",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o9th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/LRQuwCBIoCs",
-            "overrideName": "Equinoxe",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o10th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/KdOD0fZs_XU",
-            "overrideName": "Mice on Venus",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o11th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/-R-Vl4GzYWY",
-            "overrideName": "Dry Hands",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o12th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/sgrs4l9BqD8",
-            "overrideName": "Wet Hands",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o13th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/RawVEMRBW8M",
-            "overrideName": "Clark",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o14th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/yGj4a9ZtFeA",
-            "overrideName": "Chris",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o15th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/dx_rYqJ5hNQ",
-            "overrideName": "Excuse",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o16th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/xIQrC4CerB8",
-            "overrideName": "Sweden",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o17th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/p02Ww4YrsiM",
-            "overrideName": "Dog",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o18th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/WfLOBeeLtuE",
-            "overrideName": "Danny",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o19th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/jbLfMAxwOc8",
-            "overrideName": "Beginning",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o20th disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/s3kvkDGAjbQ",
-            "overrideName": "Droopy Likes Ricochet",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o21st disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/Hm51fAadWUI",
-            "overrideName": "Droopy Likes Your Face",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o22nd disc out of 22.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
-        }
-    ]
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Volume Alpha",
+	"description": "This is the official, first and most popular Minecraft soundtrack.",
+	"descriptionAsTooltip": false,
+	"icon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg",
+	"authors": ["C418"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/6wv84OUmnwg",
+			"overrideName": "Key",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o1st disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/Wv9P6hnNKIo",
+			"overrideName": "Door",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o2nd disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/o3_InDEtpLA",
+			"overrideName": "Subwoofer Lullaby",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o3rd disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/gGHU9TSUdVQ",
+			"overrideName": "Death",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o4th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/aQKGqzjno2g",
+			"overrideName": "Living Mice",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o5th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/Wu-hE0InpLw",
+			"overrideName": "Moog City",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o6th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/D09Okc11afI",
+			"overrideName": "Haggstrom",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o7th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/vxmOcAde_0s",
+			"overrideName": "Minecraft",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o8th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/m7OqQkkm2P0",
+			"overrideName": "Oxygene",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o9th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/LRQuwCBIoCs",
+			"overrideName": "Equinoxe",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o10th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/KdOD0fZs_XU",
+			"overrideName": "Mice on Venus",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o11th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/-R-Vl4GzYWY",
+			"overrideName": "Dry Hands",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o12th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/sgrs4l9BqD8",
+			"overrideName": "Wet Hands",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o13th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/RawVEMRBW8M",
+			"overrideName": "Clark",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o14th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/yGj4a9ZtFeA",
+			"overrideName": "Chris",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o15th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/dx_rYqJ5hNQ",
+			"overrideName": "Excuse",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o16th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/xIQrC4CerB8",
+			"overrideName": "Sweden",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o17th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/p02Ww4YrsiM",
+			"overrideName": "Dog",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o18th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/WfLOBeeLtuE",
+			"overrideName": "Danny",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o19th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/jbLfMAxwOc8",
+			"overrideName": "Beginning",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o20th disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/s3kvkDGAjbQ",
+			"overrideName": "Droopy Likes Ricochet",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o21st disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/Hm51fAadWUI",
+			"overrideName": "Droopy Likes Your Face",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6This is the official, first and most popular Minecraft soundtrack.\n§2§o22nd disc out of 22.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a3390257927_10.jpg"
+		}
+	]
 }

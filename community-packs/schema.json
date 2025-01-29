@@ -1,52 +1,52 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        },
-        "descriptionAsTooltip": {
-            "type": "boolean"
-        },
-        "icon": {
-            "type": "string",
-            "format": "uri"
-        },
-        "authors": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
-        "downloads": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "url": {
-                        "type": "string",
-                        "format": "uri"
-                    },
-                    "overrideName": {
-                        "type": "string"
-                    },
-                    "overrideAuthor": {
-                        "type": "string"
-                    },
-                    "overrideDescription": {
-                        "type": "string"
-                    },
-                    "baseIcon": {
-                        "type": "string",
-                        "format": "uri"
-                    }
-                },
-                "required": ["url"]
-            }
-        }
-    },
-    "required": [ "name", "description", "descriptionAsTooltip", "icon", "authors", "downloads"]
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"descriptionAsTooltip": {
+			"type": "boolean"
+		},
+		"icon": {
+			"type": "string",
+			"format": "uri"
+		},
+		"authors": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"downloads": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"url": {
+						"type": "string",
+						"format": "uri"
+					},
+					"overrideName": {
+						"type": "string"
+					},
+					"overrideAuthor": {
+						"type": "string"
+					},
+					"overrideDescription": {
+						"type": "string"
+					},
+					"baseIcon": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"required": ["url"]
+			}
+		}
+	},
+	"required": ["name", "description", "descriptionAsTooltip", "icon", "authors", "downloads"]
 }

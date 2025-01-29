@@ -1,151 +1,150 @@
 {
-    "$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
-    "name": "Minecraft: Volume Beta",
-    "description": "The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.",
-    "descriptionAsTooltip": false,
-    "icon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg",
-    "authors": ["C418"], 
-    "downloads": [
-        {
-            "url": "https://youtu.be/0y53iF8BTSU",
-            "overrideName": "Ki",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o1st disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/xLfm2nnCOpc",
-            "overrideName": "Alpha",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o2nd disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/wGQDJNksrAM",
-            "overrideName": "Dead Voxel",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o3rd disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/77Fv8gtZyuA",
-            "overrideName": "Blind Spots",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o4th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/yuySSmW5cfo",
-            "overrideName": "Flake",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o5th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/C8df2pbOX6g",
-            "overrideName": "Moog City 2",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o6th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/DwXtbA64lHE",
-            "overrideName": "Concrete Halls",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o7th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/8sglGXAfHLc",
-            "overrideName": "Biome Fest",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o8th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/5ChvaSe6aK0",
-            "overrideName": "Mutation",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o9th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/ao8U6D_F3dE",
-            "overrideName": "Haunt Muskie",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o10th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/tMjk9wgrPAc",
-            "overrideName": "Warmth",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o11th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/j1Z_Ihkluek",
-            "overrideName": "Floating Trees",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o12th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/atgjKEgSqSU",
-            "overrideName": "Aria Math",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o13th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/FVNSvz-UyuA",
-            "overrideName": "Kyoto",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o14th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/8VY2RUyY0t4",
-            "overrideName": "Ballad of the Cats",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o15th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/Mj6jF7I2s10",
-            "overrideName": "Taswell",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o16th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/2vRBjHY7ReE",
-            "overrideName": "Beginning 2",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o17th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/rbIGUF9QmXg",
-            "overrideName": "Dreiton",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o18th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/-6mBUPdTmeI",
-            "overrideName": "The End",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o19th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        },
-        {
-            "url": "https://youtu.be/tC_lJyeGxoA",
-            "overrideName": "Intro",
-            "overrideAuthor": "C418",
-            "overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o20th disc out of 20.",
-            "baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
-        }
-        
-    ]
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Volume Beta",
+	"description": "The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.",
+	"descriptionAsTooltip": false,
+	"icon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg",
+	"authors": ["C418"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/0y53iF8BTSU",
+			"overrideName": "Ki",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o1st disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/xLfm2nnCOpc",
+			"overrideName": "Alpha",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o2nd disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/wGQDJNksrAM",
+			"overrideName": "Dead Voxel",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o3rd disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/77Fv8gtZyuA",
+			"overrideName": "Blind Spots",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o4th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/yuySSmW5cfo",
+			"overrideName": "Flake",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o5th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/C8df2pbOX6g",
+			"overrideName": "Moog City 2",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o6th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/DwXtbA64lHE",
+			"overrideName": "Concrete Halls",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o7th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/8sglGXAfHLc",
+			"overrideName": "Biome Fest",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o8th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/5ChvaSe6aK0",
+			"overrideName": "Mutation",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o9th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/ao8U6D_F3dE",
+			"overrideName": "Haunt Muskie",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o10th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/tMjk9wgrPAc",
+			"overrideName": "Warmth",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o11th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/j1Z_Ihkluek",
+			"overrideName": "Floating Trees",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o12th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/atgjKEgSqSU",
+			"overrideName": "Aria Math",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o13th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/FVNSvz-UyuA",
+			"overrideName": "Kyoto",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o14th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/8VY2RUyY0t4",
+			"overrideName": "Ballad of the Cats",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o15th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/Mj6jF7I2s10",
+			"overrideName": "Taswell",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o16th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/2vRBjHY7ReE",
+			"overrideName": "Beginning 2",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o17th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/rbIGUF9QmXg",
+			"overrideName": "Dreiton",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o18th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/-6mBUPdTmeI",
+			"overrideName": "The End",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o19th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		},
+		{
+			"url": "https://youtu.be/tC_lJyeGxoA",
+			"overrideName": "Intro",
+			"overrideAuthor": "C418",
+			"overrideDescription": "§6The sequel to Volume Alpha. It’s bigger, more varied and sometimes even dark and introspective.\n§2§o20th disc out of 20.",
+			"baseIcon": "https://c418.org/wp-content/uploads/2016/05/a1112985681_10.jpg"
+		}
+	]
 }

@@ -28,12 +28,14 @@ export const ResourcePackData = writable<ExportPackData>({
 
 export const areDefaultPackSettings = () => {
 	const rpdata = get(ResourcePackData);
-	
-	return rpdata.name == 'Jext Resources' &&
+
+	return (
+		rpdata.name == 'Jext Resources' &&
 		rpdata.description == 'Adds custom music discs to Minecraft!' &&
 		rpdata.version == Math.max(...Array.from(versions.keys())) &&
 		rpdata.packs.length == 0
-}
+	);
+};
 
 // hack to load the default icon
 (async () => {

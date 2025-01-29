@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { undo } from "$lib/assets";
-	import TabbedCodeBlock from "$lib/components/docs/TabbedCodeBlock.svelte";
+	import { undo } from '$lib/assets';
+	import TabbedCodeBlock from '$lib/components/docs/TabbedCodeBlock.svelte';
 
-    let buildSystem = 'Maven';
-    let language = 'Java';
+	let buildSystem = 'Maven';
+	let language = 'Java';
 </script>
 
 <div class="flex h-full flex-col w-full">
@@ -14,22 +14,21 @@
 		<b class="text-white text-xs uppercase">PERMISSION INTEGRATIONS</b>
 	</div>
 	<div class="p-4 flex-col flex text-white overflow-y-auto w-full">
-        <h2 class="text-4xl mb-4">Permission integrations</h2>
+		<h2 class="text-4xl mb-4">Permission integrations</h2>
 
-        <p>
-            A permission integration is used to determine if a disc can play or if a jukebox gui can open in a
-            certain area. They are used by plugins like Griefprevention and WorldGuard. A plugin can register it's own integration by doing the following:
-        </p>
+		<p>
+			A permission integration is used to determine if a disc can play or if a jukebox gui can open
+			in a certain area. They are used by plugins like Griefprevention and WorldGuard. A plugin can
+			register it's own integration by doing the following:
+		</p>
 
-        <p>
-            First add the jext repository and dependency:
-        </p>
+		<p>First add the jext repository and dependency:</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={buildSystem}
-            tabs={["Maven", "Gradle Groovy", "Gradle Kotlin"]}
-            tabsContents={[
-                `<repositories>
+		<TabbedCodeBlock
+			bind:currentTab={buildSystem}
+			tabs={['Maven', 'Gradle Groovy', 'Gradle Kotlin']}
+			tabsContents={[
+				`<repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
@@ -50,7 +49,7 @@
         </exclusion>
     </exclusions>
 </dependency>`,
-                `dependencyResolutionManagement {
+				`dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenCentral()
@@ -63,7 +62,7 @@
 dependencies {
     compileOnly 'com.github.spartacus04:jext-reborn:VERSION'
 }`,
-                `repositories {
+				`repositories {
     mavenCentral()
     maven { url = uri('https://jitpack.io') }
 }
@@ -73,18 +72,16 @@ dependencies {
 dependencies {
     compileOnly("com.github.spartacus04:jext-reborn:VERSION")
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            You can now create a class that implements the PermissionIntegration interface:
-        </p>
+		<p>You can now create a class that implements the PermissionIntegration interface:</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import com.spartacus04.jext.integrations.PermissionIntegration;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import com.spartacus04.jext.integrations.PermissionIntegration;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -106,7 +103,7 @@ public class MyIntegration implements PermissionIntegration {
         return true;
     }
 }`,
-                `import com.spartacus04.jext.integrations.PermissionIntegration
+				`import com.spartacus04.jext.integrations.PermissionIntegration
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
@@ -122,17 +119,17 @@ class MyIntegration : PermissionIntegration {
         // Your implementation here
         return true
     }
-}`]} />
+}`
+			]}
+		/>
 
-        <p>
-            Finally, you can register your integration by using the PermissionsIntegrationManager:
-        </p>
+		<p>Finally, you can register your integration by using the PermissionsIntegrationManager:</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import me.spartacus04.jext.JextState;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import me.spartacus04.jext.JextState;
 
 public class MyPlugin extends JavaPlugin {
     @Override
@@ -140,16 +137,16 @@ public class MyPlugin extends JavaPlugin {
         JextState.INTEGRATIONS.registerIntegrations(new MyIntegration());
     }
 }`,
-                `import me.spartacus04.jext.JextState
+				`import me.spartacus04.jext.JextState
 
 class MyPlugin : JavaPlugin() {
     override fun onEnable() {
         JextState.INTEGRATIONS.registerIntegrations(MyIntegration())
     }
-}`]} />
+}`
+			]}
+		/>
 
-        <p>
-            Your integration is now registered and will be used by JukeboxExtendedReborn.
-        </p>
-    </div>
+		<p>Your integration is now registered and will be used by JukeboxExtendedReborn.</p>
+	</div>
 </div>

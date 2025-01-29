@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { undo } from "$lib/assets";
-	import TabbedCodeBlock from "$lib/components/docs/TabbedCodeBlock.svelte";
+	import { undo } from '$lib/assets';
+	import TabbedCodeBlock from '$lib/components/docs/TabbedCodeBlock.svelte';
 
-    let buildSystem = 'Maven';
-    let language = 'Java';
+	let buildSystem = 'Maven';
+	let language = 'Java';
 </script>
 
 <div class="flex h-full flex-col w-full">
@@ -14,21 +14,20 @@
 		<b class="text-white text-xs uppercase">CUSTOM DISC SOURCES</b>
 	</div>
 	<div class="p-4 flex-col flex text-white overflow-y-auto w-full">
-        <h2 class="text-4xl mb-4">Custom disc sources</h2>
+		<h2 class="text-4xl mb-4">Custom disc sources</h2>
 
-        <p>
-            Custom disc sources are used to add custom music discs to the plugin. A plugin can register it's own custom disc source by doing the following:
-        </p>
+		<p>
+			Custom disc sources are used to add custom music discs to the plugin. A plugin can register
+			it's own custom disc source by doing the following:
+		</p>
 
-        <p>
-            First add the jext repository and dependency:
-        </p>
+		<p>First add the jext repository and dependency:</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={buildSystem}
-            tabs={["Maven", "Gradle Groovy", "Gradle Kotlin"]}
-            tabsContents={[
-                `<repositories>
+		<TabbedCodeBlock
+			bind:currentTab={buildSystem}
+			tabs={['Maven', 'Gradle Groovy', 'Gradle Kotlin']}
+			tabsContents={[
+				`<repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
@@ -49,7 +48,7 @@
         </exclusion>
     </exclusions>
 </dependency>`,
-                `dependencyResolutionManagement {
+				`dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenCentral()
@@ -62,7 +61,7 @@
 dependencies {
     compileOnly 'com.github.spartacus04:jext-reborn:VERSION'
 }`,
-                `repositories {
+				`repositories {
     mavenCentral()
     maven { url = uri('https://jitpack.io') }
 }
@@ -72,18 +71,19 @@ dependencies {
 dependencies {
     compileOnly("com.github.spartacus04:jext-reborn:VERSION")
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            Now create a class that implements the DiscPlayingMethod interface, to define how you want to play the discs.
-        </p>
+		<p>
+			Now create a class that implements the DiscPlayingMethod interface, to define how you want to
+			play the discs.
+		</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import com.spartacus04.jext.discs.discplaying.DiscPlayingMethod;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import com.spartacus04.jext.discs.discplaying.DiscPlayingMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -100,7 +100,7 @@ public class MyDiscPlayingMethod implements DiscPlayingMethod {
         // Your implementation here
     }
 }`,
-                `import com.spartacus04.jext.discs.discplaying.DiscPlayingMethod
+				`import com.spartacus04.jext.discs.discplaying.DiscPlayingMethod
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -115,18 +115,19 @@ class MyDiscPlayingMethod : DiscPlayingMethod {
         // Your implementation here
     }
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            Now, create a class that implements the DiscSource interface, to define how you want to load the discs.
-        </p>
+		<p>
+			Now, create a class that implements the DiscSource interface, to define how you want to load
+			the discs.
+		</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import com.spartacus04.jext.discs.sources.DiscSource;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import com.spartacus04.jext.discs.sources.DiscSource;
 import com.spartacus04.jext.discs.Disc;
 
 import java.util.List;
@@ -139,7 +140,7 @@ public class MyDiscSource implements DiscSource {
         return List.of();
     }
 }`,
-                `import com.spartacus04.jext.discs.sources.DiscSource
+				`import com.spartacus04.jext.discs.sources.DiscSource
 import com.spartacus04.jext.discs.Disc
 
 class MyDiscSource : DiscSource {
@@ -149,18 +150,19 @@ class MyDiscSource : DiscSource {
         return emptyList()
     }
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            Before playing the discs, you need to register a method to stop the discs playback. To do this, create a class that implements the DiscStoppingMethod interface.
-        </p>
+		<p>
+			Before playing the discs, you need to register a method to stop the discs playback. To do
+			this, create a class that implements the DiscStoppingMethod interface.
+		</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import com.spartacus04.jext.discs.discstopping.DiscStoppingMethod;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import com.spartacus04.jext.discs.discstopping.DiscStoppingMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -197,7 +199,7 @@ public class MyDiscStoppingMethod implements DiscStoppingMethod {
         // Your implementation here
     }
 }`,
-                `import com.spartacus04.jext.discs.discstopping.DiscStoppingMethod
+				`import com.spartacus04.jext.discs.discstopping.DiscStoppingMethod
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -225,18 +227,19 @@ class MyDiscStoppingMethod : DiscStoppingMethod {
         // Your implementation here
     }
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            Finally, you can register the custom disc source and disc stopping method by using the DiscManager:
-        </p>
+		<p>
+			Finally, you can register the custom disc source and disc stopping method by using the
+			DiscManager:
+		</p>
 
-        <TabbedCodeBlock
-            bind:currentTab={language}
-            tabs={["Java", "Kotlin"]}
-            tabsContents={[
-                `import com.spartacus04.jext.JextState;
+		<TabbedCodeBlock
+			bind:currentTab={language}
+			tabs={['Java', 'Kotlin']}
+			tabsContents={[
+				`import com.spartacus04.jext.JextState;
 
 public class MyPlugin extends JavaPlugin {
     @Override
@@ -245,7 +248,7 @@ public class MyPlugin extends JavaPlugin {
         JextState.DISCS.registerDiscStoppingMethod(new MyDiscStoppingMethod());
     }
 }`,
-                `import com.spartacus04.jext.JextState
+				`import com.spartacus04.jext.JextState
 
 class MyPlugin : JavaPlugin() {
     override fun onEnable() {
@@ -253,11 +256,9 @@ class MyPlugin : JavaPlugin() {
         JextState.DISCS.registerDiscStoppingMethod(MyDiscStoppingMethod())
     }
 }`
-            ]}
-        />
+			]}
+		/>
 
-        <p>
-            You can now use the discs in game!
-        </p>
-    </div>
+		<p>You can now use the discs in game!</p>
+	</div>
 </div>

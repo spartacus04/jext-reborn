@@ -52,7 +52,7 @@ export const lootTables: Loottable[] = [
 		mode: 'weight',
 		group: 'trials/*',
 		defaultLoottableWeight: 48,
-		ignorePercentage: 0.25,
+		ignorePercentage: 0.25
 	},
 	{
 		displayName: 'Vault',
@@ -63,7 +63,7 @@ export const lootTables: Loottable[] = [
 		mode: 'weight',
 		group: 'trials/*',
 		defaultLoottableWeight: 40,
-		ignorePercentage: 0.75,
+		ignorePercentage: 0.75
 	},
 	{
 		displayName: 'Trial Spawner',
@@ -73,7 +73,7 @@ export const lootTables: Loottable[] = [
 		mode: 'weight',
 		group: 'trials/*',
 		defaultLoottableWeight: 20,
-		ignorePercentage: 0.5,
+		ignorePercentage: 0.5
 	},
 	{
 		displayName: 'Trial Spawner',
@@ -326,7 +326,8 @@ export const pages = [
 	},
 	{
 		title: 'Other plugin documentation',
-		description: 'Documentation regarding how the plugin behaves under certain conditions. (Asset loading, Jukebox GUI, NoteblockAPI support, Geyser support)',
+		description:
+			'Documentation regarding how the plugin behaves under certain conditions. (Asset loading, Jukebox GUI, NoteblockAPI support, Geyser support)',
 		url: '/docs/other-plugin-info',
 		category: 'For Server Owners'
 	},
@@ -367,7 +368,6 @@ export const pages = [
 		category: 'For Developers'
 	}
 ] satisfies Page[];
-
 
 export interface Page {
 	title: string;
