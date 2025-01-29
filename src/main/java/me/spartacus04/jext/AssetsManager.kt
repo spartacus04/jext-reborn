@@ -44,7 +44,7 @@ class AssetsManager {
         localToRpMap[id] = path
     }
 
-    private suspend fun getResourcePack() : File? {
+    private fun getResourcePack() : File? {
         return if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
             PLUGIN.dataFolder.resolve("resource-pack.zip")
         } else if(resourcePack.isNotBlank()) {
@@ -63,7 +63,7 @@ class AssetsManager {
         }
     }
 
-    internal suspend fun reloadAssets() {
+    internal fun reloadAssets() {
         val file = getResourcePack()
 
         if(file != null) {
@@ -90,7 +90,7 @@ class AssetsManager {
         }
     }
 
-    private suspend fun tryDownloadRP(url: String, path: String) : Boolean {
+    private fun tryDownloadRP(url: String, path: String) : Boolean {
         val file = PLUGIN.dataFolder.resolve("caches").resolve("$path.zip")
 
         if(!PLUGIN.dataFolder.resolve("caches").exists())

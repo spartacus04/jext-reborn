@@ -132,11 +132,11 @@ object Constants {
 
         "pots/trial_chambers/corridor" to 351,
         // trial spawners exclude the key probability
-        "spawners/trial_chamber/consumables" to 13,
-        "spawners/ominous/trial_chamber/consumables" to 77,
-        // vaults only include the Unique loot
-        "chests/trial_chambers/reward" to 56,
-        "chests/trial_chambers/reward_ominous" to 14,   // Rounded up from 13.34
+        "spawners/trial_chamber/consumables" to 10, // 10 key
+        "spawners/ominous/trial_chamber/consumables" to 70, // 30 key
+        // vaults only include the Unique loot and exclude the nothing probability
+        "chests/trial_chambers/reward" to 12,   // 36 nothing
+        "chests/trial_chambers/reward_ominous" to 30,   // 10 nothing
     )
 
     val CREEPER_DROPPABLE_DISCS: List<ItemStack> = listOf(

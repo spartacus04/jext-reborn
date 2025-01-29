@@ -12,7 +12,10 @@ internal object ListenerRegistrant {
         PrepareCraftingEvent(),
         InventoryMoveItemEvent(),
         BlockBrushEvent(),
-        DecoratedPotEvent()
+        DecoratedPotEvent(),
+        CrafterCraftDiscEvent(),
+        VaultDispenseEvent(),
+        TrialSpawnerDispenseEvent(),
     )
 
     fun registerListeners() =

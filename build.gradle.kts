@@ -1,15 +1,13 @@
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import proguard.gradle.ProGuardTask
 import io.papermc.hangarpublishplugin.model.Platforms
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.1.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
-    id("org.jetbrains.dokka") version "1.9.20"
+    id("org.jetbrains.dokka") version "2.0.0"
 
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
@@ -21,8 +19,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
-        classpath("com.guardsquare:proguard-gradle:7.5.0") {
+        classpath("org.jetbrains.dokka:dokka-base:2.0.0")
+        classpath("com.guardsquare:proguard-gradle:7.6.1") {
             exclude("com.android.tools.build")
         }
     }
@@ -41,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.14")
@@ -53,10 +51,10 @@ dependencies {
         }
     }
 
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("io.github.bananapuncher714:nbteditor:7.19.3")
-    implementation("xyz.xenondevs.invui:invui:1.33")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.33")
+    implementation("xyz.xenondevs.invui:invui:1.43")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.43")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
@@ -132,11 +130,12 @@ tasks.processResources {
 
 // publish
 
-tasks.dokkaHtml {
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        customStyleSheets = listOf(file("docsAssets/logo-styles.css"))
-        customAssets = listOf(file("icon.png"))
+dokka {
+    pluginsConfiguration.html {
+        customStyleSheets.from(file("docsAssets/logo-styles.css"))
+        customAssets.from(file("icon.png"))
         footerMessage = "Jukebox Extended Reborn is licensed under the <a href=\"https://github.com/spartacus04/jext-reborn/blob/master/LICENSE.MD\">MIT</a> License."
+
     }
 }
 
