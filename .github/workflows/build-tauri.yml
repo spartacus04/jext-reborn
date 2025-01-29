@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_x86_64.rpm
-          path: src-tauri/target/release/bundle/appimage/Jext Plugin Manager-${{ steps.tauri.outputs.appVersion }}-1.x86_64.rpm
+          path: src-tauri/target/release/bundle/rpm/Jext Plugin Manager-${{ steps.tauri.outputs.appVersion }}-1.x86_64.rpm
 
       - name: Upload .appimage binary
         if: matrix.platform == 'ubuntu-22.04'
@@ -87,7 +87,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
+          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_setup.msi
           path: src-tauri/target/release/bundle/msi/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
 
       - name: Upload .exe installer
