@@ -1,8 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.State.DISCS
+import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.listeners.utils.JextListener
-import me.spartacus04.jext.utils.Constants.BRUSH_LOOT_TABLE_ITEMS
+import me.spartacus04.jext.utils.Constants.WEIGHTED_LOOT_TABLE_ITEMS
 import me.spartacus04.jext.utils.Constants.ChanceStack
 import org.bukkit.Material
 import org.bukkit.block.BrushableBlock
@@ -14,12 +14,7 @@ import kotlin.random.Random
 internal class BlockBrushEvent : JextListener("1.20") {
     @EventHandler
     fun onBlockBrush(event: PlayerInteractEvent) {
-        if(event.action != Action.RIGHT_CLICK_BLOCK) return
-        if(event.item == null || event.item!!.type != Material.BRUSH) return
-
-        val brushableBlock = event.clickedBlock!!.state as? BrushableBlock ?: return
-
-        if(brushableBlock.lootTable == null) return
+        val brushableBlock = getBrushableBlock(event) ?: return
 
         val items = ArrayList<ChanceStack>()
 
@@ -31,7 +26,7 @@ internal class BlockBrushEvent : JextListener("1.20") {
                 items.add(ChanceStack(it.fragmentLootTables[brushableBlock.lootTable!!.key.key]!!, it.fragmentItemStack!!))
         }
 
-        val lootTableItems = BRUSH_LOOT_TABLE_ITEMS[brushableBlock.lootTable!!.key.key]!!
+        val lootTableItems = WEIGHTED_LOOT_TABLE_ITEMS[brushableBlock.lootTable!!.key.key]!!
 
         brushableBlock.lootTable = null
 
@@ -51,5 +46,16 @@ internal class BlockBrushEvent : JextListener("1.20") {
                 }
             }
         }
+    }
+
+    private fun getBrushableBlock(event: PlayerInteractEvent) : BrushableBlock? {
+        if(event.action != Action.RIGHT_CLICK_BLOCK) return null
+        if(event.item == null || event.item!!.type != Material.BRUSH) return null
+
+        val brushableBlock = event.clickedBlock!!.state as? BrushableBlock ?: return null
+
+        if(brushableBlock.lootTable == null) return null
+
+        return brushableBlock
     }
 }

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.State.VERSION
+import me.spartacus04.jext.JextState.VERSION
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.inventory.ItemStack
@@ -51,18 +51,18 @@ object Constants {
     val DEFAULT_FRAGMENTS_LOOT_TABLE = HashMap<String, ArrayList<ChanceStack>>()
 
     init {
-        SOUND_MAP[Material.MUSIC_DISC_11] = SoundData(Sound.MUSIC_DISC_11, 72)
-        SOUND_MAP[Material.MUSIC_DISC_13] = SoundData(Sound.MUSIC_DISC_13, 179)
-        SOUND_MAP[Material.MUSIC_DISC_BLOCKS] = SoundData(Sound.MUSIC_DISC_BLOCKS, 346)
-        SOUND_MAP[Material.MUSIC_DISC_CAT] = SoundData(Sound.MUSIC_DISC_CAT, 186)
-        SOUND_MAP[Material.MUSIC_DISC_CHIRP] = SoundData(Sound.MUSIC_DISC_CHIRP, 186)
-        SOUND_MAP[Material.MUSIC_DISC_FAR] = SoundData(Sound.MUSIC_DISC_FAR, 175)
-        SOUND_MAP[Material.MUSIC_DISC_MALL] = SoundData(Sound.MUSIC_DISC_MALL, 198)
-        SOUND_MAP[Material.MUSIC_DISC_MELLOHI] = SoundData(Sound.MUSIC_DISC_MELLOHI, 97)
-        SOUND_MAP[Material.MUSIC_DISC_STAL] = SoundData(Sound.MUSIC_DISC_STAL, 151)
-        SOUND_MAP[Material.MUSIC_DISC_STRAD] = SoundData(Sound.MUSIC_DISC_STRAD, 189)
+        SOUND_MAP[Material.MUSIC_DISC_11] = SoundData(Sound.MUSIC_DISC_11, 71)
+        SOUND_MAP[Material.MUSIC_DISC_13] = SoundData(Sound.MUSIC_DISC_13, 178)
+        SOUND_MAP[Material.MUSIC_DISC_BLOCKS] = SoundData(Sound.MUSIC_DISC_BLOCKS, 345)
+        SOUND_MAP[Material.MUSIC_DISC_CAT] = SoundData(Sound.MUSIC_DISC_CAT, 185)
+        SOUND_MAP[Material.MUSIC_DISC_CHIRP] = SoundData(Sound.MUSIC_DISC_CHIRP, 185)
+        SOUND_MAP[Material.MUSIC_DISC_FAR] = SoundData(Sound.MUSIC_DISC_FAR, 174)
+        SOUND_MAP[Material.MUSIC_DISC_MALL] = SoundData(Sound.MUSIC_DISC_MALL, 197)
+        SOUND_MAP[Material.MUSIC_DISC_MELLOHI] = SoundData(Sound.MUSIC_DISC_MELLOHI, 96)
+        SOUND_MAP[Material.MUSIC_DISC_STAL] = SoundData(Sound.MUSIC_DISC_STAL, 150)
+        SOUND_MAP[Material.MUSIC_DISC_STRAD] = SoundData(Sound.MUSIC_DISC_STRAD, 188)
         SOUND_MAP[Material.MUSIC_DISC_WAIT] = SoundData(Sound.MUSIC_DISC_WAIT, 238)
-        SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 252)
+        SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 251)
 
         if(VERSION >= "1.16") {
             SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = SoundData(Sound.MUSIC_DISC_PIGSTEP, 149)
@@ -82,7 +82,7 @@ object Constants {
         }
 
         if(VERSION >= "1.18") {
-            SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 196)
+            SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 195)
 
             DEFAULT_DISCS_LOOT_TABLE[LootTables.SIMPLE_DUNGEON.key.key]!!.add(
                 ChanceStack(31, ItemStack(Material.MUSIC_DISC_OTHERSIDE))
@@ -94,7 +94,7 @@ object Constants {
         }
 
         if(VERSION >= "1.19") {
-            SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 179)
+            SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 178)
 
             DEFAULT_DISCS_LOOT_TABLE[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
                 ChanceStack(161, ItemStack(Material.MUSIC_DISC_13)),
@@ -110,19 +110,33 @@ object Constants {
         if(VERSION >= "1.20") {
             SOUND_MAP[Material.MUSIC_DISC_RELIC] = SoundData(Sound.MUSIC_DISC_RELIC, 218)
         }
+
+        if(VERSION >= "1.21") {
+            SOUND_MAP[Material.MUSIC_DISC_CREATOR] = SoundData(Sound.MUSIC_DISC_CREATOR, 176)
+            SOUND_MAP[Material.MUSIC_DISC_CREATOR_MUSIC_BOX] = SoundData(Sound.MUSIC_DISC_CREATOR_MUSIC_BOX, 73)
+            SOUND_MAP[Material.MUSIC_DISC_PRECIPICE] = SoundData(Sound.MUSIC_DISC_PRECIPICE, 299)
+        }
     }
 
     val JEXT_DISC_MATERIAL = Material.MUSIC_DISC_11
     val JEXT_FRAGMENT_MATERIAL = if(VERSION >= "1.19") Material.DISC_FRAGMENT_5 else null
     val JEXT_FRAGMENT_OUTPUT = if(VERSION >= "1.19") Material.MUSIC_DISC_5 else null
 
-    val BRUSH_LOOT_TABLE_ITEMS = mapOf(
+    val WEIGHTED_LOOT_TABLE_ITEMS = mapOf(
         "archaeology/trail_ruins_rare" to 12,
         "archaeology/trail_ruins_common" to 45,
         "archaeology/ocean_ruin_cold" to 15,
         "archaeology/ocean_ruin_warm" to 15,
         "archaeology/desert_pyramid" to 8,
         "archaeology/desert_well" to 8,
+
+        "pots/trial_chambers/corridor" to 351,
+        // trial spawners exclude the key probability
+        "spawners/trial_chamber/consumables" to 10, // 10 key
+        "spawners/ominous/trial_chamber/consumables" to 70, // 30 key
+        // vaults only include the Unique loot and exclude the nothing probability
+        "chests/trial_chambers/reward" to 12,   // 36 nothing
+        "chests/trial_chambers/reward_ominous" to 30,   // 10 nothing
     )
 
     val CREEPER_DROPPABLE_DISCS: List<ItemStack> = listOf(

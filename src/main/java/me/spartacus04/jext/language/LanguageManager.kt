@@ -1,10 +1,9 @@
 package me.spartacus04.jext.language
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PLUGIN
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -19,7 +18,6 @@ import java.util.jar.JarFile
  */
 class LanguageManager {
     private val languageMap = HashMap<String, Map<String, String>>()
-    private var gson : Gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
     init {
         // this loads all languages in the languageMap
@@ -32,7 +30,7 @@ class LanguageManager {
 
                     PLUGIN.getResource("langs/$langName")!!.bufferedReader().use {file ->
                         val mapType = object : TypeToken<Map<String, String>>() {}.type
-                        val languageMap : Map<String, String> = gson.fromJson(file.readText(), mapType)
+                        val languageMap : Map<String, String> = GSON.fromJson(file.readText(), mapType)
 
                         this.languageMap.put(langName.replace(".json", "").lowercase(), languageMap)
                     }
@@ -54,7 +52,7 @@ class LanguageManager {
 
             customFile.bufferedReader().use {
                 val mapType = object : TypeToken<Map<String, String>>() {}.type
-                val languageMap : Map<String, String> = gson.fromJson(it.readText(), mapType)
+                val languageMap : Map<String, String> = GSON.fromJson(it.readText(), mapType)
 
                 this.languageMap.put("custom", languageMap)
             }
@@ -68,11 +66,10 @@ class LanguageManager {
      * @param lang The language map
      */
     private fun updateLang(file: File, lang: Map<String, String>) {
-        val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
         val jsonConfig = file.readText()
 
         val mapType = object : TypeToken<HashMap<String, String>>() {}.type
-        val languageMap = gson.fromJson<HashMap<String, String>>(jsonConfig, mapType)
+        val languageMap = GSON.fromJson<HashMap<String, String>>(jsonConfig, mapType)
 
         lang.keys.forEach {
             if(!languageMap.containsKey(it)) {
@@ -80,7 +77,7 @@ class LanguageManager {
             }
         }
 
-        file.writeText(gson.toJson(languageMap))
+        file.writeText(GSON.toJson(languageMap))
     }
 
     /**
@@ -147,18 +144,27 @@ class LanguageManager {
     companion object {
         const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extended Reborn, Do Re Mi!"
         const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extended Reborn, Mi Re Do!"
+
         const val UPDATE_LINK = "§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]"
+        const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
+
         const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
         const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
+
         const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
         const val BEDROCK_NOT_SUPPORTED = "[§cJEXT§f] §cJukebox GUI is not supported on bedrock edition!"
+
         const val WEBAPI_RESOURCEPACK_NOT_FOUND = "[§cJEXT§f] §cresource-pack.zip not found, please provide it in the plugin directory"
+
         const val WEBSERVER_STARTED = "[§aJEXT§f] §aWebserver started on port %port%"
         const val WEBSERVER_STOPPED = "[§eJEXT§f] §eWebserver stopped"
-        const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
+
         const val GEYSER_RELOAD = "[§eJEXT§f]§e Warning: Geyser won't apply the resource pack changes until you restart the server!"
-        const val DOWNLOADING_RESOURCEPACK = "[§aJEXT§f]§a Downloading resource pack..."
-        const val RESOURCEPACK_DOWNLOADED = "[§aJEXT§f]§a Resource pack downloaded!"
-        const val SHA1_REQUIRED = "[§cJEXT§f]§c SHA1 is required for resource pack downloads!"
+
+        const val RESOURCEPACK_DOWNLOAD_START = "[§aJEXT§f]§a Downloading resource pack..."
+        const val RESOURCEPACK_DOWNLOAD_SUCCESS = "[§aJEXT§f]§a Resource pack downloaded!"
+        const val RESOURCEPACK_DOWNLOAD_FAIL = "[§cJEXT§f]§c Resource pack download failed! No disc will be loaded."
+
+        const val NBS_NOT_FOUND = "[§cJEXT§f]§c No %name%.nbs file found in the nbs folder! This disc won't be loaded."
     }
 }

@@ -5,7 +5,7 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
-internal class GriefPreventionIntegration : Integration {
+internal class GriefPreventionPermissionIntegration : PermissionIntegration {
     override val id = "griefprevention"
 
     init {

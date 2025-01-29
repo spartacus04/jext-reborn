@@ -8,7 +8,7 @@ import com.sk89q.worldguard.protection.flags.StateFlag
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
-internal class WorldGuardIntegration : Integration {
+internal class WorldGuardPermissionIntegration : PermissionIntegration {
     override val id = "worldguard"
 
     init {

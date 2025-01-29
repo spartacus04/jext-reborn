@@ -1,7 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.INTEGRATIONS
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.JextState.INTEGRATIONS
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.gui.JukeboxGui
@@ -52,17 +53,19 @@ internal class JukeboxClickEvent : JextListener() {
         }
         else {
             Disc.fromItemstack(state.record)?.namespace?.let {
-                Disc.stop(location, it)
+                DISCS.stop(location, it)
             }
         }
     }
 
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
+
         if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) {
             return
         }
-        JukeboxGui(event.player, block)
+
+        JukeboxGui.open(event.player, block)
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -77,7 +80,7 @@ internal class JukeboxClickEvent : JextListener() {
         val state = block.state as? Jukebox ?: return
 
         Disc.fromItemstack(state.record)?.namespace?.let {
-            Disc.stop(loc, it)
+            DISCS.stop(loc, it)
         }
     }
 }

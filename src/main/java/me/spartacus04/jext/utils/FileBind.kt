@@ -1,22 +1,18 @@
 package me.spartacus04.jext.utils
 
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.config.Config
-import me.spartacus04.jext.config.ConfigTypeAdapter
+import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.jext.JextState.PLUGIN
 
-
-open class FileBind(@Transient private val filePath: String, @Transient private val resourcePath: String, @Transient private val typeToken: TypeToken<*>) {
-    @Transient
-    private val gson = GsonBuilder()
-        .setLenient()
-        .setPrettyPrinting()
-        .registerTypeAdapter(object : TypeToken<Config>() {}.type, ConfigTypeAdapter())
-        .create()
-
-    constructor(filePath: String, typeToken: TypeToken<*>) : this(filePath, filePath, typeToken)
-
+/**
+ * The class `FileBind` is used to bind a file to a class.
+ * 
+ * @param filePath The path of the file.
+ * @param clazz The class to bind the file to.
+ */
+open class FileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>) {
+    /**
+     * Reads the file and binds it to the class.
+     */
     fun read() {
         if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
 
@@ -25,12 +21,10 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
         if(!file.exists()) {
             file.createNewFile()
 
-            PLUGIN.getResource(resourcePath)!!.bufferedReader().use {
-                file.writeText(it.readText())
-            }
+            save()
         }
 
-        val obj = gson.fromJson(file.readText(), typeToken)
+        val obj = GSON.fromJson(file.readText(), clazz)
 
         obj.javaClass.declaredFields.forEach { field ->
             field.isAccessible = true
@@ -39,9 +33,16 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
         }
     }
 
+    /**
+     * Reads the file from the specified text and binds it to the class.
+     * 
+     * @param text The text to read from.
+     * 
+     * @return Returns true if the text was successfully read, otherwise false.
+     */
     fun fromText(text: String) : Boolean {
         try {
-            val obj = gson.fromJson(text, typeToken)
+            val obj = GSON.fromJson(text, clazz)
 
             obj.javaClass.declaredFields.forEach { field ->
                 field.isAccessible = true
@@ -55,13 +56,23 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
         }
     }
 
+    /**
+     * Saves the class to the file.
+     */
     fun save() {
-        val text = gson.toJson(this)
+        val text = GSON.toJson(this)
 
         PLUGIN.dataFolder.resolve(filePath).writeText(text)
     }
 
     companion object {
+        /**
+         * Creates a new instance of the specified class and binds it to the file.
+         * 
+         * @param clazz The class to bind the file to.
+         * 
+         * @return The instance of the class.
+         */
         fun <T : FileBind> create(clazz: Class<T>): T {
             val instance = clazz.getDeclaredConstructor().newInstance()
 

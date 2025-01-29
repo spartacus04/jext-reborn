@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.State.CONFIG
+import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.gui.items.NextPageItem
 import me.spartacus04.jext.gui.items.PreviousPageItem
@@ -16,9 +16,19 @@ import xyz.xenondevs.invui.inventory.Inventory
 import xyz.xenondevs.invui.item.builder.ItemBuilder
 import xyz.xenondevs.invui.item.impl.SimpleItem
 
-internal class GuiBuilder {
+/**
+ * The class `GuiBuilder` is used to build the GUI for the plugin.
+ */
+class GuiBuilder {
     private val border = SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("§r"))
 
+    /**
+     * Builds the GUI for the specified player and inventory based on the layout specified in the config.
+     * 
+     * @param player The player to build the GUI for.
+     * @param inventory The inventory to build the GUI with.
+     * @return The GUI builder.
+     */
     fun buildGui(player: Player, inventory: Inventory) : Gui.Builder<*, *> {
         return when(CONFIG.GUI_STYLE) {
             FieldGuiStyle.SCROLL_VERTICAL -> ScrollGui.inventories()

@@ -1,15 +1,15 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.State.CONFIG
-import me.spartacus04.jext.State.PLUGIN
-import me.spartacus04.jext.utils.getResourcePackHash
+import me.spartacus04.jext.JextState.ASSETS_MANAGER
+import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
-import org.bukkit.Bukkit
 
 internal class DiscsReadHandler : JextHttpHandler(true) {
     private val rpHosted = PLUGIN.dataFolder.resolve("resource-pack.zip")
-    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${getResourcePackHash()}.zip")
+    private val rpCache = PLUGIN.dataFolder.resolve("caches").resolve("${ASSETS_MANAGER.resourcePackHash.ifBlank { "current" }}.zip")
+
     override fun onGet(exchange: HttpExchange) {
         if(CONFIG.RESOURCE_PACK_HOST) {
             if(!rpHosted.exists()) {
