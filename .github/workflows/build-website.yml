@@ -42,7 +42,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build docs with Gradle
-        run: ./gradlew dokkaHtml
+        run: ./gradlew dokkaGeneratePublicationHtml
         env:
           jextVersion: ${{ env.releasetag }}
 
@@ -82,7 +82,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build docs with Gradle
-        run: ./gradlew dokkaHtml
+        run: ./gradlew dokkaGeneratePublicationHtml
         env:
           jextVersion: ${{ steps.latestcommit.outputs.commitsha }}
 
@@ -116,13 +116,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: stabledocs
-          path: static/javadocs/stable
+          path: static/javadocs/stable-javadocs
 
       - name: Download dev docs
         uses: actions/download-artifact@v4
         with:
           name: devdocs
-          path: static/javadocs/dev
+          path: static/javadocs/development-javadocs
 
       - uses: oven-sh/setup-bun@v1
 
