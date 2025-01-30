@@ -28,6 +28,7 @@ class DiscManager : Iterable<Disc> {
         NbsDiscStoppingMethod()
     )
 
+    @Suppress("unused")
     /**
      * Registers a disc stopping method to be used when stopping a disc.
      * 
@@ -47,6 +48,7 @@ class DiscManager : Iterable<Disc> {
 
         SCHEDULER.runTaskAsynchronously {
             val discs = CoroutineScope(Dispatchers.Default).launch {
+                ASSETS_MANAGER.clearCache()
                 ASSETS_MANAGER.reloadAssets()
 
                 discSources.forEach {

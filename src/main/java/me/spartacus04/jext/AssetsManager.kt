@@ -249,4 +249,10 @@ class AssetsManager {
 
         return true
     }
+
+    internal fun clearCache() {
+        localToRpMap.entries.forEach {
+            PLUGIN.dataFolder.resolve("${it.key}.json").delete()
+        }
+    }
 }
