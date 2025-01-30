@@ -34,13 +34,14 @@ Jext Reborn offers a wide range of features to create a customized and immersive
 - Allay duplication will still work.
 - Parrots will dance to the custom music!
 - Custom music discs can be found in dungeons and trail ruins.
-- Disc fragments can be discovered in dungeons and crafted back together.
+- Disc fragments can be discovered in dungeons and crafted back together (even with crafters!).
 - A website/desktop app to generate the necessary files for custom music discs, that integrates with the plugin automatically.
 - Set a maximum number of discs that can be found in specific loot tables.
 - Define custom chances for discovering music discs.
 - Optional replacement of the vanilla jukebox click behavior with a GUI.
 - Resource Pack host
 - Admin GUI for managing custom music discs easily
+- Vault, Decorated pot and Trial Spawners support
 
 ### Languages
 
