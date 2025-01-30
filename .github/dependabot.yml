@@ -18,6 +18,9 @@ updates:
     target-branch: "gh-pages"
     schedule:
       interval: 'daily'
+    ignore:
+      - dependency-name: "svelte-gestures"
+      - dependency-name: "@sveltejs/kit"
 
   - package-ecosystem: "cargo"
     directory: "/src-tauri/"
