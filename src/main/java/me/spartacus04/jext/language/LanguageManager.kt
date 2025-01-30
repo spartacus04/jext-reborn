@@ -152,7 +152,6 @@ class LanguageManager {
         const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
 
         const val VULNERABLE_MESSAGE = "[§cJEXT§f] §cSpigot version is outdated and is vulnerable to a crash exploit. Please update it."
-        const val BEDROCK_NOT_SUPPORTED = "[§cJEXT§f] §cJukebox GUI is not supported on bedrock edition!"
 
         const val WEBAPI_RESOURCEPACK_NOT_FOUND = "[§cJEXT§f] §cresource-pack.zip not found, please provide it in the plugin directory"
 

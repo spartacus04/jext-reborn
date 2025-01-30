@@ -7,7 +7,6 @@ import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.JextState.LANG
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.language.LanguageManager.Companion.BEDROCK_NOT_SUPPORTED
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Location
 import org.bukkit.SoundCategory
@@ -31,10 +30,6 @@ internal class JukeboxGui : BaseGui {
 
 
     override fun onInit() {
-        if(isBedrock) {
-            return targetPlayer.sendMessage(BEDROCK_NOT_SUPPORTED)
-        }
-
         if(!playingMap.containsKey(inventoryId)) {
             playingMap[inventoryId] = -1
         }
