@@ -17,24 +17,21 @@ internal class RecordPacketEvent : JextPacketListener(packetType = PacketType.Pl
         val player = event.player
         val block = packet.blockPositionModifier.values[0].toLocation(player.world).block
         val blockState = block.state
-        val data = packet.integers.read(1)
 
-        if (blockState is Jukebox && data != 0) {
-            val disc = blockState.record
-
-            val container = Disc.fromItemstack(disc) ?: return
+        if (blockState is Jukebox) {
+            val disc = Disc.fromItemstack(blockState.record) ?: return
 
             object : BukkitRunnable() {
-                override fun run() = actionBarDisplay(player, container)
-            }.runTaskLater(plugin, 5)
+                override fun run() = actionBarDisplay(player, disc)
+            }.runTaskLater(plugin, 1)
         }
     }
 
-    fun actionBarDisplay(player: Player, container: Disc) {
+    fun actionBarDisplay(player: Player, disc: Disc) {
         player.spigot().sendMessage(
             ChatMessageType.ACTION_BAR,
             TextComponent(LANG.getKey(player, "now-playing", mapOf(
-                "name" to container.displayName
+                "name" to disc.displayName
             )))
         )
     }

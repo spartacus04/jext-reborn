@@ -16,9 +16,9 @@ internal class PrepareCraftingEvent : JextListener("1.19") {
             return@any Disc.isCustomDisc(it)
         }
 
-        // check if every disc has same namespace, if they have the same namespace return the namespace else an empty string
+        // check if every disc has same namespace, if they have the same namespace return the namespace else null
         val namespace = e.inventory.matrix.map {
-            Disc.fromItemstack(it)!!.namespace
+            Disc.fromItemstack(it)?.namespace
         }.distinct().singleOrNull()
 
         if (isCustomDisc && namespace != null) {

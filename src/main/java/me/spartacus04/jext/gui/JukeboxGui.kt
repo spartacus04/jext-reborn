@@ -58,6 +58,10 @@ internal class JukeboxGui : BaseGui {
             mcevent.isRightClick
         }
 
+        if(event.isAdd && event.newItem != null && event.newItem!!.type.isRecord && !isAltClick) {
+            return
+        }
+
         if(isAltClick) {
             if(event.isRemove && event.slot == playingMap[inventoryId]!!) {
                 event.isCancelled = true
@@ -99,8 +103,6 @@ internal class JukeboxGui : BaseGui {
      * an inventory is updated.
      */
     private fun playDisc(event: ItemPreUpdateEvent) {
-        if(event.previousItem == null) return
-
         event.inventory.setItem(UpdateReason.SUPPRESSED, event.slot, event.previousItem!!.clone().apply {
             addUnsafeEnchantment(Enchantment.MENDING, 1)
 
@@ -163,7 +165,6 @@ internal class JukeboxGui : BaseGui {
         }
 
         if(playingMap[inventoryId]!! != -1) {
-            if(event.inventory.getItem(playingMap[inventoryId]!!) != null) return
             event.inventory.setItem(
                 UpdateReason.SUPPRESSED,
                 playingMap[inventoryId]!!,
