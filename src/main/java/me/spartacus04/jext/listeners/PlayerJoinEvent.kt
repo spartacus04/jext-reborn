@@ -1,5 +1,6 @@
 package me.spartacus04.jext.listeners
 
+import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.BASE_URL
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.LANG
@@ -19,7 +20,7 @@ internal class PlayerJoinEvent : JextListener() {
         if(CONFIG.WEB_INTERFACE_API_ENABLED && CONFIG.RESOURCE_PACK_HOST) {
             val hostName = BASE_URL.getBaseUrl(playerJoinEvent.player)
 
-            playerJoinEvent.player.setResourcePack("${hostName}:${CONFIG.WEB_INTERFACE_PORT}/resource-pack.zip")
+            playerJoinEvent.player.setResourcePack("http://${hostName}:${CONFIG.WEB_INTERFACE_PORT}/resource-pack.zip", ASSETS_MANAGER.resourcePackHostedHash)
         }
 
         if (playerJoinEvent.player.hasPermission("jext.notifyupdate") && CONFIG.CHECK_FOR_UPDATES) {

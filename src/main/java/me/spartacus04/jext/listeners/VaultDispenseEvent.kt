@@ -10,7 +10,6 @@ import org.bukkit.block.data.type.Vault
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockDispenseLootEvent
 
-// TODO: test this
 @Suppress("UnstableApiUsage")
 internal class VaultDispenseEvent : JextListener("1.21") {
     @EventHandler

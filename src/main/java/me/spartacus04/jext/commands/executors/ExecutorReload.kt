@@ -1,6 +1,5 @@
 package me.spartacus04.jext.commands.executors
 
-import me.spartacus04.jext.JextState.BASE_URL
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.GEYSER
@@ -30,8 +29,6 @@ internal class ExecutorReload : ExecutorAdapter("jextreload", "reload") {
         WEBSERVER.reload()
 
         GEYSER.reloadGeyser()
-
-        BASE_URL.updatePublicIp()
 
         sender.sendJEXTMessage("reloaded")
     }

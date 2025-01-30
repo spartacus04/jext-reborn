@@ -1,0 +1,6 @@
+- The JukeboxGui crashes when the user right clicks as a first interaction while adding a disc.
+- Crafters literally don't work.
+- Crafters display the wrong item in the output slot.
+- Playing actionbar doesn't work.
+- Sometimes the disc is removed from the disc manager, meaning each instance of the disc will disappear and the plugin will not be able to find it until reloaded.
+- The WebUI exports discs with an incorrect fragment texture. This doesn't impact users < 1.21

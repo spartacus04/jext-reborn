@@ -48,7 +48,6 @@ internal class JukeboxClickEvent : JextListener() {
             val disc = event.item ?: return
             if(!disc.type.isRecord) return
 
-
             Disc.fromItemstack(disc)?.play(location)
         }
         else {

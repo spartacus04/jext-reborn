@@ -26,7 +26,7 @@ internal class RecordPacketEvent : JextPacketListener(packetType = PacketType.Pl
 
             object : BukkitRunnable() {
                 override fun run() = actionBarDisplay(player, container)
-            }.runTaskLater(plugin, 1)
+            }.runTaskLater(plugin, 5)
         }
     }
 

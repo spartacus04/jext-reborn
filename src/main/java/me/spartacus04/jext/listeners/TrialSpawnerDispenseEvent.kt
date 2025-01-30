@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockDispenseLootEvent
 import kotlin.collections.contains
 
-//TODO: test this
 @Suppress("UnstableApiUsage")
 internal class TrialSpawnerDispenseEvent : JextListener("1.21") {
     @EventHandler
@@ -26,9 +25,9 @@ internal class TrialSpawnerDispenseEvent : JextListener("1.21") {
     private fun generateLoot(e: BlockDispenseLootEvent, ominous: Boolean) {
         val items = ArrayList<Constants.ChanceStack>()
         val lootTable = if(ominous) {
-            "chests/trial_chamber/consumables"
+            "spawners/ominous/trial_chamber/consumables"
         } else {
-            "chests/ominous/trial_chamber/consumable"
+            "spawners/trial_chamber/consumables"
         }
 
         DISCS.forEach {

@@ -58,6 +58,10 @@ commands:
     description: Opens the admin gui
     permission: jext.admingui
     usage: /jextadmingui
+  jextexport:
+    description: Exports the plugin resource pack
+    permission: jext.export
+    usage: /jextexport
 
 permissions:
   jext.*:
@@ -76,6 +80,7 @@ permissions:
       jext.webui: true
       jext.usejukebox: true
       jext.admingui: true
+      jext.export: true
   jext.disc:
     description: Allows player to access all custom disc.
     default: op
@@ -114,3 +119,6 @@ permissions:
     default: true
   jext.admingui:
     description: Allows player to access admin gui
+  jext.export:
+    description: Allows player to export the plugin resource pack
+    default: op

@@ -15,31 +15,23 @@ internal class CrafterCraftDiscEvent : JextListener("1.21") {
     @EventHandler
     fun onCrafterCraft(e: CrafterCraftEvent) {
         if (e.result.type != JEXT_FRAGMENT_OUTPUT) return
-
         if(e.block !is Crafter) return
 
-        val counter = mutableMapOf<String, Int>()
-        var firstMatchName: String = ""
-
-        (e.block as Crafter).inventory.forEach {
-            if(it.type == JEXT_FRAGMENT_MATERIAL) {
-                val namespace = if(Disc.isCustomDisc(it)) {
-                    Disc.fromItemstack(it)!!.namespace
-                } else {
-                    "default"
-                }
-
-                counter[namespace] = counter.getOrDefault(namespace, 0) + it.amount
-
-                if(counter[namespace]!! >= 9) {
-                    firstMatchName = namespace
-                }
-            }
+        println("CrafterCraftDiscEvent")
+        val isCustomDisc = (e.block as Crafter).inventory.any {
+            return@any Disc.isCustomDisc(it)
         }
 
-        if (firstMatchName != "default" && firstMatchName != "") {
-            e.result = DISCS[firstMatchName]!!.discItemStack
-        } else if(firstMatchName == "") {
+        println(isCustomDisc)
+        // check if every disc has same namespace, if they have the same namespace return the namespace else an empty string
+        val namespace = (e.block as Crafter).inventory.map {
+            Disc.fromItemstack(it)!!.namespace
+        }.distinct().singleOrNull()
+        println(namespace)
+
+        if (isCustomDisc && namespace != null) {
+            e.result = DISCS[namespace]!!.discItemStack
+        } else if (isCustomDisc) {
             e.isCancelled = true
         }
     }

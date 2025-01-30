@@ -1,6 +1,7 @@
 package me.spartacus04.jext.discs
 
 import me.spartacus04.jext.JextState.VERSION
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
@@ -37,7 +38,11 @@ object DiscUtils {
      * @return The custom itemstack.
      */
     fun buildCustomItemstack(material: Material, modelData: Int, namespace: String, lores: List<String>, title: String, author: String): ItemStack {
-        val disc = ItemStack(material)
+        val disc = if(VERSION >= "1.21") {
+            Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
+        } else {
+            ItemStack(material)
+        }
         val meta = disc.itemMeta
 
         meta!!.addItemFlags(if(VERSION >= "1.19.5")

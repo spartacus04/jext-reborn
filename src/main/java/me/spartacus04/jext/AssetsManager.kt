@@ -8,6 +8,7 @@ import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_FAIL
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_START
 import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_SUCCESS
+import me.spartacus04.jext.utils.getFileSha1Hash
 import org.bukkit.Bukkit
 import java.io.BufferedInputStream
 import java.io.File
@@ -200,6 +201,13 @@ class AssetsManager {
             val propertiesFile = File(".").resolve("server.properties")
 
             propertiesFile.readLines().find { it.startsWith("resource-pack-sha1=") }!!.substringAfter("resource-pack-sha1=")
+        }
+
+    internal val resourcePackHostedHash: ByteArray
+        get() = try {
+            getFileSha1Hash(PLUGIN.dataFolder.resolve("resource-pack.zip"))
+        } catch (_: Exception) {
+            byteArrayOf()
         }
 
     /**
