@@ -21,6 +21,9 @@ updates:
     ignore:
       - dependency-name: "svelte-gestures"
       - dependency-name: "@sveltejs/kit"
+      - dependency-name: "svelte"
+      - dependency-name: "@sveltejs/vite-plugin-svelte"
+      - dependency-name: "svelte-check"
 
   - package-ecosystem: "cargo"
     directory: "/src-tauri/"
