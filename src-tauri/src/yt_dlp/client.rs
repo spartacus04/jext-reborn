@@ -109,6 +109,11 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
         Err(e) => return Err(format!("Error downloading yt-dlp: {}", e)),
     };
 
+    if !binary_path.parent().unwrap().exists() {
+        std::fs::create_dir_all(binary_path.parent().unwrap())
+            .map_err(|e| format!("Error creating directory: {}", e))?;
+    }
+
     std::fs::write(binary_path, bytes).unwrap();
 
     #[cfg(unix)]

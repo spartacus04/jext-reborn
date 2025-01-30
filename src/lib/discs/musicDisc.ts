@@ -18,7 +18,15 @@ export class MusicDisc extends BaseDisc {
 
 		this.title = file.name;
 
-		if (splitName.length >= 1) this.title = splitName.shift()!;
+		if (splitName.length >= 1) {
+			const candidateTitle = splitName.shift()!;
+
+			if(candidateTitle.includes('\\')) {
+				this.title = candidateTitle.split('\\').pop()!;
+			} else {
+				this.title = candidateTitle;
+			}
+		}
 		if (splitName.length >= 1) this.author = splitName.join(' - ');
 
 		this.autoSetNamespace();

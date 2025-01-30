@@ -58,11 +58,16 @@ pub fn run_ffmpeg(
     let output_binding = cache_binding.join("output_file.ogg");
     let output_file = output_binding.to_str().unwrap();
 
-    if let Err(e) = fs::remove_file(input_file) {
-        return Err(format!("Error removing temporary file: {}", e));
+    if fs::metadata(input_file).is_ok() {
+        if let Err(e) = fs::remove_file(input_file) {
+            return Err(format!("Error removing temporary file: {}", e));
+        }
     }
-    if let Err(e) = fs::remove_file(output_file) {
-        return Err(format!("Error removing output file: {}", e));
+
+    if fs::metadata(output_file).is_ok() {
+        if let Err(e) = fs::remove_file(output_file) {
+            return Err(format!("Error removing output file: {}", e));
+        }
     }
 
     let mut temp_file = fs::File::create(input_file).unwrap();

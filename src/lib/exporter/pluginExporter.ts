@@ -82,12 +82,12 @@ export class PluginExporter extends BaseExporter {
 		);
 
 		rp.file(
-			'assets/minecraft/models/item/music_disc_5.json',
+			'assets/minecraft/models/item/disc_fragment_5.json',
 			JSON.stringify(
 				{
 					parent: 'item/generated',
 					textures: {
-						layer0: 'item/music_disc_5'
+						layer0: 'item/disc_fragment_5'
 					},
 					overrides: discs.map((disc) => {
 						return {
@@ -131,7 +131,7 @@ export class PluginExporter extends BaseExporter {
 		);
 
 		rp.file(
-			`assets/minecraft/items/fragment_5.json`,
+			`assets/minecraft/items/disc_fragment_5.json`,
 			JSON.stringify(
 				{
 					model: {
@@ -139,7 +139,7 @@ export class PluginExporter extends BaseExporter {
 						property: 'custom_model_data',
 						fallback: {
 							type: 'model',
-							model: 'item/music_disc_5'
+							model: 'item/disc_fragment_5'
 						},
 						entries: discs.map((disc) => {
 							return {
