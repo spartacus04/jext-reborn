@@ -145,7 +145,7 @@ class LanguageManager {
         const val ENABLED_MESSAGE = "[§aJEXT§f]§a Enabled Jukebox Extended Reborn, Do Re Mi!"
         const val DISABLED_MESSAGE = "[§eJEXT§f]§e Disabled Jukebox Extended Reborn, Mi Re Do!"
 
-        const val UPDATE_LINK = "§6[§2https://github.com/spartacus04/jext-reborn/releases/latest/§6]"
+        const val UPDATE_LINK = "§6[§2https://modrinth.com/plugin/jukebox-extended-reborn§6]"
         const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
 
         const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
