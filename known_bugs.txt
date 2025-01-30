@@ -1,2 +1,0 @@
-- Crafters display the wrong item in the output slot.
-- The WebUI exports discs with an incorrect fragment texture. This doesn't impact users < 1.21
