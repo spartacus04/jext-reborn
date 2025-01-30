@@ -207,6 +207,7 @@ internal class JukeboxGui : BaseGui {
         private val saveFile = PLUGIN.dataFolder.resolve(".savedata")
 
 
+        @Suppress("MemberVisibilityCanBePrivate")
         /**
          * The function `getInv` returns a `VirtualInventory` object based on the given `id`, creating a new one if it
          * doesn't exist in the `inventories` map.
@@ -284,8 +285,22 @@ internal class JukeboxGui : BaseGui {
                     if(itemStack == null) return@forEachIndexed
 
                     if(Disc.isCustomDisc(itemStack)) {
-                        val container = Disc.fromItemstack(itemStack)!!
-                        data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
+                        try {
+                            val container = Disc.fromItemstack(itemStack)!!
+                            data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
+                        } catch (e: NullPointerException) {
+                            val stack = arrayListOf(
+                                SOUND_MAP.keys.map { disc -> ItemStack(disc) },
+                                DISCS.map { disc -> disc.discItemStack }
+                            ).flatten().random()
+
+                            if(Disc.isCustomDisc(stack)) {
+                                val container = Disc.fromItemstack(stack)!!
+                                data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
+                            } else {
+                                data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
+                            }
+                        }
                     } else {
                         data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
                     }
