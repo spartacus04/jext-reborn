@@ -47,7 +47,7 @@ internal class DiscUpdateEvent : JextListener() {
 
                     stacks.random()
                 } else {
-                    disc.discItemStack.clone()
+                    disc.discItemStack
                 }
             }
         } else if(VERSION >= "1.19" && itemStack.type.isRecordFragment) {
@@ -64,7 +64,7 @@ internal class DiscUpdateEvent : JextListener() {
                         amount = itemStack.amount
                     }
                 } else {
-                    disc.fragmentItemStack!!.clone().apply {
+                    disc.fragmentItemStack!!.apply {
                         amount = itemStack.amount
                     }
                 }
