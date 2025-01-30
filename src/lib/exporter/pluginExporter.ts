@@ -143,7 +143,7 @@ export class PluginExporter extends BaseExporter {
 						},
 						entries: discs.map((disc) => {
 							return {
-								when: disc.modelData,
+								threshold: disc.modelData,
 								model: {
 									type: 'model',
 									model: `item/fragment_${disc.namespace}`
