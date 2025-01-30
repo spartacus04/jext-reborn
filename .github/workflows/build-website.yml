@@ -44,7 +44,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build docs with Gradle
-        run: ./gradlew dokkaHtml
+        run: ./gradlew dokkaGeneratePublicationHtml
         env:
           jextVersion: ${{ env.releasetag }}
 
