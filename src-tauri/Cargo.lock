@@ -4630,9 +4630,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-http"
-version = "2.0.3"
+version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c752aee1b00ec3c4d4f440095995d9bd2c640b478f2067d1fba388900b82eb96"
+checksum = "3a8137a106e0741fdd357366178fc6e0597abe7d20796f53f44171a1bcec1683"
 dependencies = [
  "data-url",
  "http",
@@ -4644,7 +4644,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "tauri-plugin-fs",
- "thiserror 1.0.69",
+ "thiserror 2.0.3",
  "tokio",
  "url",
  "urlpattern",
