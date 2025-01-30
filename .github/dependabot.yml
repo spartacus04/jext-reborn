@@ -24,6 +24,7 @@ updates:
       - dependency-name: "svelte"
       - dependency-name: "@sveltejs/vite-plugin-svelte"
       - dependency-name: "svelte-check"
+      - dependency-name: "tailwindcss"
 
   - package-ecosystem: "cargo"
     directory: "/src-tauri/"
