@@ -23,7 +23,6 @@ internal class CrafterCraftDiscEvent : JextListener("1.21") {
         val namespace = (e.block.state as Crafter).inventory.map {
             Disc.fromItemstack(it)?.namespace
         }.distinct().singleOrNull()
-        println(namespace)
 
         if (isCustomDisc && namespace != null) {
             e.result = DISCS[namespace]!!.discItemStack

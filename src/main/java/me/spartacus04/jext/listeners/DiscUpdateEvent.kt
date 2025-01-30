@@ -35,6 +35,7 @@ internal class DiscUpdateEvent : JextListener() {
     }
 
     private fun updateItem(itemStack: ItemStack) : ItemStack {
+        println(itemStack.type)
         if (itemStack.type.isRecord) {
             if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
@@ -47,7 +48,7 @@ internal class DiscUpdateEvent : JextListener() {
 
                     stacks.random()
                 } else {
-                    disc.discItemStack
+                    disc.discItemStack.clone()
                 }
             }
         } else if(VERSION >= "1.19" && itemStack.type.isRecordFragment) {
@@ -64,7 +65,7 @@ internal class DiscUpdateEvent : JextListener() {
                         amount = itemStack.amount
                     }
                 } else {
-                    disc.fragmentItemStack!!.apply {
+                    disc.fragmentItemStack!!.clone().apply {
                         amount = itemStack.amount
                     }
                 }

@@ -1,3 +1,2 @@
 - Crafters display the wrong item in the output slot.
-- The disc is removed from the disc manager randomly, meaning each instance of the disc will disappear and the plugin will not be able to find it until reloaded.
 - The WebUI exports discs with an incorrect fragment texture. This doesn't impact users < 1.21

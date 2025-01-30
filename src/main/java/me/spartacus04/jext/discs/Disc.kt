@@ -19,8 +19,8 @@ import org.bukkit.inventory.ItemStack
  * The class `Disc` is a data class that represents a custom disc in the plugin.
  * 
  * @param sourceId The id of the disc source.
- * @param discItemStack The itemstack of the disc.
- * @param fragmentItemStack The itemstack of the disc fragment.
+ * @param baseDiscItemStack The itemstack of the disc.
+ * @param baseFragmentItemStack The itemstack of the disc fragment.
  * @param namespace The namespace of the disc.
  * @param displayName The display name of the disc.
  * @param duration The duration of the disc.
@@ -31,8 +31,8 @@ import org.bukkit.inventory.ItemStack
  */
 open class Disc(
     val sourceId: String,
-    val discItemStack: ItemStack,
-    val fragmentItemStack: ItemStack? = null,
+    private val baseDiscItemStack: ItemStack,
+    private val baseFragmentItemStack: ItemStack? = null,
     val namespace: String,
     val displayName: String,
     val duration: Int,
@@ -41,6 +41,28 @@ open class Disc(
     val fragmentLootTables: HashMap<String, Int>,
     private val discPlayingMethod: DiscPlayingMethod
 ) {
+    // Stupid Ahh abstraction to prevent disc being cancelled from existence
+
+    /**
+     * Returns the itemstack of the disc.
+     *
+     * @return The itemstack of the disc.
+     */
+    val discItemStack: ItemStack
+        get() {
+            return baseDiscItemStack.clone()
+        }
+
+    /**
+     * Returns the itemstack of the disc fragment.
+     *
+     * @return The itemstack of the disc fragment.
+     */
+    val fragmentItemStack: ItemStack?
+        get() {
+            return baseFragmentItemStack?.clone()
+        }
+
     /**
      * Returns the display name of the disc.
      * 
