@@ -107,6 +107,8 @@ export async function editDiscs(...discs: BaseDisc[]) {
 			}
 		}
 	}
+
+	discsStore.update((d) => d);
 }
 
 export async function editLootTables(data: { [key: string]: number }) {

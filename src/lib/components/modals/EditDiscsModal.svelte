@@ -33,15 +33,11 @@
 			edited: false
 		},
 		discTexture: {
-			value: discs.every((disc) => disc.discTexture === discs[0].discTexture)
-				? discs[0].discTexture
-				: '',
+			value: discs[0].discTexture,
 			edited: false
 		},
 		fragmentTexture: {
-			value: discs.every((disc) => disc.fragmentTexture === discs[0].fragmentTexture)
-				? discs[0].fragmentTexture
-				: '',
+			value: discs[0].fragmentTexture,
 			edited: false
 		},
 		tooltip: {
