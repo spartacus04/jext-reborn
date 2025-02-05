@@ -1,8 +1,6 @@
 name: Build Website
 
 on:
-  schedule:
-    - cron: '00 00 * * 0'
   push:
     branches: [ master, gh-pages ]
   release:
