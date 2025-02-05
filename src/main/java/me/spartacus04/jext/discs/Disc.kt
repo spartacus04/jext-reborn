@@ -131,7 +131,7 @@ open class Disc(
 
                     NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
                 } else {
-                    NBTEditor.set(location.block, (72 - duration) * 20 + 5)
+                    NBTEditor.set(location.block, ((72 - duration) * 20 + 5).toLong(), "ticks_since_song_started")
                 }
             }
         }, 5)

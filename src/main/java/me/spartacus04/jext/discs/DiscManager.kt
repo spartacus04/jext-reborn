@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.spartacus04.jext.JextState.ASSETS_MANAGER
 import me.spartacus04.jext.JextState.SCHEDULER
+import me.spartacus04.jext.JextState.VERSION
 import me.spartacus04.jext.discs.discstopping.DefaultDiscStoppingMethod
 import me.spartacus04.jext.discs.discstopping.DiscStoppingMethod
 import me.spartacus04.jext.discs.discstopping.NbsDiscStoppingMethod
@@ -142,7 +143,11 @@ class DiscManager : Iterable<Disc> {
 
         if(location.block.type != Material.JUKEBOX) return
 
-        NBTEditor.set(location.block, NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
+        if(VERSION <= "1.21") {
+            NBTEditor.set(location.block, NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
+        } else {
+            NBTEditor.set(location.block, (72 * 20).toLong(), "ticks_since_song_started")
+        }
     }
 
     /**
@@ -160,6 +165,10 @@ class DiscManager : Iterable<Disc> {
 
         if(location.block.type != Material.JUKEBOX) return
 
-        NBTEditor.set(location.block, NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
+        if(VERSION <= "1.21") {
+            NBTEditor.set(location.block, NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
+        } else {
+            NBTEditor.set(location.block, (72 * 20).toLong(), "ticks_since_song_started")
+        }
     }
 }
