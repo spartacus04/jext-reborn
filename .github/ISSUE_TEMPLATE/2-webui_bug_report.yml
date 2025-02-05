@@ -34,7 +34,7 @@ body:
     attributes:
       label: Logs
       description: If applicable, check the browser developer console and paste the error logs
-   - type: checkboxes
+  - type: checkboxes
     id: dekstop app
     attributes:
       label: This issue is exclusive to the desktop app
