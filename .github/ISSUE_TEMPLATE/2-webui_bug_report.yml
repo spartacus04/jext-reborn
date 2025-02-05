@@ -34,6 +34,14 @@ body:
     attributes:
       label: Logs
       description: If applicable, check the browser developer console and paste the error logs
+   - type: checkboxes
+    id: dekstop app
+    attributes:
+      label: This issue is exclusive to the desktop app
+      description: By checking this checkbox you are guaranteeing that the issue doesn't happen on the web app, and only happens in the desktop app
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
   - type: checkboxes
     id: Checkboxes
     attributes:
