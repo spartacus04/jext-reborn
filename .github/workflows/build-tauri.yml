@@ -2,6 +2,8 @@ name: 'Build Tauri'
 # This workflow build a Tauri app for all platforms and upload the binaries as artifacts
 
 on:
+  schedule:
+    - cron: '00 00 * * 0'
   push:
     branches:
       - gh-pages
