@@ -6,6 +6,7 @@ import type { NbsDisc } from '$lib/discs/nbsDisc';
 import { convertToPng, getDuration, getVersionFromTime } from '$lib/utils';
 import { ResourcePackData } from '$lib/discs/resourcePackManager';
 import { MusicDisc } from '$lib/discs/musicDisc';
+import { versions } from '$lib/constants';
 
 export class PluginExporter extends BaseExporter {
 	public name = 'JEXT Reborn';
@@ -32,7 +33,8 @@ export class PluginExporter extends BaseExporter {
 				{
 					pack: {
 						pack_format: packData.version,
-						description: packData.description
+						description: packData.description,
+						supported_formats: [Math.min(...Array.from(versions.keys())), packData.version]
 					}
 				},
 				null,
