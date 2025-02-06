@@ -123,6 +123,9 @@
 	</button>
 </div>
 
+<p class="text-md text-justify font-minecraft text-orange-400">Warning: the resource pack merge feature doesn't always merge resource packs correctly. If that happens it won't be considered a bug.</p>
+
+
 <style>
 	.card button:hover:not(:disabled) {
 		transform: scale(1.2);

@@ -20,18 +20,20 @@ export const mergeResourcePacks = async (base: Blob) => {
 				if (
 					(file.name.endsWith('.json') &&
 						!file.name.endsWith('jext.json') &&
-						!file.name.endsWith('jext.nbs.json')) ||
+						!file.name.endsWith('jext.nbs.json')) &&
+						!file.name.endsWith('items/music_disc_11.json') &&
+						!file.name.endsWith('items/disc_fragment_5.json') ||
 					file.name.endsWith('.mcmeta')
 				) {
-					console.log(mergedJsonFiles);
 
 					if (!mergedJsonFiles[file.name])
 						mergedJsonFiles[file.name] = JSON.parse(await file.async('text'));
-					else
+					else  {
 						mergedJsonFiles[file.name] = mergeDeep(
 							mergedJsonFiles[file.name],
 							JSON.parse(await file.async('text'))
 						);
+					}
 				}
 
 				rp.file(path, file.async('blob'));
