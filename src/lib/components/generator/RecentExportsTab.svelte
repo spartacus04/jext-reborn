@@ -2,11 +2,6 @@
 	import {
 		exists,
 		readDir,
-		writeFile,
-		mkdir,
-		remove,
-		stat,
-		type DirEntry,
 		readFile
 	} from '@tauri-apps/plugin-fs';
 	import { appCacheDir } from '@tauri-apps/api/path';
@@ -15,6 +10,7 @@
 	import { addDisc } from '$lib/discs/discManager';
 	import { JextReader } from '$lib/exporter/importer';
 	import { cAlert } from '$lib/utils';
+	import { ResourcePackData } from '$lib/discs/resourcePackManager';
 
 	const getRecentExportsPromise = async () => {
 		const baseDir = (await appCacheDir()) + '/recentExports';
@@ -75,6 +71,36 @@
 
 		await cAlert('Successfully imported the pack!');
 	};
+
+	const importPackWithData = async (filename: string, name: string) => {
+		const binary = await readFile(`${await appCacheDir()}/recentExports/${filename}`);
+		const blob = new Blob([binary], { type: 'application/zip' });
+
+		const zip = await JSZip.loadAsync(blob);
+
+		const packmcmeta = await zip.file('pack.mcmeta')!.async('text');
+
+		const { pack } = JSON.parse(packmcmeta);
+		const icon = await zip.file('pack.png')!.async('blob');
+
+		ResourcePackData.update((data) => {
+			data.description = pack.description;
+			data.version = pack.pack_format;
+			data.icon = icon;
+			data.name = name;
+
+			data.packs.push({
+				name: name,
+				icon: icon,
+				contents: blob
+			});
+
+			return data;
+		});
+
+
+		await importPack(filename);
+	};
 </script>
 
 {#await getRecentExportsPromise()}
@@ -120,10 +146,18 @@
 
 					<div class="lg:ml-4 flex gap-2 lg:flex-col">
 						<LauncherButton
-							text="Import"
+							text="Import discs"
 							type="primary"
 							on:click={async () => {
 								await importPack(exportRp.filename);
+							}}
+						/>
+						<LauncherButton
+							text="Import everything"
+							type="primary"
+							classes="w-max"
+							on:click={async () => {
+								await importPackWithData(exportRp.filename, exportRp.name);
 							}}
 						/>
 					</div>

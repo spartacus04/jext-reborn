@@ -4,7 +4,7 @@ import type { BaseDisc } from '$lib/discs/baseDisc';
 import { MusicDisc } from '$lib/discs/musicDisc';
 import { NbsDisc } from '$lib/discs/nbsDisc';
 import { get } from 'svelte/store';
-import { ResourcePackData } from '$lib/discs/resourcePackManager';
+import { ResourcePackData, areDefaultPackSettings } from '$lib/discs/resourcePackManager';
 
 const newBaseSchema = {
 	type: 'array',
@@ -267,7 +267,7 @@ export const JextReader = async (blob: Blob): Promise<BaseDisc[]> => {
 		})
 	);
 
-	if (get(ResourcePackData).packs.length == 0) {
+	if(areDefaultPackSettings()) {
 		ResourcePackData.update((data) => {
 			data.description = pack.description;
 			data.version = pack.pack_format;
