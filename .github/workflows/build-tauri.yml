@@ -29,14 +29,12 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
         with:
-            bun-version: latest
+          bun-version: latest
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
-    
-    
 
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04'
@@ -46,6 +44,11 @@ jobs:
 
       - name: Install frontend dependencies
         run: bun install
+
+      - name: Prepare Tauri
+        run: |
+          COMMIT_HASH=$(git rev-parse HEAD)
+          bun run scripts/append-version.ts $COMMIT_HASH
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri
