@@ -48,7 +48,7 @@ jobs:
       - name: Prepare Tauri
         run: |
           COMMIT_HASH=$(git rev-parse HEAD)
-          bun run scripts/append-version.ts $COMMIT_HASH
+          bun run scripts/append-hash.ts $COMMIT_HASH
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri
