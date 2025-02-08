@@ -8,7 +8,10 @@
 		panorama_2 as panorama_back,
 		panorama_3 as panorama_left,
 		panorama_4 as panorama_top,
-		panorama_5 as panorama_bottom
+		panorama_5 as panorama_bottom,
+
+		jukebox_note_anim
+
 	} from '$lib/assets';
 	import { exporterSteps, exportResourcePack } from '$lib/exporter/exporterLine';
 	import { PluginExporter } from '$lib/exporter/pluginExporter';
@@ -242,6 +245,8 @@
 					<p class="font-minecraft text-2xl text-white text-left w-full select-none">&nbsp;</p>
 					<ForgeProgressBar max={0} value={0} invisible={true} />
 				{/if}
+
+				<img src={jukebox_note_anim} alt="" class="absolute right-5 bottom-5 h-32" />
 			</div>
 		</div>
 	{/if}
