@@ -1,5 +1,6 @@
 <script lang="ts">
     import TopBar from "$lib/components/generator/TopBar.svelte";
+	import AboutPage from "$lib/components/settings/AboutPage.svelte";
 	import GeneralSettingsPage from "$lib/components/settings/GeneralSettingsPage.svelte";
 
 	let currentPage: string;
@@ -20,7 +21,7 @@
         {#if currentPage === "General"}
             <GeneralSettingsPage />
         {:else if currentPage === "About"}
-            <div>About</div>
+            <AboutPage />
         {:else if currentPage === "Debug"}
             <div>Debug</div>
         {:else}

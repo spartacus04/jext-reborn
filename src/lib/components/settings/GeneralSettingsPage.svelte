@@ -43,8 +43,6 @@
         accessibilityTextSize = false;
         accessibilityDyslexicFont = false;
     }
-
-    let reload = Promise.resolve()
 </script>
 
 <div class="flex p-4 gap-2 w-fit text-white flex-col text-md">
@@ -53,18 +51,16 @@
         <img src={jukebox_disc_anim} alt="disc anim" class="w-10 ml-4" />
     </div>
 
-    {#await reload then _}
-        <b>JEXT COMPANION APP SETTINGS</b>
+    <b>JEXT COMPANION APP SETTINGS</b>
 
-        <LauncherCheckbox disableMinecraftFont={true} small={true} label="Disable animations" bind:value={disableAnimations} on:change={() => setProperty('disable-animations', disableAnimations)} />
-        <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar dark mode" bind:value={generationProgressBarDarkMode} on:change={() => setProperty('generation-progress-bar-dark-mode', generationProgressBarDarkMode)} />
-        <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar animation" bind:value={generationAnimation} on:change={() => setProperty('generation-animation', generationAnimation)} />
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Disable animations" bind:value={disableAnimations} on:change={() => setProperty('disable-animations', disableAnimations)} />
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar dark mode" bind:value={generationProgressBarDarkMode} on:change={() => setProperty('generation-progress-bar-dark-mode', generationProgressBarDarkMode)} />
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar animation" bind:value={generationAnimation} on:change={() => setProperty('generation-animation', generationAnimation)} />
 
-        <b>ACCESSIBILITY SETTINGS</b>
+    <b>ACCESSIBILITY SETTINGS</b>
 
-        <LauncherCheckbox disableMinecraftFont={true} small={true} label="Make text size bigger" bind:value={accessibilityTextSize} on:change={() => setProperty('accessibility-text-size', accessibilityTextSize)} />
-        <LauncherCheckbox disableMinecraftFont={true} small={true} label="Use font for dyslexic people" bind:value={accessibilityDyslexicFont} on:change={() => setProperty('accessibility-dyslexic-font', accessibilityDyslexicFont)} />
-    {/await}
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Make text size bigger" bind:value={accessibilityTextSize} on:change={() => setProperty('accessibility-text-size', accessibilityTextSize)} />
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Use font for dyslexic people" bind:value={accessibilityDyslexicFont} on:change={() => setProperty('accessibility-dyslexic-font', accessibilityDyslexicFont)} />
 
     <button class="bg-[#ffd055] mt-4 pt-1 pb-2 px-5 font-bold text-black" on:click={resetSettings}>
         Reset all settings
