@@ -130,7 +130,6 @@ pub async fn download_yt_dlp(binary_path: &PathBuf) -> Result<(), String> {
 
     #[cfg(windows)]
     {
-
         let mut perms = std::fs::metadata(binary_path)
             .map_err(|e| format!("Error getting metadata: {}", e))?
             .permissions();

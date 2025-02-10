@@ -8,7 +8,10 @@
 		panorama_2 as panorama_back,
 		panorama_3 as panorama_left,
 		panorama_4 as panorama_top,
-		panorama_5 as panorama_bottom
+		panorama_5 as panorama_bottom,
+
+		jukebox_note_anim
+
 	} from '$lib/assets';
 	import { exporterSteps, exportResourcePack } from '$lib/exporter/exporterLine';
 	import { PluginExporter } from '$lib/exporter/pluginExporter';
@@ -97,6 +100,7 @@
 		if (!canvas) return;
 
 		setTimeout(() => {
+			if(localStorage.getItem('disable-animations') === 'true') return;
 			requestAnimationFrame(animate);
 		}, 1000 / 60);
 
@@ -137,7 +141,7 @@
 
 <dialog
 	bind:this={dialog}
-	class="h-screen overflow-y-hidden w-screen flex items-center justify-center flex-col backdrop:bg-white {output
+	class="h-screen overflow-y-hidden w-screen flex items-center justify-center flex-col {localStorage.getItem('generation-progress-bar-dark-mode') ? 'backdrop:bg-black' : 'backdrop:bg-white'} {output
 		? 'z-10'
 		: ''}"
 >
@@ -185,12 +189,12 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full fixed h-full flex flex-col items-center justify-center">
+		<div class="w-full fixed h-full flex flex-col items-center justify-center {localStorage.getItem('generation-progress-bar-dark-mode') ? 'bg-black' : ''}">
 			<div class="xl:w-[50%] lg:w-[60%] w-[100%] flex flex-col items-center justify-center p-4">
 				<div class="flex items-center justify-center gap-4 flex-col sm:flex-row mb-4">
 					<img src={default_icon} alt="jext-icon" class="aspect-square h-32 sm:h-full" />
 					<h1
-						class="font-minecraft-launcher text-black h1 text-6xl {window.__TAURI__
+						class="font-minecraft-launcher {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} h1 text-6xl {window.__TAURI__
 							? 'text-nowrap'
 							: ''} md:text-7xl sm:text-nowrap sm:text-8xl text-center"
 					>
@@ -200,7 +204,7 @@
 
 				{#if $exporterSteps[0] != undefined}
 					<p
-						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+						class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
 					>
 						{$exporterSteps[0].status}
 					</p>
@@ -209,13 +213,13 @@
 						bind:value={$exporterSteps[0].current}
 					/>
 				{:else}
-					<p class="font-minecraft text-2xl text-white text-left w-full select-none">&nbsp;</p>
+					<p class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full select-none">&nbsp;</p>
 					<ForgeProgressBar max={0} value={0} invisible={true} />
 				{/if}
 
 				{#if $exporterSteps[1] != undefined}
 					<p
-						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+						class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
 					>
 						{$exporterSteps[1].status}
 					</p>
@@ -224,13 +228,13 @@
 						bind:value={$exporterSteps[1].current}
 					/>
 				{:else}
-					<p class="font-minecraft text-2xl text-white text-left w-full select-none">&nbsp;</p>
+					<p class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full select-none">&nbsp;</p>
 					<ForgeProgressBar max={0} value={0} invisible={true} />
 				{/if}
 
 				{#if $exporterSteps[2] != undefined}
 					<p
-						class="font-minecraft text-2xl text-black text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
+						class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full overflow-hidden whitespace-nowrap text-ellipsis"
 					>
 						{$exporterSteps[2].status}
 					</p>
@@ -239,8 +243,12 @@
 						bind:value={$exporterSteps[2].current}
 					/>
 				{:else}
-					<p class="font-minecraft text-2xl text-white text-left w-full select-none">&nbsp;</p>
+					<p class="font-minecraft text-2xl {localStorage.getItem('generation-progress-bar-dark-mode') ? 'text-white' : 'text-black'} text-left w-full select-none">&nbsp;</p>
 					<ForgeProgressBar max={0} value={0} invisible={true} />
+				{/if}
+
+				{#if localStorage.getItem('generation-animation') === 'true'}
+					<img src={jukebox_note_anim} alt="" class="absolute right-5 bottom-5 h-32" />
 				{/if}
 			</div>
 		</div>

@@ -7,6 +7,7 @@
 	import type { LayoutData } from './$types';
 	import { addDisc } from '$lib/discs/discManager';
 	import { JextReader } from '$lib/exporter/importer';
+	import { onMount } from 'svelte';
 
 	const media = matchMedia('(max-width: 768px)');
 
@@ -30,6 +31,23 @@
 			isOpen = true;
 		}
 	};
+
+	onMount(() => {
+		if (localStorage.getItem('disable-animations')) {
+			document.documentElement.style.setProperty('--prefers-reduced-motion', 'reduce');
+		} else {
+			document.documentElement.style.removeProperty('--prefers-reduced-motion');
+		}
+
+		if (localStorage.getItem('accessibility-text-size')) {
+			document.documentElement.setAttribute('data-font-size', 'large');
+		}
+
+		// data-font-type='dyslexic'
+		if (localStorage.getItem('accessibility-dyslexic-font')) {
+			document.documentElement.setAttribute('data-font-type', 'dyslexic');
+		}
+	});
 
 	export let data: LayoutData;
 

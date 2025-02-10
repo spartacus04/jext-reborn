@@ -40,6 +40,11 @@ div {
 		font-weight: 700;
 		src: url('/fonts/Minecrafter.Reg.ttf') format('truetype');
 	}
+	@font-face {
+		font-family: 'OpenDyslexic';
+		font-weight: 400;
+		src: url('/fonts/OpenDyslexic-Regular.otf') format('opentype');
+	}
 }
 
 ::-webkit-scrollbar {
@@ -103,4 +108,16 @@ div {
 
 .hljs-tag {
 	color: #808080;
+}
+
+html {
+	font-size: 100%; /* Default size */
+}
+
+html[data-font-size='large'] {
+	font-size: 120%;
+}
+
+html[data-font-type='dyslexic'] * {
+	font-family: 'OpenDyslexic' !important;
 }
