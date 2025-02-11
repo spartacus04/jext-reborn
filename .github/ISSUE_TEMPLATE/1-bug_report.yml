@@ -5,6 +5,7 @@ assignees:
   - spartacus04
 labels:
   - bug
+  - plugin
 body:
   - type: textarea
     id: description
