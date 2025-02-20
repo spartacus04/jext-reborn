@@ -27,6 +27,7 @@ internal class DiscUpdateEvent : JextListener() {
     }
 
     private fun updateInventory(inv: Inventory) {
+        // We can't use inv.contents.forEachIndexed because it interferes with other inventory plugins
         val contents = inv.contents
         contents.forEachIndexed { i, it ->
             if (it != null) {
