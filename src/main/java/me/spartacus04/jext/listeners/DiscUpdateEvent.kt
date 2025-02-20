@@ -27,11 +27,13 @@ internal class DiscUpdateEvent : JextListener() {
     }
 
     private fun updateInventory(inv: Inventory) {
-        inv.contents.forEachIndexed { i, it ->
+        val contents = inv.contents
+        contents.forEachIndexed { i, it ->
             if (it != null) {
-                inv.setItem(i, updateItem(it))
+                contents[i] = updateItem(it)
             }
         }
+        inv.contents = contents
     }
 
     private fun updateItem(itemStack: ItemStack) : ItemStack {
