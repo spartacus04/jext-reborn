@@ -60,6 +60,6 @@
 		"jszip": "^3.10.1",
 		"minecraft-text-js": "^1.1.3",
 		"svelte-gestures": "5.0.7",
-		"three": "^0.173.0"
+		"three": "^0.174.0"
 	}
 }
