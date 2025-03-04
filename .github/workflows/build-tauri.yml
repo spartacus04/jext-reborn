@@ -1,0 +1,103 @@
+name: 'Build Tauri'
+# This workflow build a Tauri app for all platforms and upload the binaries as artifacts
+
+on:
+  schedule:
+    - cron: '00 00 * * 0'
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  publish-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest' # for Intel based macs.
+            args: '--target x86_64-apple-darwin'
+          - platform: 'ubuntu-22.04'
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+        ref: gh-pages
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install frontend dependencies
+        run: bun install
+
+      - name: Prepare Tauri
+        run: |
+          bun run scripts/append-hash.ts
+
+      - uses: tauri-apps/tauri-action@v0
+        id: tauri
+
+      - name: Upload .dmg M1 binary
+        if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
+          path: src-tauri/target/release/bundle/dmg/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
+
+      - name: Upload .dmg intel binary
+        if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x86_64.dmg
+          path: src-tauri/target/release/bundle/dmg/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
+
+      - name: Upload .deb binary
+        if: matrix.platform == 'ubuntu-22.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
+          path: src-tauri/target/release/bundle/deb/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
+
+      - name: Upload .rpm binary
+        if: matrix.platform == 'ubuntu-22.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_x86_64.rpm
+          path: src-tauri/target/release/bundle/rpm/Jext Plugin Manager-${{ steps.tauri.outputs.appVersion }}-1.x86_64.rpm
+
+      - name: Upload .appimage binary
+        if: matrix.platform == 'ubuntu-22.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
+          path: src-tauri/target/release/bundle/appimage/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
+
+      - name: Upload .msi installer
+        if: matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_setup.msi
+          path: src-tauri/target/release/bundle/msi/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
+
+      - name: Upload .exe installer
+        if: matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
+          path: src-tauri/target/release/bundle/nsis/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
