@@ -9,9 +9,8 @@ enum class FieldJukeboxBehaviour {
     @SerializedName("gui")
     GUI;
 
-    internal fun toJukeboxBehaviour(): String = this.name.lowercase()
 
-   internal  companion object {
+    internal companion object {
         fun fromString(name: String): FieldJukeboxBehaviour {
             return entries.find { it.name == name || it.name == name.replace("-", "_").uppercase() } ?: throw IllegalArgumentException("Invalid serialized name")
         }

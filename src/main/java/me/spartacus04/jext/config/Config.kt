@@ -9,6 +9,7 @@ import me.spartacus04.jext.utils.FileBind
 /**
  * The data class `Config` is used to store the plugin's configuration settings.
  */
+@Suppress("PropertyName")
 data class Config(
     // behaviour settings
 

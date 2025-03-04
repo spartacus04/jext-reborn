@@ -20,6 +20,7 @@ class PermissionsIntegrationManager {
      * 
      * @param permissionIntegrations The permission integrations to register.
      */
+    @Suppress("unused")
     fun registerIntegrations(vararg permissionIntegrations: PermissionIntegration) {
         permissionIntegrations.forEach { registerIntegration(it) }
     }

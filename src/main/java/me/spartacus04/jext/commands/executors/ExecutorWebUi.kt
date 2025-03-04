@@ -23,7 +23,7 @@ internal class ExecutorWebUi : ExecutorAdapter("jextwebui", "webui") {
             else -> ""
         }
 
-        val ip = BASE_URL.getBaseUrl(sender)
+        val ip = BASE_URL.getUrl(sender)
 
         sender.sendJEXTMessage("webui", hashMapOf(
             "url" to "https://spartacus04.github.io/jext-reborn/${page}?c=c&ip=${ip}&port=${CONFIG.WEB_INTERFACE_PORT}"

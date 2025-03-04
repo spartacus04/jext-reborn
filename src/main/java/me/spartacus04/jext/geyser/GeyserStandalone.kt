@@ -3,7 +3,6 @@ package me.spartacus04.jext.geyser
 import java.util.UUID
 import java.util.Base64
 
-
 internal class GeyserStandalone : GeyserMode {
     private val ipcCommunicator = GeyserIPC()
 

@@ -3,6 +3,7 @@ package me.spartacus04.jext.config.legacy
 import com.google.gson.annotations.SerializedName
 import me.spartacus04.jext.JextState.GSON
 
+@Suppress("PropertyName")
 internal data class V5Config (
     @SerializedName("lang")
     var LANGUAGE_MODE: String = "auto",

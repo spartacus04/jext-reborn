@@ -31,6 +31,7 @@ class AssetsManager {
      * 
      * @param id The id and path of the config file.
      */
+    @Suppress("unused")
     fun registerConfigFile(id: String) {
         localToRpMap[id] = id
     }
@@ -41,6 +42,7 @@ class AssetsManager {
      * @param id The id and name of the asset.
      * @param path The path of the asset in the resource pack.
      */
+    @Suppress("unused")
     fun registerAsset(id: String, path: String) {
         localToRpMap[id] = path
     }
@@ -215,7 +217,7 @@ class AssetsManager {
      * 
      * @return Whether the export was successful.
      */
-    suspend fun tryExportResourcePack() : Boolean {
+    fun tryExportResourcePack() : Boolean {
         val file = getResourcePack() ?: return false
 
         runBlocking {

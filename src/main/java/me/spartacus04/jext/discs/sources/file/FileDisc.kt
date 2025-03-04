@@ -10,6 +10,7 @@ import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_MATERIAL
 import org.bukkit.Bukkit
 
+@Suppress("PropertyName")
 internal data class FileDisc(
     @SerializedName("title")
     val TITLE: String = "",

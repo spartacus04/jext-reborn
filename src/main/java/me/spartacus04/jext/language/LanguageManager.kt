@@ -148,6 +148,9 @@ class LanguageManager {
         const val UPDATE_LINK = "§6[§2https://modrinth.com/plugin/jukebox-extended-reborn§6]"
         const val JEXT_VERSION = "[§aJEXT§f]§a v%version%"
 
+        const val NO_DISCS_FOUND = "[§cJEXT§f]§c No custom discs found! Check out the documentation for more info."
+        const val DOCUMENTATION_LINK = "§6[§2https://spartacus04.github.io/jext-reborn/docs/§6]"
+
         const val CROWDIN_MESSAGE = "[§aJEXT§f] It looks like your language isn't in JEXT yet. Why not contribute and add it yourself here?"
         const val CROWDIN_LINK = "§6[§2https://crwd.in/jext-reborn§6]"
 

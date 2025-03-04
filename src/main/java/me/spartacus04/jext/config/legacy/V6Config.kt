@@ -5,6 +5,7 @@ import me.spartacus04.jext.JextState.GSON
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 
+@Suppress("PropertyName")
 internal data class V6Config (
     @SerializedName("lang")
     var LANGUAGE_MODE: String = "auto",

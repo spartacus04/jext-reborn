@@ -172,7 +172,7 @@ open class Disc(
                 if (!helper.checkIdentifier()) {
                     return false
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 return false
             }
 

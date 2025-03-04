@@ -7,6 +7,7 @@ import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 
+@Suppress("PropertyName")
 internal data class V7Config(
     @SerializedName("lang")
     var LANGUAGE_MODE: FieldLanguageMode = FieldLanguageMode.AUTO,

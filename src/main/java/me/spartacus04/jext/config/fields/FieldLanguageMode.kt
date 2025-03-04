@@ -2,6 +2,7 @@ package me.spartacus04.jext.config.fields
 
 import com.google.gson.annotations.SerializedName
 
+@Suppress("EnumEntryName")
 enum class FieldLanguageMode {
     @SerializedName("auto")
     AUTO,
@@ -19,14 +20,6 @@ enum class FieldLanguageMode {
     hu_hu, it_it, ja_jp, ko_kr, nl_nl, no_no,
     pl_pl, pt_br, pt_pt, ro_ro, ru_ru, sr_sp,
     sv_se, tr_tr, uk_ua, vi_vn, zh_cn, zh_tw;
-
-    internal fun toLocale(): String {
-        return if(this == AUTO || this == SILENT || this == CUSTOM) {
-            this.name
-        } else {
-            this.name.replace("_", "-")
-        }.lowercase()
-    }
 
     internal companion object {
         fun fromString(name: String): FieldLanguageMode {

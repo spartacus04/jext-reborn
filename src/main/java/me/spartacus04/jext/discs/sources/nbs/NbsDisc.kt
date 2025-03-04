@@ -14,6 +14,7 @@ import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_MATERIAL
 import org.bukkit.Bukkit
 import kotlin.math.ceil
 
+@Suppress("PropertyName")
 internal data class NbsDisc(
     @SerializedName("title")
     val TITLE: String = "",

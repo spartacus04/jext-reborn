@@ -11,7 +11,6 @@ import org.geysermc.geyser.api.item.custom.CustomItemData
 import org.geysermc.geyser.api.item.custom.CustomItemOptions
 import java.util.UUID
 
-
 internal class GeyserSpigot : EventRegistrar, GeyserMode {
 
     init {

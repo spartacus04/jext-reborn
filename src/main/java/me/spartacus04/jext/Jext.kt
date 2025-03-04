@@ -10,7 +10,9 @@ import me.spartacus04.jext.discs.sources.file.FileSource
 import me.spartacus04.jext.discs.sources.nbs.NbsSource
 import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
+import me.spartacus04.jext.language.LanguageManager.Companion.DOCUMENTATION_LINK
 import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
+import me.spartacus04.jext.language.LanguageManager.Companion.NO_DISCS_FOUND
 import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
 import me.spartacus04.jext.listeners.ListenerRegistrant
 import me.spartacus04.jext.utils.Updater
@@ -43,6 +45,11 @@ internal class Jext : JavaPlugin() {
         DISCS.registerDiscSource(FileSource(), NbsSource()) {
             INTEGRATIONS.reloadDefaultIntegrations()
             JukeboxGui.loadFromFile()
+
+            if(DISCS.size() == 0) {
+                Bukkit.getConsoleSender().sendMessage(NO_DISCS_FOUND)
+                Bukkit.getConsoleSender().sendMessage(DOCUMENTATION_LINK)
+            }
         }
 
         ListenerRegistrant.registerListeners()

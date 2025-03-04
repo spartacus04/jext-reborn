@@ -15,8 +15,7 @@ enum class FieldGuiStyle {
     @SerializedName("page-vertical")
     PAGE_VERTICAL;
 
-    internal fun toGuiStyle(): String = this.name.replace("_", "-").lowercase()
-
+    @Suppress("unused")
     internal companion object {
         fun fromString(name: String): FieldGuiStyle {
             return FieldGuiStyle.entries.find { it.name == name || it.name == name.replace("-", "_").uppercase() } ?: throw IllegalArgumentException("Invalid serialized name")

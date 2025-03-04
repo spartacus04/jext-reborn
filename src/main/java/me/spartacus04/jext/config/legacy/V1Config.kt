@@ -3,6 +3,7 @@ package me.spartacus04.jext.config.legacy
 import com.google.gson.annotations.SerializedName
 import me.spartacus04.jext.JextState.GSON
 
+@Suppress("PropertyName")
 internal data class V1Config (
     @SerializedName("force-resource-pack")
     var FORCE_RESOURCE_PACK : Boolean = false,
