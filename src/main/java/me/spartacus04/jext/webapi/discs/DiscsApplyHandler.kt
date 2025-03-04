@@ -1,6 +1,8 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
+import me.spartacus04.jext.JextState.ASSETS_MANAGER
+import me.spartacus04.jext.JextState.BASE_URL
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.INTEGRATIONS
 import me.spartacus04.jext.JextState.PLUGIN
@@ -20,7 +22,8 @@ internal class DiscsApplyHandler : JextHttpHandler(true) {
             JukeboxGui.loadFromFile()
 
             PLUGIN.server.onlinePlayers.forEach {
-                sendResourcePack(it)
+                val baseUrl = BASE_URL.getUrl(it)
+                it.setResourcePack("$baseUrl/resource-pack.zip", ASSETS_MANAGER.resourcePackHostedHash)
             }
         }
 
