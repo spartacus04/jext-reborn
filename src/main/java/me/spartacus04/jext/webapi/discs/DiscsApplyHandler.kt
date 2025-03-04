@@ -7,7 +7,6 @@ import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.INTEGRATIONS
 import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.gui.JukeboxGui
-import me.spartacus04.jext.utils.sendResourcePack
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class DiscsApplyHandler : JextHttpHandler(true) {
