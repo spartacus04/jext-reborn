@@ -14,7 +14,7 @@
   "prev-page": "§7Página anterior",
   "no-page": "§cNo hay más páginas!",
   "cant-scroll-further": "§c¡No puedes ir más allá!",
-  "disc-command-success": "§¡fObtenido §fdisco §d%disc%§f!",
+  "disc-command-success": "§f¡Obtenido §fdisco §d%disc%§f!",
   "disc-namespace-not-found": "§c¡No se pudo encontrar el disco con el espacio de nombres §6%namespace% §c!",
   "disc-received": "§fRecibido disco §d%disc%§f!",
   "disc-given-multiple": "§f¡Entregado disco §6%disc% §fa §6%playercount% §fjugadores!",
