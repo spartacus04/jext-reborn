@@ -6,6 +6,7 @@ export class MusicDisc extends BaseDisc {
 
 	public monoChannel: boolean = true;
 	public normalizeVolume: boolean = true;
+	public disableTranscoding: boolean = false;
 	public qualityPreset: 'none' | 'low' | 'medium' | 'high' = 'none';
 
 	constructor(file: File, isNew: boolean = true) {

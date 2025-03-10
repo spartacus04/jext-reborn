@@ -19,8 +19,12 @@ export const preProcessDiscs = async (ffmpeg: FFmpeg | null) => {
 
 		if (isMusicDisc(discs[i])) {
 			if (!(discs[i] as MusicDisc).cachedFinalAudioFile) {
-				const track = await convertAudio(discs[i] as MusicDisc, ffmpeg);
-				(discs[i] as MusicDisc).cachedFinalAudioFile = track;
+				if((discs[i] as MusicDisc).disableTranscoding || localStorage.getItem('disable-audio-transcoding') === 'true') {
+					(discs[i] as MusicDisc).cachedFinalAudioFile = (discs[i] as MusicDisc).audioFile;
+				} else {
+					const track = await convertAudio(discs[i] as MusicDisc, ffmpeg);
+					(discs[i] as MusicDisc).cachedFinalAudioFile = track;
+				}
 			}
 		}
 

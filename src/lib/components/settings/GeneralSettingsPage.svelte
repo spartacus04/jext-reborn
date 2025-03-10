@@ -15,6 +15,7 @@
     let disableAnimations = getProperty('disable-animations', false);
     let generationProgressBarDarkMode = getProperty('generation-progress-bar-dark-mode', false);
     let generationAnimation = getProperty('generation-animation', true);
+    let disableAudioTranscoding = getProperty('disable-audio-transcoding', false);
 
     let accessibilityTextSize = getProperty('accessibility-text-size', false);
     let accessibilityDyslexicFont = getProperty('accessibility-dyslexic-font', false);
@@ -42,6 +43,7 @@
         generationAnimation = true;
         accessibilityTextSize = false;
         accessibilityDyslexicFont = false;
+        disableAudioTranscoding = false;
     }
 </script>
 
@@ -56,6 +58,7 @@
     <LauncherCheckbox disableMinecraftFont={true} small={true} label="Disable animations" bind:value={disableAnimations} on:change={() => setProperty('disable-animations', disableAnimations)} />
     <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar dark mode" bind:value={generationProgressBarDarkMode} on:change={() => setProperty('generation-progress-bar-dark-mode', generationProgressBarDarkMode)} />
     <LauncherCheckbox disableMinecraftFont={true} small={true} label="Generation progress bar animation" bind:value={generationAnimation} on:change={() => setProperty('generation-animation', generationAnimation)} />
+    <LauncherCheckbox disableMinecraftFont={true} small={true} label="Disable audio file transcoding" bind:value={disableAudioTranscoding} on:change={() => setProperty('disable-audio-transcoding', disableAudioTranscoding)} />
 
     <b>ACCESSIBILITY SETTINGS</b>
 
