@@ -8,21 +8,20 @@ import java.net.InetAddress
 
 internal class BaseUrl {
     fun getUrl(commandSender: CommandSender) : String {
-        var hostName = getUrl(commandSender)
-
-        if(!hostName.startsWith("https://") && !hostName.startsWith("http://")) {
-            hostName = "http://$hostName"
-        }
+        var hostName = getBaseUrl(commandSender)
 
         if(!hostName.contains(":")) {
             val split = hostName.split("/")
 
             if(split.size > 3) {
-                hostName = split[0] + "//" + split[2] + ":$CONFIG.WEB_INTERFACE_PORT" + "/" + split.subList(3, split.size).joinToString("/")
+                hostName = split[0] + "//" + split[2] + ":${CONFIG.WEB_INTERFACE_PORT}" + "/" + split.subList(3, split.size).joinToString("/")
             } else {
-                hostName += ":$CONFIG.WEB_INTERFACE_PORT"
+                hostName += ":${CONFIG.WEB_INTERFACE_PORT}"
             }
+        }
 
+        if(!hostName.startsWith("https://") && !hostName.startsWith("http://")) {
+            hostName = "http://$hostName"
         }
 
         if(hostName.endsWith("/")) {
