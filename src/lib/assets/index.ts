@@ -1,6 +1,8 @@
 export { default as signalum_security_lock } from './signalum-security-lock.webp';
 export { default as dark_dirt_background } from './dark_dirt_background.webp';
 export { default as fragment_template } from './fragment_template.webp';
+export { default as jukebox_disc_anim } from './jukebox_disc_anim.webp';
+export { default as jukebox_note_anim } from './jukebox_note_anim.webp';
 export { default as button_highlight } from './button_highlight.webp';
 export { default as default_fragment } from './default_fragment.webp';
 export { default as button_disabled } from './button_disabled.webp';

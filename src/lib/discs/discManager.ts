@@ -94,7 +94,7 @@ export async function editDiscs(...discs: BaseDisc[]) {
 	for (const change of Object.keys(changes)) {
 		for (let i = 0; i < discs.length; i++) {
 			if (
-				['monoChannel', 'normalizeVolume', 'qualityPreset'].includes(change) &&
+				['monoChannel', 'normalizeVolume', 'qualityPreset', 'disableTranscoding'].includes(change) &&
 				!isMusicDisc(discs[i])
 			)
 				continue;
@@ -103,8 +103,8 @@ export async function editDiscs(...discs: BaseDisc[]) {
 			discs[i][change] = changes[change];
 			if (discs[i].isNew) {
 				discs[i].autoSetNamespace();
-				discs[i].refreshTextures();
 			}
+			discs[i].refreshTextures();
 		}
 	}
 

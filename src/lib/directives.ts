@@ -36,6 +36,7 @@ export const dropFile = (
 		ev.preventDefault();
 
 		if (ev.dataTransfer!.items && ev.dataTransfer!.items.length > 0) {
+			// @ts-expect-error This is fine
 			[...ev.dataTransfer!.items].forEach((item) => {
 				if (item.kind === 'file') {
 					const file = item.getAsFile()!;
@@ -50,6 +51,7 @@ export const dropFile = (
 				}
 			});
 		} else {
+			// @ts-expect-error This is fine
 			[...ev.dataTransfer!.files].forEach((file) => {
 				if (accept.startsWith('.')) {
 					if (file.name.endsWith(accept)) {
@@ -101,7 +103,7 @@ export const inputFile = (
 				multiple: multiple,
 				directory: false,
 				title: 'Select a file',
-				filters: [{ name: 'Files', extensions: accept.replace(/\./g, '').split(',') }]
+				filters: [{ name: 'Files', extensions: accept == 'image/*' ? ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff'] : accept.replace(/\./g, '').split(',') }]
 			})) as string | string[] | null;
 
 			if (filePaths == null) return;

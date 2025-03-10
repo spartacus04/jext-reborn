@@ -1,7 +1,7 @@
 {
 	"$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
 	"productName": "Jext Plugin Manager",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"identifier": "com.spartacus04.jext-tool",
 	"build": {
 		"frontendDist": "../build",
@@ -33,6 +33,11 @@
 			"icons/128x128@2x.png",
 			"icons/icon.icns",
 			"icons/icon.ico"
-		]
+		],
+		"linux": {
+			"deb": {
+				"depends": ["ffmpeg"]
+			}
+		}
 	}
 }

@@ -87,6 +87,13 @@
 				: 'none',
 			edited: false
 		};
+
+		changes['disableTranscoding'] = {
+			value: musicDiscs.every((disc) => disc.disableTranscoding === musicDiscs[0].disableTranscoding)
+				? musicDiscs[0].disableTranscoding
+				: false,
+			edited: false
+		};
 	}
 
 	export const open = () => dialog.show();
@@ -305,6 +312,11 @@
 						bind:value={changes.normalizeVolume.value}
 						on:change={() => setUpdatedPropery('normalizeVolume')}
 						label="Normalize volume"
+					/>
+					<LauncherCheckbox
+						bind:value={changes.disableTranscoding.value}
+						on:change={() => setUpdatedPropery('disableTranscoding')}
+						label="Disable transcoding"
 					/>
 				</div>
 				<div class="flex flex-col w-full">

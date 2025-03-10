@@ -2,7 +2,9 @@
 	import { isTauri } from '$lib/state';
 	import TopBarItem from './TopBarItem.svelte';
 
-	const pages: { [key: string]: boolean } = {
+	export let title = 'MANAGE CUSTOM DISCS';
+
+	export let pages: { [key: string]: boolean } = {
 		Discs: false,
 		'Resource pack manager': false,
 		'Bulk import': true,
@@ -14,7 +16,7 @@
 </script>
 
 <div class="flex flex-col bg-surface-background w-full pt-4 px-8">
-	<b class="text-white text-xs">MANAGE CUSTOM DISCS</b>
+	<b class="text-white text-xs">{title}</b>
 
 	<div class="flex w-full items center gap-2 overflow-x-auto mt-1">
 		{#each Object.keys(pages) as page}

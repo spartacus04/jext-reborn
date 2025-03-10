@@ -1,0 +1,38 @@
+{
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: The garden awakens",
+	"description": "Spooky and mysterious tracks capturing the essence of the pale gardens.",
+	"descriptionAsTooltip": false,
+	"icon": "https://i.scdn.co/image/ab67616d0000b2739a0b2ecd745287226535325e",
+	"authors": ["Lena Raine (Remixed)"],
+	"downloads": [
+		{
+            "url": "https://youtu.be/2LTyoXWfIZE",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2739a0b2ecd745287226535325e",
+            "overrideName": "Infinite Spooky Amethyst",
+            "overrideAuthor": "Lena Raine (Remixed)",
+            "overrideDescription": "§6Spooky and mysterious tracks capturing the essence of the pale gardens.\n§2§o1st disc out of 4."
+        },
+        {
+            "url": "https://youtu.be/4BIlfLEBR3Y",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2739a0b2ecd745287226535325e",
+            "overrideName": "Infinite Spooky Amethyst (Slowed + Reverb)",
+            "overrideAuthor": "Lena Raine (Remixed)",
+            "overrideDescription": "§6Spooky and mysterious tracks capturing the essence of the pale gardens.\n§2§o2nd disc out of 4."
+        },
+        {
+            "url": "https://youtu.be/ufVIwrm9Yho",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2739a0b2ecd745287226535325e",
+            "overrideName": "Infinite Spooky Amethyst (Trumpet Version)",
+            "overrideAuthor": "Lena Raine (Remixed)",
+            "overrideDescription": "§6Spooky and mysterious tracks capturing the essence of the pale gardens.\n§2§o3rd disc out of 4."
+        },
+        {
+            "url": "https://youtu.be/QfOezo3f_ak",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2739a0b2ecd745287226535325e",
+            "overrideName": "Infinite Spooky Amethyst (Sped Up Trumpet Version)",
+            "overrideAuthor": "Lena Raine (Remixed)",
+            "overrideDescription": "§6Spooky and mysterious tracks capturing the essence of the pale gardens.\n§2§o4th disc out of 4."
+        }
+	]
+}
