@@ -8,7 +8,7 @@ import java.net.InetAddress
 
 internal class BaseUrl {
     fun getUrl(commandSender: CommandSender) : String {
-        var hostName = getUrl(commandSender)
+        var hostName = getBaseUrl(commandSender)
 
         if(!hostName.startsWith("https://") && !hostName.startsWith("http://")) {
             hostName = "http://$hostName"
