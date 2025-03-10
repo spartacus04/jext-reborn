@@ -247,7 +247,7 @@
 					<ForgeProgressBar max={0} value={0} invisible={true} />
 				{/if}
 
-				{#if localStorage.getItem('generation-animation') === 'true'}
+				{#if localStorage.getItem('generation-animation') == null || localStorage.getItem('generation-animation') === 'true'}
 					<img src={jukebox_note_anim} alt="" class="absolute right-5 bottom-5 h-32" />
 				{/if}
 			</div>
