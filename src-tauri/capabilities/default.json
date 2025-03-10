@@ -35,6 +35,7 @@
       ]
     },
     "notification:default",
-    "os:default"
+    "os:default",
+    "clipboard-manager:allow-write-text"
   ]
 }

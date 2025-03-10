@@ -15,17 +15,13 @@
 </svelte:head>
 
 <div class="flex flex-col h-full w-full">
-	<TopBar bind:currentPage title="SETTINGS" pages={{General: false, About: false, Debug: false}} />
+	<TopBar bind:currentPage title="SETTINGS" pages={{General: false, About: false}} />
 
 	<div class="flex-1 flex flex-col h-[calc(100%-65px)] bg-[#333333]">
         {#if currentPage === "General"}
             <GeneralSettingsPage />
         {:else if currentPage === "About"}
             <AboutPage />
-        {:else if currentPage === "Debug"}
-            <div>Debug</div>
-        {:else}
-            <div>General</div>
         {/if}
 	</div>
 </div>

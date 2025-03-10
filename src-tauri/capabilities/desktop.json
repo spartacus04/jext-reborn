@@ -8,5 +8,7 @@
   "windows": [
     "main"
   ],
-  "permissions": []
+  "permissions": [
+    "clipboard-manager:allow-write-text"
+  ]
 }
