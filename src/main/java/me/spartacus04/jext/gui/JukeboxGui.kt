@@ -273,31 +273,34 @@ internal class JukeboxGui : BaseGui {
 
             val data = HashMap<String, HashMap<Int, JukeboxEntry>>()
 
-            inventories.forEach {
-                data[it.key] = HashMap()
+            inventories.forEach { (key, inv) ->
+                // Skip entirely empty jukeboxes
+                if (inv.items.all { it == null }) return@forEach
 
-                it.value.items.forEachIndexed { index, itemStack ->
-                    if(itemStack == null) return@forEachIndexed
+                data[key] = HashMap()
 
-                    if(Disc.isCustomDisc(itemStack)) {
+                inv.items.forEachIndexed { index, itemStack ->
+                    if (itemStack == null) return@forEachIndexed
+
+                    if (Disc.isCustomDisc(itemStack)) {
                         try {
                             val container = Disc.fromItemstack(itemStack)!!
-                            data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
+                            data[key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
                         } catch (e: NullPointerException) {
                             val stack = arrayListOf(
                                 SOUND_MAP.keys.map { disc -> ItemStack(disc) },
                                 DISCS.map { disc -> disc.discItemStack }
                             ).flatten().random()
 
-                            if(Disc.isCustomDisc(stack)) {
+                            if (Disc.isCustomDisc(stack)) {
                                 val container = Disc.fromItemstack(stack)!!
-                                data[it.key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
+                                data[key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
                             } else {
-                                data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
+                                data[key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
                             }
                         }
                     } else {
-                        data[it.key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
+                        data[key]!![index] = JukeboxEntry("minecraft", itemStack.type.name)
                     }
                 }
             }
