@@ -34,6 +34,10 @@ const getRustDependencies = () => {
 
     const cargoRegistryPath = `${userPath}/.cargo/registry/src`
 
+    if (!fs.existsSync(cargoRegistryPath)) {
+        return []
+    }
+
     const registry = fs.readdirSync(cargoRegistryPath)[0]
 
     const rustDependencies = []
