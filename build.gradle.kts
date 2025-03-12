@@ -165,7 +165,7 @@ hangarPublish {
 
         platforms {
             register(Platforms.PAPER) {
-                jar.set(tasks.getByName("proguardJar").outputs.files.singleFile)
+                url.set("${property("modrinth_url")}")
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 this.dependencies {

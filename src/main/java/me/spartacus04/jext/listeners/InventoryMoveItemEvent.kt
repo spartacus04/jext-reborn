@@ -17,7 +17,7 @@ internal class InventoryMoveItemEvent : JextListener("1.19.4") {
         try {
             InventoryType.JUKEBOX
             super.register()
-        } catch (e: NoSuchFieldError) {
+        } catch (_: NoSuchFieldError) {
             Bukkit.getConsoleSender().sendMessage(VULNERABLE_MESSAGE)
         }
     }

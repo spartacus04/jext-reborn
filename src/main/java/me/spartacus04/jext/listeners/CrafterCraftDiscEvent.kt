@@ -7,16 +7,15 @@ import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_OUTPUT
 import org.bukkit.block.Crafter
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.CrafterCraftEvent
-import org.bukkit.inventory.CrafterInventory
 
 @Suppress("UnstableApiUsage")
 internal class CrafterCraftDiscEvent : JextListener("1.21") {
     @EventHandler
     fun onCrafterCraft(e: CrafterCraftEvent) {
         if (e.result.type != JEXT_FRAGMENT_OUTPUT) return
-        if(e.block.state !is Crafter) return
+        if (e.block !is Crafter) return
 
-        val inventory = ((e.block.state as Crafter).inventory as CrafterInventory).contents.clone()
+        val inventory = (e.block as Crafter).inventory.contents.clone()
 
         val isCustomDisc = inventory.any {
             return@any Disc.isCustomDisc(it)
