@@ -35,7 +35,7 @@ internal class DiscUpdateEvent : JextListener() {
             val disabled = arrayListOf<Int>()
             val holder = inv.holder as? Crafter ?: return
 
-            for(i in 1..inv.size) {
+            for(i in 0..inv.size-1) {
                 if(holder.isSlotDisabled(i)) {
                     disabled.add(i)
                 }

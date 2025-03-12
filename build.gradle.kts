@@ -172,6 +172,9 @@ hangarPublish {
                     hangar("ProtocolLib") {
                         required.set(true)
                     }
+                    url("https://modrinth.com/plugin/noteblockapi", "NoteBlockAPI") {
+                        required.set(false)
+                    }
                 }
             }
         }
@@ -189,6 +192,10 @@ modrinth {
     uploadFile.set(tasks.getByName("proguardJar").outputs.files.singleFile)
     gameVersions.set("${property("minecraft_versions")}".split(","))
     loaders.set("${property("modrinth_loaders")}".split(","))
+
+    dependencies {
+        optional.project "noteblockapi"
+    }
 
     changelog.set(modrinthChangelog)
 
