@@ -194,7 +194,7 @@ modrinth {
     loaders.set("${property("modrinth_loaders")}".split(","))
 
     dependencies {
-        optional.project "noteblockapi"
+        optional.project("noteblockapi")
     }
 
     changelog.set(modrinthChangelog)
