@@ -13,30 +13,27 @@ import org.bukkit.inventory.CrafterInventory
 internal class PrepareCraftingEvent : JextListener("1.19") {
     @EventHandler
     fun prepareCraftingEvent(e: PrepareItemCraftEvent) {
-        if (e.inventory.result == null || e.inventory.result!!.type != JEXT_FRAGMENT_OUTPUT) return
         val block = e.inventory.holder as Block
-
         printDisabledSlots(block)
+
+        if (e.inventory.result == null || e.inventory.result!!.type != JEXT_FRAGMENT_OUTPUT) return
+
         val inventory = e.inventory.matrix.clone()
 
-        printDisabledSlots(block)
         val isCustomDisc = inventory.any {
             return@any Disc.isCustomDisc(it)
         }
 
-        printDisabledSlots(block)
         // check if every disc has same namespace, if they have the same namespace return the namespace else null
         val namespace = inventory.map {
             Disc.fromItemstack(it)?.namespace
         }.distinct().singleOrNull()
 
-        printDisabledSlots(block)
         if (isCustomDisc && namespace != null) {
             e.inventory.result = DISCS[namespace]!!.discItemStack
         } else if (isCustomDisc) {
             e.inventory.result = null
         }
-        printDisabledSlots(block)
     }
 
     fun printDisabledSlots(b: Block) {

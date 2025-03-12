@@ -10,9 +10,11 @@ import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import org.bukkit.block.Crafter
 
 internal class DiscUpdateEvent : JextListener() {
     @EventHandler(ignoreCancelled = true)
@@ -26,7 +28,22 @@ internal class DiscUpdateEvent : JextListener() {
         e.item.itemStack = updateItem(e.item.itemStack)
     }
 
+    @Suppress("UnstableApiUsage")
     private fun updateInventory(inv: Inventory) {
+        // If the inventory is a crafter, we need to keep track of the disabled slots
+        val crafterArr = if(inv.type == InventoryType.CRAFTER) {
+            val disabled = arrayListOf<Int>()
+            val holder = inv.holder as? Crafter ?: return
+
+            for(i in 1..inv.size) {
+                if(holder.isSlotDisabled(i)) {
+                    disabled.add(i)
+                }
+            }
+
+            disabled
+        } else null
+
         // We can't use inv.contents.forEachIndexed because it interferes with other inventory plugins
         val contents = inv.contents
         contents.forEachIndexed { i, it ->
@@ -35,6 +52,15 @@ internal class DiscUpdateEvent : JextListener() {
             }
         }
         inv.contents = contents
+
+        // Restore the disabled slots
+        if(crafterArr != null) {
+            val holder = inv.holder as? Crafter ?: return
+
+            for(i in crafterArr) {
+                holder.setSlotDisabled(i, true)
+            }
+        }
     }
 
     private fun updateItem(itemStack: ItemStack) : ItemStack {
