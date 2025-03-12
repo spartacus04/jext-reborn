@@ -7,6 +7,7 @@ import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_OUTPUT
 import org.bukkit.block.Crafter
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.CrafterCraftEvent
+import org.bukkit.inventory.CrafterInventory
 
 @Suppress("UnstableApiUsage")
 internal class CrafterCraftDiscEvent : JextListener("1.21") {
@@ -15,12 +16,14 @@ internal class CrafterCraftDiscEvent : JextListener("1.21") {
         if (e.result.type != JEXT_FRAGMENT_OUTPUT) return
         if(e.block.state !is Crafter) return
 
-        val isCustomDisc = (e.block.state as Crafter).inventory.any {
+        val inventory = ((e.block.state as Crafter).inventory as CrafterInventory).contents.clone()
+
+        val isCustomDisc = inventory.any {
             return@any Disc.isCustomDisc(it)
         }
 
         // check if every disc has same namespace, if they have the same namespace return the namespace else null
-        val namespace = (e.block.state as Crafter).inventory.map {
+        val namespace = inventory.map {
             Disc.fromItemstack(it)?.namespace
         }.distinct().singleOrNull()
 

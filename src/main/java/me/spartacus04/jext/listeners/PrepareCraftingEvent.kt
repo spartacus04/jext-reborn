@@ -12,12 +12,14 @@ internal class PrepareCraftingEvent : JextListener("1.19") {
     fun prepareCraftingEvent(e: PrepareItemCraftEvent) {
         if (e.inventory.result == null || e.inventory.result!!.type != JEXT_FRAGMENT_OUTPUT) return
 
-        val isCustomDisc = e.inventory.matrix.any {
+        val inventory = e.inventory.matrix.clone()
+
+        val isCustomDisc = inventory.any {
             return@any Disc.isCustomDisc(it)
         }
 
         // check if every disc has same namespace, if they have the same namespace return the namespace else null
-        val namespace = e.inventory.matrix.map {
+        val namespace = inventory.map {
             Disc.fromItemstack(it)?.namespace
         }.distinct().singleOrNull()
 
