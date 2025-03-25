@@ -14,7 +14,9 @@ import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
 import java.net.URI
+import java.util.UUID
 import java.util.zip.ZipFile
 
 /**
@@ -115,7 +117,16 @@ class AssetsManager {
             val successFullDownload = runBlocking {
                 withContext(Dispatchers.IO) {
                     return@withContext try{
-                        val inputStream = BufferedInputStream(rpUrl.openStream())
+                        val connection = rpUrl.openConnection() as HttpURLConnection
+
+                        connection.setRequestProperty("X-Minecraft-Username", "jext")
+                        connection.setRequestProperty("X-Minecraft-UUID", UUID.randomUUID().toString())
+                        connection.setRequestProperty("X-Minecraft-Version", "1.21.5")
+                        connection.setRequestProperty("X-Minecraft-Version-Id", "1.21.5")
+                        connection.setRequestProperty("X-Minecraft-Pack-Format", "55")
+                        connection.setRequestProperty("User-Agent", "Minecraft Java/1.21.5")
+
+                        val inputStream = BufferedInputStream(connection.inputStream)
                         val outputStream = FileOutputStream(file)
 
                         val buffer = ByteArray(1024)
