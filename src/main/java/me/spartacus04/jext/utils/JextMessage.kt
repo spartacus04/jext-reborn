@@ -21,7 +21,11 @@ internal fun CommandSender.sendJEXTMessage(key: String, params: HashMap<String, 
 
     when(JextState.CONFIG.LANGUAGE_MODE) {
         FieldLanguageMode.AUTO -> sendMessage(
-            LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale.lowercase(), key]}", params)
+            if(LANG.hasLanguage(this.locale.lowercase())) {
+                LANG.replaceParameters("[§aJEXT§f] ${LANG[this.locale.lowercase(), key]}", params)
+            } else {
+                LANG.replaceParameters("[§aJEXT§f] ${LANG["en_us", key]}", params)
+            }
         )
         FieldLanguageMode.CUSTOM -> sendMessage(
             LANG.replaceParameters("[§aJEXT§f] ${LANG["custom", key]}", params)
