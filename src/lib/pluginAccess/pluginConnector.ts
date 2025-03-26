@@ -53,7 +53,7 @@ export class PluginConnector {
 			throw new Error('Could not connect to the JEXT server');
 		});
 
-		if (response.status === 200) {
+		if (response.status === 200 || response.status === 204) {
 			this.bearerToken = undefined;
 		} else {
 			pluginConnectorStore.set(undefined);
@@ -70,7 +70,7 @@ export class PluginConnector {
 			throw new Error('Could not connect to the JEXT server');
 		});
 
-		if (response1.status != 200) {
+		if (response1.status != 200 && response1.status != 204) {
 			pluginConnectorStore.set(undefined);
 			window.sessionStorage.removeItem('bearerToken');
 			window.sessionStorage.removeItem('serverAddress');
@@ -90,7 +90,7 @@ export class PluginConnector {
 			throw new Error('Could not connect to the JEXT server');
 		});
 
-		if (response2.status == 200) {
+		if (response2.status == 200 || response2.status == 204) {
 			return true;
 		}
 
