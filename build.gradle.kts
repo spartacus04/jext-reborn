@@ -1,5 +1,4 @@
 import proguard.gradle.ProGuardTask
-import io.papermc.hangarpublishplugin.model.Platforms
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -164,11 +163,11 @@ hangarPublish {
         apiKey.set(hangarApiKey)
 
         platforms {
-            register(Platforms.PAPER) {
-                url.set("${property("modrinth_url")}")
+            paper {
+                url = "${property("modrinth_url")}"
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
-                this.dependencies {
+                dependencies {
                     hangar("ProtocolLib") {
                         required.set(true)
                     }
