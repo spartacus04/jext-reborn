@@ -9,6 +9,6 @@ internal class DisconnectHandler : JextHttpHandler(true) {
 
         ConnectHandler.connectedHashMap.remove(addr)
 
-        exchange.sendResponseHeaders(200, 0)
+        exchange.sendResponseHeaders(204, 0)
     }
 }

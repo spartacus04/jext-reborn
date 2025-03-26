@@ -9,7 +9,7 @@ internal class DiscsApplyGeyserHandler : JextHttpHandler(true) {
         val body = exchange.requestBody.readBytes()
 
         GEYSER.applyResourcePack(body)
-        exchange.sendResponseHeaders(200, 0)
+        exchange.sendResponseHeaders(204, 0)
 
         GEYSER.reloadGeyser()
     }

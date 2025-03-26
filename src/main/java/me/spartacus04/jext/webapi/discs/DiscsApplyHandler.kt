@@ -26,6 +26,6 @@ internal class DiscsApplyHandler : JextHttpHandler(true) {
             }
         }
 
-        exchange.sendResponseHeaders(200, 0)
+        exchange.sendResponseHeaders(204, 0)
     }
 }

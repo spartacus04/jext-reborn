@@ -8,12 +8,12 @@ internal class HealthHandler : JextHttpHandler(false) {
         val token = exchange.requestHeaders["Authorization"]?.first()?.replace("Bearer ", "")
 
         if(token == null) {
-            exchange.sendResponseHeaders(200, 0)
+            exchange.sendResponseHeaders(204, 0)
         } else {
             val addr = exchange.remoteAddress.address.address.map { it.toInt() }.joinToString(".")
 
             if(ConnectHandler.connectedHashMap[addr] == token) {
-                exchange.sendResponseHeaders(200, 0)
+                exchange.sendResponseHeaders(204, 0)
             } else {
                 exchange.sendResponseHeaders(401, 0)
             }

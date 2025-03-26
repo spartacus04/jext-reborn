@@ -13,7 +13,7 @@ internal class ConfigApplyHandler : JextHttpHandler(true) {
         if(CONFIG.fromText(body)) {
             CONFIG.save()
 
-            exchange.sendResponseHeaders(200, 0)
+            exchange.sendResponseHeaders(204, 0)
             JextMetrics.reloadMetrics()
             WEBSERVER.reload()
         } else {
