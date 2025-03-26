@@ -76,7 +76,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401']}
+				tabs={['204', '401']}
 				tabsContents={[
 					`
 (empty)
@@ -107,7 +107,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401']}
+				tabs={['204', '401']}
 				tabsContents={[
 					`
 (empty)
@@ -197,7 +197,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401', '400']}
+				tabs={['204', '401', '400']}
 				tabsContents={[
 					`
 (empty)
@@ -269,7 +269,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401']}
+				tabs={['204', '401']}
 				tabsContents={[
 					`
 (empty)
@@ -305,7 +305,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401']}
+				tabs={['204', '401']}
 				tabsContents={[
 					`
 (empty)
