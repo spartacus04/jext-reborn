@@ -4,7 +4,7 @@ authors: [ Spartacus04 ]
 version: ${version}
 api-version: 1.14
 depend: [ProtocolLib]
-softdepent: [WorldGuard, GriefPrevention, Geyser-Spigot, NoteBlockAPI]
+softdepend: [WorldGuard, GriefPrevention, Geyser-Spigot, NoteBlockAPI]
 load: STARTUP
 prefix: JEXT
 folia-supported: true
