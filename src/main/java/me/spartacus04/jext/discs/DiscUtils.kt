@@ -39,8 +39,7 @@ object DiscUtils {
      */
     fun buildCustomItemstack(material: Material, modelData: Int, namespace: String, lores: List<String>, title: String, author: String): ItemStack {
         val disc = if(VERSION >= "1.21.5") {
-            // TODO: Before merging test this
-            Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable=\"minecraft:11\",tooltip_display={hidden_components:[\"minecraft:instrument\"]})")
+            Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable=\"minecraft:11\",tooltip_display={hidden_components:[\"minecraft:jukebox_playable\"]}]")
         } else if(VERSION >= "1.21") {
             Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
         } else {
