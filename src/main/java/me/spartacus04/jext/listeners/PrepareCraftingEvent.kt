@@ -4,18 +4,12 @@ import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_OUTPUT
-import org.bukkit.block.Block
-import org.bukkit.block.Crafter
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.PrepareItemCraftEvent
-import org.bukkit.inventory.CrafterInventory
 
 internal class PrepareCraftingEvent : JextListener("1.19") {
     @EventHandler
     fun prepareCraftingEvent(e: PrepareItemCraftEvent) {
-        val block = e.inventory.holder as Block
-        printDisabledSlots(block)
-
         if (e.inventory.result == null || e.inventory.result!!.type != JEXT_FRAGMENT_OUTPUT) return
 
         val inventory = e.inventory.matrix.clone()
@@ -34,19 +28,5 @@ internal class PrepareCraftingEvent : JextListener("1.19") {
         } else if (isCustomDisc) {
             e.inventory.result = null
         }
-    }
-
-    fun printDisabledSlots(b: Block) {
-        if(b !is Crafter) return
-
-        val slots = arrayListOf<Number>()
-
-        for(i in 1..b.inventory.size) {
-            if(b.isSlotDisabled(i)) {
-                slots.add(i)
-            }
-        }
-
-        println("Disabled slots: $slots")
     }
 }
