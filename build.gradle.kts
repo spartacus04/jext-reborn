@@ -164,14 +164,14 @@ hangarPublish {
 
         platforms {
             paper {
-                url = "${property("modrinth_url")}"
+                url.set("${property("modrinth_url")}")
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 dependencies {
                     hangar("ProtocolLib") {
                         required.set(true)
                     }
-                    url("https://modrinth.com/plugin/noteblockapi", "NoteBlockAPI") {
+                    this.url("NoteBlockAPI", "https://modrinth.com/plugin/noteblockapi") {
                         required.set(false)
                     }
                 }
