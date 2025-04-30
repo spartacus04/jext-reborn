@@ -21,7 +21,7 @@ internal class GriefPreventionPermissionIntegration : PermissionIntegration {
             val claim = GriefPrevention.instance.dataStore.getClaimAt(block.location, false, null)
 
             claim.checkPermission(player, permission, null) == null
-        } catch (e: NullPointerException) {
+        } catch (_: NullPointerException) {
             true
         }
     }
