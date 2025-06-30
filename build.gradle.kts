@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.16")
@@ -52,8 +52,8 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("io.github.bananapuncher714:nbteditor:7.19.7")
-    implementation("xyz.xenondevs.invui:invui:1.44")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.44")
+    implementation("xyz.xenondevs.invui:invui:1.45")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.45")
     implementation("com.google.code.gson:gson:2.12.1")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
