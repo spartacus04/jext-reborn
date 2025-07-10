@@ -168,5 +168,7 @@ class LanguageManager {
         const val RESOURCEPACK_DOWNLOAD_FAIL = "[§cJEXT§f]§c Resource pack download failed! No disc will be loaded."
 
         const val NBS_NOT_FOUND = "[§cJEXT§f]§c No %name%.nbs file found in the nbs folder! This disc won't be loaded."
+
+        const val FAILED_TO_REGISTER_LISTENER = "[§cJEXT§f]§c Failed to register listener %name%! The plugin may not function correctly: %error%"
     }
 }
