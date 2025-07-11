@@ -17,7 +17,7 @@ internal class WrapperPlayServerStopSoundCategory(private var category: SoundCat
         this.flags = readByte()
 
 
-        if ((this.flags and FLAG_CATEGORY) != 0.toByte()) {
+        if (this.flags and FLAG_CATEGORY != 0.toByte()) {
             category = SoundCategory.fromId(readVarInt())
         }
     }
