@@ -70,14 +70,14 @@
 		</div>
 
 		<p>
-			You also need to download <b>Protocollib</b> as it's one of the
+			You also need to download <b>PacketEvents</b> as it's one of the
 			<b class="underline">required</b> dependencies, you can download it from any of these sources:
 		</p>
 
 		<div class="grid grid-cols-1 sm:grid-cols-3 bg-surface-background rounded-3xl [&>*]:p-4 my-4">
 			<a
 				class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2 rounded-l-3xl"
-				href="https://www.spigotmc.org/resources/protocollib.1997/"
+				href="https://www.spigotmc.org/resources/packetevents-api.80279/"
 				target="_blank"
 			>
 				<span class="h-[220px] aspect-square"
@@ -87,17 +87,17 @@
 			</a>
 			<a
 				class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2"
-				href="https://hangar.papermc.io/dmulloy2/ProtocolLib"
+				href="https://modrinth.com/plugin/packetevents"
 				target="_blank"
 			>
 				<span class="h-[220px] aspect-square"
-					><img src={hangar} alt="github" srcset="" class="h-full w-full" /></span
+					><img src={modrinth} alt="github" srcset="" class="h-full w-full" /></span
 				>
-				<span>Hangar</span>
+				<span>Modrinth</span>
 			</a>
 			<a
 				class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2 rounded-r-3xl"
-				href="https://github.com/dmulloy2/ProtocolLib/releases/latest"
+				href="https://github.com/retrooper/packetevents/releases/latest"
 				target="_blank"
 			>
 				<span class="h-[220px] aspect-square"
@@ -126,6 +126,43 @@
 			<div class="flex gap-4 items-start">
 				<img src={warning} alt="warning" />
 				<div id="popup">
+					Versions of JEXT Reborn before 2.1.10 require ProtocolLib instead of Packetevents.
+
+					You can find the latest version of ProtocolLib on any of these sources:
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 bg-surface-background rounded-3xl [&>*]:p-4 my-4">
+						<a
+							class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2 rounded-l-3xl"
+							href="https://www.spigotmc.org/resources/protocollib.1997/"
+							target="_blank"
+						>
+							<span class="h-[220px] aspect-square"
+								><img src={spigotmc} alt="github" srcset="" class="h-full w-full" /></span
+							>
+							<span>Spigot MC</span>
+						</a>
+						<a
+							class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2"
+							href="https://hangar.papermc.io/dmulloy2/ProtocolLib"
+							target="_blank"
+						>
+							<span class="h-[220px] aspect-square"
+								><img src={hangar} alt="github" srcset="" class="h-full w-full" /></span
+							>
+							<span>Hangar</span>
+						</a>
+						<a
+							class="flex flex-col items-center justify-center hover:bg-surface-separator gap-2 rounded-r-3xl"
+							href="https://github.com/dmulloy2/ProtocolLib/releases/latest"
+							target="_blank"
+						>
+							<span class="h-[220px] aspect-square"
+								><img src={github} alt="github" srcset="" class="h-full w-full" /></span
+							>
+							<span>Github</span>
+						</a>
+					</div>
+
 					Sometimes protocollib gets updated for later versions but the actual update doesn't get
 					published until later dates. You can download these updated versions from the latest
 					successful compilation on their Jenkins CI (<a
