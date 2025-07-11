@@ -18,7 +18,7 @@ For more details and guides on how to set up the plugin, please visit the [quick
 
 ## Dependencies
 
-- ProtocolLib ([Spigot](https://www.spigotmc.org/resources/protocollib.1997/)-[Hangar](https://hangar.papermc.io/dmulloy2/ProtocolLib)-[Github](https://github.com/dmulloy2/ProtocolLib))
+- Packetevents ([Spigot](https://www.spigotmc.org/resources/packetevents-api.80279/)-[Modrinth](https://modrinth.com/plugin/packetevents)-[Github](https://github.com/retrooper/packetevents))
 
 ## Features
 
