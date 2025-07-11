@@ -1,9 +1,8 @@
 package me.spartacus04.jext.discs.discstopping
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.PacketContainer
+import com.github.retrooper.packetevents.PacketEvents
 import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.utils.WrapperPlayServerStopSoundCategory
 import org.bukkit.Location
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
@@ -15,11 +14,10 @@ class DefaultDiscStoppingMethod : DiscStoppingMethod {
     override val requires = listOf<String>()
 
     private fun stopOldVersions(player: Player) {
-        val packet = PacketContainer(PacketType.Play.Server.STOP_SOUND)
+        val category = com.github.retrooper.packetevents.protocol.sound.SoundCategory.RECORD
+        val packet = WrapperPlayServerStopSoundCategory(category)
 
-        packet.soundCategories.write(0, com.comphenix.protocol.wrappers.EnumWrappers.SoundCategory.RECORDS)
-
-        ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet)
+        PacketEvents.getAPI().playerManager.sendPacket(player, packet)
     }
 
     override fun stop(player: Player) {

@@ -1,21 +1,33 @@
 package me.spartacus04.jext.listeners
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.events.PacketEvent
+import com.github.retrooper.packetevents.event.PacketSendEvent
+import com.github.retrooper.packetevents.protocol.packettype.PacketType
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEffect
 import me.spartacus04.jext.JextState.LANG
+import me.spartacus04.jext.JextState.PLUGIN
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.listeners.utils.JextPacketListener
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
+import org.bukkit.Location
 import org.bukkit.block.Jukebox
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 
-internal class RecordPacketEvent : JextPacketListener(packetType = PacketType.Play.Server.WORLD_EVENT) {
-    override fun onPacketSending(event: PacketEvent) {
-        val packet = event.packet
-        val player = event.player
-        val block = packet.blockPositionModifier.values[0].toLocation(player.world).block
+internal class RecordPacketEvent : JextPacketListener() {
+    override fun onPacketSend(event: PacketSendEvent) {
+        if(event.packetType != PacketType.Play.Server.EFFECT) return
+
+        val packet = WrapperPlayServerEffect(event)
+
+        // https://minecraft.wiki/w/Java_Edition_protocol/Packets#World_Event
+
+        if(packet.type != 1010) return
+
+        val player = event.getPlayer<Player>()
+
+        val position = packet.position.toVector3d()
+        val block = Location(player.world, position.x, position.y, position.z).block
         val blockState = block.state
 
         if (blockState is Jukebox) {
@@ -23,7 +35,7 @@ internal class RecordPacketEvent : JextPacketListener(packetType = PacketType.Pl
 
             object : BukkitRunnable() {
                 override fun run() = actionBarDisplay(player, disc)
-            }.runTaskLater(plugin, 1)
+            }.runTaskLater(PLUGIN, 1)
         }
     }
 
