@@ -1,20 +1,16 @@
 package me.spartacus04.jext.listeners.utils
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.ListenerPriority
-import com.comphenix.protocol.events.PacketAdapter
+import com.github.retrooper.packetevents.PacketEvents
+import com.github.retrooper.packetevents.event.PacketListener
+import com.github.retrooper.packetevents.event.PacketListenerPriority
 import me.spartacus04.jext.JextState
-import me.spartacus04.jext.JextState.PLUGIN
 
-internal open class JextPacketListener(private val minVersion: String? = null, listenerPriority: ListenerPriority = ListenerPriority.NORMAL, packetType: PacketType) : PacketAdapter(PLUGIN, listenerPriority, packetType), AbstractJextListener {
+internal open class JextPacketListener(private val minVersion: String? = null) : PacketListener, AbstractJextListener {
     override fun register() {
         if(minVersion == null || JextState.VERSION >= minVersion) {
-            ProtocolLibrary.getProtocolManager().addPacketListener(this)
+            PacketEvents.getAPI().eventManager.registerListener(this, PacketListenerPriority.NORMAL)
         }
     }
 
-    override fun unregister() {
-        ProtocolLibrary.getProtocolManager().removePacketListener(this)
-    }
+    override fun unregister() = Unit
 }

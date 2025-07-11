@@ -1,5 +1,7 @@
 package me.spartacus04.jext
 
+import com.github.retrooper.packetevents.PacketEvents
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder
 import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.DISCS
 import me.spartacus04.jext.JextState.INTEGRATIONS
@@ -27,6 +29,12 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 @Suppress("unused")
 internal class Jext : JavaPlugin() {
+
+    override fun onLoad() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().load()
+    }
+
     override fun onEnable() {
         try {
             load()

@@ -3,7 +3,7 @@ name: JukeboxExtendedReborn
 authors: [ Spartacus04 ]
 version: ${version}
 api-version: 1.14
-depend: [ProtocolLib]
+depend: [packetevents]
 softdepend: [WorldGuard, GriefPrevention, Geyser-Spigot, NoteBlockAPI]
 load: STARTUP
 prefix: JEXT

@@ -29,7 +29,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://repo.dmulloy2.net/nexus/repository/public/")
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.xenondevs.xyz/releases/")
@@ -39,7 +38,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.9.1")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.16")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
