@@ -116,6 +116,14 @@ object Constants {
             SOUND_MAP[Material.MUSIC_DISC_CREATOR_MUSIC_BOX] = SoundData(Sound.MUSIC_DISC_CREATOR_MUSIC_BOX, 73)
             SOUND_MAP[Material.MUSIC_DISC_PRECIPICE] = SoundData(Sound.MUSIC_DISC_PRECIPICE, 299)
         }
+
+        if(VERSION >= "1.21.6") {
+            SOUND_MAP[Material.MUSIC_DISC_TEARS] = SoundData(Sound.MUSIC_DISC_TEARS, 176)
+        }
+
+        if(VERSION >= "1.21.7") {
+            SOUND_MAP[Material.MUSIC_DISC_LAVA_CHICKEN] = SoundData(Sound.MUSIC_DISC_LAVA_CHICKEN, 135)
+        }
     }
 
     val JEXT_DISC_MATERIAL = Material.MUSIC_DISC_11
