@@ -36,6 +36,7 @@ internal class RecordPacketEvent : JextPacketListener() {
 
             actionBarDisplay(player, disc)
         }, 1)
+
     }
 
     private fun actionBarDisplay(player: Player, disc: Disc) {
