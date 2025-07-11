@@ -1,0 +1,45 @@
+{
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Chase the Skies",
+	"description": "A cheerful and uplifting soundtrack for your Minecraft adventures.",
+	"descriptionAsTooltip": false,
+	"icon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+	"authors": ["Amos Roddy"],
+	"downloads": [
+		{
+            "url": "https://youtu.be/URr3lmSj9g4",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+            "overrideName": "Liliypad",
+            "overrideAuthor": "Amos Roddy",
+            "overrideDescription": "§6A cheerful and uplifting soundtrack for your Minecraft adventures.\n§2§o1st disc out of 5."
+        },
+        {
+            "url": "https://youtu.be/NPzukBv7w2w",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+            "overrideName": "Below and Above",
+            "overrideAuthor": "Amos Roddy",
+            "overrideDescription": "§6A cheerful and uplifting soundtrack for your Minecraft adventures.\n§2§o2nd disc out of 5."
+        },
+        {
+            "url": "https://youtu.be/3vrNJ88Aiww",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+            "overrideName": "O's Piano",
+            "overrideAuthor": "Amos Roddy",
+            "overrideDescription": "§6A cheerful and uplifting soundtrack for your Minecraft adventures.\n§2§o3rd disc out of 5."
+        },
+        {
+            "url": "https://youtu.be/bDIsDGxeg9c",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+            "overrideName": "Broken Clocks",
+            "overrideAuthor": "Amos Roddy",
+            "overrideDescription": "§6A cheerful and uplifting soundtrack for your Minecraft adventures.\n§2§o4th disc out of 5."
+        },
+        {
+            "url": "https://youtu.be/wDaqicVmpqo",
+            "baseIcon": "https://i.scdn.co/image/ab67616d0000b2738d1aec83cbf40f0d35a5261b",
+            "overrideName": "Fireflies",
+            "overrideAuthor": "Amos Roddy",
+            "overrideDescription": "§6A cheerful and uplifting soundtrack for your Minecraft adventures.\n§2§o5th disc out of 5."
+        }
+	]
+}
