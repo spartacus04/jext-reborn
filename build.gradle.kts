@@ -167,7 +167,7 @@ hangarPublish {
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 dependencies {
-                    hangar("ProtocolLib") {
+                    this.url("ProtocolLib", "https://modrinth.com/plugin/packetevents") {
                         required.set(true)
                     }
                     this.url("NoteBlockAPI", "https://modrinth.com/plugin/noteblockapi") {
@@ -193,6 +193,7 @@ modrinth {
 
     dependencies {
         optional.project("noteblockapi")
+        required.project("packetevents")
     }
 
     changelog.set(modrinthChangelog)
