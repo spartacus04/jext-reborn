@@ -37,27 +37,27 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.7-R0.1-SNAPSHOT")
     compileOnly("com.github.retrooper:packetevents-spigot:2.9.1")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.16")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.2")
-    compileOnly("org.geysermc.geyser:api:2.6.1-SNAPSHOT") {
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly("org.geysermc.geyser:api:2.7.0-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
         }
     }
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
-    implementation("io.github.bananapuncher714:nbteditor:7.19.7")
-    implementation("xyz.xenondevs.invui:invui:1.45")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.45")
-    implementation("com.google.code.gson:gson:2.12.1")
+    implementation("io.github.bananapuncher714:nbteditor:7.19.9")
+    implementation("xyz.xenondevs.invui:invui:1.46")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.46")
+    implementation("com.google.code.gson:gson:2.13.1")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }
 
 group = "me.spartacus04.jext"
