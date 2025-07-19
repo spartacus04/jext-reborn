@@ -1,5 +1,5 @@
 {
-  "now-playing": "§6Tocando agora: §a%name%",
+  "now-playing": "§6Now playing: §a%name%",
   "disc-name": "§a%author% §5- §a%title%",
   "disc-name-simple": "§a%title%",
   "update-available": "Uma nova atualização está disponível!",
