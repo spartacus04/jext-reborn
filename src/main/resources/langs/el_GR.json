@@ -32,7 +32,7 @@
   "stopped-music-for-multiple": "§fStopped μουσική για §6%playercount% §fplayers!",
   "stopped-music-for": "§fStopped μουσική για §6%player%§f!",
   "stopped-music-for-no-one": "§fStopped μουσική για κανένα παίκτη, κάτι πήγε στραβά!",
-  "export-start": "§fExporting resourcepack to §6%file%§f...",
+  "export-start": "Εξαγωγή πακέτων πόρων στο §6%file%§f...",
   "export-success": "§fResourcepack exported to §6%file%§f!",
   "export-fail": "§cResourcepack εξαγωγή απέτυχε!",
   "reloaded": "§cReloaded!",
