@@ -37,24 +37,24 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.7-R0.1-SNAPSHOT")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.9.1")
+    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.9.4")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.16")
     compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
-    compileOnly("org.geysermc.geyser:api:2.7.0-SNAPSHOT") {
+    compileOnly("org.geysermc.geyser:api:2.8.3-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
         }
     }
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
-    implementation("io.github.bananapuncher714:nbteditor:7.19.9")
+    implementation("io.github.bananapuncher714:nbteditor:7.19.10")
     implementation("xyz.xenondevs.invui:invui:1.46")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.46")
     implementation("com.google.code.gson:gson:2.13.1")
-    implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
+    implementation("com.github.Anon8281:UniversalScheduler:0.1.7")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -90,7 +90,7 @@ tasks {
         exclude("DebugProbesKt.bin")
         exclude("META-INF/**")
 
-        minimize{
+        minimize {
             exclude(dependency("xyz.xenondevs.invui:.*:.*"))
         }
     }
@@ -132,7 +132,8 @@ dokka {
     pluginsConfiguration.html {
         customStyleSheets.from(file("docsAssets/logo-styles.css"))
         customAssets.from(file("icon.png"))
-        footerMessage = "Jukebox Extended Reborn is licensed under the <a href=\"https://github.com/spartacus04/jext-reborn/blob/master/LICENSE.MD\">MIT</a> License."
+        footerMessage =
+            "Jukebox Extended Reborn is licensed under the <a href=\"https://github.com/spartacus04/jext-reborn/blob/master/LICENSE.MD\">MIT</a> License."
 
     }
 }
