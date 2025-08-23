@@ -18,25 +18,24 @@ import org.bukkit.block.Crafter
 
 internal class DiscUpdateEvent : JextListener() {
     @EventHandler(ignoreCancelled = true)
-    fun playerJoinEvent(e : PlayerJoinEvent) = updateInventory(e.player.inventory)
+    fun playerJoinEvent(e: PlayerJoinEvent) = updateInventory(e.player.inventory)
 
     @EventHandler(ignoreCancelled = true)
-    fun inventoryOpenEvent(e : InventoryOpenEvent) = updateInventory(e.inventory)
+    fun inventoryOpenEvent(e: InventoryOpenEvent) = updateInventory(e.inventory)
 
     @EventHandler(ignoreCancelled = true)
     fun pickUpItemEvent(e: EntityPickupItemEvent) {
         e.item.itemStack = updateItem(e.item.itemStack)
     }
 
-    @Suppress("UnstableApiUsage")
     private fun updateInventory(inv: Inventory) {
         // If the inventory is a crafter, we need to keep track of the disabled slots
-        val crafterArr = if(inv.type == InventoryType.CRAFTER) {
+        val crafterArr = if (inv.type == InventoryType.CRAFTER) {
             val disabled = arrayListOf<Int>()
             val holder = inv.holder as? Crafter ?: return
 
-            for(i in 0..inv.size-1) {
-                if(holder.isSlotDisabled(i)) {
+            for (i in 0..8) {
+                if (holder.isSlotDisabled(i)) {
                     disabled.add(i)
                 }
             }
@@ -54,16 +53,16 @@ internal class DiscUpdateEvent : JextListener() {
         inv.contents = contents
 
         // Restore the disabled slots
-        if(crafterArr != null) {
+        if (crafterArr != null) {
             val holder = inv.holder as? Crafter ?: return
 
-            for(i in crafterArr) {
+            for (i in crafterArr) {
                 holder.setSlotDisabled(i, true)
             }
         }
     }
 
-    private fun updateItem(itemStack: ItemStack) : ItemStack {
+    private fun updateItem(itemStack: ItemStack): ItemStack {
         if (itemStack.type.isRecord) {
             if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
@@ -79,11 +78,11 @@ internal class DiscUpdateEvent : JextListener() {
                     disc.discItemStack
                 }
             }
-        } else if(VERSION >= "1.19" && itemStack.type.isRecordFragment) {
-            if(Disc.isCustomDisc(itemStack)) {
+        } else if (VERSION >= "1.19" && itemStack.type.isRecordFragment) {
+            if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
 
-                return if(disc == null) {
+                return if (disc == null) {
                     val stacks = arrayListOf(
                         FRAGMENT_LIST.map { ItemStack(it) },
                         DISCS.map { it.fragmentItemStack!! }
