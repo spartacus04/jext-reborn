@@ -29,35 +29,32 @@ internal class DiscUpdateEvent : JextListener() {
     }
 
     private fun updateInventory(inv: Inventory) {
-        // If the inventory is a crafter, we need to keep track of the disabled slots
-        val crafterArr = if (inv.type == InventoryType.CRAFTER) {
-            val disabled = arrayListOf<Int>()
-            val holder = inv.holder as? Crafter ?: return
+        // Take a snapshot of the disabled slots if this inventory is a Crafter
+        val crafter = if (inv.type == InventoryType.CRAFTER) inv.holder as? Crafter else null
+        val crafterSnapshot: BooleanArray? = crafter?.let { c ->
+            BooleanArray(9) { i -> c.isSlotDisabled(i) }
+        }
 
-            for (i in 0..8) {
-                if (holder.isSlotDisabled(i)) {
-                    disabled.add(i)
+        try {
+            // Update item by item – do not overwrite the entire contents array
+            val size = inv.size
+            for (i in 0 until size) {
+                val stack = inv.getItem(i) ?: continue
+                val updated = updateItem(stack)
+
+                // Only update if there is an actual change
+                if (updated != stack) {
+                    if (updated.type != stack.type || updated.amount != stack.amount || updated.itemMeta != stack.itemMeta) {
+                        inv.setItem(i, updated)
+                    }
                 }
             }
-
-            disabled
-        } else null
-
-        // We can't use inv.contents.forEachIndexed because it interferes with other inventory plugins
-        val contents = inv.contents
-        contents.forEachIndexed { i, it ->
-            if (it != null) {
-                contents[i] = updateItem(it)
-            }
-        }
-        inv.contents = contents
-
-        // Restore the disabled slots
-        if (crafterArr != null) {
-            val holder = inv.holder as? Crafter ?: return
-
-            for (i in crafterArr) {
-                holder.setSlotDisabled(i, true)
+        } finally {
+            // Restore the exact previous disabled state for Crafter slots
+            if (crafter != null && crafterSnapshot != null) {
+                for (i in 0 until 9) {
+                    crafter.setSlotDisabled(i, crafterSnapshot[i])
+                }
             }
         }
     }
