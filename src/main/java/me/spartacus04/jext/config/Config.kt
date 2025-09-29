@@ -90,6 +90,22 @@ data class Config(
     @SerializedName("force-resource-pack")
     var FORCE_RESOURCE_PACK : Boolean = false,
 
+    @ConfigField(
+        "Resource pack URL",
+        "If set, the plugin use this URL and the resource-pack-hash for the resource pack source.",
+        ""
+    )
+    @SerializedName("resource-pack-url")
+    var RESOURCE_PACK_URL : String = "",
+
+    @ConfigField(
+        "Resource pack hash",
+        "Hash for the pack in resource-pack-url.",
+        ""
+    )
+    @SerializedName("resource-pack-hash")
+    var RESOURCE_PACK_HASH : String = "",
+
     // metrics & updates
 
     @ConfigField(
