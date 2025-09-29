@@ -66,7 +66,7 @@ data class Config(
 
     @ConfigField(
         "Enable modifying disc item names",
-        "If set to true, the plugin will set the item name to the disc name and author instead of putting it in the lore. Enable this if you use InteractionVisualizer to support showing custom disc names over the jukebox",
+        "If set to true, the plugin will set the item name to the disc name and author instead of putting it in the lore. Enable this if you use InteractionVisualizer to support showing custom disc names over the jukebox.",
         "false"
     )
     @SerializedName("disc-modify-item-name")
