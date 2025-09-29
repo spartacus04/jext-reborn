@@ -65,6 +65,14 @@ data class Config(
     var JUKEBOX_RANGE: Int = 64,
 
     @ConfigField(
+        "Enable modifying disc item names",
+        "If set to true, the plugin will set the item name to the disc name and author instead of putting it in the lore. Enable this if you use InteractionVisualizer to support showing custom disc names over the jukebox",
+        "false"
+    )
+    @SerializedName("disc-modify-item-name")
+    var DISC_MODIFY_ITEM_NAME : Boolean = false,
+
+    @ConfigField(
         "Disc loot tables limit",
         "Sets the maximum amount of discs that can be found in chests, the default amount is 2.",
         "{}",

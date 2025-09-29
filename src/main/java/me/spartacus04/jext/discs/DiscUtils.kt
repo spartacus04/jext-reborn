@@ -1,5 +1,6 @@
 package me.spartacus04.jext.discs
 
+import me.spartacus04.jext.JextState.CONFIG
 import me.spartacus04.jext.JextState.VERSION
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -14,11 +15,11 @@ object DiscUtils {
     private fun getProcessedLores(lores: List<String>, title: String, author: String): ArrayList<String> {
         val lore = ArrayList<String>()
 
-        if(author != "")
-            lore.add("${ChatColor.GRAY}$author - $title")
-        else {
-            lore.add("${ChatColor.GRAY}$title")
-        }
+        if(!CONFIG.DISC_MODIFY_ITEM_NAME)
+            if(author != "")
+                lore.add("${ChatColor.GRAY}$author - $title")
+            else
+                lore.add("${ChatColor.GRAY}$title")
 
         lore.addAll(lores)
 
@@ -54,6 +55,15 @@ object DiscUtils {
         )
 
         meta.setCustomModelData(modelData)
+
+        if (CONFIG.DISC_MODIFY_ITEM_NAME)
+            if(author != "") {
+                meta.setItemName("${ChatColor.YELLOW}$author - $title")
+                meta.setDisplayName("${ChatColor.YELLOW}$author - $title")
+            } else {
+                meta.setItemName("${ChatColor.YELLOW}$title")
+                meta.setDisplayName("${ChatColor.YELLOW}$title")
+            }
 
         // Store custom disc data
         val helper = DiscPersistentDataContainer(meta)
