@@ -27,7 +27,7 @@ internal class ExecutorMain : ExecutorAdapter("jext") {
 
         val subcommand = commandRegistry.find { it.subCommandString == args[0] } ?: return
 
-        Bukkit.dispatchCommand(sender, "${subcommand.commandString} ${subArgs.joinToString(separator = " ")}")
+        Bukkit.dispatchCommand(sender, "${subcommand.commandString} ${subArgs.joinToString(separator = " ")}".trim())
     }
 
     override fun onTabComplete(
