@@ -50,7 +50,7 @@ dependencies {
     }
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
-    implementation("io.github.bananapuncher714:nbteditor:7.19.9")
+    implementation("io.github.bananapuncher714:nbteditor:7.19.10")
     implementation("xyz.xenondevs.invui:invui:1.46")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.46")
     implementation("com.google.code.gson:gson:2.13.1")
