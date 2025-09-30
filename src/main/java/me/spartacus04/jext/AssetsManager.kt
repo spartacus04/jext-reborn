@@ -64,7 +64,7 @@ class AssetsManager {
                 null
             }
         } else {
-            Bukkit.getLogger().warning("No resource pack specified or found. " + CONFIG.RESOURCE_PACK_URL + " " + CONFIG.RESOURCE_PACK_HASH + " " + resourcePack);
+            Bukkit.getLogger().warning("No resource pack specified or found.");
             null
         }
     }
