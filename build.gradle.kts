@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     java
     kotlin("jvm") version "2.2.21"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.2.2"
 
     id("org.jetbrains.dokka") version "2.1.0"
 
@@ -81,7 +81,7 @@ tasks {
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
         relocate("xyz/xenondevs/invui", "${dependencyPackage}.invui")
         relocate("xyz/xenondevs/inventoryaccess", "${dependencyPackage}.inventoryaccess")
-        relocate("com/github/Anon8281/universalScheduler", "${dependencyPackage}.universalScheduler")
+        relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
         relocate("_COROUTINE", "${dependencyPackage}._COROUTINE")
 
         exclude("colors.bin")
