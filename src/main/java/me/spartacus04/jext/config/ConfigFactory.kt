@@ -19,7 +19,8 @@ internal object ConfigFactory {
         V4Config::class.java,
         V5Config::class.java,
         V6Config::class.java,
-        V7Config::class.java
+        V7Config::class.java,
+        V8Config::class.java
     )
 
     private fun updateOldConfig(plugin: ColosseumPlugin) {

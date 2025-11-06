@@ -7,8 +7,11 @@ import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 
+/**
+ * The data class `Config` is used to store the plugin's configuration settings.
+ */
 @Suppress("PropertyName")
-internal data class V7Config(
+internal data class V8Config(
     @SerializedName("lang")
     var LANGUAGE_MODE: FieldLanguageMode = FieldLanguageMode.AUTO,
 
@@ -24,11 +27,14 @@ internal data class V7Config(
     @SerializedName("disable-music-overlap")
     var DISABLE_MUSIC_OVERLAP : Boolean = true,
 
+    @SerializedName("jukebox-range")
+    var JUKEBOX_RANGE: Int = 64,
+
     @SerializedName("disc-loottables-limit")
-    var DISC_LIMIT : HashMap<String, Int> = hashMapOf(),
+    var DISC_LIMIT : HashMap<String, Int> = HashMap(),
 
     @SerializedName("fragment-loottables-limit")
-    var FRAGMENT_LIMIT : HashMap<String, Int> = hashMapOf(),
+    var FRAGMENT_LIMIT : HashMap<String, Int> = HashMap(),
 
     @SerializedName("force-resource-pack")
     var FORCE_RESOURCE_PACK : Boolean = false,
@@ -45,6 +51,9 @@ internal data class V7Config(
     @SerializedName("web-interface-port")
     var WEB_INTERFACE_PORT : Int = 9871,
 
+    @SerializedName("override-web-interface-base-url")
+    var WEB_INTERFACE_BASE_URL: String = "",
+
     @SerializedName("web-interface-api-enabled")
     var WEB_INTERFACE_API_ENABLED : Boolean = true,
 
@@ -52,7 +61,7 @@ internal data class V7Config(
     var WEB_INTERFACE_PASSWORD : String = "",
 ) : ConfigMigrator {
     override fun migrateToNext(plugin: ColosseumPlugin): String {
-        return plugin.gson.toJson(V8Config(
+        return plugin.gson.toJson(Config(
             LANGUAGE_MODE = LANGUAGE_MODE,
             JUKEBOX_BEHAVIOUR = JUKEBOX_BEHAVIOUR,
             GUI_STYLE = GUI_STYLE,
@@ -64,10 +73,10 @@ internal data class V7Config(
             CHECK_FOR_UPDATES = CHECK_FOR_UPDATES,
             ALLOW_METRICS = ALLOW_METRICS,
             RESOURCE_PACK_HOST = RESOURCE_PACK_HOST,
+            WEB_INTERFACE_BASE_URL = WEB_INTERFACE_BASE_URL,
             WEB_INTERFACE_PORT = WEB_INTERFACE_PORT,
             WEB_INTERFACE_API_ENABLED = WEB_INTERFACE_API_ENABLED,
             WEB_INTERFACE_PASSWORD = WEB_INTERFACE_PASSWORD
         ))
     }
-
 }
