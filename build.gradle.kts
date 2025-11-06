@@ -5,7 +5,6 @@ plugins {
     java
     kotlin("jvm") version "2.2.21"
     id("com.gradleup.shadow") version "9.2.2"
-
     id("org.jetbrains.dokka") version "2.1.0"
 
     `maven-publish`
@@ -109,6 +108,24 @@ tasks.register<ProGuardTask>("proguardJar") {
     dependsOn("shadowJar")
 
     injars(tasks.shadowJar.flatMap { it.archiveFile })
+
+    val compileFiles = configurations.getByName("compileClasspath").files
+    val runtimeFiles = configurations.getByName("runtimeClasspath").files
+    val libFiles = (compileFiles + runtimeFiles).toSet() // dedupe identical files
+
+    libFiles.forEach { libraryjars(it) }
+
+    // Add JRE classes: prefer rt.jar (Java 8), fallback to jmods (Java 9+)
+    val javaHome = System.getProperty("java.home")
+    val rtJar = file("$javaHome/lib/rt.jar")
+    if (rtJar.exists()) {
+        libraryjars(rtJar)
+    } else {
+        val jmods = file("$javaHome/jmods")
+        if (jmods.exists()) {
+            libraryjars(fileTree(jmods).matching { include("**/*.jmod") })
+        }
+    }
 
     configuration("proguard-rules.pro")
 
