@@ -1,7 +1,7 @@
 package me.spartacus04.jext.config.legacy
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.colosseum.ColosseumPlugin
 
 @Suppress("PropertyName")
 internal data class V3Config (
@@ -20,8 +20,8 @@ internal data class V3Config (
     @SerializedName("allow-metrics")
     var ALLOW_METRICS : Boolean = true,
 ) : ConfigMigrator {
-    override fun migrateToNext(): String {
-        return GSON.toJson(V4Config(
+    override fun migrateToNext(plugin: ColosseumPlugin): String {
+        return plugin.gson.toJson(V4Config(
             LANGUAGE_MODE = LANGUAGE_MODE,
             FORCE_RESOURCE_PACK = FORCE_RESOURCE_PACK,
             IGNORE_FAILED_DOWNLOAD = IGNORE_FAILED_DOWNLOAD,

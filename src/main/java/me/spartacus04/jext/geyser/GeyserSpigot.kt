@@ -1,8 +1,6 @@
 package me.spartacus04.jext.geyser
 
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.GeyserApi
 import org.geysermc.geyser.api.event.EventRegistrar
@@ -14,14 +12,14 @@ import java.util.UUID
 internal class GeyserSpigot : EventRegistrar, GeyserMode {
 
     init {
-        GeyserApi.api().eventBus().register(this, PLUGIN)
+        GeyserApi.api().eventBus().register(this, INSTANCE)
         GeyserApi.api().eventBus().subscribe(this, GeyserDefineCustomItemsEvent::class.java, this::onGeyserInit)
     }
 
     @Suppress("unused")
     @Subscribe
     private fun onGeyserInit(event : GeyserDefineCustomItemsEvent) {
-        DISCS.map {
+        INSTANCE.discs.map {
             val itemOptions = CustomItemOptions.builder()
                 .customModelData(it.discItemStack.itemMeta!!.customModelData)
                 .build()
@@ -36,8 +34,8 @@ internal class GeyserSpigot : EventRegistrar, GeyserMode {
             event.register("minecraft:music_disc_11", it)
         }
 
-        if(VERSION >= "1.19") {
-            DISCS.map {
+        if(INSTANCE.serverVersion >= "1.19") {
+            INSTANCE.discs.map {
                 val itemOptions = CustomItemOptions.builder()
                     .customModelData(it.fragmentItemStack?.itemMeta?.customModelData ?: 0)
                     .build()
@@ -57,7 +55,7 @@ internal class GeyserSpigot : EventRegistrar, GeyserMode {
     override fun isBedrockPlayer(player: UUID) = GeyserApi.api().isBedrockPlayer(player)
 
     override fun applyResourcePack(buffer: ByteArray) {
-        val geyserPlugin = PLUGIN.server.pluginManager.getPlugin("Geyser-Spigot") ?: return
+        val geyserPlugin = INSTANCE.server.pluginManager.getPlugin("Geyser-Spigot") ?: return
 
         geyserPlugin.dataFolder.resolve("packs").resolve("jext_resources.mcpack").writeBytes(buffer)
     }

@@ -1,10 +1,8 @@
 package me.spartacus04.jext.discs
 
 import io.github.bananapuncher714.nbteditor.NBTEditor
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.SCHEDULER
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.discs.discplaying.DiscPlayingMethod
 import me.spartacus04.jext.discs.sources.file.FileDisc
 import me.spartacus04.jext.utils.Constants.JEXT_DISC_MATERIAL
@@ -39,10 +37,10 @@ open class Disc(
     val creeperDrop: Boolean,
     val lootTables: HashMap<String, Int>,
     val fragmentLootTables: HashMap<String, Int>,
-    private val discPlayingMethod: DiscPlayingMethod
+    private val discPlayingMethod: DiscPlayingMethod,
+    val plugin: Jext
 ) {
-    // Stupid Ahh abstraction to prevent disc being cancelled from existence
-
+    // Stupid abstraction to prevent disc being cancelled from existence
     /**
      * Returns the itemstack of the disc.
      *
@@ -82,7 +80,7 @@ open class Disc(
 
         return when(other) {
             is Disc -> { hashCode() == other.hashCode() }
-            is FileDisc -> other.toJextDisc().hashCode() == hashCode()
+            is FileDisc -> other.toJextDisc(plugin).hashCode() == hashCode()
             else -> false
         }
     }
@@ -109,15 +107,15 @@ open class Disc(
      * @param pitch The pitch of the disc
      */
     fun play(location: Location, volume : Float = 4.0f, pitch : Float = 1.0f) {
-        if (CONFIG.DISABLE_MUSIC_OVERLAP) {
-            DISCS.stop(location, namespace)
+        if (plugin.config.DISABLE_MUSIC_OVERLAP) {
+            plugin.discs.stop(location, namespace)
         }
 
         discPlayingMethod.playLocation(location, namespace, volume, pitch)
 
         if(location.block.type != Material.JUKEBOX) return
 
-        SCHEDULER.runTaskLater({
+        plugin.scheduler.runTaskLater({
             location.world!!.players.forEach {
                 it.stopSound(
                     SOUND_MAP[JEXT_DISC_MATERIAL]!!.sound,
@@ -126,7 +124,7 @@ open class Disc(
             }
 
             if(location.block.type == Material.JUKEBOX) {
-                if(VERSION <= "1.21") {
+                if(plugin.serverVersion <= "1.21") {
                     val startTickCount = NBTEditor.getLong(location.block,"RecordStartTick")
 
                     NBTEditor.set(location.block,startTickCount - (duration - 72) * 20 + 5, "TickCount")
@@ -145,8 +143,8 @@ open class Disc(
      * @param pitch The pitch of the disc
      */
     fun play(player: Player, volume : Float = 4.0f, pitch : Float = 1.0f) {
-        if (CONFIG.DISABLE_MUSIC_OVERLAP) {
-            DISCS.stop(player, namespace)
+        if (plugin.config.DISABLE_MUSIC_OVERLAP) {
+            plugin.discs.stop(player, namespace)
         }
 
         discPlayingMethod.playPlayer(player, namespace, volume, pitch)
@@ -190,7 +188,7 @@ open class Disc(
             if (isCustomDisc(itemStack)) {
                 val meta = itemStack.itemMeta!!
 
-                return DISCS[meta]
+                return INSTANCE.discs[meta]
             }
 
             return null

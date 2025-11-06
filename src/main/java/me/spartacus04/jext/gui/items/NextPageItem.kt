@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui.items
 
-import me.spartacus04.jext.JextState
+import me.spartacus04.jext.Jext
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.gui.PagedGui
@@ -8,14 +8,14 @@ import xyz.xenondevs.invui.item.ItemProvider
 import xyz.xenondevs.invui.item.builder.ItemBuilder
 import xyz.xenondevs.invui.item.impl.controlitem.PageItem
 
-internal class NextPageItem(private val player: Player) : PageItem(true) {
+internal class NextPageItem(private val player: Player, private val plugin: Jext) : PageItem(true) {
     override fun getItemProvider(gui: PagedGui<*>): ItemProvider {
         val builder = ItemBuilder(Material.GREEN_STAINED_GLASS_PANE)
 
-        builder.setDisplayName(JextState.LANG.getKey(player, "next-page"))
+        builder.setDisplayName(plugin.i18nManager!![player, "next-page"]!!)
 
         if (!gui.hasNextPage())
-            builder.addLoreLines(JextState.LANG.getKey(player, "no-page"))
+            builder.addLoreLines(plugin.i18nManager!![player, "no-page"]!!)
 
         return builder
     }

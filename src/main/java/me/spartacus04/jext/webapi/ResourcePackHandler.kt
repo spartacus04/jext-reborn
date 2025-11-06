@@ -1,11 +1,11 @@
 package me.spartacus04.jext.webapi
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-internal class ResourcePackHandler : JextHttpHandler(false) {
-    private val file = PLUGIN.dataFolder.resolve("resource-pack.zip")
+internal class ResourcePackHandler(plugin: Jext) : JextHttpHandler(plugin, false) {
+    private val file = plugin.dataFolder.resolve("resource-pack.zip")
     override fun onGet(exchange: HttpExchange) {
         if(!file.exists()) {
             return notFound(exchange)

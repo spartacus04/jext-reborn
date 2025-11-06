@@ -1,32 +1,30 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.SCHEDULER
-import me.spartacus04.jext.listeners.utils.JextListener
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.jext.Jext
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerResourcePackStatusEvent
 
-internal class ResourceStatusEvent : JextListener() {
+internal class ResourceStatusEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler
     fun onResourceStatus(e: PlayerResourcePackStatusEvent) {
         val status = e.status
 
-        SCHEDULER.runTaskLater({
-            if(!CONFIG.FORCE_RESOURCE_PACK) return@runTaskLater
+        plugin.scheduler.runTaskLater({
+            if(!plugin.config.FORCE_RESOURCE_PACK) return@runTaskLater
 
             when(status) {
                 PlayerResourcePackStatusEvent.Status.DECLINED -> {
-                    return@runTaskLater e.player.kickPlayer(LANG.getKey(
+                    return@runTaskLater e.player.kickPlayer(plugin.i18nManager!![
                         e.player,
                         "resource-pack-decline-kick-message"
-                    ))
+                    ])
                 }
                 PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD -> {
-                    return@runTaskLater e.player.kickPlayer(LANG.getKey(
+                    return@runTaskLater e.player.kickPlayer(plugin.i18nManager!![
                         e.player,
                         "failed-download-kick-message"
-                    ))
+                    ])
                 }
 
                 else -> Unit

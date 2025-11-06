@@ -1,9 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.FRAGMENT_LIST
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import me.spartacus04.jext.utils.isRecordFragment
@@ -16,7 +15,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.block.Crafter
 
-internal class DiscUpdateEvent : JextListener() {
+internal class DiscUpdateEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler(ignoreCancelled = true)
     fun playerJoinEvent(e: PlayerJoinEvent) = updateInventory(e.player.inventory)
 
@@ -67,7 +66,7 @@ internal class DiscUpdateEvent : JextListener() {
                 return if (disc == null) {
                     val stacks = arrayListOf(
                         SOUND_MAP.keys.map { ItemStack(it) },
-                        DISCS.map { it.discItemStack }
+                        plugin.discs.map { it.discItemStack }
                     ).flatten()
 
                     stacks.random()
@@ -75,14 +74,14 @@ internal class DiscUpdateEvent : JextListener() {
                     disc.discItemStack
                 }
             }
-        } else if (VERSION >= "1.19" && itemStack.type.isRecordFragment) {
+        } else if (plugin.serverVersion >= "1.19" && itemStack.type.isRecordFragment) {
             if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
 
                 return if (disc == null) {
                     val stacks = arrayListOf(
                         FRAGMENT_LIST.map { ItemStack(it) },
-                        DISCS.map { it.fragmentItemStack!! }
+                        plugin.discs.map { it.fragmentItemStack!! }
                     ).flatten()
 
                     stacks.random().apply {

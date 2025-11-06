@@ -1,10 +1,11 @@
 package me.spartacus04.jext.geyser
 
-import me.spartacus04.jext.language.LanguageManager.Companion.GEYSER_RELOAD
+import me.spartacus04.jext.Jext.Companion.INSTANCE
+import me.spartacus04.jext.language.DefaultMessages.GEYSER_RELOAD
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-internal class GeyserManager {
+class GeyserManager {
     private var geyser: GeyserMode?
 
     init {
@@ -30,7 +31,7 @@ internal class GeyserManager {
             }
         }
 
-        Bukkit.getConsoleSender().sendMessage(GEYSER_RELOAD)
+        INSTANCE.colosseumLogger.info(GEYSER_RELOAD)
     }
 
     fun isBedrockPlayer(player: Player) : Boolean {

@@ -1,22 +1,21 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory
 import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
 import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
 
-internal class AdminGui private constructor(player: Player, inventory: VirtualInventory, inventoryName: String) : BaseGui(player, inventory, inventoryName) {
+internal class AdminGui private constructor(player: Player, inventory: VirtualInventory, inventoryName: String, val plugin: Jext) : BaseGui(player, inventory, inventoryName, plugin) {
     override fun onInit() {
-        DISCS.forEachIndexed { i, it ->
+        plugin.discs.forEachIndexed { i, it ->
             inventory.setItemSilently(i, it.discItemStack)
         }
 
-        if(VERSION >= "1.19") {
-            DISCS.forEachIndexed {i, it ->
-                inventory.setItemSilently(i + DISCS.size(), it.fragmentItemStack)
+        if(plugin.serverVersion >= "1.19") {
+            plugin.discs.forEachIndexed {i, it ->
+                inventory.setItemSilently(i + plugin.discs.size(), it.fragmentItemStack)
             }
         }
     }
@@ -25,10 +24,10 @@ internal class AdminGui private constructor(player: Player, inventory: VirtualIn
 
     override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
         inventory.setItemSilently(event.slot,
-            if(event.slot >= DISCS.size())
-                DISCS[event.slot - DISCS.size()].fragmentItemStack
+            if(event.slot >= plugin.discs.size())
+                plugin.discs[event.slot - plugin.discs.size()].fragmentItemStack
             else
-                DISCS[event.slot].discItemStack
+                plugin.discs[event.slot].discItemStack
         )
     }
 
@@ -36,9 +35,10 @@ internal class AdminGui private constructor(player: Player, inventory: VirtualIn
         fun open(player: Player) = AdminGui(
             player,
             VirtualInventory(
-                DISCS.size() * if(VERSION >= "1.19") 2 else 1
+                INSTANCE.discs.size() * if(INSTANCE.serverVersion >= "1.19") 2 else 1
             ),
-            LANG.getKey(player, "jukebox")
+            INSTANCE.i18nManager!![player, "jukebox"]!!,
+            INSTANCE
         )
     }
 }

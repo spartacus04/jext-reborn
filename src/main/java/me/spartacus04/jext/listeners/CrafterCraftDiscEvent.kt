@@ -1,15 +1,16 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.colosseum.utils.version.VersionCompatibilityMin
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.JEXT_FRAGMENT_OUTPUT
 import org.bukkit.block.Crafter
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.CrafterCraftEvent
 
-@Suppress("UnstableApiUsage")
-internal class CrafterCraftDiscEvent : JextListener("1.21") {
+@VersionCompatibilityMin("1.21")
+internal class CrafterCraftDiscEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler
     fun onCrafterCraft(e: CrafterCraftEvent) {
         if (e.result.type != JEXT_FRAGMENT_OUTPUT) return
@@ -27,7 +28,7 @@ internal class CrafterCraftDiscEvent : JextListener("1.21") {
         }.distinct().singleOrNull()
 
         if (isCustomDisc && namespace != null) {
-            e.result = DISCS[namespace]!!.discItemStack
+            e.result = plugin.discs[namespace]!!.discItemStack
         } else if (isCustomDisc) {
             e.isCancelled = true
         }

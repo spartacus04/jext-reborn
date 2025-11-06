@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.gui.items.NextPageItem
 import me.spartacus04.jext.gui.items.PreviousPageItem
@@ -29,8 +29,8 @@ class GuiBuilder {
      * @param inventory The inventory to build the GUI with.
      * @return The GUI builder.
      */
-    fun buildGui(player: Player, inventory: Inventory) : Gui.Builder<*, *> {
-        return when(CONFIG.GUI_STYLE) {
+    fun buildGui(player: Player, inventory: Inventory, plugin: Jext) : Gui.Builder<*, *> {
+        return when(plugin.config.GUI_STYLE) {
             FieldGuiStyle.SCROLL_VERTICAL -> ScrollGui.inventories()
                 .setStructure(
                     "x x x x x x x x u",
@@ -41,8 +41,8 @@ class GuiBuilder {
                     "x x x x x x x x d"
                 )
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-                .addIngredient('u', ScrollUpItem(player, false))
-                .addIngredient('d', ScrollDownItem(player, false))
+                .addIngredient('u', ScrollUpItem(player, false, plugin))
+                .addIngredient('d', ScrollDownItem(player, false, plugin))
                 .addIngredient('#', border)
                 .setContent(listOf(inventory))
 
@@ -56,8 +56,8 @@ class GuiBuilder {
                     "u # # # # # # # d"
                 )
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_VERTICAL)
-                .addIngredient('u', ScrollUpItem(player, true))
-                .addIngredient('d', ScrollDownItem(player, true))
+                .addIngredient('u', ScrollUpItem(player, true, plugin))
+                .addIngredient('d', ScrollDownItem(player, true, plugin))
                 .addIngredient('#', border)
                 .setContent(listOf(inventory))
 
@@ -71,8 +71,8 @@ class GuiBuilder {
                     "u # # # # # # # d"
                 )
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_VERTICAL)
-                .addIngredient('u', PreviousPageItem(player))
-                .addIngredient('d', NextPageItem(player))
+                .addIngredient('u', PreviousPageItem(player, plugin))
+                .addIngredient('d', NextPageItem(player, plugin))
                 .addIngredient('#', border)
                 .setContent(listOf(inventory))
 
@@ -86,8 +86,8 @@ class GuiBuilder {
                     "x x x x x x x x d"
                 )
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_VERTICAL)
-                .addIngredient('u', PreviousPageItem(player))
-                .addIngredient('d', NextPageItem(player))
+                .addIngredient('u', PreviousPageItem(player, plugin))
+                .addIngredient('d', NextPageItem(player, plugin))
                 .addIngredient('#', border)
                 .setContent(listOf(inventory))
         }

@@ -3,7 +3,7 @@ package me.spartacus04.jext.discs.discplaying
 import com.xxmicloxx.NoteBlockAPI.model.Song
 import com.xxmicloxx.NoteBlockAPI.songplayer.EntitySongPlayer
 import com.xxmicloxx.NoteBlockAPI.songplayer.PositionSongPlayer
-import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import kotlin.math.roundToInt
@@ -18,7 +18,7 @@ class NbsDiscPlayingMethod(private val song: Song) : DiscPlayingMethod {
         songPlayer.targetLocation = location
         songPlayer.volume = volume.roundToInt().toByte()
 
-        songPlayer.distance = CONFIG.JUKEBOX_RANGE
+        songPlayer.distance = INSTANCE.config.JUKEBOX_RANGE
 
         location.world!!.players.forEach {
             songPlayer.addPlayer(it)
@@ -33,7 +33,7 @@ class NbsDiscPlayingMethod(private val song: Song) : DiscPlayingMethod {
         songPlayer.entity = player
         songPlayer.volume = volume.roundToInt().toByte()
 
-        songPlayer.distance = CONFIG.JUKEBOX_RANGE
+        songPlayer.distance = INSTANCE.config.JUKEBOX_RANGE
 
         songPlayer.addPlayer(player)
 

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.inventory.ItemStack
@@ -31,7 +31,7 @@ object Constants {
     val FRAGMENT_LIST: ArrayList<Material> = run {
         val frags = ArrayList<Material>()
 
-        if(VERSION >= "1.19") {
+        if(INSTANCE.serverVersion >= "1.19") {
             frags.add(Material.DISC_FRAGMENT_5)
         }
 
@@ -64,7 +64,7 @@ object Constants {
         SOUND_MAP[Material.MUSIC_DISC_WAIT] = SoundData(Sound.MUSIC_DISC_WAIT, 238)
         SOUND_MAP[Material.MUSIC_DISC_WARD] = SoundData(Sound.MUSIC_DISC_WARD, 251)
 
-        if(VERSION >= "1.16") {
+        if(INSTANCE.serverVersion >= "1.16") {
             SOUND_MAP[Material.MUSIC_DISC_PIGSTEP] = SoundData(Sound.MUSIC_DISC_PIGSTEP, 149)
 
             DEFAULT_DISCS_LOOT_TABLE[LootTables.BASTION_TREASURE.key.key] = arrayListOf(
@@ -81,7 +81,7 @@ object Constants {
             )
         }
 
-        if(VERSION >= "1.18") {
+        if(INSTANCE.serverVersion >= "1.18") {
             SOUND_MAP[Material.MUSIC_DISC_OTHERSIDE] = SoundData(Sound.MUSIC_DISC_OTHERSIDE, 195)
 
             DEFAULT_DISCS_LOOT_TABLE[LootTables.SIMPLE_DUNGEON.key.key]!!.add(
@@ -93,7 +93,7 @@ object Constants {
             )
         }
 
-        if(VERSION >= "1.19") {
+        if(INSTANCE.serverVersion >= "1.19") {
             SOUND_MAP[Material.MUSIC_DISC_5] = SoundData(Sound.MUSIC_DISC_5, 178)
 
             DEFAULT_DISCS_LOOT_TABLE[LootTables.ANCIENT_CITY.key.key] = arrayListOf(
@@ -107,28 +107,28 @@ object Constants {
             )
         }
 
-        if(VERSION >= "1.20") {
+        if(INSTANCE.serverVersion >= "1.20") {
             SOUND_MAP[Material.MUSIC_DISC_RELIC] = SoundData(Sound.MUSIC_DISC_RELIC, 218)
         }
 
-        if(VERSION >= "1.21") {
+        if(INSTANCE.serverVersion >= "1.21") {
             SOUND_MAP[Material.MUSIC_DISC_CREATOR] = SoundData(Sound.MUSIC_DISC_CREATOR, 176)
             SOUND_MAP[Material.MUSIC_DISC_CREATOR_MUSIC_BOX] = SoundData(Sound.MUSIC_DISC_CREATOR_MUSIC_BOX, 73)
             SOUND_MAP[Material.MUSIC_DISC_PRECIPICE] = SoundData(Sound.MUSIC_DISC_PRECIPICE, 299)
         }
 
-        if(VERSION >= "1.21.6") {
+        if(INSTANCE.serverVersion >= "1.21.6") {
             SOUND_MAP[Material.MUSIC_DISC_TEARS] = SoundData(Sound.MUSIC_DISC_TEARS, 176)
         }
 
-        if(VERSION >= "1.21.7") {
+        if(INSTANCE.serverVersion >= "1.21.7") {
             SOUND_MAP[Material.MUSIC_DISC_LAVA_CHICKEN] = SoundData(Sound.MUSIC_DISC_LAVA_CHICKEN, 135)
         }
     }
 
     val JEXT_DISC_MATERIAL = Material.MUSIC_DISC_11
-    val JEXT_FRAGMENT_MATERIAL = if(VERSION >= "1.19") Material.DISC_FRAGMENT_5 else null
-    val JEXT_FRAGMENT_OUTPUT = if(VERSION >= "1.19") Material.MUSIC_DISC_5 else null
+    val JEXT_FRAGMENT_MATERIAL = if(INSTANCE.serverVersion >= "1.19") Material.DISC_FRAGMENT_5 else null
+    val JEXT_FRAGMENT_OUTPUT = if(INSTANCE.serverVersion >= "1.19") Material.MUSIC_DISC_5 else null
 
     val WEIGHTED_LOOT_TABLE_ITEMS = mapOf(
         "archaeology/trail_ruins_rare" to 12,

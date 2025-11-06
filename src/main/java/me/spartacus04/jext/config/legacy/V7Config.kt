@@ -1,7 +1,7 @@
 package me.spartacus04.jext.config.legacy
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.colosseum.ColosseumPlugin
 import me.spartacus04.jext.config.Config
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
@@ -51,8 +51,8 @@ internal data class V7Config(
     @SerializedName("web-interface-password")
     var WEB_INTERFACE_PASSWORD : String = "",
 ) : ConfigMigrator {
-    override fun migrateToNext(): String {
-        return GSON.toJson(Config(
+    override fun migrateToNext(plugin: ColosseumPlugin): String {
+        return plugin.gson.toJson(Config(
             LANGUAGE_MODE = LANGUAGE_MODE,
             JUKEBOX_BEHAVIOUR = JUKEBOX_BEHAVIOUR,
             GUI_STYLE = GUI_STYLE,

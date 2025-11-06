@@ -1,6 +1,6 @@
 package me.spartacus04.jext.discs
 
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -38,16 +38,16 @@ object DiscUtils {
      * @return The custom itemstack.
      */
     fun buildCustomItemstack(material: Material, modelData: Int, namespace: String, lores: List<String>, title: String, author: String): ItemStack {
-        val disc = if(VERSION >= "1.21.5") {
+        val disc = if(INSTANCE.serverVersion >= "1.21.5") {
             Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable=\"minecraft:11\",tooltip_display={hidden_components:[\"minecraft:jukebox_playable\"]}]")
-        } else if(VERSION >= "1.21") {
+        } else if(INSTANCE.serverVersion >= "1.21") {
             Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
         } else {
             ItemStack(material)
         }
         val meta = disc.itemMeta
 
-        meta!!.addItemFlags(if(VERSION >= "1.19.5")
+        meta!!.addItemFlags(if(INSTANCE.serverVersion >= "1.19.5")
             ItemFlag.HIDE_ADDITIONAL_TOOLTIP
         else
             ItemFlag.valueOf("HIDE_POTION_EFFECTS")

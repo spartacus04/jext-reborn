@@ -1,7 +1,7 @@
 package me.spartacus04.jext.config.legacy
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.colosseum.ColosseumPlugin
 
 @Suppress("PropertyName")
 internal data class V1Config (
@@ -20,8 +20,8 @@ internal data class V1Config (
     @SerializedName("allow-music-overlapping")
     var ALLOW_MUSIC_OVERLAPPING : Boolean = false,
 ) : ConfigMigrator {
-    override fun migrateToNext(): String {
-        return GSON.toJson(V2Config(
+    override fun migrateToNext(plugin: ColosseumPlugin): String {
+        return plugin.gson.toJson(V2Config(
             FORCE_RESOURCE_PACK = FORCE_RESOURCE_PACK,
             IGNORE_FAILED_DOWNLOAD = IGNORE_FAILED_DOWNLOAD,
             ALLOW_MUSIC_OVERLAPPING = ALLOW_MUSIC_OVERLAPPING

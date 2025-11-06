@@ -2,33 +2,32 @@ package me.spartacus04.jext.discs.sources.nbs
 
 import com.google.common.reflect.TypeToken
 import com.xxmicloxx.NoteBlockAPI.utils.NBSDecoder
-import me.spartacus04.jext.JextState.ASSETS_MANAGER
-import me.spartacus04.jext.JextState.GSON
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.discs.sources.DiscSource
 import org.bukkit.Bukkit
 
 internal class NbsSource : DiscSource {
     private val nbsTypeToken = object : TypeToken<ArrayList<NbsDisc>>() {}.type
-    private val baseNbsDir = PLUGIN.dataFolder.resolve("nbs")
 
     private fun isNoteBlockApiPresent(): Boolean {
         return Bukkit.getPluginManager().getPlugin("NoteBlockAPI") != null
     }
 
-    override suspend fun getDiscs(): List<Disc> {
+    override suspend fun getDiscs(plugin: Jext): List<Disc> {
         if (!isNoteBlockApiPresent()) {
             return emptyList()
         }
+
+        val baseNbsDir = plugin.dataFolder.resolve("nbs")
 
         if(!baseNbsDir.exists()) {
             baseNbsDir.mkdirs()
         }
 
-        val contents = ASSETS_MANAGER.getAsset("nbs")?.bufferedReader()?.readText() ?: "[]"
+        val contents = plugin.assetsManager.getAsset("nbs")?.bufferedReader()?.readText() ?: "[]"
 
-        val discsMeta = GSON.fromJson<ArrayList<NbsDisc>>(contents, nbsTypeToken)
+        val discsMeta = plugin.gson.fromJson<ArrayList<NbsDisc>>(contents, nbsTypeToken)
 
         // rename all nbs files to lowercase to avoid issues
 
@@ -75,9 +74,9 @@ internal class NbsSource : DiscSource {
         }
 
         if(changes) {
-            ASSETS_MANAGER.saveAsset("nbs", GSON.toJson(discsMeta))
+            plugin.assetsManager.saveAsset("nbs", plugin.gson.toJson(discsMeta))
         }
 
-        return discsMeta.mapNotNull { it.toJextDisc() }
+        return discsMeta.mapNotNull { it.toJextDisc(plugin) }
     }
 }

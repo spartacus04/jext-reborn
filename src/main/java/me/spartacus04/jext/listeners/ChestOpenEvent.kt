@@ -1,9 +1,7 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.VERSION
-import me.spartacus04.jext.listeners.utils.JextListener
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.utils.Constants.ChanceStack
 import me.spartacus04.jext.utils.Constants.DEFAULT_DISCS_LOOT_TABLE
 import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
@@ -24,7 +22,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.loot.Lootable
 import kotlin.random.Random
 
-internal class ChestOpenEvent : JextListener() {
+internal class ChestOpenEvent(val plugin: Jext) : ColosseumListener(plugin) {
 
     /**
      * The function generates items in an inventory based on certain conditions and probabilities.
@@ -39,7 +37,7 @@ internal class ChestOpenEvent : JextListener() {
         val discsMap = DEFAULT_DISCS_LOOT_TABLE.toMutableMap()
         val discFragmentMap = DEFAULT_FRAGMENTS_LOOT_TABLE.toMutableMap()
 
-        DISCS.forEach {
+        plugin.discs.forEach {
             it.lootTables.forEach { lootTable ->
                 if (discsMap.containsKey(lootTable.key)) {
                     discsMap[lootTable.key]!!.add(ChanceStack(lootTable.value, it.discItemStack))
@@ -48,7 +46,7 @@ internal class ChestOpenEvent : JextListener() {
                 }
             }
 
-            if(VERSION < "1.19") return@forEach
+            if(plugin.serverVersion < "1.19") return@forEach
 
             it.fragmentLootTables.forEach { lootTable ->
                 if (discFragmentMap.containsKey(lootTable.key)) {
@@ -70,8 +68,8 @@ internal class ChestOpenEvent : JextListener() {
                 }.toTypedArray()
             }
 
-            val discMaxAmount = if(CONFIG.DISC_LIMIT.containsKey(key)) CONFIG.DISC_LIMIT[key]!!
-            else if(CONFIG.DISC_LIMIT.containsKey("chests/*")) CONFIG.DISC_LIMIT["chests/*"]!!
+            val discMaxAmount = if(plugin.config.DISC_LIMIT.containsKey(key)) plugin.config.DISC_LIMIT[key]!!
+            else if(plugin.config.DISC_LIMIT.containsKey("chests/*")) plugin.config.DISC_LIMIT["chests/*"]!!
             else 2
 
             var discAmount = Random.nextInt(0, discMaxAmount + 1)
@@ -101,7 +99,7 @@ internal class ChestOpenEvent : JextListener() {
             }
         }
 
-        if(VERSION >= "1.19" && discFragmentMap.containsKey(key)) {
+        if(plugin.serverVersion >= "1.19" && discFragmentMap.containsKey(key)) {
             if(inventory.any { it != null && it.type.isRecordFragment }) {
                 inventory.storageContents = inventory.storageContents.map { itemstack ->
                     if(itemstack != null && itemstack.type.isRecordFragment) {
@@ -112,8 +110,8 @@ internal class ChestOpenEvent : JextListener() {
                 }.toTypedArray()
             }
 
-            val fragmentMaxAmount = if(CONFIG.FRAGMENT_LIMIT.containsKey(key)) CONFIG.FRAGMENT_LIMIT[key]!!
-            else if(CONFIG.FRAGMENT_LIMIT.containsKey("chests/*")) CONFIG.FRAGMENT_LIMIT["chests/*"]!!
+            val fragmentMaxAmount = if(plugin.config.FRAGMENT_LIMIT.containsKey(key)) plugin.config.FRAGMENT_LIMIT[key]!!
+            else if(plugin.config.FRAGMENT_LIMIT.containsKey("chests/*")) plugin.config.FRAGMENT_LIMIT["chests/*"]!!
             else 3
 
             var fragmentAmount = Random.nextInt(0, fragmentMaxAmount + 1)

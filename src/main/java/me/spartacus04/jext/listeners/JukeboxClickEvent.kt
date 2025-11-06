@@ -1,12 +1,10 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.INTEGRATIONS
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.gui.JukeboxGui
-import me.spartacus04.jext.listeners.utils.JextListener
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.Jukebox
@@ -16,7 +14,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
-internal class JukeboxClickEvent : JextListener() {
+internal class JukeboxClickEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     fun onJukeboxInteract(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
@@ -29,14 +27,14 @@ internal class JukeboxClickEvent : JextListener() {
             return
         }
 
-        when(CONFIG.JUKEBOX_BEHAVIOUR) {
+        when(plugin.config.JUKEBOX_BEHAVIOUR) {
             FieldJukeboxBehaviour.VANILLA -> defaultBehaviour(event, block)
             else -> jukeboxGui(event, block)
         }
     }
 
     private fun defaultBehaviour(event: PlayerInteractEvent, block: Block) {
-        if(!INTEGRATIONS.hasJukeboxAccess(event.player, block)) {
+        if(!plugin.integrations.hasJukeboxAccess(event.player, block)) {
             event.isCancelled = true
             return
         }
@@ -52,7 +50,7 @@ internal class JukeboxClickEvent : JextListener() {
         }
         else {
             Disc.fromItemstack(state.record)?.namespace?.let {
-                DISCS.stop(location, it)
+                plugin.discs.stop(location, it)
             }
         }
     }
@@ -60,7 +58,7 @@ internal class JukeboxClickEvent : JextListener() {
     private fun jukeboxGui(event: PlayerInteractEvent, block: Block) {
         event.isCancelled = true
 
-        if(!INTEGRATIONS.hasJukeboxGuiAccess(event.player, block)) {
+        if(!plugin.integrations.hasJukeboxGuiAccess(event.player, block)) {
             return
         }
 
@@ -79,7 +77,7 @@ internal class JukeboxClickEvent : JextListener() {
         val state = block.state as? Jukebox ?: return
 
         Disc.fromItemstack(state.record)?.namespace?.let {
-            DISCS.stop(loc, it)
+            plugin.discs.stop(loc, it)
         }
     }
 }

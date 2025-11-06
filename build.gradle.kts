@@ -53,8 +53,7 @@ dependencies {
     implementation("io.github.bananapuncher714:nbteditor:7.19.10")
     implementation("xyz.xenondevs.invui:invui:1.46")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.46")
-    implementation("com.google.code.gson:gson:2.13.1")
-    implementation("com.github.Anon8281:UniversalScheduler:0.1.7")
+    implementation("com.github.spartacus04:colosseum:1.1")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
