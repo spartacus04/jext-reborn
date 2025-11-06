@@ -62,6 +62,7 @@ class AssetsManager(private val plugin: Jext) {
                 null
             }
         } else {
+            Bukkit.getLogger().warning("No resource pack specified or found.");
             null
         }
     }
@@ -196,7 +197,7 @@ class AssetsManager(private val plugin: Jext) {
 
     private val resourcePack: String
         get() = try {
-            Bukkit.getServer().resourcePack
+            CONFIG.RESOURCE_PACK_URL.ifBlank { Bukkit.getServer().resourcePack }
         } catch (_: NoSuchMethodError) {
             val propertiesFile = File(".").resolve("server.properties")
 
@@ -205,7 +206,9 @@ class AssetsManager(private val plugin: Jext) {
 
     internal val resourcePackHash: String
         get() = try {
-            Bukkit.getServer().resourcePackHash
+            if (CONFIG.RESOURCE_PACK_URL.isNotBlank())
+                CONFIG.RESOURCE_PACK_HASH
+            else Bukkit.getServer().resourcePackHash
         } catch (_: NoSuchMethodError) {
             val propertiesFile = File(".").resolve("server.properties")
 

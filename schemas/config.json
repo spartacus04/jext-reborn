@@ -303,6 +303,16 @@
       "description": "If set to true, the plugin will force players to use the resource pack. If the player declines, they will be kicked.",
       "default": false
     },
+    "resource-pack-url": {
+      "type": "string",
+      "description": "If set, the plugin use this URL and the resource-pack-hash for the resource pack source.",
+      "default": ""
+    },
+    "resource-pack-hash": {
+      "type": "string",
+      "description": "Hash for the pack in resource-pack-url.",
+      "default": ""
+    },
     "enable-resource-pack-host": {
       "type": "boolean",
       "description": "If set to true, the plugin will host the resource pack and automatically send it to players.",
