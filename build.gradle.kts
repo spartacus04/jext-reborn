@@ -40,7 +40,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-spigot:2.10.1")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:2.13.17")
-    compileOnly("com.github.techFortress:GriefPrevention:17.0.0")
+    compileOnly("com.github.techFortress:GriefPrevention:18.0.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
     compileOnly("org.geysermc.geyser:api:2.9.0-SNAPSHOT") {
         attributes {
