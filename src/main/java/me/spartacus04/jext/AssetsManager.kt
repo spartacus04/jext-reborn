@@ -3,11 +3,9 @@ package me.spartacus04.jext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_FAIL
-import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_START
-import me.spartacus04.jext.language.LanguageManager.Companion.RESOURCEPACK_DOWNLOAD_SUCCESS
+import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_FAIL
+import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_START
+import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_SUCCESS
 import me.spartacus04.jext.utils.getFileSha1Hash
 import org.bukkit.Bukkit
 import java.io.BufferedInputStream
@@ -22,7 +20,7 @@ import java.util.zip.ZipFile
 /**
  * The class `AssetsManager` is a utility class that's used to import, read, save and export assets from the server's resource pack.
  */
-class AssetsManager {
+class AssetsManager(private val plugin: Jext) {
     private val localToRpMap = hashMapOf(
         "discs" to "",
         "nbs" to "nbs",
@@ -50,8 +48,8 @@ class AssetsManager {
     }
 
     private fun getResourcePack() : File? {
-        return if(CONFIG.RESOURCE_PACK_HOST && PLUGIN.dataFolder.resolve(("resource-pack.zip")).exists()) {
-            PLUGIN.dataFolder.resolve("resource-pack.zip")
+        return if(plugin.config.RESOURCE_PACK_HOST && plugin.dataFolder.resolve(("resource-pack.zip")).exists()) {
+            plugin.dataFolder.resolve("resource-pack.zip")
         } else if(resourcePack.isNotBlank()) {
             val name = resourcePackHash.ifBlank { "current" }
 
@@ -59,7 +57,7 @@ class AssetsManager {
                     resourcePack,
                     name
                 )) {
-                PLUGIN.dataFolder.resolve("caches").resolve("$name.zip")
+                plugin.dataFolder.resolve("caches").resolve("$name.zip")
             } else {
                 null
             }
@@ -79,7 +77,7 @@ class AssetsManager {
                     localToRpMap.entries.forEach {
                         try {
                             val zipEntry = zipFile.getEntry(getNameFromId(it.value))
-                            val entry = PLUGIN.dataFolder.resolve("${it.key}.json")
+                            val entry = plugin.dataFolder.resolve("${it.key}.json")
 
                             if(zipEntry.time > entry.lastModified()) {
                                 zipFile.getInputStream(zipEntry).use { input ->
@@ -96,10 +94,10 @@ class AssetsManager {
     }
 
     private fun tryDownloadRP(url: String, path: String) : Boolean {
-        val file = PLUGIN.dataFolder.resolve("caches").resolve("$path.zip")
+        val file = plugin.dataFolder.resolve("caches").resolve("$path.zip")
 
-        if(!PLUGIN.dataFolder.resolve("caches").exists())
-            PLUGIN.dataFolder.resolve("caches").mkdir()
+        if(!plugin.dataFolder.resolve("caches").exists())
+            plugin.dataFolder.resolve("caches").mkdir()
 
         if(file.exists()) {
             if(path == "current") {
@@ -109,7 +107,7 @@ class AssetsManager {
             }
         }
 
-        Bukkit.getConsoleSender().sendMessage(RESOURCEPACK_DOWNLOAD_START)
+        plugin.colosseumLogger.info(RESOURCEPACK_DOWNLOAD_START)
 
         return try {
             val rpUrl = URI(url).toURL()
@@ -146,17 +144,15 @@ class AssetsManager {
                 }
             }
 
-            Bukkit.getConsoleSender().sendMessage(
-                if(successFullDownload) {
-                    RESOURCEPACK_DOWNLOAD_SUCCESS
-                } else {
-                    RESOURCEPACK_DOWNLOAD_FAIL
-                }
-            )
+            if(successFullDownload) {
+                plugin.colosseumLogger.confirm(RESOURCEPACK_DOWNLOAD_SUCCESS)
+            } else {
+                plugin.colosseumLogger.error(RESOURCEPACK_DOWNLOAD_FAIL)
+            }
 
             successFullDownload
         } catch (_: Exception) {
-            Bukkit.getConsoleSender().sendMessage(RESOURCEPACK_DOWNLOAD_FAIL)
+            plugin.colosseumLogger.error(RESOURCEPACK_DOWNLOAD_FAIL)
             false
         }
     }
@@ -175,7 +171,7 @@ class AssetsManager {
      * @return The asset.
      */
     fun getAsset(id: String) : FileInputStream? {
-        val file = PLUGIN.dataFolder.resolve("$id.json")
+        val file = plugin.dataFolder.resolve("$id.json")
 
         return if(file.exists()) {
             file.inputStream()
@@ -189,7 +185,7 @@ class AssetsManager {
      * @param content The content of the asset.
      */
     fun saveAsset(id: String, content: String) {
-        val file = PLUGIN.dataFolder.resolve("$id.json")
+        val file = plugin.dataFolder.resolve("$id.json")
 
         if(!file.exists()) {
             file.createNewFile()
@@ -218,7 +214,7 @@ class AssetsManager {
 
     internal val resourcePackHostedHash: ByteArray
         get() = try {
-            getFileSha1Hash(PLUGIN.dataFolder.resolve("resource-pack.zip"))
+            getFileSha1Hash(plugin.dataFolder.resolve("resource-pack.zip"))
         } catch (_: Exception) {
             byteArrayOf()
         }
@@ -238,7 +234,7 @@ class AssetsManager {
                 localToRpMap.entries.forEach {
                     try {
                         val zipEntry = zipFile.getEntry(getNameFromId(it.value))
-                        val entry = PLUGIN.dataFolder.resolve("${it.key}.json")
+                        val entry = plugin.dataFolder.resolve("${it.key}.json")
 
                         if(zipEntry.time < entry.lastModified()) {
                             zipFile.getInputStream(zipEntry).use { input ->
@@ -250,7 +246,7 @@ class AssetsManager {
                     } catch (_: Exception) { }
                 }
 
-                val exportedFile = PLUGIN.dataFolder.resolve("exported.zip")
+                val exportedFile = plugin.dataFolder.resolve("exported.zip")
 
                 if(exportedFile.exists()) {
                     exportedFile.delete()
@@ -265,7 +261,7 @@ class AssetsManager {
 
     internal fun clearCache() {
         localToRpMap.entries.forEach {
-            PLUGIN.dataFolder.resolve("${it.key}.json").delete()
+            plugin.dataFolder.resolve("${it.key}.json").delete()
         }
     }
 }

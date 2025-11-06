@@ -2,13 +2,11 @@ package me.spartacus04.jext.webapi
 
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.*
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.PLUGIN
-import me.spartacus04.jext.JextState.SCHEDULER
-import me.spartacus04.jext.language.LanguageManager.Companion.WEBAPI_RESOURCEPACK_NOT_FOUND
-import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STARTED
-import me.spartacus04.jext.language.LanguageManager.Companion.WEBSERVER_STOPPED
+import me.spartacus04.colosseum.i18n.ColosseumI18nManager
+import me.spartacus04.jext.Jext
+import me.spartacus04.jext.language.DefaultMessages.WEBAPI_RESOURCEPACK_NOT_FOUND
+import me.spartacus04.jext.language.DefaultMessages.WEBSERVER_STARTED
+import me.spartacus04.jext.language.DefaultMessages.WEBSERVER_STOPPED
 import me.spartacus04.jext.webapi.auth.ConnectHandler
 import me.spartacus04.jext.webapi.auth.DisconnectHandler
 import me.spartacus04.jext.webapi.auth.HealthHandler
@@ -17,58 +15,57 @@ import me.spartacus04.jext.webapi.config.ConfigReadHandler
 import me.spartacus04.jext.webapi.discs.DiscsApplyGeyserHandler
 import me.spartacus04.jext.webapi.discs.DiscsApplyHandler
 import me.spartacus04.jext.webapi.discs.DiscsReadHandler
-import org.bukkit.Bukkit
 import java.net.InetSocketAddress
 
-internal class JextWebServer {
+class JextWebServer(private val plugin: Jext) {
     private var server : HttpServer? = null
-    private var resourcePackHostEnabled = CONFIG.RESOURCE_PACK_HOST
-    private var apiEnabled = CONFIG.WEB_INTERFACE_API_ENABLED
+    private var resourcePackHostEnabled = plugin.config.RESOURCE_PACK_HOST
+    private var apiEnabled = plugin.config.WEB_INTERFACE_API_ENABLED
     private var scope: Job? = null
 
     init {
-        if(CONFIG.WEB_INTERFACE_API_ENABLED || CONFIG.RESOURCE_PACK_HOST) {
+        if(plugin.config.WEB_INTERFACE_API_ENABLED || plugin.config.RESOURCE_PACK_HOST) {
             start()
         }
     }
 
     private fun createContext() {
-        server!!.createContext("/connect", ConnectHandler())
-        server!!.createContext("/disconnect", DisconnectHandler())
-        server!!.createContext("/health", HealthHandler())
+        server!!.createContext("/connect", ConnectHandler(plugin))
+        server!!.createContext("/disconnect", DisconnectHandler(plugin))
+        server!!.createContext("/health", HealthHandler(plugin))
 
-        server!!.createContext("/config/read", ConfigReadHandler())
-        server!!.createContext("/config/apply", ConfigApplyHandler())
+        server!!.createContext("/config/read", ConfigReadHandler(plugin))
+        server!!.createContext("/config/apply", ConfigApplyHandler(plugin))
 
-        server!!.createContext("/discs/read", DiscsReadHandler())
-        server!!.createContext("/discs/apply", DiscsApplyHandler())
+        server!!.createContext("/discs/read", DiscsReadHandler(plugin))
+        server!!.createContext("/discs/apply", DiscsApplyHandler(plugin))
 
-        server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler())
+        server!!.createContext("/discs/applygeyser", DiscsApplyGeyserHandler(plugin))
     }
 
     private fun start() {
-        SCHEDULER.runTaskAsynchronously {
+        plugin.scheduler.runTaskAsynchronously {
             scope = CoroutineScope(Dispatchers.Default).launch {
                 if(server != null) return@launch
 
-                server = HttpServer.create(InetSocketAddress(CONFIG.WEB_INTERFACE_PORT), 0)
+                server = HttpServer.create(InetSocketAddress(plugin.config.WEB_INTERFACE_PORT), 0)
                 server!!.executor = null
 
                 server!!.start()
 
-                SCHEDULER.runTask {
-                    Bukkit.getConsoleSender().sendMessage(LANG.replaceParameters(WEBSERVER_STARTED, mapOf(
-                        "port" to CONFIG.WEB_INTERFACE_PORT.toString()
+                plugin.scheduler.runTask {
+                    plugin.colosseumLogger.confirm(ColosseumI18nManager.replacePlaceholders(WEBSERVER_STARTED, mapOf(
+                        "port" to plugin.config.WEB_INTERFACE_PORT.toString()
                     )))
                 }
 
                 if (resourcePackHostEnabled) {
-                    server!!.createContext("/resource-pack.zip", ResourcePackHandler())
+                    server!!.createContext("/resource-pack.zip", ResourcePackHandler(plugin))
 
-                    val file = PLUGIN.dataFolder.resolve("resource-pack.zip")
+                    val file = plugin.dataFolder.resolve("resource-pack.zip")
 
                     if (!file.exists()) {
-                        Bukkit.getConsoleSender().sendMessage(WEBAPI_RESOURCEPACK_NOT_FOUND)
+                        plugin.colosseumLogger.warn(WEBAPI_RESOURCEPACK_NOT_FOUND)
                     }
                 }
 
@@ -80,27 +77,27 @@ internal class JextWebServer {
     }
 
     fun reload() {
-        if(CONFIG.WEB_INTERFACE_API_ENABLED || CONFIG.RESOURCE_PACK_HOST) {
-            if(server != null && server!!.address.port != CONFIG.WEB_INTERFACE_PORT) {
+        if(plugin.config.WEB_INTERFACE_API_ENABLED || plugin.config.RESOURCE_PACK_HOST) {
+            if(server != null && server!!.address.port != plugin.config.WEB_INTERFACE_PORT) {
                 stop()
             }
 
             start()
 
-            if(CONFIG.WEB_INTERFACE_API_ENABLED != apiEnabled) {
-                apiEnabled = CONFIG.WEB_INTERFACE_API_ENABLED
+            if(plugin.config.WEB_INTERFACE_API_ENABLED != apiEnabled) {
+                apiEnabled = plugin.config.WEB_INTERFACE_API_ENABLED
             }
 
-            if(CONFIG.RESOURCE_PACK_HOST != resourcePackHostEnabled) {
-                resourcePackHostEnabled = CONFIG.RESOURCE_PACK_HOST
+            if(plugin.config.RESOURCE_PACK_HOST != resourcePackHostEnabled) {
+                resourcePackHostEnabled = plugin.config.RESOURCE_PACK_HOST
 
                 if(resourcePackHostEnabled) {
-                    server!!.createContext("/resource-pack.zip", ResourcePackHandler())
+                    server!!.createContext("/resource-pack.zip", ResourcePackHandler(plugin))
 
-                    val file = PLUGIN.dataFolder.resolve("resource-pack.zip")
+                    val file = plugin.dataFolder.resolve("resource-pack.zip")
 
                     if(!file.exists()) {
-                        Bukkit.getConsoleSender().sendMessage(WEBAPI_RESOURCEPACK_NOT_FOUND)
+                        plugin.colosseumLogger.warn(WEBAPI_RESOURCEPACK_NOT_FOUND)
                     }
                 } else {
                     server!!.removeContext("/resource-pack.zip")
@@ -126,17 +123,17 @@ internal class JextWebServer {
             stop()
         }
 
-        if(CONFIG.WEB_INTERFACE_API_ENABLED) {
-            if (server == null || server!!.address.port != CONFIG.WEB_INTERFACE_PORT) {
+        if(plugin.config.WEB_INTERFACE_API_ENABLED) {
+            if (server == null || server!!.address.port != plugin.config.WEB_INTERFACE_PORT) {
                 stop()
                 start()
-            } else if(CONFIG.RESOURCE_PACK_HOST != resourcePackHostEnabled) {
+            } else if(plugin.config.RESOURCE_PACK_HOST != resourcePackHostEnabled) {
                 if(resourcePackHostEnabled) {
                     server!!.removeContext("/resource-pack.zip")
                 } else {
-                    server!!.createContext("/resource-pack.zip", ResourcePackHandler())
+                    server!!.createContext("/resource-pack.zip", ResourcePackHandler(plugin))
                 }
-                resourcePackHostEnabled = CONFIG.RESOURCE_PACK_HOST
+                resourcePackHostEnabled = plugin.config.RESOURCE_PACK_HOST
             }
         } else if(server != null) {
             stop()
@@ -149,6 +146,6 @@ internal class JextWebServer {
         runBlocking {
             scope?.cancelAndJoin()
         }
-        Bukkit.getConsoleSender().sendMessage(WEBSERVER_STOPPED)
+        plugin.colosseumLogger.warn(WEBSERVER_STOPPED)
     }
 }

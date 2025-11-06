@@ -2,10 +2,9 @@ package me.spartacus04.jext.config
 
 import com.google.common.reflect.TypeToken
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.JextState.GSON
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.colosseum.ColosseumPlugin
 import me.spartacus04.jext.config.legacy.*
-import me.spartacus04.jext.utils.FileBind
+import me.spartacus04.jext.utils.JextFileBind
 
 internal object ConfigFactory {
     private fun getSerializedNames(clazz: Class<*>) =
@@ -23,8 +22,8 @@ internal object ConfigFactory {
         V7Config::class.java
     )
 
-    private fun updateOldConfig() {
-        var text = PLUGIN.dataFolder.resolve("config.json").readText()
+    private fun updateOldConfig(plugin: ColosseumPlugin) {
+        var text = plugin.dataFolder.resolve("config.json").readText()
 
         val currentConfigParams = Config::class.java.declaredFields.map {
             it.getAnnotation(SerializedName::class.java).value
@@ -35,25 +34,25 @@ internal object ConfigFactory {
         legacyConfigs.forEach {
             val params = getSerializedNames(it)
 
-            val map = GSON.fromJson<HashMap<String, Any>>(text, object : TypeToken<HashMap<String, Any>>() {}.type)
+            val map = plugin.gson.fromJson<HashMap<String, Any>>(text, object : TypeToken<HashMap<String, Any>>() {}.type)
             map.remove("\$schema")
 
             if(params.all { param -> map.containsKey(param) } && map.keys.all { key -> params.contains(key) }) {
-                val instance = GSON.fromJson(text, it)
-                text = instance.migrateToNext()
+                val instance = plugin.gson.fromJson(text, it)
+                text = instance.migrateToNext(plugin)
             }
         }
 
-        PLUGIN.dataFolder.resolve("config.json").writeText(text)
+        plugin.dataFolder.resolve("config.json").writeText(text)
     }
 
-    fun createConfigObject() : Config {
-        if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
+    fun createConfigObject(plugin: ColosseumPlugin) : Config {
+        if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
 
-        if(PLUGIN.dataFolder.resolve("config.json").exists()) {
-            updateOldConfig()
+        if(plugin.dataFolder.resolve("config.json").exists()) {
+            updateOldConfig(plugin)
         }
 
-        return FileBind.create(Config::class.java)
+        return JextFileBind.create(Config::class.java)
     }
 }

@@ -2,24 +2,35 @@ package me.spartacus04.jext
 
 import com.github.retrooper.packetevents.PacketEvents
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.INTEGRATIONS
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.WEBSERVER
-import me.spartacus04.jext.commands.CommandRegistrant
+import me.spartacus04.colosseum.ColosseumPlugin
+import me.spartacus04.jext.commands.AdminGuiCommand
+import me.spartacus04.jext.commands.DiscCommand
+import me.spartacus04.jext.commands.DiscGiveCommand
+import me.spartacus04.jext.commands.ExportCommand
+import me.spartacus04.jext.commands.FragmentCommand
+import me.spartacus04.jext.commands.FragmentGiveCommand
+import me.spartacus04.jext.commands.JukeboxGuiCommand
+import me.spartacus04.jext.commands.PlayAtCommand
+import me.spartacus04.jext.commands.PlayMusicCommand
+import me.spartacus04.jext.commands.ReloadCommand
+import me.spartacus04.jext.commands.StopMusicCommand
+import me.spartacus04.jext.commands.WebUICommand
+import me.spartacus04.jext.config.Config
+import me.spartacus04.jext.config.ConfigFactory
+import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.discs.sources.file.FileSource
 import me.spartacus04.jext.discs.sources.nbs.NbsSource
+import me.spartacus04.jext.geyser.GeyserManager
 import me.spartacus04.jext.gui.JukeboxGui
-import me.spartacus04.jext.language.LanguageManager.Companion.DISABLED_MESSAGE
-import me.spartacus04.jext.language.LanguageManager.Companion.DOCUMENTATION_LINK
-import me.spartacus04.jext.language.LanguageManager.Companion.ENABLED_MESSAGE
-import me.spartacus04.jext.language.LanguageManager.Companion.NO_DISCS_FOUND
-import me.spartacus04.jext.language.LanguageManager.Companion.UPDATE_LINK
+import me.spartacus04.jext.integrations.PermissionsIntegrationManager
+import me.spartacus04.jext.language.DefaultMessages.DISABLED_MESSAGE
+import me.spartacus04.jext.language.DefaultMessages.DOCUMENTATION_LINK
+import me.spartacus04.jext.language.DefaultMessages.ENABLED_MESSAGE
+import me.spartacus04.jext.language.DefaultMessages.NO_DISCS_FOUND
+import me.spartacus04.jext.language.DefaultMessages.UPDATE_LINK
 import me.spartacus04.jext.listeners.ListenerRegistrant
-import me.spartacus04.jext.utils.Updater
-import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
+import me.spartacus04.jext.utils.BaseUrl
+import me.spartacus04.jext.webapi.JextWebServer
 
 /**
  * The class `Jext` is the main class of the plugin. It extends the `JavaPlugin` class, which is the main class of all
@@ -28,10 +39,9 @@ import org.bukkit.plugin.java.JavaPlugin
  * @constructor Creates a new Jext plugin.
  */
 @Suppress("unused")
-internal class Jext : JavaPlugin() {
-
+class Jext : ColosseumPlugin() {
     override fun onLoad() {
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this))
         PacketEvents.getAPI().load()
     }
 
@@ -45,36 +55,85 @@ internal class Jext : JavaPlugin() {
     }
 
     override fun onDisable() {
-        WEBSERVER.stop()
-        Bukkit.getConsoleSender().sendMessage(DISABLED_MESSAGE)
+        webServer.stop()
+        colosseumLogger.warn(DISABLED_MESSAGE)
     }
 
     private fun load() {
-        DISCS.registerDiscSource(FileSource(), NbsSource()) {
-            INTEGRATIONS.reloadDefaultIntegrations()
+        INSTANCE = this
+
+        buildI18nManager {
+            this.loadInternalLanguageDirectory("langs")
+            this.loadExternalLanguageFiles(dataFolder.resolve("langs.json"), "custom", "en_us")
+            this.setDefaultLocale("en_us")
+            this.setLanguagesToLower(true)
+        }
+
+        discs.registerDiscSource(FileSource(), NbsSource()) {
+            integrations.reloadDefaultIntegrations()
             JukeboxGui.loadFromFile()
 
-            if(DISCS.size() == 0) {
-                Bukkit.getConsoleSender().sendMessage(NO_DISCS_FOUND)
-                Bukkit.getConsoleSender().sendMessage(DOCUMENTATION_LINK)
+            if(discs.size() == 0) {
+                colosseumLogger.warn(NO_DISCS_FOUND)
+                colosseumLogger.url(DOCUMENTATION_LINK)
             }
         }
 
-        ListenerRegistrant.registerListeners()
+        ListenerRegistrant.registerListeners(this)
 
-        CommandRegistrant.registerCommands()
+        registerCommands {
+            addCommands(
+                AdminGuiCommand::class.java,
+                DiscCommand::class.java,
+                DiscGiveCommand::class.java,
+                ExportCommand::class.java,
+                FragmentCommand::class.java,
+                FragmentGiveCommand::class.java,
+                JukeboxGuiCommand::class.java,
+                PlayAtCommand::class.java,
+                PlayMusicCommand::class.java,
+                ReloadCommand::class.java,
+                StopMusicCommand::class.java,
+                WebUICommand::class.java,
+            )
 
-        Bukkit.getConsoleSender().sendMessage(ENABLED_MESSAGE)
+            registerMainCommand("jext")
+        }
 
-        if(CONFIG.CHECK_FOR_UPDATES) {
-            Updater().getVersion {
-                if(description.version == "dev") {
-                    Bukkit.getConsoleSender().sendMessage("Current upstream version is $it")
-                } else if(it != description.version) {
-                    Bukkit.getConsoleSender().sendMessage("[§aJEXT§f] ${LANG["en_us", "update-available"]}")
-                    Bukkit.getConsoleSender().sendMessage(UPDATE_LINK)
+        colosseumLogger.warn(ENABLED_MESSAGE)
+
+        if(config.CHECK_FOR_UPDATES) {
+            checkForUpdates("spartacus04/jext-reborn") {
+                if(it != description.version) {
+                    colosseumLogger.confirmI18n(this, "update-available")
+                    colosseumLogger.url(UPDATE_LINK)
                 }
             }
         }
+    }
+
+    val config: Config
+        get() = ConfigFactory.createConfigObject(this)
+
+    val baseUrl: BaseUrl
+        get() = BaseUrl(this)
+
+    val assetsManager: AssetsManager
+        get() = AssetsManager(this)
+
+    val discs: DiscManager
+        get() = DiscManager(this)
+
+    val integrations: PermissionsIntegrationManager
+        get() = PermissionsIntegrationManager()
+
+    val webServer: JextWebServer
+        get() = JextWebServer(this)
+
+    val geyserManager: GeyserManager
+        get() = GeyserManager()
+
+    companion object {
+        lateinit var INSTANCE: Jext
     }
 }

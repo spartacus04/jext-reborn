@@ -1,7 +1,6 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.JextState.GSON
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.colosseum.ColosseumPlugin
 
 /**
  * The class `FileBind` is used to bind a file to a class.
@@ -9,14 +8,14 @@ import me.spartacus04.jext.JextState.PLUGIN
  * @param filePath The path of the file.
  * @param clazz The class to bind the file to.
  */
-open class FileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>) {
+open class JextFileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>, @Transient private val plugin: ColosseumPlugin) {
     /**
      * Reads the file and binds it to the class.
      */
     fun read() {
-        if(!PLUGIN.dataFolder.exists()) PLUGIN.dataFolder.mkdirs()
+        if(!plugin.dataFolder.exists()) plugin.dataFolder.mkdirs()
 
-        val file = PLUGIN.dataFolder.resolve(filePath)
+        val file = plugin.dataFolder.resolve(filePath)
 
         if(!file.exists()) {
             file.createNewFile()
@@ -24,7 +23,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
             save()
         }
 
-        val obj = GSON.fromJson(file.readText(), clazz)
+        val obj = plugin.gson.fromJson(file.readText(), clazz)
 
         obj.javaClass.declaredFields.forEach { field ->
             field.isAccessible = true
@@ -42,7 +41,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
      */
     fun fromText(text: String) : Boolean {
         try {
-            val obj = GSON.fromJson(text, clazz)
+            val obj = plugin.gson.fromJson(text, clazz)
 
             obj.javaClass.declaredFields.forEach { field ->
                 field.isAccessible = true
@@ -60,9 +59,9 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
      * Saves the class to the file.
      */
     fun save() {
-        val text = GSON.toJson(this)
+        val text = plugin.gson.toJson(this)
 
-        PLUGIN.dataFolder.resolve(filePath).writeText(text)
+        plugin.dataFolder.resolve(filePath).writeText(text)
     }
 
     companion object {
@@ -73,7 +72,7 @@ open class FileBind(@Transient private val filePath: String, @Transient private 
          * 
          * @return The instance of the class.
          */
-        fun <T : FileBind> create(clazz: Class<T>): T {
+        fun <T : JextFileBind> create(clazz: Class<T>): T {
             val instance = clazz.getDeclaredConstructor().newInstance()
 
             instance.read()

@@ -2,9 +2,10 @@ package me.spartacus04.jext.webapi.utils
 
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.webapi.auth.ConnectHandler
 
-internal open class JextHttpHandler(private val requireAuth: Boolean) : HttpHandler {
+internal open class JextHttpHandler(val plugin: Jext, val requireAuth: Boolean) : HttpHandler {
     override fun handle(exchange: HttpExchange) {
         val origin = exchange.requestHeaders["Origin"]?.firstOrNull() ?: "*"
 

@@ -1,12 +1,13 @@
 package me.spartacus04.jext.utils
 
-import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.Jext
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.net.InetAddress
 
-internal class BaseUrl {
+@Suppress("HttpUrlsUsage")
+class BaseUrl(private val plugin: Jext) {
     fun getUrl(commandSender: CommandSender) : String {
         var hostName = getBaseUrl(commandSender)
 
@@ -14,9 +15,9 @@ internal class BaseUrl {
             val split = hostName.split("/")
 
             if(split.size > 3) {
-                hostName = split[0] + "//" + split[2] + ":${CONFIG.WEB_INTERFACE_PORT}" + "/" + split.subList(3, split.size).joinToString("/")
+                hostName = split[0] + "//" + split[2] + ":${plugin.config.WEB_INTERFACE_PORT}" + "/" + split.subList(3, split.size).joinToString("/")
             } else {
-                hostName += ":${CONFIG.WEB_INTERFACE_PORT}"
+                hostName += ":${plugin.config.WEB_INTERFACE_PORT}"
             }
         }
 
@@ -25,15 +26,15 @@ internal class BaseUrl {
         }
 
         if(hostName.endsWith("/")) {
-            hostName = hostName.substring(0, hostName.length - 1)
+            hostName = hostName.dropLast(1)
         }
 
         return hostName
     }
 
     private fun getBaseUrl(commandSender: CommandSender) : String {
-        if(CONFIG.WEB_INTERFACE_BASE_URL.isNotBlank()) {
-            return CONFIG.WEB_INTERFACE_BASE_URL
+        if(plugin.config.WEB_INTERFACE_BASE_URL.isNotBlank()) {
+            return plugin.config.WEB_INTERFACE_BASE_URL
         } else if(Bukkit.getIp().isNotBlank()) {
             return Bukkit.getIp()
         }

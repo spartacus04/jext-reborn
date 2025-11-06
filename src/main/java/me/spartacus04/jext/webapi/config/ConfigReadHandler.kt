@@ -2,14 +2,13 @@ package me.spartacus04.jext.webapi.config
 
 import com.google.gson.annotations.SerializedName
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.config.ConfigField
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-internal class ConfigReadHandler : JextHttpHandler(true) {
+internal class ConfigReadHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onGet(exchange: HttpExchange) {
-        val data = CONFIG::class.java.declaredFields.mapNotNull {
+        val data = plugin.config::class.java.declaredFields.mapNotNull {
             val id = it.getAnnotation(SerializedName::class.java).value
 
             if(id == "\$schema") return@mapNotNull null
@@ -17,7 +16,7 @@ internal class ConfigReadHandler : JextHttpHandler(true) {
             val data = it.getAnnotation(ConfigField::class.java)
 
             it.isAccessible = true
-            val value = GSON.toJson(it.get(CONFIG))
+            val value = plugin.gson.toJson(it.get(plugin.config))
             it.isAccessible = false
 
             """
@@ -32,11 +31,7 @@ internal class ConfigReadHandler : JextHttpHandler(true) {
             """.trimIndent()
         }
 
-        println(data)
-
         val response = "[${data.joinToString(",")}]"
-
-        println(response)
 
         exchange.sendResponseHeaders(200, response.length.toLong())
         exchange.responseBody.use { output ->

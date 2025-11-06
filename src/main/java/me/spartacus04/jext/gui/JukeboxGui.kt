@@ -1,11 +1,8 @@
 package me.spartacus04.jext.gui
 
 import com.google.gson.reflect.TypeToken
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.GSON
-import me.spartacus04.jext.JextState.LANG
-import me.spartacus04.jext.JextState.PLUGIN
+import me.spartacus04.jext.Jext
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Location
@@ -24,10 +21,14 @@ import xyz.xenondevs.invui.inventory.event.UpdateReason
 import java.util.*
 
 internal class JukeboxGui : BaseGui {
-    private constructor(player: Player, inventory: VirtualInventory, inventoryName: String) : super(player, inventory, inventoryName)
+    private constructor(player: Player, inventory: VirtualInventory, inventoryName: String, plugin: Jext) : super(player, inventory, inventoryName, plugin) {
+        this.plugin = plugin
+    }
+    private constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String, plugin: Jext) : super(player, block, inventory, inventoryName, plugin) {
+        this.plugin = plugin
+    }
 
-    private constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String) : super(player, block, inventory, inventoryName)
-
+    val plugin: Jext
 
     override fun onInit() {
         if(!playingMap.containsKey(inventoryId)) {
@@ -174,9 +175,9 @@ internal class JukeboxGui : BaseGui {
         }
 
         if(targetBlock != null) {
-            DISCS.stop(targetBlock.location)
+            plugin.discs.stop(targetBlock.location)
         } else {
-            DISCS.stop(targetPlayer)
+            plugin.discs.stop(targetPlayer)
         }
     }
 
@@ -185,21 +186,23 @@ internal class JukeboxGui : BaseGui {
         fun open(player: Player) = JukeboxGui(
             player,
             getInv(player.uniqueId.toString()),
-            LANG.getKey(player, "jukebox")
+            INSTANCE.i18nManager!![player, "jukebox"]!!,
+            INSTANCE
         )
 
         fun open(player: Player, block: Block) = JukeboxGui(
             player,
             block,
             getInv("${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"),
-            LANG.getKey(player, "jukebox"),
+            INSTANCE.i18nManager!![player, "jukebox"]!!,
+            INSTANCE
         )
 
         private val inventories = HashMap<String, VirtualInventory>()
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()
 
-        private val saveFile = PLUGIN.dataFolder.resolve(".savedata")
+        private val saveFile = INSTANCE.dataFolder.resolve(".savedata")
 
 
         @Suppress("MemberVisibilityCanBePrivate")
@@ -220,7 +223,7 @@ internal class JukeboxGui : BaseGui {
                 return inventories[id]!!
             }
 
-            val inv = VirtualInventory(CONFIG.GUI_SIZE)
+            val inv = VirtualInventory(INSTANCE.config.GUI_SIZE)
             inventories[id] = inv
 
             return inv
@@ -245,7 +248,7 @@ internal class JukeboxGui : BaseGui {
             } else {
                 val text = saveFile.readText()
 
-                val data = GSON.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
+                val data = INSTANCE.gson.fromJson<HashMap<String, HashMap<Int, JukeboxEntry>>>(text, typeToken) ?: return
 
                 data.forEach { (id, itemMap) ->
                     val inv = getInv(id)
@@ -286,10 +289,10 @@ internal class JukeboxGui : BaseGui {
                         try {
                             val container = Disc.fromItemstack(itemStack)!!
                             data[key]!![index] = JukeboxEntry(container.sourceId, container.namespace)
-                        } catch (e: NullPointerException) {
+                        } catch (_: NullPointerException) {
                             val stack = arrayListOf(
                                 SOUND_MAP.keys.map { disc -> ItemStack(disc) },
-                                DISCS.map { disc -> disc.discItemStack }
+                                INSTANCE.discs.map { disc -> disc.discItemStack }
                             ).flatten().random()
 
                             if (Disc.isCustomDisc(stack)) {
@@ -305,7 +308,7 @@ internal class JukeboxGui : BaseGui {
                 }
             }
 
-            saveFile.writeText(GSON.toJson(data))
+            saveFile.writeText(INSTANCE.gson.toJson(data))
         }
 
         /**

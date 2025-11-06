@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState.DISCS
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack
  */
 internal data class JukeboxEntry(
     var type: String,
-    var value: String
+    var value: String,
 ) {
     /**
      * The function `toItemStack` returns an ItemStack object based on the type and value of the jukebox entry.
@@ -24,21 +24,21 @@ internal data class JukeboxEntry(
     fun toItemStack() : ItemStack {
         return when(type) {
             "jext" -> {
-                val disc = DISCS[value]
+                val disc = INSTANCE.discs[value]
 
                 disc?.discItemStack
                     ?: arrayListOf(
                         SOUND_MAP.keys.map { mat -> ItemStack(mat) },
-                        DISCS.map { discm -> discm.discItemStack }
+                        INSTANCE.discs.map { discm -> discm.discItemStack }
                     ).flatten().random()
             }
             "jext-nbs" -> {
-                val disc = DISCS[value]
+                val disc = INSTANCE.discs[value]
 
                 disc?.discItemStack
                     ?: arrayListOf(
                         SOUND_MAP.keys.map { mat -> ItemStack(mat) },
-                        DISCS.map { discm -> discm.discItemStack }
+                        INSTANCE.discs.map { discm -> discm.discItemStack }
                     ).flatten().random()
             }
             else -> {
@@ -50,7 +50,7 @@ internal data class JukeboxEntry(
 
                 arrayListOf(
                     SOUND_MAP.keys.map { mat -> ItemStack(mat) },
-                    DISCS.map { disc -> disc.discItemStack }
+                    INSTANCE.discs.map { disc -> disc.discItemStack }
                 ).flatten().random()
             }
         }

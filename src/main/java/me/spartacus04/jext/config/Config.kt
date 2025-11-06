@@ -1,10 +1,11 @@
 package me.spartacus04.jext.config
 
 import com.google.gson.annotations.SerializedName
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.config.fields.FieldGuiStyle
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
-import me.spartacus04.jext.utils.FileBind
+import me.spartacus04.jext.utils.JextFileBind
 
 /**
  * The data class `Config` is used to store the plugin's configuration settings.
@@ -157,7 +158,7 @@ data class Config(
     )
     @SerializedName("web-interface-password")
     var WEB_INTERFACE_PASSWORD : String = "",
-) : FileBind("config.json", Config::class.java) {
+) : JextFileBind("config.json", Config::class.java, INSTANCE) {
     @Suppress("unused")
     @SerializedName("\$schema")
     private val schema = "https://raw.githubusercontent.com/spartacus04/jext-reborn/master/schemas/config.json"

@@ -1,5 +1,6 @@
 package me.spartacus04.jext.discs.sources
 
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.Disc
 
 /**
@@ -12,5 +13,5 @@ interface DiscSource {
      * 
      * @return The list of discs.
      */
-    suspend fun getDiscs(): List<Disc>
+    suspend fun getDiscs(plugin: Jext): List<Disc>
 }

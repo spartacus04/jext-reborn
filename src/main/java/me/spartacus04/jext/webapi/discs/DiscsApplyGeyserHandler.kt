@@ -1,16 +1,16 @@
 package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
-import me.spartacus04.jext.JextState.GEYSER
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-internal class DiscsApplyGeyserHandler : JextHttpHandler(true) {
+internal class DiscsApplyGeyserHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onPost(exchange: HttpExchange) {
         val body = exchange.requestBody.readBytes()
 
-        GEYSER.applyResourcePack(body)
+        plugin.geyserManager.applyResourcePack(body)
         exchange.sendResponseHeaders(204, 0)
 
-        GEYSER.reloadGeyser()
+        plugin.geyserManager.reloadGeyser()
     }
 }

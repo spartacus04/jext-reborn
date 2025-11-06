@@ -1,9 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.Disc
-import me.spartacus04.jext.listeners.utils.JextListener
 import me.spartacus04.jext.utils.Constants.FRAGMENT_LIST
 import me.spartacus04.jext.utils.Constants.SOUND_MAP
 import me.spartacus04.jext.utils.isRecordFragment
@@ -16,54 +15,50 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.block.Crafter
 
-internal class DiscUpdateEvent : JextListener() {
+internal class DiscUpdateEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler(ignoreCancelled = true)
-    fun playerJoinEvent(e : PlayerJoinEvent) = updateInventory(e.player.inventory)
+    fun playerJoinEvent(e: PlayerJoinEvent) = updateInventory(e.player.inventory)
 
     @EventHandler(ignoreCancelled = true)
-    fun inventoryOpenEvent(e : InventoryOpenEvent) = updateInventory(e.inventory)
+    fun inventoryOpenEvent(e: InventoryOpenEvent) = updateInventory(e.inventory)
 
     @EventHandler(ignoreCancelled = true)
     fun pickUpItemEvent(e: EntityPickupItemEvent) {
         e.item.itemStack = updateItem(e.item.itemStack)
     }
 
-    @Suppress("UnstableApiUsage")
     private fun updateInventory(inv: Inventory) {
-        // If the inventory is a crafter, we need to keep track of the disabled slots
-        val crafterArr = if(inv.type == InventoryType.CRAFTER) {
-            val disabled = arrayListOf<Int>()
-            val holder = inv.holder as? Crafter ?: return
+        // Take a snapshot of the disabled slots if this inventory is a Crafter
+        val crafter = if (inv.type == InventoryType.CRAFTER) inv.holder as? Crafter else null
+        val crafterSnapshot: BooleanArray? = crafter?.let { c ->
+            BooleanArray(9) { i -> c.isSlotDisabled(i) }
+        }
 
-            for(i in 0..inv.size-1) {
-                if(holder.isSlotDisabled(i)) {
-                    disabled.add(i)
+        try {
+            // Update item by item – do not overwrite the entire contents array
+            val size = inv.size
+            for (i in 0 until size) {
+                val stack = inv.getItem(i) ?: continue
+                val updated = updateItem(stack)
+
+                // Only update if there is an actual change
+                if (updated != stack) {
+                    if (updated.type != stack.type || updated.amount != stack.amount || updated.itemMeta != stack.itemMeta) {
+                        inv.setItem(i, updated)
+                    }
                 }
             }
-
-            disabled
-        } else null
-
-        // We can't use inv.contents.forEachIndexed because it interferes with other inventory plugins
-        val contents = inv.contents
-        contents.forEachIndexed { i, it ->
-            if (it != null) {
-                contents[i] = updateItem(it)
-            }
-        }
-        inv.contents = contents
-
-        // Restore the disabled slots
-        if(crafterArr != null) {
-            val holder = inv.holder as? Crafter ?: return
-
-            for(i in crafterArr) {
-                holder.setSlotDisabled(i, true)
+        } finally {
+            // Restore the exact previous disabled state for Crafter slots
+            if (crafter != null && crafterSnapshot != null) {
+                for (i in 0 until 9) {
+                    crafter.setSlotDisabled(i, crafterSnapshot[i])
+                }
             }
         }
     }
 
-    private fun updateItem(itemStack: ItemStack) : ItemStack {
+    private fun updateItem(itemStack: ItemStack): ItemStack {
         if (itemStack.type.isRecord) {
             if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
@@ -71,7 +66,7 @@ internal class DiscUpdateEvent : JextListener() {
                 return if (disc == null) {
                     val stacks = arrayListOf(
                         SOUND_MAP.keys.map { ItemStack(it) },
-                        DISCS.map { it.discItemStack }
+                        plugin.discs.map { it.discItemStack }
                     ).flatten()
 
                     stacks.random()
@@ -79,14 +74,14 @@ internal class DiscUpdateEvent : JextListener() {
                     disc.discItemStack
                 }
             }
-        } else if(VERSION >= "1.19" && itemStack.type.isRecordFragment) {
-            if(Disc.isCustomDisc(itemStack)) {
+        } else if (plugin.serverVersion >= "1.19" && itemStack.type.isRecordFragment) {
+            if (Disc.isCustomDisc(itemStack)) {
                 val disc = Disc.fromItemstack(itemStack)
 
-                return if(disc == null) {
+                return if (disc == null) {
                     val stacks = arrayListOf(
                         FRAGMENT_LIST.map { ItemStack(it) },
-                        DISCS.map { it.fragmentItemStack!! }
+                        plugin.discs.map { it.fragmentItemStack!! }
                     ).flatten()
 
                     stacks.random().apply {

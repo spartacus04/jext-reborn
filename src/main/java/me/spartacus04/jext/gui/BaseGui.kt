@@ -1,6 +1,6 @@
 package me.spartacus04.jext.gui
 
-import me.spartacus04.jext.JextState.GEYSER
+import me.spartacus04.jext.Jext
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import xyz.xenondevs.invui.inventory.VirtualInventory
@@ -18,17 +18,19 @@ abstract class BaseGui {
     internal val isBedrock: Boolean
     internal val inventory: VirtualInventory
     private val inventoryName: String
+    private val plugin: Jext
 
     /**
      * Create a new jukebox container for a player
      */
-    protected constructor(player: Player, inventory: VirtualInventory, inventoryName: String) {
+    protected constructor(player: Player, inventory: VirtualInventory, inventoryName: String, plugin: Jext) {
         this.targetPlayer = player
         this.inventoryId = player.uniqueId.toString()
         this.targetBlock = null
-        this.isBedrock = GEYSER.isBedrockPlayer(player)
+        this.isBedrock = plugin.geyserManager.isBedrockPlayer(player)
         this.inventory = inventory
         this.inventoryName = inventoryName
+        this.plugin = plugin
 
         this.onInit()
         this.setHandlers()
@@ -38,13 +40,14 @@ abstract class BaseGui {
     /**
      * Create a new jukebox container for a block
      */
-    protected constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String) {
+    protected constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String, plugin: Jext) {
         this.targetPlayer = player
         this.inventoryId = "${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"
         this.targetBlock = block
-        this.isBedrock = GEYSER.isBedrockPlayer(player)
+        this.isBedrock = plugin.geyserManager.isBedrockPlayer(player)
         this.inventory = inventory
         this.inventoryName = inventoryName
+        this.plugin = plugin
 
         this.onInit()
         this.setHandlers()
@@ -76,7 +79,7 @@ abstract class BaseGui {
      */
     @SuppressWarnings
     fun finalizeGui() {
-        val gui = GuiBuilder().buildGui(targetPlayer, inventory)
+        val gui = GuiBuilder().buildGui(targetPlayer, inventory, plugin)
 
         val window = Window.single()
             .setViewer(targetPlayer)

@@ -1,6 +1,6 @@
 package me.spartacus04.jext.discs.discplaying
 
-import me.spartacus04.jext.JextState.CONFIG
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.Location
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 class DefaultDiscPlayingMethod : DiscPlayingMethod {
     override fun playLocation(location: Location, namespace: String, volume : Float, pitch : Float) {
         location.world!!.players.forEach {
-            if(location.distance(it.location) <= CONFIG.JUKEBOX_RANGE) {
+            if(location.distance(it.location) <= INSTANCE.config.JUKEBOX_RANGE) {
                 it.playSound(location, namespace, SoundCategory.RECORDS, volume, pitch)
             }
         }

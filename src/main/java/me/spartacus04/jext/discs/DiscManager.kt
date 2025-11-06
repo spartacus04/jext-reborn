@@ -4,9 +4,7 @@ import io.github.bananapuncher714.nbteditor.NBTEditor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.spartacus04.jext.JextState.ASSETS_MANAGER
-import me.spartacus04.jext.JextState.SCHEDULER
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.discs.discstopping.DefaultDiscStoppingMethod
 import me.spartacus04.jext.discs.discstopping.DiscStoppingMethod
 import me.spartacus04.jext.discs.discstopping.NbsDiscStoppingMethod
@@ -20,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta
 /**
  * The class `DiscManager` is a utility class that's used to manage and enumerate all the discs in the plugin.
  */
-class DiscManager : Iterable<Disc> {
+class DiscManager(val plugin: Jext) : Iterable<Disc> {
     private val discSources = arrayListOf<DiscSource>()
     private var discs: ArrayList<Disc> = arrayListOf()
 
@@ -47,13 +45,13 @@ class DiscManager : Iterable<Disc> {
     fun reloadDiscs(onReload: (() -> Unit)? = null) {
         discs.clear()
 
-        SCHEDULER.runTaskAsynchronously {
+        plugin.scheduler.runTaskAsynchronously {
             val discs = CoroutineScope(Dispatchers.Default).launch {
-                ASSETS_MANAGER.clearCache()
-                ASSETS_MANAGER.reloadAssets()
+                plugin.assetsManager.clearCache()
+                plugin.assetsManager.reloadAssets()
 
                 discSources.forEach {
-                    discs.addAll(it.getDiscs())
+                    discs.addAll(it.getDiscs(plugin))
                 }
             }
 
@@ -163,7 +161,7 @@ class DiscManager : Iterable<Disc> {
     private fun mergedStop(location: Location) {
         if(location.block.type != Material.JUKEBOX) return
 
-        if(VERSION <= "1.21") {
+        if(plugin.serverVersion <= "1.21") {
             NBTEditor.set(location.block, NBTEditor.getLong(location.block, "RecordStartTick") + 72 * 20, "TickCount")
         } else {
             NBTEditor.set(location.block, (72 * 20).toLong(), "ticks_since_song_started")

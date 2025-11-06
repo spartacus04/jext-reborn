@@ -1,9 +1,9 @@
 package me.spartacus04.jext.listeners
 
 import io.github.bananapuncher714.nbteditor.NBTEditor
-import me.spartacus04.jext.JextState.CONFIG
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.listeners.utils.JextListener
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.colosseum.utils.version.VersionCompatibilityMin
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.utils.Constants
 import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.Material
@@ -15,7 +15,8 @@ import org.bukkit.event.entity.EntityChangeBlockEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import kotlin.random.Random
 
-internal class DecoratedPotEvent : JextListener("1.21") {
+@VersionCompatibilityMin("1.21")
+internal class DecoratedPotEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler
     fun onPotBreak(event: BlockBreakEvent) {
         if(event.block.type != Material.DECORATED_POT) return
@@ -49,7 +50,7 @@ internal class DecoratedPotEvent : JextListener("1.21") {
     private fun updateLootTable(block: Block, lootTable: String, seed: Long) {
         val items = ArrayList<Constants.ChanceStack>()
 
-        DISCS.forEach {
+        plugin.discs.forEach {
             if(it.lootTables.contains(lootTable))
                 items.add(Constants.ChanceStack(it.lootTables[lootTable]!!, it.discItemStack))
 
@@ -79,8 +80,8 @@ internal class DecoratedPotEvent : JextListener("1.21") {
                     val decoratedPot = block.state as DecoratedPot
                     decoratedPot.inventory.item = item.stack.apply {
                         if(this.type.isRecordFragment) {
-                            this.amount = if(CONFIG.DISC_LIMIT.containsKey(lootTable)) CONFIG.DISC_LIMIT[lootTable]!!
-                            else if(CONFIG.DISC_LIMIT.containsKey("chests/*")) CONFIG.DISC_LIMIT["chests/*"]!!
+                            this.amount = if(plugin.config.DISC_LIMIT.containsKey(lootTable)) plugin.config.DISC_LIMIT[lootTable]!!
+                            else if(plugin.config.DISC_LIMIT.containsKey("chests/*")) plugin.config.DISC_LIMIT["chests/*"]!!
                             else 2
                         }
                     }

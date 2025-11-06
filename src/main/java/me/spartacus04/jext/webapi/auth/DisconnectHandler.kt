@@ -1,9 +1,10 @@
 package me.spartacus04.jext.webapi.auth
 
 import com.sun.net.httpserver.HttpExchange
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
-internal class DisconnectHandler : JextHttpHandler(true) {
+internal class DisconnectHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onPost(exchange: HttpExchange) {
         val addr = exchange.remoteAddress.address.address.map { it.toInt() }.joinToString(".")
 

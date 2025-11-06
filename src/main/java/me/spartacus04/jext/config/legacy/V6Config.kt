@@ -1,7 +1,7 @@
 package me.spartacus04.jext.config.legacy
 
 import com.google.gson.annotations.SerializedName
-import me.spartacus04.jext.JextState.GSON
+import me.spartacus04.colosseum.ColosseumPlugin
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.config.fields.FieldLanguageMode
 
@@ -37,8 +37,8 @@ internal data class V6Config (
     @SerializedName("fragment-loottables-limit")
     var FRAGMENT_LIMIT : HashMap<String, Int> = hashMapOf(),
 ) : ConfigMigrator {
-    override fun migrateToNext(): String {
-        return GSON.toJson(V7Config(
+    override fun migrateToNext(plugin: ColosseumPlugin): String {
+        return plugin.gson.toJson(V7Config(
             LANGUAGE_MODE = try {
                 FieldLanguageMode.fromString(LANGUAGE_MODE)
             } catch (_: IllegalArgumentException) { FieldLanguageMode.AUTO },

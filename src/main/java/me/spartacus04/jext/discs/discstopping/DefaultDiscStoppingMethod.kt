@@ -1,7 +1,7 @@
 package me.spartacus04.jext.discs.discstopping
 
 import com.github.retrooper.packetevents.PacketEvents
-import me.spartacus04.jext.JextState.VERSION
+import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.utils.WrapperPlayServerStopSoundCategory
 import org.bukkit.Location
 import org.bukkit.SoundCategory
@@ -21,7 +21,7 @@ class DefaultDiscStoppingMethod : DiscStoppingMethod {
     }
 
     override fun stop(player: Player) {
-        if(VERSION < "1.19") {
+        if(INSTANCE.serverVersion < "1.19") {
             stopOldVersions(player)
         } else {
             player.stopSound(SoundCategory.RECORDS)
@@ -41,7 +41,7 @@ class DefaultDiscStoppingMethod : DiscStoppingMethod {
     override fun stop(location: Location) {
         for (player in location.world!!.players) {
             if (player.location.distance(location) <= 64) {
-                if(VERSION < "1.19") {
+                if(INSTANCE.serverVersion < "1.19") {
                     stopOldVersions(player)
                 } else {
                     player.stopSound(SoundCategory.RECORDS)

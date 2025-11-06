@@ -1,7 +1,8 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.jext.JextState.DISCS
-import me.spartacus04.jext.listeners.utils.JextListener
+import me.spartacus04.colosseum.listeners.ColosseumListener
+import me.spartacus04.colosseum.utils.version.VersionCompatibilityMin
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.utils.Constants.WEIGHTED_LOOT_TABLE_ITEMS
 import me.spartacus04.jext.utils.Constants.ChanceStack
 import org.bukkit.Material
@@ -11,14 +12,15 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import kotlin.random.Random
 
-internal class BlockBrushEvent : JextListener("1.20") {
+@VersionCompatibilityMin("1.20")
+internal class BlockBrushEvent(val plugin: Jext) : ColosseumListener(plugin) {
     @EventHandler
     fun onBlockBrush(event: PlayerInteractEvent) {
         val brushableBlock = getBrushableBlock(event) ?: return
 
         val items = ArrayList<ChanceStack>()
 
-        DISCS.forEach {
+        plugin.discs.forEach {
             if(it.lootTables.contains(brushableBlock.lootTable!!.key.key))
                 items.add(ChanceStack(it.lootTables[brushableBlock.lootTable!!.key.key]!!, it.discItemStack))
 
