@@ -42,7 +42,7 @@ dependencies {
     compileOnly("org.scala-lang:scala-library:2.13.18")
     compileOnly("com.github.techFortress:GriefPrevention:18.0.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
-    compileOnly("org.geysermc.geyser:api:2.9.0-SNAPSHOT") {
+    compileOnly("org.geysermc.geyser:api:2.9.1-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
         }
