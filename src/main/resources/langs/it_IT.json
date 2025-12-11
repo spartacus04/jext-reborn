@@ -43,7 +43,7 @@
   "reloaded": "§cRicaricato!",
   "error-missing-permission": "§cNon hai il permesso di usare questo comando!",
   "error-malformed-command": "§cComando malformato: atteso '§e%expected%§c' argomenti, ottenuto '§e%got%§c'.",
-  "error-malformed-argument": "§cArgomento malformato: atteso '§e%expected%§c' a '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cErrore: atteso almeno §e'%expected%'§c argomenti a §e'%at%'§c, ottenuto '§e%got%§c'.",
   "error-invalid-sender-at": "§cErrore: mittente non valido '§e%sender%§c' a §e'%at%'§c'.",
   "error-no-players": "Errore: Nessun giocatore trovato",
