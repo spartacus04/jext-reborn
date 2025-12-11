@@ -43,7 +43,7 @@
   "reloaded": "§cReloaded!",
   "error-missing-permission": "§cΔεν έχεις άδεια να χρησιμοποιήσεις αυτήν την εντολή!",
   "error-malformed-command": "§cMalformed command: αναμενόταν '§e%expected%§c' arguments, πήρε '§e%got%§c'.",
-  "error-malformed-argument": "§cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Αναμένεται τουλάχιστον §e'%expected%'§c arguments at §e'%at%'§c, πήρε '§e%got%§c'.",
   "error-invalid-sender-at": "§cError: Άκυρος αποστολέας '§e%sender%§c' στο §e'%at%'§c'.",
   "error-no-players": "Σφάλμα: δεν βρέθηκαν παίκτες",
