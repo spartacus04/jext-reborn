@@ -50,8 +50,8 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("io.github.bananapuncher714:nbteditor:7.20.1")
-    implementation("xyz.xenondevs.invui:invui:1.48")
-    implementation("xyz.xenondevs.invui:invui-kotlin:1.48")
+    implementation("xyz.xenondevs.invui:invui:1.49")
+    implementation("xyz.xenondevs.invui:invui-kotlin:1.49")
     implementation("com.github.spartacus04:colosseum:1.1")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
