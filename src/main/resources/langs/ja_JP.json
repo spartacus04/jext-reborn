@@ -43,7 +43,7 @@
   "reloaded": "§c再読み込みしました！",
   "error-missing-permission": "§cこのコマンドを使用する権限がありません！",
   "error-malformed-command": "§c不正な形式のコマンド: '§e%expected%§c' 引数を想定し、'§e%got%§c'を得ました。",
-  "error-malformed-argument": "§c不正な引数: '§e%expected%§c' at '§e%at%§c'が期待されています。",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'",
   "error-invalid-sender-at": "§cエラー: 無効な送信者'§e%sender%§c '§e%at%'§c'。",
   "error-no-players": "エラー：プレイヤーが見つかりませんでした",
