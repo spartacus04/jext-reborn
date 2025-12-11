@@ -43,7 +43,7 @@
   "reloaded": "§cOppdatert!",
   "error-missing-permission": "§cDu har ikke tillatelse til å bruke denne kommandoen!",
   "error-malformed-command": "§cFeilformet kommando: forventet '§e%expected%§c' argumenter, fikk '§e%got%§c'.",
-  "error-malformed-argument": "§cFeilformet argument: forventet '§e%expected%§c' ved '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cFeil: Forventet minst §e'%expected%'§c arguments at §e'%at%'§c, fikk '§e%got%§c'.",
   "error-invalid-sender-at": "§cFeil: Ugyldig avsender '§e%sender%§c' ved §e'%at%'§c'.",
   "error-no-players": "Feil: Ingen spillere funnet",
