@@ -43,7 +43,7 @@
   "reloaded": "§c已重新载入配置！",
   "error-missing-permission": "§c你没有权限使用此命令!",
   "error-malformed-command": "§cMalformed command: expected '§e%expected%§c' arguments, got '§e%got%§c'.",
-  "error-malformed-argument": "§cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cError: Invalid sender '§e%sender%§c' at §e'%at%'§c'.",
   "error-no-players": "错误：没有找到玩家",
