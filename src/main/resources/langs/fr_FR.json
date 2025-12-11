@@ -43,7 +43,7 @@
   "reloaded": "§cRechargé !",
   "error-missing-permission": "§cVous n'avez pas la permission d'utiliser cette commande!",
   "error-malformed-command": "§cCommande mal formée: arguments '§e%expected%§c', reçu '§e%got%§c'.",
-  "error-malformed-argument": "§cArgument mal formé : '§e%expected%§c' attendu à '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cErreur: Attendait au moins §e'%expected%'§c arguments à §e'%at%'§c, a reçu '§e%got%§c'.",
   "error-invalid-sender-at": "§cErreur: Expéditeur invalide '§e%sender%§c' à §e'%at%'§c'.",
   "error-no-players": "Erreur: Aucun joueur trouvé",
