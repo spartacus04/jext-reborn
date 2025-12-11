@@ -1,5 +1,6 @@
-package me.spartacus04.jext.geyser
+package me.spartacus04.jext.geyser.plugin
 
+import me.spartacus04.jext.geyser.IPC.GeyserIPC
 import java.util.UUID
 import java.util.Base64
 

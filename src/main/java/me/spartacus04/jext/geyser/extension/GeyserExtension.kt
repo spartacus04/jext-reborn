@@ -1,10 +1,12 @@
-package me.spartacus04.jext.geyser
+package me.spartacus04.jext.geyser.extension
 
+import me.spartacus04.jext.geyser.IPC.GeyserIPC
 import org.geysermc.api.Geyser
 import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent
 import org.geysermc.geyser.api.extension.Extension
-import java.util.*
+import java.util.Base64
+import java.util.UUID
 import java.util.zip.ZipFile
 import kotlin.io.path.writeBytes
 

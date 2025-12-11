@@ -1,4 +1,4 @@
-package me.spartacus04.jext.geyser
+package me.spartacus04.jext.geyser.plugin
 
 import java.util.UUID
 

@@ -1,4 +1,4 @@
-package me.spartacus04.jext.geyser
+package me.spartacus04.jext.geyser.IPC
 
 import java.io.File
 import java.nio.file.Files

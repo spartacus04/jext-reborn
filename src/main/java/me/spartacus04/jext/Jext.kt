@@ -20,7 +20,7 @@ import me.spartacus04.jext.config.ConfigFactory
 import me.spartacus04.jext.discs.DiscManager
 import me.spartacus04.jext.discs.sources.file.FileSource
 import me.spartacus04.jext.discs.sources.nbs.NbsSource
-import me.spartacus04.jext.geyser.GeyserManager
+import me.spartacus04.jext.geyser.plugin.GeyserManager
 import me.spartacus04.jext.gui.JukeboxGui
 import me.spartacus04.jext.integrations.PermissionsIntegrationManager
 import me.spartacus04.jext.language.DefaultMessages.DISABLED_MESSAGE
@@ -100,7 +100,7 @@ class Jext : ColosseumPlugin() {
             registerMainCommand("jext")
         }
 
-        colosseumLogger.warn(ENABLED_MESSAGE)
+        colosseumLogger.confirm(ENABLED_MESSAGE)
 
         if(config.CHECK_FOR_UPDATES) {
             checkForUpdates("spartacus04/jext-reborn") {

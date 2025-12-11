@@ -1,4 +1,4 @@
-package me.spartacus04.jext.geyser
+package me.spartacus04.jext.geyser.plugin
 
 import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.geysermc.event.subscribe.Subscribe

@@ -45,7 +45,7 @@ class JextWebServer(private val plugin: Jext) {
 
     private fun start() {
         plugin.scheduler.runTaskAsynchronously {
-            scope = CoroutineScope(Dispatchers.Default).launch {
+            CoroutineScope(Dispatchers.Default).launch {
                 if(server != null) return@launch
 
                 server = HttpServer.create(InetSocketAddress(plugin.config.WEB_INTERFACE_PORT), 0)
