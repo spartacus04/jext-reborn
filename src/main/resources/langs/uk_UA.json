@@ -43,7 +43,7 @@
   "reloaded": "§cПерезавантажено!",
   "error-missing-permission": "§cУ вас немає прав для використання цієї команди!",
   "error-malformed-command": "§cНеправильна команда: очікувалось '§e аргументи%expected%§c', отримали '§e%got%§c'.",
-  "error-malformed-argument": "§cНеправильний аргумент: очікувалось '§e%expected%§c' на '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cПомилка: Недійсний відправник '§e%sender%§c' о §e'%at%'§c'.",
   "error-no-players": "Помилка: Гравців не знайдено",
