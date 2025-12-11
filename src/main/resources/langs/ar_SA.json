@@ -43,7 +43,7 @@
   "reloaded": "باسكويلد!",
   "error-missing-permission": "§ ليس لديك إذن لاستخدام هذا الأمر!",
   "error-malformed-command": "§cMalform: الحجج المتوقعة '§e%expected%§c' ، حصلت على '§e%got%§c'.",
-  "error-malformed-argument": "حجة §cMalform: توقعت '§e%expected%§c' في '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: توقّعت على الأقل §e'%expected%'§c الحجج عند §e'%at%'§c، حصلت على '§e%got%§c'.",
   "error-invalid-sender-at": "§cError: المرسل غير صحيح '§e%sender%§c' على §e'%at%'§c'.",
   "error-no-players": "خطأ: لم يتم العثور على لاعبين",
