@@ -43,7 +43,7 @@
   "reloaded": "§cHerladen!",
   "error-missing-permission": "§cJe hebt geen toestemming om dit commando te gebruiken!",
   "error-malformed-command": "§cMisvormde commando: verwachtte '§e%expected%§c' argumenten, kreeg '§e%got%§c'.",
-  "error-malformed-argument": "§cMisvormd argument: verwacht '§e%expected%§c' op '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cFout: Ten minste §e'%expected%'§c argumenten om §e'%at%'§c, kreeg '§e%got%§c'.",
   "error-invalid-sender-at": "§cFout: Ongeldige afzender '§e%sender%§c' om §e'%at%'§c'.",
   "error-no-players": "Fout: Geen spelers gevonden",

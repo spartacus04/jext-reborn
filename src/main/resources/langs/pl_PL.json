@@ -43,7 +43,7 @@
   "reloaded": "§cPrzeładowano!",
   "error-missing-permission": "§cNie masz uprawnień do używania tej komendy!",
   "error-malformed-command": "§cZłe polecenie: oczekiwano argumentów '§e%expected%§c', otrzymano '§e%got%§c'.",
-  "error-malformed-argument": "§cBłędny argument: oczekiwano '§e%expected%§c' na '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cBłąd: Oczekiwano co najmniej §e'%expected%'§c argumenty w §e'%at%'§c, otrzymano '§e%got%§c'.",
   "error-invalid-sender-at": "§cBłąd: Nieprawidłowy nadawca '§e%sender%§c' w §e'%at%'§c'.",
   "error-no-players": "Błąd: Nie znaleziono graczy",

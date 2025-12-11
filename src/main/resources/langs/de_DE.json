@@ -43,7 +43,7 @@
   "reloaded": "§cNeugeladen!",
   "error-missing-permission": "§cDu hast keine Berechtigung, diesen Befehl zu benutzen!",
   "error-malformed-command": "§cFalformer Befehl: erwartete '§e%expected%§c' Argumente, erhielt '§e%got%§c'.",
-  "error-malformed-argument": "§cUngültiges Argument: '§e%expected%§c' bei '§e%at%§c' erwartet.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cFehler: Ungültiger Absender '§e%sender%§c' bei §e'%at%'§c'.",
   "error-no-players": "Fehler: Keine Spieler gefunden",

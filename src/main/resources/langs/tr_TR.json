@@ -43,7 +43,7 @@
   "reloaded": "§cYeniden yüklendi!",
   "error-missing-permission": "§cYou don't have permission to use this command!",
   "error-malformed-command": "§cMalformed command: expected '§e%expected%§c' arguments, got '§e%got%§c'.",
-  "error-malformed-argument": "§cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cError: Invalid sender '§e%sender%§c' at §e'%at%'§c'.",
   "error-no-players": "Error: No players found",

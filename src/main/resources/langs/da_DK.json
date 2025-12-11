@@ -43,7 +43,7 @@
   "reloaded": "§cGenindlæst!",
   "error-missing-permission": "§cDu har ikke tilladelse til at bruge denne kommando!",
   "error-malformed-command": "§cForkert udformet kommando: forventede '§e%expected%§c' argumenter, fik '§e%got%§c'.",
-  "error-malformed-argument": "§cForkert udformet argument: forventet '§e%expected%§c' på '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cFejl: Forventede mindst §e'%expected%'§c arguments at §e'%at%'§c, fik '§e%got%§c'.",
   "error-invalid-sender-at": "§cFejl: Ugyldig afsender '§e%sender%§c' i §e'%at%'§c'.",
   "error-no-players": "Fejl: Ingen spillere fundet",

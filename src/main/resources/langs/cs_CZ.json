@@ -43,7 +43,7 @@
   "reloaded": "§cZnovu přidáno!",
   "error-missing-permission": "§cNemáš oprávnění použít tento příkaz!",
   "error-malformed-command": "§cPoškozen prikaz: očekával '§e%expected%§c' argumenty, dostal '§e%got%§c'.",
-  "error-malformed-argument": "§cChyben argument: očekával '§e%expected%§c' na '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cChyba: Očekáván alespoň §e'%expected%'§c argumenty na §e'%at%'§c, dostal '§e%got%§c'.",
   "error-invalid-sender-at": "§cChyba: Neplatný odesílatel '§e%sender%§c' na §e'%at%'§c'.",
   "error-no-players": "Chyba: Nebyli nalezeni žádní hráči",

@@ -43,7 +43,7 @@
   "reloaded": "§cReincarcat!",
   "error-missing-permission": "§cNu ai permisiunea sa folosesti aceasta comanda!",
   "error-malformed-command": "§cComanda malformata: asteptata '§e%expected%§c', a primit '§e%got%§c'.",
-  "error-malformed-argument": "§cArgument malformat: asteptat '§e%expected%§c' la '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cError: Expected at least §e'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cEroare: expeditorul invalid '§e%sender%§c' la §e'%at%'§c'.",
   "error-no-players": "Eroare: Niciun jucător găsit",

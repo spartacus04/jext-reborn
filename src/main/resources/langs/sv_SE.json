@@ -43,7 +43,7 @@
   "reloaded": "§cOmladdad!",
   "error-missing-permission": "§cDu har inte tillåtelse att använda detta kommando!",
   "error-malformed-command": "§cFelformaterat kommando: förväntade '§e%expected%§c' argument, fick '§e%got%§c'.",
-  "error-malformed-argument": "§cFelformaterat argument: förväntat '§e%expected%§c' på '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cFel: Förväntade sig minst §'%expected%'§c arguments at §e'%at%'§c, got '§e%got%§c'.",
   "error-invalid-sender-at": "§cFel: Ogiltig avsändare '§e%sender%§c' på §e'%at%'§c'.",
   "error-no-players": "Fel: Inga spelare hittades",
