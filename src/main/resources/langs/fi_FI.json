@@ -43,7 +43,7 @@
   "reloaded": "§cLadattu!",
   "error-missing-permission": "§cSinulla ei ole lupaa käyttää tätä komentoa!",
   "error-malformed-command": "§cVirheellinen komento: odotti '§e%expected%§c' argumenttia, sai '§e%got%§c'.",
-  "error-malformed-argument": "§cVirheellinen argumentti: odotti '§e%expected%§c' '§e%at%§c'.",
+  "error-malformed-argument": "cMalformed argument: expected '§e%expected%§c' at '§e%at%§c'.",
   "error-insufficient-consumes": "§cVirhe: Odotettiin vähintään §e'%expected%'§c argumenttia §e'%at%'§c, sai '§e%got%§c'.",
   "error-invalid-sender-at": "§cError: Invalid sender '§e%sender%§c' at §e'%at%'§c'.",
   "error-no-players": "Virhe: Pelaajia ei löytynyt",
