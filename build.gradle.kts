@@ -52,7 +52,7 @@ dependencies {
     implementation("io.github.bananapuncher714:nbteditor:7.20.1")
     implementation("xyz.xenondevs.invui:invui:1.49")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.49")
-    implementation("com.github.spartacus04:colosseum:1.1")
+    implementation("com.github.spartacus04:colosseum:1.1.1")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
