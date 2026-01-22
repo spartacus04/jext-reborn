@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.11-R0.2-SNAPSHOT")
     compileOnly("com.github.retrooper:packetevents-spigot:2.11.1")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:3.8.0")
