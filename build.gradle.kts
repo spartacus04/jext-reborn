@@ -49,7 +49,7 @@ dependencies {
     }
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
-    implementation("io.github.bananapuncher714:nbteditor:7.20.2")
+    implementation("io.github.bananapuncher714:nbteditor:7.20.3")
     implementation("xyz.xenondevs.invui:invui:1.49")
     implementation("xyz.xenondevs.invui:invui-kotlin:1.49")
     implementation("com.github.spartacus04:colosseum:1.1.1")
