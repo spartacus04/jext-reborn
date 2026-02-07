@@ -1,8 +1,7 @@
 use std::{path::PathBuf, process::Command};
 
-use tauri::http::HeaderValue;
-use tauri_plugin_http::reqwest::header::USER_AGENT;
-use tauri_plugin_http::reqwest::Client;
+use reqwest::header::USER_AGENT;
+use reqwest::Client;
 
 use super::platform::{Architecture, Platform};
 
@@ -149,7 +148,7 @@ pub async fn get_yt_dlp_release_data() -> Result<serde_json::Value, String> {
     let client = Client::new();
     let response = match client
         .get(url)
-        .header(USER_AGENT, HeaderValue::from_static("rust-reqwest"))
+        .header(USER_AGENT, "rust-reqwest")
         .send()
         .await
     {
