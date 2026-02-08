@@ -81,7 +81,7 @@ fun Gui.Builder.setJextStructure(player: Player, inventory: VirtualInventory) : 
             .setBinding(
                 'x',
                 inventory,
-                Gui.Builder.DirectionMarker.HORIZONTAL
+                Gui.Builder.DirectionMarker.VERTICAL
             )
 
         FieldGuiStyle.PAGE_HORIZONTAL -> this
@@ -107,7 +107,7 @@ fun Gui.Builder.setJextStructure(player: Player, inventory: VirtualInventory) : 
             .setBinding(
                 'x',
                 inventory,
-                Gui.Builder.DirectionMarker.HORIZONTAL
+                Gui.Builder.DirectionMarker.VERTICAL
             )
 
         FieldGuiStyle.PAGE_VERTICAL -> this

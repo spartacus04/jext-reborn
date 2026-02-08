@@ -12,7 +12,7 @@ internal class PreviousPageItem(scrollAmount: Int, private val player: Player, p
 
         item.itemMeta = item.itemMeta!!.apply {
             this.setDisplayName(plugin.i18nManager!![player, "prev-page"]!!)
-            if(gui.virtualInventories[inventoryId]!!.providers.first().slot <= 0) {
+            if(!gui.canScroll(inventoryId, scrollAmount)) {
                 lore = listOf(plugin.i18nManager!![player, "no-page"]!!)
             }
         }

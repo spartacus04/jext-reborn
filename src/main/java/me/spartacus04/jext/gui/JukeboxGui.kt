@@ -3,7 +3,7 @@ package me.spartacus04.jext.gui
 import com.google.gson.reflect.TypeToken
 import me.spartacus04.colosseum.gui.Gui
 import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventory
-import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryClickEvent
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryInteractEvent
 import me.spartacus04.jext.Jext
 import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.discs.Disc
@@ -13,7 +13,6 @@ import org.bukkit.SoundCategory
 import org.bukkit.block.Block
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import java.util.HashMap
@@ -22,69 +21,78 @@ import java.util.TimerTask
 import kotlin.collections.component1
 import kotlin.collections.component2
 
-class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val plugin: Jext) : VirtualInventory(size) {
+class JukeboxGui(size: Int, val id: String, val plugin: Jext) : VirtualInventory(size) {
     init {
         if(!playingMap.containsKey(id)) {
             playingMap[id] = -1
         }
     }
 
-    override fun onPreUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
-        val isBedrock = plugin.geyserManager.isBedrockPlayer(clickEvent.player)
-
-        val addTakeClick = if(isBedrock) {
-            !clickEvent.isShiftClick
+    override fun onPreUpdateEvent(event: VirtualInventoryInteractEvent) {
+        val changes = if(event.slotChanges.size == 1) {
+            event.slotChanges.first()
         } else {
-            clickEvent.isRightClick
-        }
+            event.isCancelled = true
+            null
+        } ?: return
 
-        // If the player tries to add a non-record item, cancel the event
-        // Also, if the player tries to add a record with the play/stop click, simply ignore it
-        if(clickEvent.cursor != null && !clickEvent.cursor!!.type.isRecord) {
-            clickEvent.isCancelled = true
-            return
-        } else if(clickEvent.cursor != null && clickEvent.cursor!!.type.isRecord && !addTakeClick) {
+
+        if((changes.isAdd || changes.isSwap) && changes.newItem != null && !changes.newItem!!.type.isRecord) {
+            event.isCancelled = true
             return
         }
 
-        if(addTakeClick) {
-            // if I'm removing an item, and the slot is currently playing, stop the music
-            if(clickEvent.virtualSlot == playingMap[id]) {
-                clickEvent.isCancelled = true
-                stopDisc(clickEvent)
-                playingMap[id] = -1
-            }
+        val isBedrock = plugin.geyserManager.isBedrockPlayer(event.player)
+
+        val isAltClick = if(isBedrock) {
+            !event.isShiftClick
         } else {
-            if(
-                (isBedrock && clickEvent.action != InventoryAction.MOVE_TO_OTHER_INVENTORY) ||
-                (!isBedrock && clickEvent.isRightClick)
-            ) {
-                return
-            }
+            event.isRightClick
+        }
 
-            clickEvent.isCancelled = true
+        if(changes.isAdd && changes.newItem != null && changes.newItem!!.type.isRecord && !isAltClick) {
+            return
+        }
 
-            stopDisc(clickEvent)
-
-            if(playingMap[id]!! != -1 && playingMap[id]!! == clickEvent.virtualSlot) {
+        if(isAltClick) {
+            if(changes.isRemove && changes.virtualSlot == playingMap[id]!!) {
+                event.isCancelled = true
+                stopDisc(event)
                 playingMap[id] = -1
-            } else {
-                playingMap[id] = clickEvent.virtualSlot
-                playDisc(clickEvent)
             }
+
+            return
+        }
+
+        if(
+            (isBedrock && !changes.isRemove) ||
+            (!isBedrock && event.isRightClick && !changes.isRemove)
+        ) return
+
+        event.isCancelled = true
+
+        stopDisc(event)
+
+        if(playingMap[id]!! != -1 && playingMap[id]!! == changes.virtualSlot) {
+            playingMap[id] = -1
+        } else {
+            playingMap[id] = changes.virtualSlot
+            playDisc(event, changes)
         }
     }
 
-    private fun playDisc(event: VirtualInventoryClickEvent) {
-        val itemStack = get(event.virtualSlot) ?: return
+    private fun playDisc(event: VirtualInventoryInteractEvent, changes: VirtualInventoryInteractEvent.SlotChange) {
+        val itemStack = get(changes.virtualSlot) ?: return
 
-        set(event.virtualSlot, itemStack.clone().apply {
+        set(changes.virtualSlot, itemStack.clone().apply {
             addUnsafeEnchantment(Enchantment.MENDING, 1)
 
             itemMeta = itemMeta!!.apply {
                 addItemFlags(ItemFlag.HIDE_ENCHANTS)
             }
         })
+
+        val targetBlock = getBlock()
 
         val delay = if(Disc.isCustomDisc(itemStack)) {
             val disc = Disc.fromItemstack(itemStack)!!
@@ -137,7 +145,17 @@ class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val 
         }
     }
 
-    private fun stopDisc(event: VirtualInventoryClickEvent) {
+    private fun getBlock(): Block? {
+        return if(id.contains(":")) {
+            val parts = id.split(":")
+            plugin.server.getWorld(parts[0])!!
+                .getBlockAt(parts[1].toInt(), parts[2].toInt(), parts[3].toInt())
+        } else {
+            null
+        }
+    }
+
+    private fun stopDisc(event: VirtualInventoryInteractEvent) {
         if(timerMap.containsKey(id)) {
             timerMap[id]!!.cancel()
             timerMap.remove(id)
@@ -158,6 +176,8 @@ class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val 
             )
         }
 
+        val targetBlock = getBlock()
+
         if(targetBlock != null) {
             plugin.discs.stop(targetBlock.location)
         } else {
@@ -165,8 +185,8 @@ class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val 
         }
     }
 
-    override fun onPostUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
-        if(clickEvent.action != InventoryAction.NOTHING) {
+    override fun onPostUpdateEvent(event: VirtualInventoryInteractEvent) {
+        if(event.slotChanges.isNotEmpty()) {
             save()
         }
     }
@@ -220,15 +240,7 @@ class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val 
                 return inventories[id]!!
             }
 
-            val block = if(id.contains(":")) {
-                val parts = id.split(":")
-                INSTANCE.server.getWorld(parts[0])!!
-                    .getBlockAt(parts[1].toInt(), parts[2].toInt(), parts[3].toInt())
-            } else {
-                null
-            }
-
-            val inv = JukeboxGui(INSTANCE.config.GUI_SIZE, block, id, INSTANCE)
+            val inv = JukeboxGui(INSTANCE.config.GUI_SIZE, id, INSTANCE)
             inventories[id] = inv
 
             return inv

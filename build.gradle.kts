@@ -50,7 +50,7 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("io.github.bananapuncher714:nbteditor:7.20.3")
-    implementation("me.spartacus04.colosseum:colosseum:dev")
+    implementation("com.github.spartacus04:colosseum:1.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -76,8 +76,6 @@ tasks {
         relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
         relocate("org/bstats", "${dependencyPackage}.bstats")
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
-        relocate("xyz/xenondevs/invui", "${dependencyPackage}.invui")
-        relocate("xyz/xenondevs/inventoryaccess", "${dependencyPackage}.inventoryaccess")
         relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
         relocate("_COROUTINE", "${dependencyPackage}._COROUTINE")
 
@@ -85,10 +83,6 @@ tasks {
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
         exclude("META-INF/**")
-
-        minimize {
-            exclude(dependency("xyz.xenondevs.invui:.*:.*"))
-        }
     }
 }
 

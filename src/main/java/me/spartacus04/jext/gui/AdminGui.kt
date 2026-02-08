@@ -2,24 +2,18 @@ package me.spartacus04.jext.gui
 
 import me.spartacus04.colosseum.gui.Gui
 import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventory
-import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryClickEvent
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryInteractEvent
 import me.spartacus04.jext.Jext
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 class AdminGui private constructor(size: Int, items: Array<ItemStack?>, val plugin: Jext) : VirtualInventory(size, items) {
-    override fun onPostUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
-        if(plugin.discs.size() == 0) return
+    val originalDiscs = items.clone()
 
-        val disc = plugin.discs[clickEvent.virtualSlot % plugin.discs.size()]
-        val isFragment = clickEvent.virtualSlot >= plugin.discs.size()
-                && plugin.serverVersion >= "1.19"
-
-        set(clickEvent.virtualSlot, if(isFragment) {
-            disc.fragmentItemStack
-        } else {
-            disc.discItemStack
-        })
+    override fun onPostUpdateEvent(event: VirtualInventoryInteractEvent) {
+        event.slotChanges.forEach {
+            set(it.virtualSlot, originalDiscs[it.virtualSlot])
+        }
     }
 
     companion object {

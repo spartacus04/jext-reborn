@@ -5,6 +5,7 @@ import me.spartacus04.jext.Jext
 import me.spartacus04.jext.config.fields.FieldJukeboxBehaviour
 import me.spartacus04.jext.discs.Disc
 import me.spartacus04.jext.gui.JukeboxGui
+import me.spartacus04.jext.utils.isRecordFragment
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.Jukebox
@@ -44,7 +45,7 @@ internal class JukeboxClickEvent(val plugin: Jext) : ColosseumListener(plugin) {
 
         if(state.record.type == Material.AIR) {
             val disc = event.item ?: return
-            if(!disc.type.isRecord) return
+            if(!disc.type.isRecord || disc.type.isRecordFragment) return
 
             Disc.fromItemstack(disc)?.play(location)
         }

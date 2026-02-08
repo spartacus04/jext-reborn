@@ -11,8 +11,8 @@ internal class ScrollUpItem(val horizontal: Boolean, scrollAmount: Int, private 
         val item = ItemStack(Material.GREEN_STAINED_GLASS_PANE)
 
         item.itemMeta = item.itemMeta!!.apply {
-            this.setDisplayName(plugin.i18nManager!![player, if(horizontal) "scroll-left" else "scroll-up"]!!)
-            if(gui.virtualInventories[inventoryId]!!.providers.first().slot <= 0) {
+            this.setItemName(plugin.i18nManager!![player, if(horizontal) "scroll-left" else "scroll-up"]!!)
+            if(!gui.canScroll(inventoryId, scrollAmount)) {
                 lore = listOf(plugin.i18nManager!![player, "cant-scroll-further"]!!)
             }
         }

@@ -12,7 +12,7 @@ internal class ScrollDownItem(val horizontal: Boolean, scrollAmount: Int, privat
 
         item.itemMeta = item.itemMeta!!.apply {
             this.setDisplayName(plugin.i18nManager!![player, if(horizontal) "scroll-right" else "scroll-down"]!!)
-            if(gui.virtualInventories[inventoryId]!!.providers.last().slot >= gui.virtualInventories[inventoryId]!!.inventory.size - 1) {
+            if(!gui.canScroll(inventoryId, scrollAmount)) {
                 lore = listOf(plugin.i18nManager!![player, "cant-scroll-further"]!!)
             }
         }

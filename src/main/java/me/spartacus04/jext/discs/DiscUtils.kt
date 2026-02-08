@@ -39,9 +39,17 @@ object DiscUtils {
      */
     fun buildCustomItemstack(material: Material, modelData: Int, namespace: String, lores: List<String>, title: String, author: String): ItemStack {
         val disc = if(INSTANCE.serverVersion >= "1.21.5") {
-            Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable=\"minecraft:11\",tooltip_display={hidden_components:[\"minecraft:jukebox_playable\"]}]")
+            if(material.isRecord) {
+                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable=\"minecraft:11\",tooltip_display={hidden_components:[\"minecraft:jukebox_playable\"]}]")
+            } else {
+                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[tooltip_display={hidden_components:[\"minecraft:jukebox_playable\"]}]")
+            }
         } else if(INSTANCE.serverVersion >= "1.21") {
-            Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
+            if(material.isRecord) {
+                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
+            } else {
+                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[show_in_tooltip=false]")
+            }
         } else {
             ItemStack(material)
         }
