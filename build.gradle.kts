@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
-    kotlin("jvm") version "2.2.21"
-    id("com.gradleup.shadow") version "9.3.0"
+    kotlin("jvm") version "2.3.10"
+    id("com.gradleup.shadow") version "9.3.1"
     id("org.jetbrains.dokka") version "2.1.0"
 
     `maven-publish`
-    id("io.papermc.hangar-publish-plugin") version "0.1.3"
+    id("io.papermc.hangar-publish-plugin") version "0.1.4"
     id("com.modrinth.minotaur") version "2.8.10"
 }
 
@@ -36,20 +36,20 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.10-R0.1-SNAPSHOT")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.10.1")
+    compileOnly("org.spigotmc:spigot-api:1.21.11-R0.2-SNAPSHOT")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
-    compileOnly("org.scala-lang:scala-library:2.13.18")
+    compileOnly("org.scala-lang:scala-library:3.8.1")
     compileOnly("com.github.techFortress:GriefPrevention:18.0.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
-    compileOnly("org.geysermc.geyser:api:2.9.1-SNAPSHOT") {
+    compileOnly("org.geysermc.geyser:api:2.9.2-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
         }
     }
 
     implementation("org.bstats:bstats-bukkit:3.1.0")
-    implementation("io.github.bananapuncher714:nbteditor:7.20.1")
+    implementation("io.github.bananapuncher714:nbteditor:7.20.3")
     implementation("me.spartacus04.colosseum:colosseum:dev")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
