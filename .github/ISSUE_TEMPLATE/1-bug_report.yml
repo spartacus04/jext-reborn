@@ -40,6 +40,7 @@ body:
       label: Server Version
       description: Select the server version
       options:
+        - 1.21.11
         - 1.21.10
         - 1.21.9
         - 1.21.8

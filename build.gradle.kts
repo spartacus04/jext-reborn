@@ -77,12 +77,16 @@ tasks {
         relocate("org/bstats", "${dependencyPackage}.bstats")
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
         relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
+        relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
+        relocate("com/google/errorprone", "${dependencyPackage}.errorprone")
         relocate("_COROUTINE", "${dependencyPackage}._COROUTINE")
 
         exclude("colors.bin")
         exclude("ScopeJVMKt.class")
         exclude("DebugProbesKt.bin")
         exclude("META-INF/**")
+
+        minimize()
     }
 }
 
