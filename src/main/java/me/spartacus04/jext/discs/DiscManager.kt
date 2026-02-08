@@ -46,16 +46,20 @@ class DiscManager(val plugin: Jext) : Iterable<Disc> {
         discs.clear()
 
         plugin.scheduler.runTaskAsynchronously {
-            val discs = CoroutineScope(Dispatchers.Default).launch {
+            val discsScope = CoroutineScope(Dispatchers.Default).launch {
                 plugin.assetsManager.clearCache()
                 plugin.assetsManager.reloadAssets()
 
                 discSources.forEach {
-                    discs.addAll(it.getDiscs(plugin))
+                    val loadedDiscs = it.getDiscs(plugin)
+
+                    plugin.colosseumLogger.debug("Loaded ${loadedDiscs.size} music discs from source $it.")
+
+                    discs.addAll(loadedDiscs)
                 }
             }
 
-            discs.invokeOnCompletion { onReload?.invoke() }
+            discsScope.invokeOnCompletion { onReload?.invoke() }
         }
     }
 

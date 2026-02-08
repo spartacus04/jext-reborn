@@ -1,6 +1,9 @@
 package me.spartacus04.jext.gui
 
 import com.google.gson.reflect.TypeToken
+import me.spartacus04.colosseum.gui.Gui
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventory
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryClickEvent
 import me.spartacus04.jext.Jext
 import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.discs.Disc
@@ -10,96 +13,72 @@ import org.bukkit.SoundCategory
 import org.bukkit.block.Block
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import xyz.xenondevs.invui.inventory.VirtualInventory
-import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
-import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
-import xyz.xenondevs.invui.inventory.event.PlayerUpdateReason
-import xyz.xenondevs.invui.inventory.event.UpdateReason
-import java.util.*
+import java.util.HashMap
+import java.util.Timer
+import java.util.TimerTask
+import kotlin.collections.component1
+import kotlin.collections.component2
 
-internal class JukeboxGui : BaseGui {
-    private constructor(player: Player, inventory: VirtualInventory, inventoryName: String, plugin: Jext) : super(player, inventory, inventoryName, plugin) {
-        this.plugin = plugin
-    }
-    private constructor(player: Player, block: Block, inventory: VirtualInventory, inventoryName: String, plugin: Jext) : super(player, block, inventory, inventoryName, plugin) {
-        this.plugin = plugin
-    }
-
-    val plugin: Jext
-
-    override fun onInit() {
-        if(!playingMap.containsKey(inventoryId)) {
-            playingMap[inventoryId] = -1
+class JukeboxGui(size: Int, val targetBlock: Block? = null, val id: String, val plugin: Jext) : VirtualInventory(size) {
+    init {
+        if(!playingMap.containsKey(id)) {
+            playingMap[id] = -1
         }
     }
 
-    override fun onItemPreUpdate(event: ItemPreUpdateEvent) {
-        if((event.isAdd || event.isSwap) && event.newItem != null && !event.newItem!!.type.isRecord) {
-            event.isCancelled = true
-            return
-        }
+    override fun onPreUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
+        val isBedrock = plugin.geyserManager.isBedrockPlayer(clickEvent.player)
 
-        if(event.updateReason == null || event.updateReason !is PlayerUpdateReason) return
-        val updateReason = event.updateReason as PlayerUpdateReason
-
-        if(updateReason.event !is InventoryClickEvent) return
-        val mcevent = updateReason.event as InventoryClickEvent
-
-        val isAltClick = if(isBedrock) {
-            !mcevent.isShiftClick
+        val addTakeClick = if(isBedrock) {
+            !clickEvent.isShiftClick
         } else {
-            mcevent.isRightClick
+            clickEvent.isRightClick
         }
 
-        if(event.isAdd && event.newItem != null && event.newItem!!.type.isRecord && !isAltClick) {
+        // If the player tries to add a non-record item, cancel the event
+        // Also, if the player tries to add a record with the play/stop click, simply ignore it
+        if(clickEvent.cursor != null && !clickEvent.cursor!!.type.isRecord) {
+            clickEvent.isCancelled = true
+            return
+        } else if(clickEvent.cursor != null && clickEvent.cursor!!.type.isRecord && !addTakeClick) {
             return
         }
 
-        if(isAltClick) {
-            if(event.isRemove && event.slot == playingMap[inventoryId]!!) {
-                event.isCancelled = true
-                stopDisc(event)
-                playingMap[inventoryId] = -1
+        if(addTakeClick) {
+            // if I'm removing an item, and the slot is currently playing, stop the music
+            if(clickEvent.virtualSlot == playingMap[id]) {
+                clickEvent.isCancelled = true
+                stopDisc(clickEvent)
+                playingMap[id] = -1
+            }
+        } else {
+            if(
+                (isBedrock && clickEvent.action != InventoryAction.MOVE_TO_OTHER_INVENTORY) ||
+                (!isBedrock && clickEvent.isRightClick)
+            ) {
+                return
             }
 
-            return
-        }
+            clickEvent.isCancelled = true
 
-        if(
-            (isBedrock && !event.isRemove) ||
-            (!isBedrock && mcevent.isRightClick && !event.isRemove)
-        ) return
+            stopDisc(clickEvent)
 
-        event.isCancelled = true
-
-        stopDisc(event)
-
-        if(playingMap[inventoryId]!! != -1 && playingMap[inventoryId]!! == event.slot) {
-            playingMap[inventoryId] = -1
-        } else {
-            playingMap[inventoryId] = event.slot
-            playDisc(event)
+            if(playingMap[id]!! != -1 && playingMap[id]!! == clickEvent.virtualSlot) {
+                playingMap[id] = -1
+            } else {
+                playingMap[id] = clickEvent.virtualSlot
+                playDisc(clickEvent)
+            }
         }
     }
 
-    override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
-        if(event.isAdd || event.isSwap || event.isRemove) {
-            save()
-        }
-    }
+    private fun playDisc(event: VirtualInventoryClickEvent) {
+        val itemStack = get(event.virtualSlot) ?: return
 
-
-    /**
-     * The function `playDisc` plays a music disc, sets the itemstack as playing, and sets a timer to revert the changes
-     *
-     * @param event The event parameter is of type ItemPreUpdateEvent. It is an event that is triggered before an item in
-     * an inventory is updated.
-     */
-    private fun playDisc(event: ItemPreUpdateEvent) {
-        event.inventory.setItem(UpdateReason.SUPPRESSED, event.slot, event.previousItem!!.clone().apply {
+        set(event.virtualSlot, itemStack.clone().apply {
             addUnsafeEnchantment(Enchantment.MENDING, 1)
 
             itemMeta = itemMeta!!.apply {
@@ -107,34 +86,43 @@ internal class JukeboxGui : BaseGui {
             }
         })
 
-        val delay = if(Disc.isCustomDisc(event.previousItem!!)) {
-            val disc = Disc.fromItemstack(event.previousItem!!)!!
+        val delay = if(Disc.isCustomDisc(itemStack)) {
+            val disc = Disc.fromItemstack(itemStack)!!
 
             if(targetBlock != null) {
                 disc.play(targetBlock.location)
             } else {
-                disc.play(targetPlayer)
+                disc.play(event.player)
             }
 
             disc.duration
         } else {
             if(targetBlock != null) {
-                targetBlock.location.world?.playSound(targetBlock.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 1f, 1f)
+                targetBlock.location.world?.playSound(
+                    targetBlock.location,
+                    SOUND_MAP[itemStack.type]!!.sound,
+                    SoundCategory.RECORDS, 1f, 1f
+                )
             } else {
-                targetPlayer.playSound(targetPlayer.location, SOUND_MAP[event.previousItem!!.type]!!.sound, SoundCategory.RECORDS, 500f, 1f)
+                event.player.playSound(
+                    event.player.location,
+                    SOUND_MAP[itemStack.type]!!.sound,
+                    SoundCategory.RECORDS, 500f, 1f
+                )
             }
 
-            SOUND_MAP[event.previousItem!!.type]!!.duration
+            SOUND_MAP[itemStack.type]!!.duration
         }
 
         if(delay == -1) {
             return
         }
 
-        timerMap[inventoryId] = Timer().apply {
+        timerMap[id] = Timer().apply {
             schedule(object : TimerTask() {
                 override fun run() {
-                    event.inventory.setItem(UpdateReason.SUPPRESSED, playingMap[inventoryId]!!, event.previousItem!!.clone().apply {
+                    val slot = playingMap[id] ?: return
+                    set(slot, get(slot)!!.clone().apply {
                         removeEnchantment(Enchantment.MENDING)
 
                         itemMeta = itemMeta!!.apply {
@@ -142,29 +130,25 @@ internal class JukeboxGui : BaseGui {
                         }
                     })
 
-                    playingMap[inventoryId] = -1
+                    playingMap[id] = -1
 
                 }
             }, delay.toLong() * 1000)
         }
     }
 
-    /**
-     * The function `stopDisc` cancels the timer for a disc, sets the itemstack as not playing, and stops the disc.
-     *
-     * @param event The parameter "event" is of type ItemPreUpdateEvent.
-     */
-    private fun stopDisc(event: ItemPreUpdateEvent) {
-        if(timerMap.containsKey(inventoryId)) {
-            timerMap[inventoryId]!!.cancel()
-            timerMap.remove(inventoryId)
+    private fun stopDisc(event: VirtualInventoryClickEvent) {
+        if(timerMap.containsKey(id)) {
+            timerMap[id]!!.cancel()
+            timerMap.remove(id)
         }
 
-        if(playingMap[inventoryId]!! != -1) {
-            event.inventory.setItem(
-                UpdateReason.SUPPRESSED,
-                playingMap[inventoryId]!!,
-                event.inventory.getItem(playingMap[inventoryId]!!)!!.clone().apply {
+        if(playingMap[id]!! != -1) {
+            val slot = playingMap[id]!!
+
+            set(
+                slot,
+                get(slot)!!.clone().apply {
                     removeEnchantment(Enchantment.MENDING)
 
                     itemMeta = itemMeta!!.apply {
@@ -177,43 +161,56 @@ internal class JukeboxGui : BaseGui {
         if(targetBlock != null) {
             plugin.discs.stop(targetBlock.location)
         } else {
-            plugin.discs.stop(targetPlayer)
+            plugin.discs.stop(event.player)
         }
     }
 
+    override fun onPostUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
+        if(clickEvent.action != InventoryAction.NOTHING) {
+            save()
+        }
+    }
 
     companion object {
-        fun open(player: Player) = JukeboxGui(
-            player,
-            getInv(player.uniqueId.toString()),
-            INSTANCE.i18nManager!![player, "jukebox"]!!,
-            INSTANCE
-        )
-
-        fun open(player: Player, block: Block) = JukeboxGui(
-            player,
-            block,
-            getInv("${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}"),
-            INSTANCE.i18nManager!![player, "jukebox"]!!,
-            INSTANCE
-        )
-
-        private val inventories = HashMap<String, VirtualInventory>()
+        private val inventories = HashMap<String, JukeboxGui>()
         private val playingMap = HashMap<String, Int>()
         private val timerMap = HashMap<String, Timer>()
 
         private val saveFile = INSTANCE.dataFolder.resolve(".savedata")
 
+        fun buildAndOpen(player: Player, plugin: Jext): Gui {
+            val inv = getInv(player.uniqueId.toString())
+            return buildAndOpen(player, inv, plugin)
+        }
+
+        fun buildAndOpen(player: Player, block: Block, plugin: Jext): Gui {
+            val inv = getInv(
+                "${block.location.world!!.name}:${block.location.blockX}:${block.location.blockY}:${block.location.blockZ}",
+            )
+            return buildAndOpen(player, inv, plugin)
+        }
+
+        fun buildAndOpen(player: Player, inv: JukeboxGui, plugin: Jext): Gui {
+            return Gui.buildAndOpen(plugin) {
+                setTitle(
+                    plugin.i18nManager!![player, "jukebox"]!!
+                )
+                setJextStructure(
+                    player,
+                    inv
+                )
+            }
+        }
 
         @Suppress("MemberVisibilityCanBePrivate")
         /**
-         * The function `getInv` returns a `VirtualInventory` object based on the given `id`, creating a new one if it
+         * The function `getInv` returns a `JukeboxGui` object based on the given `id`, creating a new one if it
          * doesn't exist in the `inventories` map.
          *
          * @param id The `id` parameter is a string that represents the identifier of a virtual inventory.
-         * @return The function `getInv` returns a `VirtualInventory` object.
+         * @return The function `getInv` returns a `JukeboxGui` object.
          */
-        fun getInv(id: String): VirtualInventory {
+        fun getInv(id: String): JukeboxGui {
             if(inventories.containsKey(id)) {
                 return inventories[id]!!
             } else if(inventories.containsKey(id.replace(":", ""))) {
@@ -223,7 +220,15 @@ internal class JukeboxGui : BaseGui {
                 return inventories[id]!!
             }
 
-            val inv = VirtualInventory(INSTANCE.config.GUI_SIZE)
+            val block = if(id.contains(":")) {
+                val parts = id.split(":")
+                INSTANCE.server.getWorld(parts[0])!!
+                    .getBlockAt(parts[1].toInt(), parts[2].toInt(), parts[3].toInt())
+            } else {
+                null
+            }
+
+            val inv = JukeboxGui(INSTANCE.config.GUI_SIZE, block, id, INSTANCE)
             inventories[id] = inv
 
             return inv
@@ -253,13 +258,15 @@ internal class JukeboxGui : BaseGui {
                 data.forEach { (id, itemMap) ->
                     val inv = getInv(id)
 
+                    inv.itemStacks.fill(null)
+
                     itemMap.forEach { (slot, entry) ->
                         inv.apply {
-                            setItem(UpdateReason.SUPPRESSED, slot, entry.toItemStack())
+                            set(slot, entry.toItemStack())
                         }
                     }
 
-                    inventories[id] = inv
+                    inv.refreshAll()
                 }
 
                 save()
@@ -278,11 +285,11 @@ internal class JukeboxGui : BaseGui {
 
             inventories.forEach { (key, inv) ->
                 // Skip entirely empty jukeboxes
-                if (inv.items.all { it == null }) return@forEach
+                if (inv.itemStacks.all { it == null }) return@forEach
 
                 data[key] = HashMap()
 
-                inv.items.forEachIndexed { index, itemStack ->
+                inv.itemStacks.forEachIndexed { index, itemStack ->
                     if (itemStack == null) return@forEachIndexed
 
                     if (Disc.isCustomDisc(itemStack)) {
@@ -328,7 +335,7 @@ internal class JukeboxGui : BaseGui {
             val inv = inventories.remove(id) ?: return emptyList()
 
             save()
-            return inv.items.filterNotNull()
+            return inv.itemStacks.filterNotNull()
 
         }
     }

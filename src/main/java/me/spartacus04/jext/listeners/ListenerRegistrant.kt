@@ -1,32 +1,39 @@
 package me.spartacus04.jext.listeners
 
-import me.spartacus04.colosseum.ColosseumPlugin
+import me.spartacus04.jext.Jext
 
 internal object ListenerRegistrant {
-    private val listeners = listOf(
-        RecordPacketEvent::class.java,
-        ChestOpenEvent::class.java,
-        CreeperDeathEvent::class.java,
-        DiscUpdateEvent::class.java,
-        JukeboxClickEvent::class.java,
-        PlayerJoinEvent::class.java,
-        ResourceStatusEvent::class.java,
-        PrepareCraftingEvent::class.java,
-        InventoryMoveItemEvent::class.java,
-        BlockBrushEvent::class.java,
-        DecoratedPotEvent::class.java,
-        CrafterCraftDiscEvent::class.java,
-        VaultDispenseEvent::class.java,
-        TrialSpawnerDispenseEvent::class.java
-    )
+    fun registerListeners(plugin: Jext) {
+        val listeners = listOf(
+            RecordPacketEvent(plugin),
+            ChestOpenEvent(plugin),
+            CreeperDeathEvent(plugin),
+            DiscUpdateEvent(plugin),
+            JukeboxClickEvent(plugin),
+            PlayerJoinEvent(plugin),
+            ResourceStatusEvent(plugin),
+            PrepareCraftingEvent(plugin),
+            InventoryMoveItemEvent(plugin),
+            BlockBrushEvent(plugin),
+            DecoratedPotEvent(plugin),
+            CrafterCraftDiscEvent(plugin),
+            VaultDispenseEvent(plugin),
+            TrialSpawnerDispenseEvent(plugin)
+        )
 
-    fun registerListeners(plugin: ColosseumPlugin) {
         plugin.colosseumLogger.debug("Registering listeners...")
 
-        listeners.forEach { listener ->
-            listener.constructors.first { it.parameters.size == 1 }.newInstance(plugin)
+        val registered = listeners.fold(0) { acc, listener ->
+            return@fold try {
+                listener.register()
+                plugin.colosseumLogger.debug("Registered listener: ${listener::class.simpleName}")
+                acc + 1
+            } catch (_: Exception) {
+                plugin.colosseumLogger.error("Failed to register listener: ${listener::class.simpleName}")
+                acc
+            }
         }
 
-        plugin.colosseumLogger.debug("Registered ${listeners.size} listeners.")
+        plugin.colosseumLogger.debug("Registered $registered/${listeners.size} listeners.")
     }
 }

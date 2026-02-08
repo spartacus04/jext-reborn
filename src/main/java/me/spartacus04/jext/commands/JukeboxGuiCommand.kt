@@ -11,6 +11,6 @@ class JukeboxGuiCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     }
 
     override fun executePlayer(ctx: CommandContext<Player>) {
-        JukeboxGui.open(ctx.sender)
+        JukeboxGui.buildAndOpen(ctx.sender, plugin)
     }
 }

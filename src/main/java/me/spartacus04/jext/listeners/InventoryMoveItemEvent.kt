@@ -19,6 +19,7 @@ internal class InventoryMoveItemEvent(val plugin: Jext) : ColosseumListener(plug
             super.register()
         } catch (_: NoSuchFieldError) {
             plugin.colosseumLogger.warn(VULNERABLE_MESSAGE)
+            throw Error(VULNERABLE_MESSAGE)
         }
     }
 

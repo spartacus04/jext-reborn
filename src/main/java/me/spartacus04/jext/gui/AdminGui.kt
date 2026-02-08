@@ -1,44 +1,45 @@
 package me.spartacus04.jext.gui
 
+import me.spartacus04.colosseum.gui.Gui
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventory
+import me.spartacus04.colosseum.gui.virtualInventory.VirtualInventoryClickEvent
 import me.spartacus04.jext.Jext
-import me.spartacus04.jext.Jext.Companion.INSTANCE
 import org.bukkit.entity.Player
-import xyz.xenondevs.invui.inventory.VirtualInventory
-import xyz.xenondevs.invui.inventory.event.ItemPostUpdateEvent
-import xyz.xenondevs.invui.inventory.event.ItemPreUpdateEvent
+import org.bukkit.inventory.ItemStack
 
-internal class AdminGui private constructor(player: Player, inventory: VirtualInventory, inventoryName: String, val plugin: Jext) : BaseGui(player, inventory, inventoryName, plugin) {
-    override fun onInit() {
-        plugin.discs.forEachIndexed { i, it ->
-            inventory.setItemSilently(i, it.discItemStack)
-        }
+class AdminGui private constructor(size: Int, items: Array<ItemStack?>, val plugin: Jext) : VirtualInventory(size, items) {
+    override fun onPostUpdateEvent(clickEvent: VirtualInventoryClickEvent) {
+        if(plugin.discs.size() == 0) return
 
-        if(plugin.serverVersion >= "1.19") {
-            plugin.discs.forEachIndexed {i, it ->
-                inventory.setItemSilently(i + plugin.discs.size(), it.fragmentItemStack)
-            }
-        }
-    }
+        val disc = plugin.discs[clickEvent.virtualSlot % plugin.discs.size()]
+        val isFragment = clickEvent.virtualSlot >= plugin.discs.size()
+                && plugin.serverVersion >= "1.19"
 
-    override fun onItemPreUpdate(event: ItemPreUpdateEvent) { }
-
-    override fun onItemPostUpdate(event: ItemPostUpdateEvent) {
-        inventory.setItemSilently(event.slot,
-            if(event.slot >= plugin.discs.size())
-                plugin.discs[event.slot - plugin.discs.size()].fragmentItemStack
-            else
-                plugin.discs[event.slot].discItemStack
-        )
+        set(clickEvent.virtualSlot, if(isFragment) {
+            disc.fragmentItemStack
+        } else {
+            disc.discItemStack
+        })
     }
 
     companion object {
-        fun open(player: Player) = AdminGui(
-            player,
-            VirtualInventory(
-                INSTANCE.discs.size() * if(INSTANCE.serverVersion >= "1.19") 2 else 1
-            ),
-            INSTANCE.i18nManager!![player, "jukebox"]!!,
-            INSTANCE
-        )
+        fun buildAndOpen(plugin: Jext, player: Player): Gui {
+            val discs = if(plugin.serverVersion >= "1.19") plugin.discs.flatMap { listOf(it.discItemStack, it.fragmentItemStack) }
+            else plugin.discs.map { it.discItemStack }
+
+            return Gui.buildAndOpen(plugin) {
+                setTitle(
+                    plugin.i18nManager!![player, "jukebox"]!!
+                )
+                setJextStructure(
+                    player,
+                    AdminGui(
+                        discs.size,
+                        discs.toTypedArray(),
+                        plugin
+                    )
+                )
+            }
+        }
     }
 }

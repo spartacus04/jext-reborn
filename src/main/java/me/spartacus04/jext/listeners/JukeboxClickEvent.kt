@@ -62,7 +62,7 @@ internal class JukeboxClickEvent(val plugin: Jext) : ColosseumListener(plugin) {
             return
         }
 
-        JukeboxGui.open(event.player, block)
+        JukeboxGui.buildAndOpen(event.player, block, plugin)
     }
 
     @EventHandler(ignoreCancelled = true)

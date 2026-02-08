@@ -61,6 +61,9 @@ class Jext : ColosseumPlugin() {
 
     private fun load() {
         INSTANCE = this
+        config = ConfigFactory.createConfigObject(this)
+        webServer = JextWebServer(this)
+        geyserManager = GeyserManager()
 
         buildI18nManager {
             this.loadInternalLanguageDirectory("langs")
@@ -72,6 +75,8 @@ class Jext : ColosseumPlugin() {
         discs.registerDiscSource(FileSource(), NbsSource()) {
             integrations.reloadDefaultIntegrations()
             JukeboxGui.loadFromFile()
+
+            colosseumLogger.debug("Finished loading discs from disc sources, found ${discs.count()} discs in total.")
 
             if(discs.size() == 0) {
                 colosseumLogger.warn(NO_DISCS_FOUND)
@@ -112,26 +117,19 @@ class Jext : ColosseumPlugin() {
         }
     }
 
-    val config: Config
-        get() = ConfigFactory.createConfigObject(this)
+    lateinit var config: Config
 
-    val baseUrl: BaseUrl
-        get() = BaseUrl(this)
+    val baseUrl = BaseUrl(this)
 
-    val assetsManager: AssetsManager
-        get() = AssetsManager(this)
+    val assetsManager = AssetsManager(this)
 
-    val discs: DiscManager
-        get() = DiscManager(this)
+    val discs = DiscManager(this)
 
-    val integrations: PermissionsIntegrationManager
-        get() = PermissionsIntegrationManager()
+    val integrations = PermissionsIntegrationManager()
 
-    val webServer: JextWebServer
-        get() = JextWebServer(this)
+    lateinit var webServer: JextWebServer
 
-    val geyserManager: GeyserManager
-        get() = GeyserManager()
+    lateinit var geyserManager: GeyserManager
 
     companion object {
         lateinit var INSTANCE: Jext
