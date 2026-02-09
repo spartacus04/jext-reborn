@@ -26,9 +26,10 @@ internal class RecordPacketEvent(val plugin: ColosseumPlugin) : ColosseumPacketL
 
         val position = packet.position.toVector3d()
 
-        plugin.scheduler.runTaskLater({
-            val block = Location(player.world, position.x, position.y, position.z).block
-            val blockState = block.state
+        val location = Location(player.world, position.x, position.y, position.z)
+
+        plugin.scheduler.runTaskLater(location, {
+            val blockState = location.block.state
 
             if (blockState !is Jukebox) return@runTaskLater
             val disc = Disc.fromItemstack(blockState.record) ?: return@runTaskLater
@@ -45,7 +46,5 @@ internal class RecordPacketEvent(val plugin: ColosseumPlugin) : ColosseumPacketL
                 "name" to disc.displayName
             ])
         )
-
-
     }
 }
