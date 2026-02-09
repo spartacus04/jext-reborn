@@ -115,7 +115,7 @@ open class Disc(
 
         if(location.block.type != Material.JUKEBOX) return
 
-        plugin.scheduler.runTaskLater({
+        plugin.scheduler.runTaskLater(location,{
             location.world!!.players.forEach {
                 it.stopSound(
                     SOUND_MAP[JEXT_DISC_MATERIAL]!!.sound,
