@@ -63,7 +63,7 @@ class Jext : ColosseumPlugin() {
         INSTANCE = this
         config = ConfigFactory.createConfigObject(this)
         webServer = JextWebServer(this)
-        geyserManager = GeyserManager()
+        geyserManager = GeyserManager(this)
 
         buildI18nManager {
             this.loadInternalLanguageDirectory("langs")
