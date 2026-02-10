@@ -5,7 +5,7 @@ import me.spartacus04.jext.Jext
 import me.spartacus04.jext.gui.JukeboxGui
 import org.bukkit.entity.Player
 
-class JukeboxGuiCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class JukeboxGuiCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("jukeboxgui") {
         subCommandName = "gui"
     }

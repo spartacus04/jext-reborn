@@ -5,7 +5,7 @@ import me.spartacus04.jext.Jext
 import me.spartacus04.jext.gui.AdminGui
 import org.bukkit.entity.Player
 
-class AdminGuiCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class AdminGuiCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("jextadmingui") {
         subCommandName = "admingui"
     }

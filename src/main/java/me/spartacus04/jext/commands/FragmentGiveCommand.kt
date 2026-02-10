@@ -12,7 +12,7 @@ import me.spartacus04.jext.discs.Disc
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class FragmentGiveCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class FragmentGiveCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("fragmentgive") {
         arguments.addAll(listOf(
             ArgumentPlayers(false),

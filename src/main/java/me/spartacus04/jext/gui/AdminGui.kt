@@ -7,7 +7,7 @@ import me.spartacus04.jext.Jext
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class AdminGui private constructor(size: Int, items: Array<ItemStack?>, val plugin: Jext) : VirtualInventory(size, items) {
+internal class AdminGui private constructor(size: Int, items: Array<ItemStack?>, val plugin: Jext) : VirtualInventory(size, items) {
     val originalDiscs = items.clone()
 
     override fun onPostUpdateEvent(event: VirtualInventoryInteractEvent) {

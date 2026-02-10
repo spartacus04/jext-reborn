@@ -9,7 +9,7 @@ import me.spartacus04.colosseum.i18n.sendI18nError
 import me.spartacus04.jext.Jext
 import org.bukkit.command.CommandSender
 
-class ExportCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class ExportCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("jextexport") {
         subCommandName = "export"
     }

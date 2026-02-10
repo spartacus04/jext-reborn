@@ -21,7 +21,7 @@ import java.util.TimerTask
 import kotlin.collections.component1
 import kotlin.collections.component2
 
-class JukeboxGui(size: Int, val id: String, val plugin: Jext) : VirtualInventory(size) {
+internal class JukeboxGui(size: Int, val id: String, val plugin: Jext) : VirtualInventory(size) {
     init {
         if(!playingMap.containsKey(id)) {
             playingMap[id] = -1

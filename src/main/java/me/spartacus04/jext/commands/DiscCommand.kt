@@ -8,7 +8,7 @@ import me.spartacus04.jext.commands.customArgs.ArgumentDisc
 import me.spartacus04.jext.discs.Disc
 import org.bukkit.entity.Player
 
-class DiscCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class DiscCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("disc") {
         arguments.add(ArgumentDisc(plugin))
     }

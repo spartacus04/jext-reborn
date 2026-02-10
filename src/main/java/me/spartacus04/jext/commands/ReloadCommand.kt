@@ -6,7 +6,7 @@ import me.spartacus04.jext.Jext
 import me.spartacus04.jext.utils.JextMetrics
 import org.bukkit.command.CommandSender
 
-class ReloadCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class ReloadCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("jextreload") {
         subCommandName = "reload"
     }

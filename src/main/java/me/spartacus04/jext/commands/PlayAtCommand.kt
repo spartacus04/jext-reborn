@@ -10,7 +10,7 @@ import me.spartacus04.jext.discs.Disc
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
-class PlayAtCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class PlayAtCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("playat") {
         arguments.addAll(listOf(
             ArgumentDisc(plugin),

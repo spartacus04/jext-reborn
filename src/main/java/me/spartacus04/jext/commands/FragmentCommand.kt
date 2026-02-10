@@ -9,7 +9,7 @@ import me.spartacus04.jext.commands.customArgs.ArgumentDisc
 import me.spartacus04.jext.discs.Disc
 import org.bukkit.entity.Player
 
-class FragmentCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class FragmentCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("fragment") {
         arguments.add(ArgumentDisc(plugin))
         optionalArguments.add(ArgumentInteger(listOf(1, 9)))

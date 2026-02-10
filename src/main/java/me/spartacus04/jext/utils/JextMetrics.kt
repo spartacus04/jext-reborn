@@ -6,7 +6,7 @@ import me.spartacus04.jext.utils.Constants.BSTATS_METRICS
 import org.bstats.bukkit.Metrics
 import org.bstats.charts.SimplePie
 
-internal class JextMetrics() : Metrics(INSTANCE, BSTATS_METRICS) {
+internal class JextMetrics : Metrics(INSTANCE, BSTATS_METRICS) {
     init {
         super.addCustomChart(SimplePie("juke_gui") {
             when(INSTANCE.config.JUKEBOX_BEHAVIOUR) {

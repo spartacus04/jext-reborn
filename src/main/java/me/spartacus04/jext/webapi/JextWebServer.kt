@@ -17,7 +17,7 @@ import me.spartacus04.jext.webapi.discs.DiscsApplyHandler
 import me.spartacus04.jext.webapi.discs.DiscsReadHandler
 import java.net.InetSocketAddress
 
-class JextWebServer(private val plugin: Jext) {
+internal class JextWebServer(private val plugin: Jext) {
     private var server : HttpServer? = null
     private var resourcePackHostEnabled = plugin.config.RESOURCE_PACK_HOST
     private var apiEnabled = plugin.config.WEB_INTERFACE_API_ENABLED

@@ -12,7 +12,7 @@ import me.spartacus04.jext.discs.Disc
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class PlayMusicCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class PlayMusicCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("playmusic") {
         subCommandName = "play"
 

@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 import java.net.InetAddress
 
 @Suppress("HttpUrlsUsage")
-class BaseUrl(private val plugin: Jext) {
+internal class BaseUrl(private val plugin: Jext) {
     fun getUrl(commandSender: CommandSender) : String {
         var hostName = getBaseUrl(commandSender)
 

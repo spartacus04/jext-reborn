@@ -4,13 +4,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.spartacus04.jext.Jext
-import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.language.DefaultMessages.GEYSER_RELOAD
 import org.bukkit.entity.Player
-import org.geysermc.api.Geyser
 import java.util.UUID
 
-class GeyserManager(val plugin: Jext) {
+internal class GeyserManager(val plugin: Jext) {
     private var geyser: GeyserMode? = null
     private var scope = CoroutineScope(Dispatchers.IO)
     private val memoizedPlayers = HashMap<UUID, Boolean>()

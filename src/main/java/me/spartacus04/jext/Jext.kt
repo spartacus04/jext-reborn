@@ -31,6 +31,7 @@ import me.spartacus04.jext.language.DefaultMessages.UPDATE_LINK
 import me.spartacus04.jext.listeners.ListenerRegistrant
 import me.spartacus04.jext.utils.BaseUrl
 import me.spartacus04.jext.webapi.JextWebServer
+import org.bukkit.Bukkit
 
 /**
  * The class `Jext` is the main class of the plugin. It extends the `JavaPlugin` class, which is the main class of all
@@ -119,7 +120,7 @@ class Jext : ColosseumPlugin() {
 
     lateinit var config: Config
 
-    val baseUrl = BaseUrl(this)
+    internal val baseUrl = BaseUrl(this)
 
     val assetsManager = AssetsManager(this)
 
@@ -127,9 +128,9 @@ class Jext : ColosseumPlugin() {
 
     val integrations = PermissionsIntegrationManager()
 
-    lateinit var webServer: JextWebServer
+    internal lateinit var webServer: JextWebServer
 
-    lateinit var geyserManager: GeyserManager
+    internal lateinit var geyserManager: GeyserManager
 
     companion object {
         lateinit var INSTANCE: Jext

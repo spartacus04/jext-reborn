@@ -12,7 +12,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-fun Gui.Builder.setJextStructure(player: Player, inventory: VirtualInventory) : Gui.Builder {
+internal fun Gui.Builder.setJextStructure(player: Player, inventory: VirtualInventory) : Gui.Builder {
     if(plugin !is Jext) {
         throw IllegalStateException("Plugin must be an instance of Jext to use JextGuis")
     }

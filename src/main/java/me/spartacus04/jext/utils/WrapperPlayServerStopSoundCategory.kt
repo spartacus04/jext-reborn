@@ -4,7 +4,6 @@ import com.github.retrooper.packetevents.protocol.packettype.PacketType
 import com.github.retrooper.packetevents.protocol.sound.SoundCategory
 import com.github.retrooper.packetevents.wrapper.PacketWrapper
 import kotlin.experimental.and
-import kotlin.experimental.or
 
 internal class WrapperPlayServerStopSoundCategory(private var category: SoundCategory?) : PacketWrapper<WrapperPlayServerStopSoundCategory>(PacketType.Play.Server.STOP_SOUND) {
     private var flags: Byte = 0
@@ -26,7 +25,7 @@ internal class WrapperPlayServerStopSoundCategory(private var category: SoundCat
         this.flags = 0
 
         if(this.category != null) {
-            this.flags = this.flags or FLAG_CATEGORY
+            this.flags = FLAG_CATEGORY
         }
 
         writeByte(this.flags.toInt())

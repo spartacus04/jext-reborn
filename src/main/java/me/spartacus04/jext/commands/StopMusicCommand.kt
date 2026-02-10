@@ -11,7 +11,7 @@ import me.spartacus04.jext.discs.Disc
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class StopMusicCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class StopMusicCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("stopmusic") {
         arguments.add(ArgumentPlayers(false))
         optionalArguments.add(ArgumentDisc(plugin))

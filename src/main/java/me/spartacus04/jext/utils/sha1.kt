@@ -4,7 +4,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.security.MessageDigest
 
-fun getFileSha1Hash(file: File): ByteArray {
+internal fun getFileSha1Hash(file: File): ByteArray {
     return try {
         val md = MessageDigest.getInstance("SHA-1")
         val fis = FileInputStream(file)

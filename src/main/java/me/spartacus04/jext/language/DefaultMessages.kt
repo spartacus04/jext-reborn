@@ -1,6 +1,6 @@
 package me.spartacus04.jext.language
 
-object DefaultMessages {
+internal object DefaultMessages {
     const val ENABLED_MESSAGE = "Enabled Jukebox Extended Reborn, Do Re Mi!"
     const val DISABLED_MESSAGE = "Disabled Jukebox Extended Reborn, Mi Re Do!"
 

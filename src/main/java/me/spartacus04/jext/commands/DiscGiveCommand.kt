@@ -13,7 +13,7 @@ import me.spartacus04.jext.discs.Disc
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class DiscGiveCommand(val plugin: Jext) : ColosseumCommand(plugin) {
+internal class DiscGiveCommand(val plugin: Jext) : ColosseumCommand(plugin) {
     override val commandData = commandDescriptor("discgive") {
         arguments.addAll( listOf(
             ArgumentPlayers(false),
