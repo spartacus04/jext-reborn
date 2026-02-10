@@ -3,10 +3,7 @@ package me.spartacus04.jext.utils
 import me.spartacus04.colosseum.ColosseumPlugin
 
 /**
- * The class `FileBind` is used to bind a file to a class.
- * 
- * @param filePath The path of the file.
- * @param clazz The class to bind the file to.
+ * @suppress
  */
 open class JextFileBind(@Transient private val filePath: String, @Transient private val clazz: Class<*>, @Transient private val plugin: ColosseumPlugin) {
     /**
