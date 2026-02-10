@@ -129,19 +129,29 @@ class MyIntegration : PermissionIntegration {
 			bind:currentTab={language}
 			tabs={['Java', 'Kotlin']}
 			tabsContents={[
-				`import me.spartacus04.jext.JextState;
+				`import me.spartacus04.jext.Jext;
 
 public class MyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
-        JextState.INTEGRATIONS.registerIntegrations(new MyIntegration());
+        try {
+            Jext plug = (Jext) Bukkit.getPluginManager().getPlugin("JukeboxExtendedReborn");
+            plug.getIntegrations().registerIntegration(new MyIntegration());
+        } catch (Exception e) {
+            // Handle the case where the plugin is not found
+        }
     }
 }`,
-				`import me.spartacus04.jext.JextState
+				`import me.spartacus04.jext.Jext
 
 class MyPlugin : JavaPlugin() {
     override fun onEnable() {
-        JextState.INTEGRATIONS.registerIntegrations(MyIntegration())
+        try {
+            val plug = Bukkit.getPluginManager().getPlugin("JukeboxExtendedReborn") as Jext
+            plug.integrations.registerIntegrations(MyIntegration())
+        } catch (e: Exception) {
+            // Handle the case where the plugin is not found
+        }
     }
 }`
 			]}

@@ -239,21 +239,31 @@ class MyDiscStoppingMethod : DiscStoppingMethod {
 			bind:currentTab={language}
 			tabs={['Java', 'Kotlin']}
 			tabsContents={[
-				`import com.spartacus04.jext.JextState;
+				`import com.spartacus04.jext.Jext;
 
 public class MyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
-        JextState.DISCS.registerDiscSource(new MyDiscSource(), () -> println("Discs reloaded"));
-        JextState.DISCS.registerDiscStoppingMethod(new MyDiscStoppingMethod());
+        try {
+            Jext plug = (Jext) Bukkit.getPluginManager().getPlugin("JukeboxExtendedReborn");
+            plug.getDiscManager().registerDiscSource(new MyDiscSource(), () -> System.out.println("Discs reloaded"));
+            plug.getDiscManager().registerDiscStoppingMethod(new MyDiscStoppingMethod());
+        } catch (Exception e) {
+            // Handle the case where the plugin is not found
+        }
     }
 }`,
-				`import com.spartacus04.jext.JextState
+				`import com.spartacus04.jext.Jext
 
 class MyPlugin : JavaPlugin() {
     override fun onEnable() {
-        JextState.DISCS.registerDiscSource(MyDiscSource()) { println("Discs reloaded") }
-        JextState.DISCS.registerDiscStoppingMethod(MyDiscStoppingMethod())
+        try {
+            val plug = Bukkit.getPluginManager().getPlugin("JukeboxExtendedReborn") as Jext
+            plug.discs.registerDiscSource(MyDiscSource()) { println("Discs reloaded") }
+            plug.discs.registerDiscStoppingMethod(MyDiscStoppingMethod())
+        } catch (e: Exception) {
+            // Handle the case where the plugin is not found
+        }
     }
 }`
 			]}
