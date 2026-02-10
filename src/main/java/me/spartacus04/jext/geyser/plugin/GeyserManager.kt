@@ -3,22 +3,27 @@ package me.spartacus04.jext.geyser.plugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.spartacus04.jext.Jext
 import me.spartacus04.jext.Jext.Companion.INSTANCE
 import me.spartacus04.jext.language.DefaultMessages.GEYSER_RELOAD
 import org.bukkit.entity.Player
+import org.geysermc.api.Geyser
+import java.util.UUID
 
-class GeyserManager {
+class GeyserManager(val plugin: Jext) {
     private var geyser: GeyserMode? = null
+    private var scope = CoroutineScope(Dispatchers.IO)
+    private val memoizedPlayers = HashMap<UUID, Boolean>()
 
     init {
-        INSTANCE.scheduler.runTaskAsynchronously {
-            CoroutineScope(Dispatchers.Default).launch {
-                geyser = try {
-                    GeyserSpigot()
-                } catch (_ : NoClassDefFoundError) {
+        plugin.scheduler.runTaskAsynchronously {
+            scope.launch {
+                geyser = if(plugin.config.GEYSER_STANDALONE_IP_PORT.isNotBlank()) {
+                    GeyserStandalone(plugin.config.GEYSER_STANDALONE_IP_PORT)
+                } else {
                     try {
-                        GeyserStandalone()
-                    } catch (_ : IllegalStateException) {
+                        GeyserSpigot(plugin)
+                    } catch (_: NoClassDefFoundError) {
                         null
                     }
                 }
@@ -27,26 +32,36 @@ class GeyserManager {
     }
 
     fun reloadGeyser() {
-        INSTANCE.scheduler.runTaskAsynchronously {
-            CoroutineScope(Dispatchers.Default).launch {
-                geyser = try {
-                    GeyserSpigot()
-                } catch (_ : NoClassDefFoundError) {
+        plugin.scheduler.runTaskAsynchronously {
+            memoizedPlayers.clear()
+            geyser?.close()
+
+            scope.launch {
+                geyser = if(plugin.config.GEYSER_STANDALONE_IP_PORT.isNotBlank()) {
+                    GeyserStandalone(plugin.config.GEYSER_STANDALONE_IP_PORT)
+                } else {
                     try {
-                        GeyserStandalone()
-                    } catch (_ : IllegalStateException) {
+                        GeyserSpigot(plugin)
+                    } catch (_: NoClassDefFoundError) {
                         null
                     }
                 }
 
-                INSTANCE.colosseumLogger.info(GEYSER_RELOAD)
+                plugin.colosseumLogger.info(GEYSER_RELOAD)
             }
         }
 
     }
 
     fun isBedrockPlayer(player: Player) : Boolean {
-        return geyser?.isBedrockPlayer(player.uniqueId) ?: false
+        if(player.uniqueId in memoizedPlayers) {
+            return memoizedPlayers[player.uniqueId]!!
+        }
+
+        val result = geyser?.isBedrockPlayer(player.uniqueId) ?: false
+
+        memoizedPlayers[player.uniqueId] = result
+        return result
     }
 
     fun applyResourcePack(buffer: ByteArray) {

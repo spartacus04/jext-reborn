@@ -1,6 +1,6 @@
 package me.spartacus04.jext.geyser.plugin
 
-import me.spartacus04.jext.Jext.Companion.INSTANCE
+import me.spartacus04.jext.Jext
 import org.geysermc.event.subscribe.Subscribe
 import org.geysermc.geyser.api.GeyserApi
 import org.geysermc.geyser.api.event.EventRegistrar
@@ -9,17 +9,17 @@ import org.geysermc.geyser.api.item.custom.CustomItemData
 import org.geysermc.geyser.api.item.custom.CustomItemOptions
 import java.util.UUID
 
-internal class GeyserSpigot : EventRegistrar, GeyserMode {
+internal class GeyserSpigot(val plugin: Jext) : EventRegistrar, GeyserMode {
 
     init {
-        GeyserApi.api().eventBus().register(this, INSTANCE)
+        GeyserApi.api().eventBus().register(this, plugin)
         GeyserApi.api().eventBus().subscribe(this, GeyserDefineCustomItemsEvent::class.java, this::onGeyserInit)
     }
 
     @Suppress("unused")
     @Subscribe
     private fun onGeyserInit(event : GeyserDefineCustomItemsEvent) {
-        INSTANCE.discs.map {
+        plugin.discs.map {
             val itemOptions = CustomItemOptions.builder()
                 .customModelData(it.discItemStack.itemMeta!!.customModelData)
                 .build()
@@ -34,8 +34,8 @@ internal class GeyserSpigot : EventRegistrar, GeyserMode {
             event.register("minecraft:music_disc_11", it)
         }
 
-        if(INSTANCE.serverVersion >= "1.19") {
-            INSTANCE.discs.map {
+        if(plugin.serverVersion >= "1.19") {
+            plugin.discs.map {
                 val itemOptions = CustomItemOptions.builder()
                     .customModelData(it.fragmentItemStack?.itemMeta?.customModelData ?: 0)
                     .build()
@@ -55,8 +55,10 @@ internal class GeyserSpigot : EventRegistrar, GeyserMode {
     override fun isBedrockPlayer(player: UUID) = GeyserApi.api().isBedrockPlayer(player)
 
     override fun applyResourcePack(buffer: ByteArray) {
-        val geyserPlugin = INSTANCE.server.pluginManager.getPlugin("Geyser-Spigot") ?: return
+        val geyserPlugin = plugin.server.pluginManager.getPlugin("Geyser-Spigot") ?: return
 
         geyserPlugin.dataFolder.resolve("packs").resolve("jext_resources.mcpack").writeBytes(buffer)
     }
+
+    override fun close() = Unit
 }

@@ -115,6 +115,14 @@ data class Config(
     @SerializedName("resource-pack-hash")
     var RESOURCE_PACK_HASH : String = "",
 
+    @ConfigField(
+        "Geyser standalone ip and port",
+        "If set, the plugin will attempt to use this IP:PORT to integrate with geyser standalone. (Requires jext geyser extension to be installed and enabled)",
+        ""
+    )
+    @SerializedName("geyser-standalone-ip-port")
+    var GEYSER_STANDALONE_IP_PORT : String = "",
+
     // metrics & updates
 
     @ConfigField(

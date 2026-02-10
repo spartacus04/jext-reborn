@@ -6,4 +6,6 @@ internal interface GeyserMode {
     fun isBedrockPlayer(player: UUID): Boolean
 
     fun applyResourcePack(buffer: ByteArray)
+
+    fun close()
 }
