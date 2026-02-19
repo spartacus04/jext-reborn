@@ -18,7 +18,7 @@ const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
 const baseMTURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.10/dist/esm';
 
 const qualityArgs = {
-	none: [],
+	none: ['-ar', '48000'],
 	low: ['-ar', '22050', '-qscale:a', '9'],
 	medium: ['-ar', '44100', '-qscale:a', '1'],
 	high: ['-ar', '48000', '-qscale:a', '7']

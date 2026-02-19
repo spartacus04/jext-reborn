@@ -26,6 +26,8 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -48,6 +50,9 @@ jobs:
       - name: Prepare Tauri
         run: |
           bun run scripts/append-hash.ts
+
+      - name: Download FFmpeg, FFprobe and YT-DLP binaries
+        run: bun run scripts/download-ffmpeg.ts
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri

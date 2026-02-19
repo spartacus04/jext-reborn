@@ -26,6 +26,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             ffmpeg::try_download_ffmpeg,
             ffmpeg::run_ffmpeg,
+            ffmpeg::run_ffprobe,
+            ffmpeg::extract_ffmpeg_cover,
             yt_dlp::yt_dlp_get_info,
             yt_dlp::yt_dlp_get_playlist_info,
             yt_dlp::yt_dlp_download,

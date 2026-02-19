@@ -114,7 +114,11 @@ export const inputFile = (
 					if (!(await exists(path))) return null;
 					const contents = await readFile(path);
 
-					return new File([contents], path.split('/').pop()!);
+					const file = new File([contents], path.split('/').pop()!);
+					// @ts-expect-error attach tauri path for ffprobe
+					file.tauriPath = path;
+
+					return file;
 				})
 			);
 

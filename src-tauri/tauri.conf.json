@@ -1,7 +1,7 @@
 {
 	"$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
 	"productName": "Jext Plugin Manager",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"identifier": "com.spartacus04.jext-tool",
 	"build": {
 		"frontendDist": "../build",
@@ -27,6 +27,20 @@
 	"bundle": {
 		"active": true,
 		"targets": "all",
+		"externalBin": [
+			"bin/ffmpeg-linux-x64",
+			"bin/ffprobe-linux-x64",
+			"bin/ffmpeg-linux-arm64",
+			"bin/ffprobe-linux-arm64",
+			"bin/ffmpeg-darwin-arm64",
+			"bin/ffprobe-darwin-arm64",
+			"bin/ffmpeg-win32-x64",
+			"bin/ffprobe-win32-x64",
+			"bin/yt-dlp-linux",
+			"bin/yt-dlp-macos-aarch64",
+			"bin/yt-dlp-macos-x86_64",
+			"bin/yt-dlp-windows.exe"
+		],
 		"icon": [
 			"icons/32x32.png",
 			"icons/128x128.png",
@@ -34,10 +48,6 @@
 			"icons/icon.icns",
 			"icons/icon.ico"
 		],
-		"linux": {
-			"deb": {
-				"depends": ["ffmpeg"]
-			}
-		}
+		"linux": {}
 	}
 }

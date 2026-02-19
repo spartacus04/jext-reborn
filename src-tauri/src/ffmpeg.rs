@@ -3,33 +3,97 @@ use base64::{
     Engine,
 };
 use ffmpeg_sidecar::event::FfmpegEvent;
+use serde::Serialize;
 use std::{
     fs,
     io::{Read, Write},
+    path::{Path, PathBuf},
+    process::Command,
 };
 use tauri::{Emitter, Manager};
 use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
 
-#[tauri::command]
-pub fn try_download_ffmpeg(app: tauri::AppHandle) -> Result<bool, String> {
-    let result = ffmpeg_sidecar::download::auto_download();
+fn target_triple() -> Option<&'static str> {
+    let os = std::env::consts::OS;
+    let arch = std::env::consts::ARCH;
 
-    match result {
-        Ok(_) => return Ok(true),
-        Err(e) => {
-            app.dialog()
-                .message("Error downloading Ffmpeg. Exit the app?")
-                .title("Error")
-                .buttons(MessageDialogButtons::YesNo)
-                .show(move |result| {
-                    if result {
-                        app.exit(1);
-                    }
-                });
+    match (os, arch) {
+        ("linux", "x86_64") => Some("x86_64-unknown-linux-gnu"),
+        ("linux", "aarch64") => Some("aarch64-unknown-linux-gnu"),
+        ("macos", "aarch64") => Some("aarch64-apple-darwin"),
+        ("macos", "x86_64") => Some("x86_64-apple-darwin"),
+        ("windows", "x86_64") => Some("x86_64-pc-windows-msvc"),
+        _ => None,
+    }
+}
 
-            return Err(format!("Error downloading ffmpeg: {}", e));
+fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> PathBuf {
+    let resource_base = resource_dir.join("bin");
+    let manifest_base = Path::new(env!("CARGO_MANIFEST_DIR")).join("bin");
+
+    for base in [resource_base, manifest_base] {
+        let base_path = base.join(name);
+        if base_path.exists() {
+            return base_path;
+        }
+
+        if let Some(triple) = target_triple() {
+            let candidate = base.join(format!("{name}-{triple}"));
+            if candidate.exists() {
+                return candidate;
+            }
         }
     }
+
+    resource_dir.join("bin").join(name)
+}
+
+fn resolve_ffmpeg_paths(app_handle: &tauri::AppHandle) -> Result<(PathBuf, PathBuf), String> {
+    let os = std::env::consts::OS;
+    let arch = std::env::consts::ARCH;
+
+    let (ffmpeg_name, ffprobe_name) = match (os, arch) {
+        ("linux", "x86_64") => ("ffmpeg-linux-x64", "ffprobe-linux-x64"),
+        ("linux", "aarch64") => ("ffmpeg-linux-arm64", "ffprobe-linux-arm64"),
+        ("macos", _) => ("ffmpeg-darwin-arm64", "ffprobe-darwin-arm64"),
+        ("windows", _) => ("ffmpeg-win32-x64", "ffprobe-win32-x64"),
+        _ => {
+            return Err(format!(
+                "Unsupported platform/arch for ffmpeg: {os}/{arch}"
+            ))
+        }
+    };
+
+    let resource_dir = app_handle
+        .path()
+        .resource_dir()
+        .map_err(|e| format!("Error resolving resource dir: {e}"))?;
+
+    Ok((
+        resolve_sidecar_path(&resource_dir, ffmpeg_name),
+        resolve_sidecar_path(&resource_dir, ffprobe_name),
+    ))
+}
+
+#[tauri::command]
+pub fn try_download_ffmpeg(app: tauri::AppHandle) -> Result<bool, String> {
+    let (ffmpeg_path, ffprobe_path) = resolve_ffmpeg_paths(&app)?;
+
+    if ffmpeg_path.exists() && ffprobe_path.exists() {
+        return Ok(true);
+    }
+
+    app.dialog()
+        .message("Required ffmpeg binaries are missing. Exit the app?")
+        .title("Error")
+        .buttons(MessageDialogButtons::YesNo)
+        .show(move |result| {
+            if result {
+                app.exit(1);
+            }
+        });
+
+    Err("Required ffmpeg binaries are missing".to_string())
 }
 
 #[tauri::command(async)]
@@ -40,8 +104,9 @@ pub fn run_ffmpeg(
 ) -> Result<String, String> {
     let binary = STANDARD.decode(input).unwrap();
 
-    if !ffmpeg_sidecar::command::ffmpeg_is_installed() {
-        return Err("Ffmpeg is not installed".to_string());
+    let (ffmpeg_path, _) = resolve_ffmpeg_paths(&app_handle)?;
+    if !ffmpeg_path.exists() {
+        return Err("Ffmpeg binary not found".to_string());
     }
 
     // create a temporary file with the input data
@@ -77,7 +142,7 @@ pub fn run_ffmpeg(
     }
 
     // run the ffmpeg command with the args and the temporary file
-    let mut ffmpeg = ffmpeg_sidecar::command::FfmpegCommand::new()
+    let mut ffmpeg = ffmpeg_sidecar::command::FfmpegCommand::new_with_path(ffmpeg_path)
         .input(input_file)
         .args(args)
         .output(output_file)
@@ -128,4 +193,82 @@ pub fn run_ffmpeg(
     }
 
     return Ok(general_purpose::STANDARD.encode(output_data));
+}
+
+#[tauri::command(async)]
+pub async fn run_ffprobe(args: Vec<String>, app_handle: tauri::AppHandle) -> Result<String, String> {
+    let (_, ffprobe_path) = resolve_ffmpeg_paths(&app_handle)?;
+    if !ffprobe_path.exists() {
+        return Err("Ffprobe binary not found".to_string());
+    }
+
+    let output = Command::new(ffprobe_path)
+        .args(args)
+        .output()
+        .map_err(|e| format!("Error running ffprobe: {e}"))?;
+
+    if !output.status.success() {
+        return Err(String::from_utf8_lossy(&output.stderr).to_string());
+    }
+
+    Ok(String::from_utf8_lossy(&output.stdout).to_string())
+}
+
+#[derive(Serialize)]
+pub struct CoverImagePayload {
+    mime: String,
+    data: String,
+}
+
+fn detect_image_mime(data: &[u8]) -> &'static str {
+    if data.starts_with(b"\x89PNG\r\n\x1a\n") {
+        return "image/png";
+    }
+
+    if data.starts_with(&[0xff, 0xd8, 0xff]) {
+        return "image/jpeg";
+    }
+
+    if data.starts_with(b"GIF87a") || data.starts_with(b"GIF89a") {
+        return "image/gif";
+    }
+
+    "application/octet-stream"
+}
+
+#[tauri::command(async)]
+pub async fn extract_ffmpeg_cover(
+    path: String,
+    app_handle: tauri::AppHandle,
+) -> Result<CoverImagePayload, String> {
+    let (ffmpeg_path, _) = resolve_ffmpeg_paths(&app_handle)?;
+    if !ffmpeg_path.exists() {
+        return Err("Ffmpeg binary not found".to_string());
+    }
+
+    let output = Command::new(ffmpeg_path)
+        .args([
+            "-v",
+            "error",
+            "-i",
+            &path,
+            "-map",
+            "0:v:0",
+            "-c",
+            "copy",
+            "-f",
+            "image2pipe",
+            "-",
+        ])
+        .output()
+        .map_err(|e| format!("Error extracting cover: {e}"))?;
+
+    if !output.status.success() {
+        return Err(String::from_utf8_lossy(&output.stderr).to_string());
+    }
+
+    let mime = detect_image_mime(&output.stdout).to_string();
+    let data = general_purpose::STANDARD.encode(output.stdout);
+
+    Ok(CoverImagePayload { mime, data })
 }
