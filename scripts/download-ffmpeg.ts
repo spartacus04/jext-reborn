@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const platform = process.platform;
 const arch = process.arch;
+const targetTripleFromEnv = process.env.JEXT_TARGET_TRIPLE;
 
 const ytBase = 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/';
 const ffBase = 'https://github.com/eugeneware/ffmpeg-static/releases/latest/download/';
@@ -26,6 +27,10 @@ const downloadFile = async (url: string, outputPaths: string[]) => {
 };
 
 const resolveTargetTriple = () => {
+    if (targetTripleFromEnv) {
+        return targetTripleFromEnv;
+    }
+
     if (platform === 'linux' && arch === 'x64') {
         return 'x86_64-unknown-linux-gnu';
     }
@@ -94,6 +99,14 @@ const ffmpegBinaries = [
         name: 'ffprobe-darwin-arm64'
     },
     {
+        url: ffBase + 'ffmpeg-darwin-x64',
+        name: 'ffmpeg-darwin-x64'
+    },
+    {
+        url: ffBase + 'ffprobe-darwin-x64',
+        name: 'ffprobe-darwin-x64'
+    },
+    {
         url: ffBase + 'ffmpeg-win32-x64',
         name: 'ffmpeg-win32-x64'
     },
@@ -118,6 +131,10 @@ const main = async () => {
         const basePath = path.join(outDir, binary.name);
         const suffixedPath = path.join(outDir, `${binary.name}${suffix}`);
         const outputPaths = basePath === suffixedPath ? [basePath] : [basePath, suffixedPath];
+
+        if (target.includes('windows') && !suffixedPath.endsWith('.exe')) {
+            outputPaths.push(`${suffixedPath}.exe`);
+        }
 
         await downloadFile(binary.url, outputPaths);
     }

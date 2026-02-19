@@ -52,10 +52,14 @@ jobs:
           bun run scripts/append-hash.ts
 
       - name: Download FFmpeg, FFprobe and YT-DLP binaries
+        env:
+          JEXT_TARGET_TRIPLE: ${{ matrix.args == '--target aarch64-apple-darwin' && 'aarch64-apple-darwin' || matrix.args == '--target x86_64-apple-darwin' && 'x86_64-apple-darwin' || matrix.platform == 'windows-latest' && 'x86_64-pc-windows-msvc' || matrix.platform == 'ubuntu-22.04' && 'x86_64-unknown-linux-gnu' || '' }}
         run: bun run scripts/download-ffmpeg.ts
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri
+        env:
+          TAURI_CONFIG: ${{ matrix.args == '--target aarch64-apple-darwin' && '{"bundle":{"externalBin":["bin/ffmpeg-darwin-arm64","bin/ffprobe-darwin-arm64","bin/yt-dlp-macos-aarch64"]}}' || matrix.args == '--target x86_64-apple-darwin' && '{"bundle":{"externalBin":["bin/ffmpeg-darwin-x64","bin/ffprobe-darwin-x64","bin/yt-dlp-macos-x86_64"]}}' || matrix.platform == 'windows-latest' && '{"bundle":{"externalBin":["bin/ffmpeg-win32-x64","bin/ffprobe-win32-x64","bin/yt-dlp-windows.exe"]}}' || '{"bundle":{"externalBin":["bin/ffmpeg-linux-x64","bin/ffprobe-linux-x64","bin/yt-dlp-linux"]}}' }}
 
       - name: Upload .dmg M1 binary
         if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'

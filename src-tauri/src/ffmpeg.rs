@@ -55,7 +55,8 @@ fn resolve_ffmpeg_paths(app_handle: &tauri::AppHandle) -> Result<(PathBuf, PathB
     let (ffmpeg_name, ffprobe_name) = match (os, arch) {
         ("linux", "x86_64") => ("ffmpeg-linux-x64", "ffprobe-linux-x64"),
         ("linux", "aarch64") => ("ffmpeg-linux-arm64", "ffprobe-linux-arm64"),
-        ("macos", _) => ("ffmpeg-darwin-arm64", "ffprobe-darwin-arm64"),
+        ("macos", "aarch64") => ("ffmpeg-darwin-arm64", "ffprobe-darwin-arm64"),
+        ("macos", "x86_64") => ("ffmpeg-darwin-x64", "ffprobe-darwin-x64"),
         ("windows", _) => ("ffmpeg-win32-x64", "ffprobe-win32-x64"),
         _ => {
             return Err(format!(
