@@ -48,7 +48,7 @@ dependencies {
         }
     }
 
-    implementation("org.bstats:bstats-bukkit:3.1.0")
+    implementation("org.bstats:bstats-bukkit:3.2.0")
     implementation("io.github.bananapuncher714:nbteditor:7.20.3")
     implementation("com.github.spartacus04:colosseum:1.2")
 
