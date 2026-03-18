@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.dokka:dokka-base:2.1.0")
-        classpath("com.guardsquare:proguard-gradle:7.8.2") {
+        classpath("com.guardsquare:proguard-gradle:7.9.0") {
             exclude("com.android.tools.build")
         }
     }
