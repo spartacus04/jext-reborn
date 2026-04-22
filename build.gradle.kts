@@ -41,7 +41,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.3")
     compileOnly("org.scala-lang:scala-library:3.8.2")
     compileOnly("com.github.techFortress:GriefPrevention:18.0.0")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
     compileOnly("org.geysermc.geyser:api:2.9.4-SNAPSHOT") {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
