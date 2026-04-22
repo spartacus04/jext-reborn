@@ -12,22 +12,4 @@ updates:
       interval: 'daily'
     ignore:
       - dependency-name: "com.sk89q.worldguard:worldguard-bukkit"
-
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    target-branch: "gh-pages"
-    schedule:
-      interval: 'daily'
-    ignore:
-      - dependency-name: "svelte-gestures"
-      - dependency-name: "@sveltejs/kit"
-      - dependency-name: "svelte"
-      - dependency-name: "@sveltejs/vite-plugin-svelte"
-      - dependency-name: "svelte-check"
-      - dependency-name: "tailwindcss"
-
-  - package-ecosystem: "cargo"
-    directory: "/src-tauri/"
-    target-branch: "gh-pages"
-    schedule:
-      interval: 'daily'
+    open-pull-requests-limit: 10
