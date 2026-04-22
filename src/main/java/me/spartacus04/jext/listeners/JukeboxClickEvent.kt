@@ -70,15 +70,9 @@ internal class JukeboxClickEvent(val plugin: Jext) : ColosseumListener(plugin) {
     fun onJukeboxBreak(event: BlockBreakEvent) {
         val loc = event.block.location
 
+        plugin.discs.stop(loc)
         JukeboxGui.destroyJukebox(loc).forEach {
             loc.world!!.dropItemNaturally(loc, it)
-        }
-
-        val block = event.block
-        val state = block.state as? Jukebox ?: return
-
-        Disc.fromItemstack(state.record)?.namespace?.let {
-            plugin.discs.stop(loc, it)
         }
     }
 }

@@ -40,7 +40,7 @@ internal class InventoryMoveItemEvent(val plugin: Jext) : ColosseumListener(plug
                 }
             }
             else -> {
-                if(e.source.type == InventoryType.PLAYER && e.destination.type == InventoryType.JUKEBOX) {
+                if(e.destination.type == InventoryType.JUKEBOX) {
                     e.isCancelled = true
                 }
             }
