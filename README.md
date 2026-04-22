@@ -7,7 +7,7 @@
 ![bStats Players](https://img.shields.io/bstats/players/16571)
 ![bStats Servers](https://img.shields.io/bstats/servers/16571)
 
-![Spigot Downloads](https://img.shields.io/spiget/downloads/103219?label=Spigot%20Downloads)
+![Spigot Downloads](https://img.shields.io/spiget/downloads/103219?label=Spigot%20downloads)
 ![Hangar Downloads](https://img.shields.io/hangar/dt/JukeboxExtendedReborn?label=Hangar%20downloads)
 ![Modrinth Downloads](https://img.shields.io/modrinth/dt/LRzd464N?label=Modrinth%20downloads&color=00cc00)
 ![GitHub all releases](https://img.shields.io/github/downloads/spartacus04/jext-reborn/total?label=Github%20downloads)

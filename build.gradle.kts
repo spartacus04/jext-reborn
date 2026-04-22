@@ -1,5 +1,8 @@
+import groovy.json.JsonSlurper
 import proguard.gradle.ProGuardTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import xyz.jpenilla.runtask.task.AbstractRun
+import java.net.URL
 
 plugins {
     java
@@ -10,6 +13,7 @@ plugins {
     `maven-publish`
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
     id("com.modrinth.minotaur") version "2.9.0"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 buildscript {
@@ -67,7 +71,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 tasks {
     shadowJar {
         archiveFileName.set("${rootProject.name}_${project.version}-shadowed.jar")
-        val dependencyPackage = "${rootProject.group}.dependencies.${rootProject.name.lowercase()}"
+        val dependencyPackage = "${rootProject.group}.dependencies"
         from(subprojects.map { it.sourceSets.main.get().output })
 
         relocate("kotlin", "${dependencyPackage}.kotlin")
@@ -76,8 +80,7 @@ tasks {
         relocate("org/jetbrains/annotations", "${dependencyPackage}.annotations")
         relocate("org/bstats", "${dependencyPackage}.bstats")
         relocate("io/github/bananapuncher714/nbteditor", "${dependencyPackage}.nbteditor")
-        relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
-        relocate("me/github/spartacus04/colosseum", "${dependencyPackage}.colosseum")
+        relocate("me/spartacus04/colosseum", "${dependencyPackage}.colosseum")
         relocate("com/google/errorprone", "${dependencyPackage}.errorprone")
         relocate("_COROUTINE", "${dependencyPackage}._COROUTINE")
 
@@ -135,6 +138,46 @@ tasks.processResources {
 
     filesMatching("extension.yml") {
         expand("version" to project.rootProject.version)
+    }
+}
+
+// Test
+
+tasks.withType(AbstractRun::class) {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+val lastSupportedVersion = "${property("minecraft_versions")}".split(",").last()
+
+tasks.runServer {
+    minecraftVersion(lastSupportedVersion)
+
+    downloadPlugins {
+        // temp solution while runServer adds support for downloading latest
+        @Suppress("UNCHECKED_CAST")
+        val packetEventsVersions = JsonSlurper()
+            .parse(URL("https://api.modrinth.com/v2/project/packetevents/version")) as List<Map<String, Any?>>
+
+        val packetEventsSpigotVersion = packetEventsVersions.firstOrNull { version ->
+            val loaders = (version["loaders"] as? List<*>)?.filterIsInstance<String>().orEmpty()
+            val gameVersions = (version["game_versions"] as? List<*>)?.filterIsInstance<String>().orEmpty()
+
+            "spigot" in loaders && lastSupportedVersion in gameVersions
+        }?.get("version_number") as? String
+            ?: throw IllegalStateException("No compatible Spigot PacketEvents version found for $lastSupportedVersion")
+
+        modrinth("packetevents", packetEventsSpigotVersion)
+
+
+        @Suppress("UNCHECKED_CAST")
+        val noteBlockAPIVersions = JsonSlurper()
+            .parse(URL("https://api.modrinth.com/v2/project/noteblockapi/version")) as List<Map<String, Any?>>
+
+        modrinth("noteblockapi",
+            noteBlockAPIVersions.firstOrNull()?.get("version_number") as? String ?: throw IllegalStateException("version_number is not defined")
+        )
     }
 }
 

@@ -26,9 +26,9 @@ internal class WorldGuardPermissionIntegration : PermissionIntegration {
 
         if(WorldGuard.getInstance().platform.sessionManager.hasBypass(wgPlayer, wgPlayer.world)) return true
 
-        val containerQuery = WorldGuard.getInstance().platform.regionContainer.createQuery()
+        val regions = WorldGuard.getInstance().platform.regionContainer.createQuery().getApplicableRegions(wgLocation)
         return flags.all {
-            containerQuery.testState(wgLocation, wgPlayer, it)
+            regions.queryState(wgPlayer, it) != StateFlag.State.DENY
         }
     }
 }

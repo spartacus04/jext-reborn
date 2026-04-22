@@ -9,6 +9,7 @@ import org.geysermc.geyser.api.item.custom.CustomItemData
 import org.geysermc.geyser.api.item.custom.CustomItemOptions
 import java.util.UUID
 
+@Suppress("DEPRECATION")
 internal class GeyserSpigot(val plugin: Jext) : EventRegistrar, GeyserMode {
 
     init {
