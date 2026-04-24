@@ -104,11 +104,11 @@ export const getVersionFromTime = () => {
 	const day = Math.floor(diffDay / oneDay);
 
 	// seconds of day
-	const startSeconds = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-	const diffSeconds = now.getTime() - startSeconds.getTime();
-	const seconds = Math.floor(diffSeconds / 1000);
+	const startMinutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+	const diffMinutes = now.getTime() - startMinutes.getTime();
+	const minutes = Math.floor(diffMinutes / 60000);
 
-	return [now.getFullYear(), day, seconds];
+	return `${now.getFullYear() % 100}.${day % 365}.${minutes}`;
 };
 
 export const downloadWithProgress = async (
