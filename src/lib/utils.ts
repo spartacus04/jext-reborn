@@ -103,7 +103,7 @@ export const getVersionFromTime = () => {
 		(startDay.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
 	const day = Math.floor(diffDay / oneDay);
 
-	// seconds of day
+	// minutes of day
 	const startMinutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 	const diffMinutes = now.getTime() - startMinutes.getTime();
 	const minutes = Math.floor(diffMinutes / 60000);
