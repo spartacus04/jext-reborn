@@ -9,6 +9,7 @@ import me.spartacus04.jext.config.fields.FieldLanguageMode
 
 @Suppress("PropertyName")
 internal data class V9Config(
+    @SerializedName("lang")
     var LANGUAGE_MODE: FieldLanguageMode = FieldLanguageMode.AUTO,
 
     @SerializedName("jukebox-behaviour")
