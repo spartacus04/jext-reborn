@@ -344,12 +344,12 @@ internal class JukeboxGui(size: Int, val id: String, val plugin: Jext) : Virtual
             playingMap.remove(id)
             timerMap.remove(id)
 
-
             val inv = inventories.remove(id) ?: return emptyList()
 
             save()
-            return inv.itemStacks.filterNotNull()
-
+            return inv.itemStacks.filterNotNull().map { it.apply {
+                removeEnchantments()
+            }}
         }
     }
 }

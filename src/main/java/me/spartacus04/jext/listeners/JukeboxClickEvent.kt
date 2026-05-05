@@ -68,6 +68,7 @@ internal class JukeboxClickEvent(val plugin: Jext) : ColosseumListener(plugin) {
 
     @EventHandler(ignoreCancelled = true)
     fun onJukeboxBreak(event: BlockBreakEvent) {
+        if(event.block.type != Material.JUKEBOX) return
         val loc = event.block.location
 
         plugin.discs.stop(loc)
