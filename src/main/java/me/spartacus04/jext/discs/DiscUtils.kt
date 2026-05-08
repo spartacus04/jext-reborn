@@ -48,7 +48,7 @@ object DiscUtils {
             if(material.isRecord) {
                 Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[jukebox_playable={song:\"minecraft:11\",show_in_tooltip:false}]")
             } else {
-                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[show_in_tooltip=false]")
+                Bukkit.getItemFactory().createItemStack("${material.name.lowercase()}[hide_additional_tooltip={}]")
             }
         } else {
             ItemStack(material)

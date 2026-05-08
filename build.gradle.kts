@@ -48,7 +48,7 @@ dependencies {
     compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
     compileOnly("org.geysermc.geyser:api:2.10.0-SNAPSHOT") {
         attributes {
-            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 17)
+            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21)
         }
     }
 
@@ -189,7 +189,6 @@ dokka {
         customAssets.from(file("icon.png"))
         footerMessage =
             "Jukebox Extended Reborn is licensed under the <a href=\"https://github.com/spartacus04/jext-reborn/blob/master/LICENSE.MD\">MIT</a> License."
-
     }
 }
 
