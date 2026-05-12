@@ -57,7 +57,7 @@ dependencies {
     implementation("com.github.spartacus04:colosseum:1.2.3")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
 }
 
 group = "me.spartacus04.jext"
