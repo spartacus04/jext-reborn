@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper
 import proguard.gradle.ProGuardTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import xyz.jpenilla.runtask.task.AbstractRun
-import java.net.URL
+import java.net.URI
 
 plugins {
     java
@@ -102,6 +102,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 artifacts.archives(tasks.shadowJar)
 
 tasks.register<ProGuardTask>("proguardJar") {
+    description = "Builds a obfuscated and minimised jar"
     outputs.upToDateWhen { false }
     dependsOn("clean")
     dependsOn("shadowJar")
@@ -158,7 +159,7 @@ tasks.runServer {
         // temp solution while runServer adds support for downloading latest
         @Suppress("UNCHECKED_CAST")
         val packetEventsVersions = JsonSlurper()
-            .parse(URL("https://api.modrinth.com/v2/project/packetevents/version")) as List<Map<String, Any?>>
+            .parse(URI.create("https://api.modrinth.com/v2/project/packetevents/version").toURL()) as List<Map<String, Any?>>
 
         val packetEventsSpigotVersion = packetEventsVersions.firstOrNull { version ->
             val loaders = (version["loaders"] as? List<*>)?.filterIsInstance<String>().orEmpty()
@@ -166,14 +167,14 @@ tasks.runServer {
 
             "spigot" in loaders && lastSupportedVersion in gameVersions
         }?.get("version_number") as? String
-            ?: throw IllegalStateException("No compatible Spigot PacketEvents version found for $lastSupportedVersion")
 
-        modrinth("packetevents", packetEventsSpigotVersion)
-
+        if(packetEventsSpigotVersion != null) {
+            modrinth("packetevents", packetEventsSpigotVersion)
+        }
 
         @Suppress("UNCHECKED_CAST")
         val noteBlockAPIVersions = JsonSlurper()
-            .parse(URL("https://api.modrinth.com/v2/project/noteblockapi/version")) as List<Map<String, Any?>>
+            .parse(URI.create("https://api.modrinth.com/v2/project/noteblockapi/version").toURL()) as List<Map<String, Any?>>
 
         modrinth("noteblockapi",
             noteBlockAPIVersions.firstOrNull()?.get("version_number") as? String ?: throw IllegalStateException("version_number is not defined")
@@ -222,7 +223,7 @@ hangarPublish {
                 platformVersions.set("${property("minecraft_versions")}".split(","))
 
                 dependencies {
-                    this.url("ProtocolLib", "https://modrinth.com/plugin/packetevents") {
+                    this.url("PacketEvents", "https://modrinth.com/plugin/packetevents") {
                         required.set(true)
                     }
                     this.url("NoteBlockAPI", "https://modrinth.com/plugin/noteblockapi") {

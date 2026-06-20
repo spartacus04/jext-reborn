@@ -124,6 +124,10 @@ object Constants {
         if(INSTANCE.serverVersion >= "1.21.7") {
             SOUND_MAP[Material.MUSIC_DISC_LAVA_CHICKEN] = SoundData(Sound.MUSIC_DISC_LAVA_CHICKEN, 135)
         }
+        
+        if(INSTANCE.serverVersion >= "26.2") {
+            SOUND_MAP[Material.MUSIC_DISC_BOUNCE] = SoundData(Sound.MUSIC_DISC_BOUNCE, 236)
+        }
     }
 
     val JEXT_DISC_MATERIAL = Material.MUSIC_DISC_11
