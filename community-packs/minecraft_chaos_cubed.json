@@ -1,0 +1,45 @@
+{
+	"$schema": "https://raw.githubusercontent.com/spartacus04/jext-reborn/refs/heads/gh-pages/community-packs/schema.json",
+	"name": "Minecraft: Chaos Cubed",
+	"description": "Soundtrack for Minecraft's sulfurous update.",
+	"descriptionAsTooltip": false,
+	"icon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25",
+	"authors": ["Fingerspit"],
+	"downloads": [
+		{
+			"url": "https://youtu.be/uUp6Zqfk7Jo",
+			"overrideName": "Memories",
+			"overrideAuthor": "Fingerspit",
+			"overrideDescription": "§6Soundtrack for Minecraft's sulfurous update.\n§2§o1st disc out of 5.",
+			"baseIcon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25"
+		},
+		{
+			"url": "https://youtu.be/Pv6sVMGhB6o",
+			"overrideName": "Ebb",
+			"overrideAuthor": "Fingerspit",
+			"overrideDescription": "§6Soundtrack for Minecraft's sulfurous update.\n§2§o2nd disc out of 5.",
+			"baseIcon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25"
+		},
+		{
+			"url": "https://youtu.be/OW74fIrbMP8",
+			"overrideName": "Home",
+			"overrideAuthor": "Fingerspit",
+			"overrideDescription": "§6Soundtrack for Minecraft's sulfurous update.\n§2§o3rd disc out of 5.",
+			"baseIcon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25"
+		},
+		{
+			"url": "https://youtu.be/cLCwGxaRbtk",
+			"overrideName": "Shores",
+			"overrideAuthor": "Fingerspit",
+			"overrideDescription": "§6Soundtrack for Minecraft's sulfurous update.\n§2§o4th disc out of 5.",
+			"baseIcon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25"
+		},
+		{
+			"url": "https://youtu.be/XXhHJ4GtmvI",
+			"overrideName": "Nightly",
+			"overrideAuthor": "Fingerspit",
+			"overrideDescription": "§6Soundtrack for Minecraft's sulfurous update.\n§2§o5th disc out of 5.",
+			"baseIcon": "https://open.spotify.com/album/7qP2RO8Zm1u47l8pbgtU25"
+		}
+	]
+}
