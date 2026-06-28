@@ -98,7 +98,7 @@ export const convertAudio = async (
 
 		removeStep(2);
 
-		return new Blob([result], { type: 'audio/ogg' });
+		return new Blob([result as BlobPart], { type: 'audio/ogg' });
 	}
 };
 
