@@ -73,7 +73,7 @@
 				let disc: BaseDisc;
 
 				if (file.name.endsWith('.nbs')) {
-					disc = new NbsDisc(file, binaryData, true);
+					disc = new NbsDisc(file, binaryData.buffer, true);
 				} else {
 					disc = new MusicDisc(file, true);
 				}

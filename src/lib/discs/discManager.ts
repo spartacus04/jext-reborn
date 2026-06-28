@@ -13,6 +13,7 @@ import { isTauri } from '$lib/state';
 import { invoke } from '@tauri-apps/api/core';
 import { appCacheDir } from '@tauri-apps/api/path';
 import { remove, writeFile } from '@tauri-apps/plugin-fs';
+import { importProjectFromJson } from './projectSerializer';
 
 export const discsStore = writable<BaseDisc[]>([]);
 export const selectedDiscs = writable<BaseDisc[]>([]);
@@ -76,7 +77,8 @@ const getEmbeddedCover = (tags: FfprobeTags | undefined) => {
 	if (pictureBlock) {
 		try {
 			const decoded = decodeBase64(pictureBlock);
-			return parseFlacPictureBlock(decoded);
+			const flacPic = parseFlacPictureBlock(decoded);
+			return { mime: flacPic.mime, data: flacPic.imageData };
 		} catch {
 			return undefined;
 		}
@@ -139,7 +141,7 @@ const applyTauriAudioMetadata = async (disc: MusicDisc, file: File) => {
 
 		const cover = getEmbeddedCover(mergedTags);
 		if (cover) {
-			const textures = await adaptImageToDisc(new Blob([cover.data], { type: cover.mime }));
+			const textures = await adaptImageToDisc(new Blob([cover.data as BlobPart], { type: cover.mime }));
 			disc.setDiscTexture(textures.discTexture);
 			disc.setFragmentTexture(textures.fragmentTexture);
 			return true;
@@ -234,6 +236,15 @@ export function createNewDisc(files: File[] | undefined) {
 			nbsDisc.RerollTextures().then(() => {
 				addDisc(nbsDisc);
 			});
+		} else if (file.name.endsWith('.json')) {
+			try {
+				const text = await file.text();
+				const payload = JSON.parse(text);
+				await importProjectFromJson(payload);
+			} catch (err) {
+				console.error(err);
+				cAlert('Failed to import project: Invalid or corrupt JSON file.');
+			}
 		}
 	});
 }
