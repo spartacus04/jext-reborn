@@ -12,8 +12,7 @@
 	import { templatesStore, loadBuiltInTemplates } from '$lib/discs/templateManager';
 	import { generateTexturesFromColors, generateTexturesFromTemplate } from '$lib/discs/textures';
 	import LauncherCombobox from '../inputs/LauncherCombobox.svelte';
-	// @ts-ignore
-	import { onMount, onDestroy } from 'svelte/internal';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let discs: BaseDisc[] = [];
 	let dialog: HTMLDialogElement;
@@ -256,7 +255,7 @@
 						return list;
 					});
 					selectTemplate(template);
-				} catch (err) {
+				} catch {
 					cAlert('Failed to load color template: Invalid JSON schema.');
 				}
 			};
@@ -375,7 +374,7 @@
 								class="flex-1 h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1 text-[10px] font-minecraft"
 							>
 								<option value="none">None (Default Disc/Fragment)</option>
-								{#each $templatesStore as t}
+								{#each $templatesStore as t (t.name)}
 									<option value={t.name}>{t.name}</option>
 								{/each}
 							</select>
@@ -394,7 +393,7 @@
 
 					<div class="flex flex-col gap-2">
 						{#if selectedTemplate}
-							{#each selectedTemplate.inputs as input}
+							{#each selectedTemplate.inputs as input (input.id)}
 								<div class="flex items-center justify-between gap-2">
 									<span class="text-[9px] text-[#aeaeae] font-minecraft w-12 truncate" title={input.name}>{input.name}</span>
 									<div class="flex items-center gap-1 flex-1">

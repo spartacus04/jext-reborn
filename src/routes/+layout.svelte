@@ -7,8 +7,7 @@
 	import { addDisc } from '$lib/discs/discManager';
 	import { loadBuiltInTemplates } from '$lib/discs/templateManager';
 	import { JextReader } from '$lib/exporter/importer';
-	// @ts-ignore
-	import { onMount } from 'svelte/internal';
+	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { PluginConnector, pluginConnectorStore } from '$lib/pluginAccess/pluginConnector';
 
