@@ -2,7 +2,6 @@
 	import { SidebarContainer } from '$lib/components/base';
 	import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
 	import '../app.postcss';
-	import '../global.d.ts';
 	import { baseElement, isTauri } from '$lib/state';
 	import { addDisc } from '$lib/discs/discManager';
 	import { loadBuiltInTemplates } from '$lib/discs/templateManager';

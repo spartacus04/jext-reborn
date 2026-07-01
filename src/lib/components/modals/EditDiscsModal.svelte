@@ -390,7 +390,6 @@
 							</button>
 						</div>
 					</div>
-
 					<div class="flex flex-col gap-2">
 						{#if selectedTemplate}
 							{#each selectedTemplate.inputs as input (input.id)}
