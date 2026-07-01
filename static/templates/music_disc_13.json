@@ -12,6 +12,11 @@
       "name": "Second Accent",
       "id": "white",
       "color": "ffffff"
+    },
+    {
+      "name": "Background Color",
+      "id": "background",
+      "color": "404040"
     }
   ],
   "replace": [
@@ -43,6 +48,62 @@
     {
       "before": "034150",
       "after": "white"
+    },
+    {
+      "before": "515151",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 80
+        },
+        {
+          "color": "ffffff",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "404040",
+      "after": "background"
+    },
+    {
+      "before": "262626",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 60
+        },
+        {
+          "color": "000000",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "212121",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 50
+        },
+        {
+          "color": "000000",
+          "contribution": 50
+        }
+      ]
+    },
+    {
+      "before": "111111",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 25
+        },
+        {
+          "color": "000000",
+          "contribution": 75
+        }
+      ]
     }
   ]
 }
