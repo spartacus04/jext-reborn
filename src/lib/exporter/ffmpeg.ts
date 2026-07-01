@@ -24,9 +24,26 @@ const qualityArgs = {
 	high: ['-ar', '48000', '-qscale:a', '7']
 };
 
+const ffmpegStore = writable<FFmpeg | null>(null);
+let cachedCoreURL: string | null = null;
+let cachedWasmURL: string | null = null;
+let conversionCount = 0;
+
+export const unloadFFmpeg = async () => {
+	const current = get(ffmpegStore);
+	if (current) {
+		try {
+			current.terminate();
+		} catch (e) {
+			console.error('Error terminating ffmpeg:', e);
+		}
+		ffmpegStore.set(null);
+	}
+	conversionCount = 0;
+};
+
 export const convertAudio = async (
-	disc: MusicDisc,
-	ffmpeg: FFmpeg | null
+	disc: MusicDisc
 ): Promise<Blob | null> => {
 	const args = ['-vn', '-acodec', 'libvorbis'];
 
@@ -68,41 +85,43 @@ export const convertAudio = async (
 			return null;
 		}
 	} else {
-		if (ffmpeg === null) return null;
+		let activeFfmpeg = await loadFFmpeg();
+		if (activeFfmpeg === null) return null;
 
-		if (!ffmpeg.loaded)
-			await ffmpeg.load(
-				crossOriginIsolated
-					? {
-							coreURL: `${baseMTURL}/ffmpeg-core.js`,
-							wasmURL: `${baseMTURL}/ffmpeg-core.wasm`
-						}
-					: {
-							coreURL: `${baseURL}/ffmpeg-core.js`,
-							wasmURL: `${baseURL}/ffmpeg-core.wasm`
-						}
-			);
+		conversionCount++;
+		if (conversionCount > 15) {
+			console.log('Resetting FFmpeg instance to prevent WebAssembly memory access out of bounds...');
+			await unloadFFmpeg();
+			activeFfmpeg = await loadFFmpeg();
+			if (activeFfmpeg === null) return null;
+			conversionCount = 1;
+		}
 
-		await ffmpeg.writeFile('input.ogg', new Uint8Array(await blobToArraBuffer(disc.audioFile)));
+		if (!activeFfmpeg.loaded) {
+			await activeFfmpeg.load({
+				coreURL: cachedCoreURL!,
+				wasmURL: cachedWasmURL!
+			});
+		}
 
-		ffmpeg.on('progress', (event) =>
+		await activeFfmpeg.writeFile('input.ogg', new Uint8Array(await blobToArraBuffer(disc.audioFile)));
+
+		activeFfmpeg.on('progress', (event) =>
 			updateSteps(2, 'Converting audio file', Math.ceil(event.progress * 100), 100)
 		);
 
-		await ffmpeg.exec(['-i', 'input.ogg', ...args, 'output.ogg']);
+		await activeFfmpeg.exec(['-i', 'input.ogg', ...args, 'output.ogg']);
 
-		const result = await ffmpeg.readFile('output.ogg');
+		const result = await activeFfmpeg.readFile('output.ogg');
 
-		ffmpeg.deleteFile('input.ogg');
-		ffmpeg.deleteFile('output.ogg');
+		activeFfmpeg.deleteFile('input.ogg');
+		activeFfmpeg.deleteFile('output.ogg');
 
 		removeStep(2);
 
-		return new Blob([result], { type: 'audio/ogg' });
+		return new Blob([result as BlobPart], { type: 'audio/ogg' });
 	}
 };
-
-const ffmpegStore = writable<FFmpeg | null>(null);
 
 export const loadFFmpeg = async (): Promise<FFmpeg | null> => {
 	if (isTauri) {
@@ -119,30 +138,33 @@ export const loadFFmpeg = async (): Promise<FFmpeg | null> => {
 
 		return null;
 	} else {
-		if (get(ffmpegStore) !== null) {
+		let ffmpeg = get(ffmpegStore);
+		if (ffmpeg !== null) {
 			updateSteps(0, 'FFmpeg loaded', 3, 3);
 			removeStep(1);
-			return get(ffmpegStore);
+			return ffmpeg;
 		}
 
-		const ffmpeg = new FFmpeg();
+		ffmpeg = new FFmpeg();
 
 		if (ffmpeg.loaded) return null;
 
-		updateSteps(1, 'Downloading ffmpeg-core.js', 0, 3);
-		const coreURL = await fetchData(
-			crossOriginIsolated ? `${baseMTURL}/ffmpeg-core.js` : `${baseURL}/ffmpeg-core.js`
-		);
+		if (!cachedCoreURL || !cachedWasmURL) {
+			updateSteps(1, 'Downloading ffmpeg-core.js', 0, 3);
+			cachedCoreURL = await fetchData(
+				crossOriginIsolated ? `${baseMTURL}/ffmpeg-core.js` : `${baseURL}/ffmpeg-core.js`
+			);
 
-		updateSteps(1, 'Downloading ffmpeg-core.wasm', 1, 3);
-		const wasmURL = await fetchData(
-			crossOriginIsolated ? `${baseMTURL}/ffmpeg-core.wasm` : `${baseURL}/ffmpeg-core.wasm`
-		);
+			updateSteps(1, 'Downloading ffmpeg-core.wasm', 1, 3);
+			cachedWasmURL = await fetchData(
+				crossOriginIsolated ? `${baseMTURL}/ffmpeg-core.wasm` : `${baseURL}/ffmpeg-core.wasm`
+			);
+		}
 
 		updateSteps(1, 'Loading FFmpeg', 2, 3);
 		await ffmpeg.load({
-			coreURL,
-			wasmURL
+			coreURL: cachedCoreURL,
+			wasmURL: cachedWasmURL
 		});
 
 		ffmpegStore.set(ffmpeg);

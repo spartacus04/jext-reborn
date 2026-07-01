@@ -1,0 +1,152 @@
+{
+  "name": "Creator Music Box Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAJFBMVEUAAABqNiXCa0zmiG7We1vbmFz2yG3/3Zn/qFH/99KKSTNNJxuqQNNCAAAAAXRSTlMAQObYZgAAAFJJREFUeNqdz0EKgAAIRFH/6Ervf9vImCja95YfFCb+wuKmCD53AFIIEpcEN5cTPdcbBbtHsLtyixW7z19aqszKKqmdhm5ZNxM24wYzE6+x37MuhbYMURxzS2EAAAAASUVORK5CYII=",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "Fill Accent",
+      "id": "copper",
+      "color": "d67b5b"
+    },
+    {
+      "name": "Highlight Accent",
+      "id": "white",
+      "color": "fff7d2"
+    },
+    {
+      "name": "Center Accent",
+      "id": "yellow",
+      "color": "f6c86d"
+    }
+  ],
+  "replace": [
+    {
+      "before": "d67b5b",
+      "after": "copper"
+    },
+    {
+      "before": "c26b4c",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 85
+        },
+        {
+          "color": "000000",
+          "contribution": 15
+        }
+      ]
+    },
+    {
+      "before": "8a4933",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 70
+        },
+        {
+          "color": "000000",
+          "contribution": 30
+        }
+      ]
+    },
+    {
+      "before": "6a3625",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 50
+        },
+        {
+          "color": "000000",
+          "contribution": 50
+        }
+      ]
+    },
+    {
+      "before": "4d271b",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 30
+        },
+        {
+          "color": "000000",
+          "contribution": 70
+        }
+      ]
+    },
+    {
+      "before": "e6886e",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 75
+        },
+        {
+          "input": "white",
+          "contribution": 25
+        }
+      ]
+    },
+    {
+      "before": "f6c86d",
+      "after": "yellow"
+    },
+    {
+      "before": "ffa851",
+      "after": [
+        {
+          "input": "yellow",
+          "contribution": 80
+        },
+        {
+          "color": "000000",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "db985c",
+      "after": [
+        {
+          "input": "yellow",
+          "contribution": 60
+        },
+        {
+          "input": "copper",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "ffdd99",
+      "after": [
+        {
+          "input": "yellow",
+          "contribution": 80
+        },
+        {
+          "input": "white",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "fff7d2",
+      "after": "white"
+    },
+    {
+      "before": "009295",
+      "after": "yellow"
+    },
+    {
+      "before": "05625d",
+      "after": "copper"
+    },
+    {
+      "before": "034150",
+      "after": "white"
+    }
+  ]
+}

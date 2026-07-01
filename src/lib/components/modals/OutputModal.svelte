@@ -23,9 +23,15 @@
 	import { saveAs } from '$lib/utils';
 	import { isTauri } from '$lib/state';
 	import { pluginConnectorStore } from '$lib/pluginAccess/pluginConnector';
+	import { exportProjectAsJson } from '$lib/discs/projectSerializer';
 
 	export let loaded = false;
 	export let onFinish: () => unknown;
+
+	const downloadProjectFile = async () => {
+		const projectBlob = await exportProjectAsJson();
+		saveAs(projectBlob, `${get(ResourcePackData).name}.json`);
+	};
 
 	let dialog: HTMLDialogElement;
 
@@ -173,6 +179,12 @@
 					on:click={() => saveAs(output?.javaRP, `${get(ResourcePackData).name}.zip`)}
 					flex={true}>Download Resource Pack for Minecraft: Java Edition</MinecraftButton
 				>
+				<MinecraftButton
+					on:click={downloadProjectFile}
+					flex={true}
+				>
+					Download Project Progress File (.json)
+				</MinecraftButton>
 				<MinecraftButton
 					enabled={output?.bedrockRP != undefined}
 					on:click={() =>

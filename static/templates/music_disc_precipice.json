@@ -1,0 +1,230 @@
+{
+  "name": "Precipice Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEUAAABuxZ96t5mio4/OjYPjgmxZspLWe1uFg3rCa0xMlIR2d29jbG1ART9NPDIpPyxNJxshOC8RHmWCAAAAAXRSTlMAQObYZgAAAGBJREFUeNqdzzESxCAMBEHBwXltDQL+/1mXAlc5dmc72dpXI70X6WkD3OWSw8iNS/RWQc7IIOjnuAoow8LltFqQnG22TkDKCtc2s3X0Rqrlvy2tiNZ+tc657RERc36+dQOjGQTk8SFk0AAAAABJRU5ErkJggg==",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "Left Accent",
+      "id": "copper",
+      "color": "d67b5b"
+    },
+    {
+      "name": "Right Accent",
+      "id": "oxidized",
+      "color": "59b292"
+    },
+    {
+      "name": "Fill Accent",
+      "id": "bg",
+      "color": "21382f"
+    }
+  ],
+  "replace": [
+    {
+      "before": "d67b5b",
+      "after": "copper"
+    },
+    {
+      "before": "c26b4c",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 85
+        },
+        {
+          "color": "000000",
+          "contribution": 15
+        }
+      ]
+    },
+    {
+      "before": "4d271b",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 35
+        },
+        {
+          "color": "000000",
+          "contribution": 65
+        }
+      ]
+    },
+    {
+      "before": "4d3c32",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 45
+        },
+        {
+          "color": "000000",
+          "contribution": 55
+        }
+      ]
+    },
+    {
+      "before": "e3826c",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 85
+        },
+        {
+          "color": "ffffff",
+          "contribution": 15
+        }
+      ]
+    },
+    {
+      "before": "ce8d83",
+      "after": [
+        {
+          "input": "copper",
+          "contribution": 70
+        },
+        {
+          "color": "ffffff",
+          "contribution": 30
+        }
+      ]
+    },
+    {
+      "before": "59b292",
+      "after": "oxidized"
+    },
+    {
+      "before": "4c9484",
+      "after": [
+        {
+          "input": "oxidized",
+          "contribution": 80
+        },
+        {
+          "color": "000000",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "6ec59f",
+      "after": [
+        {
+          "input": "oxidized",
+          "contribution": 80
+        },
+        {
+          "color": "ffffff",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "7ab799",
+      "after": [
+        {
+          "input": "oxidized",
+          "contribution": 90
+        },
+        {
+          "color": "ffffff",
+          "contribution": 10
+        }
+      ]
+    },
+    {
+      "before": "21382f",
+      "after": "bg"
+    },
+    {
+      "before": "293f2c",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 80
+        },
+        {
+          "color": "000000",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "40453f",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 55
+        },
+        {
+          "color": "ffffff",
+          "contribution": 45
+        }
+      ]
+    },
+    {
+      "before": "636c6d",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 40
+        },
+        {
+          "color": "ffffff",
+          "contribution": 60
+        }
+      ]
+    },
+    {
+      "before": "76776f",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 30
+        },
+        {
+          "color": "ffffff",
+          "contribution": 70
+        }
+      ]
+    },
+    {
+      "before": "85837a",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 20
+        },
+        {
+          "color": "ffffff",
+          "contribution": 80
+        }
+      ]
+    },
+    {
+      "before": "a2a38f",
+      "after": [
+        {
+          "input": "bg",
+          "contribution": 10
+        },
+        {
+          "color": "ffffff",
+          "contribution": 90
+        }
+      ]
+    },
+    {
+      "before": "009295",
+      "after": "oxidized"
+    },
+    {
+      "before": "05625d",
+      "after": "copper"
+    },
+    {
+      "before": "034150",
+      "after": "bg"
+    }
+  ]
+}

@@ -3,9 +3,8 @@ import { get } from 'svelte/store';
 import { removeStep, updateSteps } from './exporterLine';
 import { convertAudio } from './ffmpeg';
 import type { MusicDisc } from '$lib/discs/musicDisc';
-import type { FFmpeg } from '@ffmpeg/ffmpeg';
 
-export const preProcessDiscs = async (ffmpeg: FFmpeg | null) => {
+export const preProcessDiscs = async () => {
 	const discs = get(discsStore);
 
 	for (let i = 0; i < discs.length; i++) {
@@ -22,7 +21,7 @@ export const preProcessDiscs = async (ffmpeg: FFmpeg | null) => {
 				if((discs[i] as MusicDisc).disableTranscoding || localStorage.getItem('disable-audio-transcoding') === 'true') {
 					(discs[i] as MusicDisc).cachedFinalAudioFile = (discs[i] as MusicDisc).audioFile;
 				} else {
-					const track = await convertAudio(discs[i] as MusicDisc, ffmpeg);
+					const track = await convertAudio(discs[i] as MusicDisc);
 					(discs[i] as MusicDisc).cachedFinalAudioFile = track;
 				}
 			}

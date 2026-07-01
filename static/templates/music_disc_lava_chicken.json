@@ -1,0 +1,148 @@
+{
+  "name": "Lava Chicken Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIVBMVEUAAAD///m1tbX2hYXeHR1RUVFAQEA4ODhWFBQmJiYhISH9Gx3hAAAAAXRSTlMAQObYZgAAAFBJREFUeNqdj0EOACEIAwGhdv3/gzfFmHh2LmQm6QF7ZYnbIE5rK1Spba/C8ACqy9LN/LooELuMHtGMCY1UgaSpZMgqUq7CGe4ek7TDFM9v/Y5NAsz389trAAAAAElFTkSuQmCC",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "First Accent",
+      "id": "red",
+      "color": "de1d1d"
+    },
+    {
+      "name": "Second Accent",
+      "id": "white",
+      "color": "fffff9"
+    },
+    {
+      "name": "Background Color",
+      "id": "background",
+      "color": "404040"
+    }
+  ],
+  "replace": [
+    {
+      "before": "de1d1d",
+      "after": "red"
+    },
+    {
+      "before": "fffff9",
+      "after": "white"
+    },
+    {
+      "before": "f68585",
+      "after": [
+        {
+          "input": "red",
+          "contribution": 60
+        },
+        {
+          "input": "white",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "561414",
+      "after": [
+        {
+          "input": "red",
+          "contribution": 35
+        },
+        {
+          "color": "000000",
+          "contribution": 65
+        }
+      ]
+    },
+    {
+      "before": "b5b5b5",
+      "after": [
+        {
+          "input": "white",
+          "contribution": 70
+        },
+        {
+          "color": "000000",
+          "contribution": 30
+        }
+      ]
+    },
+    {
+      "before": "009295",
+      "after": "red"
+    },
+    {
+      "before": "05625d",
+      "after": [
+        {
+          "input": "red",
+          "contribution": 60
+        },
+        {
+          "input": "white",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "034150",
+      "after": "white"
+    },
+    {
+      "before": "515151",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 80
+        },
+        {
+          "color": "ffffff",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "404040",
+      "after": "background"
+    },
+    {
+      "before": "383838",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 85
+        },
+        {
+          "color": "000000",
+          "contribution": 15
+        }
+      ]
+    },
+    {
+      "before": "262626",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 60
+        },
+        {
+          "color": "000000",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "212121",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 50
+        },
+        {
+          "color": "000000",
+          "contribution": 50
+        }
+      ]
+    }
+  ]
+}
