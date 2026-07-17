@@ -1,0 +1,178 @@
+{
+  "name": "Relic Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAKlBMVEUAAACI5v8xrv65gFOrcUt2d3GfZUcfe9aVWkSQUEF1QjZeNy9HJR0zGhXe21i6AAAAAXRSTlMAQObYZgAAAFZJREFUeNqdj0EOwCAIBEVBgbr//26ztiaenQvZyUJCuWWSMyXZbqXICLovR5iIWMYyk1PGMyp7FJxWpVr8DU8usZfpPALvmkS7oxAA2poqgLIBuX7rBUzXBEYO7iibAAAAAElFTkSuQmCC",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "Center Accent",
+      "id": "blue",
+      "color": "1f7bd6"
+    },
+    {
+      "name": "Fill Accent",
+      "id": "dirt",
+      "color": "47251d"
+    }
+  ],
+  "replace": [
+    {
+      "before": "1f7bd6",
+      "after": "blue"
+    },
+    {
+      "before": "31aefe",
+      "after": [
+        {
+          "input": "blue",
+          "contribution": 80
+        },
+        {
+          "color": "ffffff",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "88e6ff",
+      "after": [
+        {
+          "input": "blue",
+          "contribution": 50
+        },
+        {
+          "color": "ffffff",
+          "contribution": 50
+        }
+      ]
+    },
+    {
+      "before": "47251d",
+      "after": "dirt"
+    },
+    {
+      "before": "331a15",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 60
+        },
+        {
+          "color": "000000",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "5e372f",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 85
+        },
+        {
+          "color": "ffffff",
+          "contribution": 15
+        }
+      ]
+    },
+    {
+      "before": "754236",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 70
+        },
+        {
+          "color": "ffffff",
+          "contribution": 30
+        }
+      ]
+    },
+    {
+      "before": "905041",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 60
+        },
+        {
+          "color": "ffffff",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "955a44",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 55
+        },
+        {
+          "color": "ffffff",
+          "contribution": 45
+        }
+      ]
+    },
+    {
+      "before": "9f6547",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 50
+        },
+        {
+          "color": "ffffff",
+          "contribution": 50
+        }
+      ]
+    },
+    {
+      "before": "ab714b",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 40
+        },
+        {
+          "color": "ffffff",
+          "contribution": 60
+        }
+      ]
+    },
+    {
+      "before": "b98053",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 30
+        },
+        {
+          "color": "ffffff",
+          "contribution": 70
+        }
+      ]
+    },
+    {
+      "before": "009295",
+      "after": "blue"
+    },
+    {
+      "before": "05625d",
+      "after": "dirt"
+    },
+    {
+      "before": "034150",
+      "after": [
+        {
+          "input": "dirt",
+          "contribution": 50
+        },
+        {
+          "color": "000000",
+          "contribution": 50
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Tears Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAG1BMVEUAAABUVFTo5+f5+fmfw8O129tXeHiKiIg4ODgZlQNyAAAAAXRSTlMAQObYZgAAAExJREFUeNqdjzEOADEIwyjQS/7/4pORKnWuF4gVBuKVBXdKOG5SZRVuMnt3YzGL2fvbmBFMGhRHKDnCZmpFhCUlSHKAbYHtOBie3/oBtEYBj5VJ3HUAAAAASUVORK5CYII=",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "Primary Accent",
+      "id": "white",
+      "color": "f9f9f9"
+    },
+    {
+      "name": "Secondary Accent",
+      "id": "cyan",
+      "color": "b5dbdb"
+    }
+  ],
+  "replace": [
+    {
+      "before": "f9f9f9",
+      "after": "white"
+    },
+    {
+      "before": "e8e7e7",
+      "after": [
+        {
+          "input": "white",
+          "contribution": 90
+        },
+        {
+          "color": "000000",
+          "contribution": 10
+        }
+      ]
+    },
+    {
+      "before": "b5dbdb",
+      "after": "cyan"
+    },
+    {
+      "before": "9fc3c3",
+      "after": [
+        {
+          "input": "cyan",
+          "contribution": 75
+        },
+        {
+          "color": "000000",
+          "contribution": 25
+        }
+      ]
+    },
+    {
+      "before": "009295",
+      "after": "white"
+    },
+    {
+      "before": "05625d",
+      "after": "cyan"
+    },
+    {
+      "before": "034150",
+      "after": [
+        {
+          "input": "cyan",
+          "contribution": 60
+        },
+        {
+          "color": "000000",
+          "contribution": 40
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "name": "Music Disc 13 Style",
+  "base": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeElEQVQ4T92Ryw3AIAxDWcEjcPEcrMD23SY9GeWDaK9tJAsk8p6U0No/q/duOU9MgMYYJUfZDppzrlN3L9vCvtmutpKlQSKBfxRI0lRZUgRF4mo3ShCQLPP7HeT9kIx7AGAkVzIgSAFQfwKAKb7ZQ0qBT7LX0HfrBhBUzmu87GZiAAAAAElFTkSuQmCC",
+  "fragmentBase": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVQ4y2NgGAXUB7xC4v9BWF/f/H9gYOB/ijSDcEpKCvEG4dJsa+sMxsyOAf+JMgSkGF0za1Is2HVEuwSmEYQZJk0lXjOyISBbydKMHqijaRM/AACpAEHEWUusCgAAAABJRU5ErkJggg==",
+  "inputs": [
+    {
+      "name": "First Accent",
+      "id": "yellow",
+      "color": "ffd800"
+    },
+    {
+      "name": "Second Accent",
+      "id": "white",
+      "color": "ffffff"
+    },
+    {
+      "name": "Background Color",
+      "id": "background",
+      "color": "404040"
+    }
+  ],
+  "replace": [
+    {
+      "before": "ffd800",
+      "after": "yellow"
+    },
+    {
+      "before": "ffffff",
+      "after": "white"
+    },
+    {
+      "before": "009295",
+      "after": "yellow"
+    },
+    {
+      "before": "05625d",
+      "after": [
+        {
+          "input": "yellow",
+          "contribution": 60
+        },
+        {
+          "input": "white",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "034150",
+      "after": "white"
+    },
+    {
+      "before": "515151",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 80
+        },
+        {
+          "color": "ffffff",
+          "contribution": 20
+        }
+      ]
+    },
+    {
+      "before": "404040",
+      "after": "background"
+    },
+    {
+      "before": "262626",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 60
+        },
+        {
+          "color": "000000",
+          "contribution": 40
+        }
+      ]
+    },
+    {
+      "before": "212121",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 50
+        },
+        {
+          "color": "000000",
+          "contribution": 50
+        }
+      ]
+    },
+    {
+      "before": "111111",
+      "after": [
+        {
+          "input": "background",
+          "contribution": 25
+        },
+        {
+          "color": "000000",
+          "contribution": 75
+        }
+      ]
+    }
+  ]
+}

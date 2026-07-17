@@ -19,3 +19,4 @@ declare global {
 		__TAURI__: Record<string, unknown>;
 	}
 }
+

@@ -53,10 +53,10 @@ export const exportResourcePack = async (exporter: BaseExporter) => {
 		undefined,
 		undefined
 	]);
-	const ffmpeg = await loadFFmpeg();
+	await loadFFmpeg();
 
 	updateSteps(0, 'Building music objects', 1, pack.packs.length > 0 ? 4 : 3);
-	await preProcessDiscs(ffmpeg);
+	await preProcessDiscs();
 
 	updateSteps(0, 'Building resource pack', 2, pack.packs.length > 0 ? 4 : 3);
 	const output = await exporter.export();

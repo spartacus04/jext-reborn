@@ -10,7 +10,7 @@ export const mergeResourcePacks = async (base: Blob) => {
 
 	const mergedJsonFiles: { [key: string]: unknown } = {};
 
-	for (const pack of packs.toReversed()) {
+	for (const pack of [...packs].reverse()) {
 		const packZip = await JSZip.loadAsync(pack);
 
 		for (const path in packZip.files) {

@@ -16,6 +16,13 @@ export abstract class BaseDisc {
 	public discTextureURL: string = '';
 	public fragmentTextureURL: string = '';
 
+	public colorOuter: string = '';
+	public colorInner: string = '';
+	public colorFill: string = '';
+
+	public customTemplate: any = null;
+	public templateInputs: Record<string, string> = {};
+
 	public tooltip: string = '';
 
 	public modelData: number = -1;
@@ -29,10 +36,13 @@ export abstract class BaseDisc {
 	}
 
 	async RerollTextures() {
-		const textures = await randomTextures();
+		const result = await randomTextures();
+		this.colorOuter = result.colorOuter;
+		this.colorInner = result.colorInner;
+		this.colorFill = result.colorFill;
 
-		this.setDiscTexture(textures.discTexture);
-		this.setFragmentTexture(textures.fragmentTexture);
+		this.setDiscTexture(result.discTexture);
+		this.setFragmentTexture(result.fragmentTexture);
 	}
 
 	setDiscTexture(blob: Blob) {

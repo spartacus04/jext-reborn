@@ -2,9 +2,9 @@
 	import { SidebarContainer } from '$lib/components/base';
 	import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
 	import '../app.postcss';
-	import '../global.d.ts';
 	import { baseElement, isTauri } from '$lib/state';
 	import { addDisc } from '$lib/discs/discManager';
+	import { loadBuiltInTemplates } from '$lib/discs/templateManager';
 	import { JextReader } from '$lib/exporter/importer';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
@@ -34,6 +34,7 @@
 	};
 
 	onMount(() => {
+		console.log('layout: onMount started');
 		const restoreConnection = async () => {
 			if (!isTauri) return;
 
@@ -80,7 +81,10 @@
 			document.documentElement.setAttribute('data-font-type', 'dyslexic');
 		}
 
+		console.log('layout: Calling restoreConnection');
 		restoreConnection();
+		console.log('layout: Calling loadBuiltInTemplates');
+		loadBuiltInTemplates();
 	});
 
 	let isConnectingToApi = false;
