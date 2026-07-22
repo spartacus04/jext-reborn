@@ -48,9 +48,9 @@
   "error-invalid-sender-at": "§c오류: 존재하지 않는 전송자 §e'%at%'§c, '§e%sender%§c'에서 발생함.",
   "error-no-players": "오류: 플레이어가 존재하지 않음",
   "error-no-entities": "오류: 개체가 존제하지 않음",
-  "error-invalid-sender": "§cThis command can only be run by §6%runner%§c.",
+  "error-invalid-sender": "§c이 명령어는 오직 §6%runner%§c만 실행할 수 있습니다.",
   "command-not-supported": "§6%command% §c은 지원하지 않는 명령어입니다. 이유: §6%reason%§c.",
-  "webui": "§aWeb UI available at §2%url%",
+  "webui": "§a웹 UI가 §2%url%§a에서 접근 가능합니다",
   "webui-disabled": "§c웹 UI가 비활성화 되어 있습니다!",
   "usage": "[사용법]: §6/%command%",
   "playat-command-success": "§d%disc%§f를 §6%location%§f @ §6%world%§f에서 재생합니다!"
