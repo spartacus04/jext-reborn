@@ -54,7 +54,7 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.2.1")
     implementation("io.github.bananapuncher714:nbteditor:8.0.1")
-    implementation("com.github.spartacus04:colosseum:1.2.3")
+    implementation("com.github.spartacus04:colosseum:1.2.4")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
