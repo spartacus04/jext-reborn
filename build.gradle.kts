@@ -6,7 +6,7 @@ import java.net.URI
 
 plugins {
     java
-    kotlin("jvm") version "2.4.20"
+    kotlin("jvm") version "2.4.21"
     id("com.gradleup.shadow") version "9.6.1"
     id("org.jetbrains.dokka") version "2.2.0"
 
