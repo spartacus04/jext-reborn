@@ -6,7 +6,9 @@ import me.spartacus04.jext.utils.Constants.ChanceStack
 import me.spartacus04.jext.utils.Constants.DEFAULT_DISCS_LOOT_TABLE
 import me.spartacus04.jext.utils.Constants.DEFAULT_FRAGMENTS_LOOT_TABLE
 import me.spartacus04.jext.utils.isRecordFragment
+import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.Container
 import org.bukkit.entity.minecart.StorageMinecart
@@ -19,6 +21,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import org.bukkit.loot.LootTables
 import org.bukkit.loot.Lootable
 import kotlin.random.Random
 
@@ -174,6 +177,28 @@ internal class ChestOpenEvent(val plugin: Jext) : ColosseumListener(plugin) {
         val inventory = (e.clickedBlock!!.state as Container).inventory
         val key = (e.clickedBlock!!.state as Lootable).lootTable?.key?.key ?: return
 
+        // Awards the War Pigs advancement when necessary
+        // This is hardcoded because I won't just rewrite the looting system for a one case exception
+        if(
+            plugin.serverVersion >= "1.16" &&
+            key in arrayOf(
+                LootTables.BASTION_BRIDGE,
+                LootTables.BASTION_HOGLIN_STABLE,
+                LootTables.BASTION_OTHER,
+                LootTables.BASTION_TREASURE
+            ).map { it.key.key }
+        ) {
+            val advancementProgress = e.player.getAdvancementProgress(
+                Bukkit.getAdvancement(NamespacedKey.fromString("nether/loot_bastion")!!)!!
+            )
+
+            if (!advancementProgress.isDone) {
+                advancementProgress.remainingCriteria.forEach {
+                    advancementProgress.awardCriteria(it)
+                }
+            }
+        }
+
         generateItems(inventory, key)
     }
 
@@ -196,7 +221,7 @@ internal class ChestOpenEvent(val plugin: Jext) : ColosseumListener(plugin) {
     }
 
     @EventHandler(ignoreCancelled = true)
-    fun onChestExplore(e : BlockExplodeEvent) {
+    fun onChestExplode(e : BlockExplodeEvent) {
         if(!isLootable(e.block)) return
 
         val inventory = (e.block.state as Container).inventory
