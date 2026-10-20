@@ -17,7 +17,8 @@
 	/>
 </svelte:head>
 
-<div class="flex flex-col h-full w-full">
+
+<div class="flex min-w-0 flex-col h-full w-full">
 	<TopBar bind:currentPage />
 
 	<div class="flex-1 flex flex-col h-[calc(100%-65px)]">

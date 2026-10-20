@@ -119,7 +119,7 @@
 			<div class="flex w-full mt-4 items-center justify-center">
 				<h1 class="font-minecraft text-white text-2xl">Recent exports</h1>
 			</div>
-			{#each recentExports as exportRp}
+			{#each recentExports as exportRp (exportRp)}
 				<div
 					class="flex items-center justify-between p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
 				>

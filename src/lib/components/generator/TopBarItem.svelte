@@ -6,7 +6,7 @@
 </script>
 
 {#if active}
-	<div class="flex flex-col items-center px-2 first:pl-0">
+	<div class="flex shrink-0 flex-col items-center px-2 first:pl-0">
 		<p class="text-white font-bold text-center text-nowrap select-none">
 			{page}
 		</p>
@@ -15,7 +15,7 @@
 	</div>
 {:else}
 	<button
-		class="text-[#aeaeae] hover:text-[#eaeaea] text-center mb-1 text-nowrap px-2 first:pl-0"
+		class="shrink-0 text-[#aeaeae] hover:text-[#eaeaea] text-center mb-1 text-nowrap px-2 first:pl-0"
 		title={page}
 		on:click
 	>

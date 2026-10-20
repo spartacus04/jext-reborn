@@ -2,7 +2,6 @@
 	import { delete_btn, signalum_security_lock } from '$lib/assets';
 	import { inputFile, dropFile } from '$lib/directives';
 	import { addRP, ResourcePackData } from '$lib/discs/resourcePackManager';
-	import { onDestroy } from 'svelte';
 
 	const shiftRp = (index: number, shift: number) => {
 		const packs = $ResourcePackData.packs;
@@ -41,7 +40,7 @@
 			</button>
 		</footer>
 	</div>
-	{#each $ResourcePackData.packs as pack, i}
+	{#each $ResourcePackData.packs as pack, i (pack)}
 		<div class="card p-4 bg-surface-background-variant">
 			<div class="card-header flex items-center justify-center">
 				<img

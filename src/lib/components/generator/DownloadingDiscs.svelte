@@ -4,7 +4,7 @@
 </script>
 
 <div class="grid p-4 pt-2 gap-2 grid-cols-1 xs:grid-cols-2 lg:grid-cols-1">
-	{#each $downloadQueue as elem}
+	{#each $downloadQueue as elem (elem)}
 		<DownloadingDiscElement {elem} />
 	{/each}
 </div>

@@ -75,7 +75,7 @@
 <DesktopAppModal bind:openModal={openDesktopAppModal} />
 <LoginModal bind:openModal={openLoginModal} bind:isOpen={isLoginModalOpen} />
 
-<div class="flex h-full w-full">
+	<div class="flex h-full min-w-0 w-full">
 	{#if isOpen}
 		<div
 			class="z-50 min-w-64 w-64 bg-surface-background h-full flex flex-col fixed md:relative"

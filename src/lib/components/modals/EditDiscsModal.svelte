@@ -9,6 +9,7 @@
 	import LauncherTextbox from '../inputs/LauncherTextbox.svelte';
 	import WysiwygEditor from '../inputs/WYSIWYGEditor.svelte';
 	import { editLootTables, isMusicDisc } from '$lib/discs/discManager';
+	import type { MusicDisc } from '$lib/discs/musicDisc';
 	import { templatesStore, loadBuiltInTemplates } from '$lib/discs/templateManager';
 	import { generateTexturesFromColors, generateTexturesFromTemplate } from '$lib/discs/textures';
 	import LauncherCombobox from '../inputs/LauncherCombobox.svelte';
@@ -293,14 +294,34 @@
 
 	let textureUrl = URL.createObjectURL(changes.discTexture.value);
 	let fragmentTextureUrl = URL.createObjectURL(changes.fragmentTexture.value);
+	const previewDisc = discs.find(isMusicDisc) as MusicDisc | undefined;
+	let previewAudio: HTMLAudioElement;
+	const previewAudioFile = previewDisc?.cachedFinalAudioFile ?? previewDisc?.audioFile;
+	const previewAudioMimeType = previewDisc?.cachedFinalAudioFile
+		? 'audio/ogg'
+		: previewAudioFile?.type || 'audio/mpeg';
+	const previewAudioUrl = previewAudioFile
+		? URL.createObjectURL(
+				new Blob([previewAudioFile], {
+					type: previewAudioMimeType
+				})
+			)
+		: undefined;
+
+	function stopPreview() {
+		previewAudio?.pause();
+		if (previewAudio) previewAudio.currentTime = 0;
+	}
 
 	onMount(() => {
 		loadBuiltInTemplates();
 	});
 
 	onDestroy(() => {
+		stopPreview();
 		URL.revokeObjectURL(textureUrl);
 		URL.revokeObjectURL(fragmentTextureUrl);
+		if (previewAudioUrl) URL.revokeObjectURL(previewAudioUrl);
 	});
 
 	export let onFinish: (changes: { [key: string]: any }) => unknown;
@@ -311,6 +332,7 @@
 	bind:this={dialog}
 	id="backdrop"
 	on:click={onClick}
+	on:close={stopPreview}
 	class="bg-surface-background md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
@@ -353,123 +375,6 @@
 						}}
 					/>
 				</div>
-				<div class="flex flex-col bg-[#141414] p-2 border border-surface-separator rounded-sm max-h-[14rem] overflow-y-auto w-full max-w-[20rem]">
-					<b class="text-[#aeaeae] text-[10px] uppercase font-minecraft mb-2">Procedural Colors</b>
-					
-					<!-- Template selection -->
-					<div class="flex flex-col gap-1 mb-3">
-						<span class="text-[9px] text-[#888] font-minecraft">Color Template</span>
-						<div class="flex gap-1.5">
-							<select
-								value={selectedTemplate ? selectedTemplate.name : 'none'}
-								on:change={(e) => {
-									const val = e.currentTarget.value;
-									if (val === 'none') {
-										selectTemplate(null);
-									} else {
-										const found = $templatesStore.find(t => t.name === val);
-										if (found) selectTemplate(found);
-									}
-								}}
-								class="flex-1 h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1 text-[10px] font-minecraft"
-							>
-								<option value="none">None (Default Disc/Fragment)</option>
-								{#each $templatesStore as t (t.name)}
-									<option value={t.name}>{t.name}</option>
-								{/each}
-							</select>
-							<button
-								type="button"
-								class="h-6 px-1.5 bg-[#404040] hover:bg-[#505050] text-[#aeaeae] border border-black text-[9px] font-minecraft rounded-sm whitespace-nowrap"
-								use:inputFile={{
-									accept: '.json',
-									cb: handleImportTemplate
-								}}
-							>
-								Import
-							</button>
-						</div>
-					</div>
-					<div class="flex flex-col gap-2">
-						{#if selectedTemplate}
-							{#each selectedTemplate.inputs as input (input.id)}
-								<div class="flex items-center justify-between gap-2">
-									<span class="text-[9px] text-[#aeaeae] font-minecraft w-12 truncate" title={input.name}>{input.name}</span>
-									<div class="flex items-center gap-1 flex-1">
-										<input
-											type="color"
-											bind:value={templateInputs[input.id]}
-											on:input={generateFromColors}
-											class="w-6 h-6 bg-transparent cursor-pointer border border-[#3c3f41] p-0.5 rounded-sm shrink-0"
-										/>
-										<input
-											type="text"
-											bind:value={templateInputs[input.id]}
-											on:input={generateFromColors}
-											class="w-full h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1.5 text-[10px] font-minecraft uppercase"
-											placeholder={input.color || '#FFFFFF'}
-										/>
-									</div>
-								</div>
-							{/each}
-						{:else}
-							<div class="flex items-center justify-between gap-2">
-								<span class="text-[9px] text-[#aeaeae] font-minecraft w-8">Outer</span>
-								<div class="flex items-center gap-1 flex-1">
-									<input
-										type="color"
-										bind:value={colorOuter}
-										on:input={generateFromColors}
-										class="w-6 h-6 bg-transparent cursor-pointer border border-[#3c3f41] p-0.5 rounded-sm shrink-0"
-									/>
-									<input
-										type="text"
-										bind:value={colorOuter}
-										on:input={generateFromColors}
-										class="w-full h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1.5 text-[10px] font-minecraft uppercase"
-										placeholder="#353535"
-									/>
-								</div>
-							</div>
-							<div class="flex items-center justify-between gap-2">
-								<span class="text-[9px] text-[#aeaeae] font-minecraft w-8">Inner</span>
-								<div class="flex items-center gap-1 flex-1">
-									<input
-										type="color"
-										bind:value={colorInner}
-										on:input={generateFromColors}
-										class="w-6 h-6 bg-transparent cursor-pointer border border-[#3c3f41] p-0.5 rounded-sm shrink-0"
-									/>
-									<input
-										type="text"
-										bind:value={colorInner}
-										on:input={generateFromColors}
-										class="w-full h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1.5 text-[10px] font-minecraft uppercase"
-										placeholder="#5E5E5E"
-									/>
-								</div>
-							</div>
-							<div class="flex items-center justify-between gap-2">
-								<span class="text-[9px] text-[#aeaeae] font-minecraft w-8">Fill</span>
-								<div class="flex items-center gap-1 flex-1">
-									<input
-										type="color"
-										bind:value={colorFill}
-										on:input={generateFromColors}
-										class="w-6 h-6 bg-transparent cursor-pointer border border-[#3c3f41] p-0.5 rounded-sm shrink-0"
-									/>
-									<input
-										type="text"
-										bind:value={colorFill}
-										on:input={generateFromColors}
-										class="w-full h-6 bg-[#0a0a0a] text-white border border-[#3c3f41] rounded-sm px-1.5 text-[10px] font-minecraft uppercase"
-										placeholder="#00FF00"
-									/>
-								</div>
-							</div>
-						{/if}
-					</div>
-				</div>
 			</div>
 			<div class="flex flex-col flex-1 justify-around gap-2">
 				<div class="flex flex-col">
@@ -490,6 +395,81 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="flex flex-col gap-3 mt-4 p-3 bg-[#141414] border border-surface-separator rounded-sm w-full">
+			<div class="flex items-center justify-between gap-2">
+				<b class="text-[#aeaeae] text-xs uppercase font-minecraft">Procedural Colors</b>
+				<LauncherButton text="Regenerate textures" type="primary" on:click={generateFromColors} />
+			</div>
+			<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-1">
+					<span class="text-[9px] text-[#888] font-minecraft">Color Template</span>
+					<div class="flex gap-1.5">
+						<LauncherCombobox
+							value={selectedTemplate ? selectedTemplate.name : 'none'}
+							options={['none', ...$templatesStore.map((template) => template.name)]}
+							labels={['None (Default Disc/Fragment)', ...$templatesStore.map((template) => template.name)]}
+							on:input={(e) => {
+								const val = e.currentTarget.value;
+								if (val === 'none') selectTemplate(null);
+								else {
+									const found = $templatesStore.find((t) => t.name === val);
+									if (found) selectTemplate(found);
+								}
+							}}
+							classes="flex-1 text-sm"
+						/>
+						<button
+							type="button"
+							class="h-6 px-1.5 bg-[#404040] hover:bg-[#505050] text-[#aeaeae] border border-black text-[9px] font-minecraft rounded-sm whitespace-nowrap"
+							use:inputFile={{ accept: '.json', cb: handleImportTemplate }}
+						>
+							Import
+						</button>
+					</div>
+				</div>
+				{#if selectedTemplate}
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+						{#each selectedTemplate.inputs as input (input.id)}
+							<div class="flex items-center gap-2">
+								<span class="text-[9px] text-[#aeaeae] w-12 truncate" title={input.name}>{input.name}</span>
+								<input type="color" bind:value={templateInputs[input.id]} class="w-6 h-6 shrink-0" />
+								<LauncherTextbox
+									bind:value={templateInputs[input.id]}
+									placeholder={input.color || '#FFFFFF'}
+									classes="flex-1 min-w-0 text-sm uppercase"
+									on:input={generateFromColors}
+								/>
+							</div>
+						{/each}
+					</div>
+				{:else}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+						<label class="flex items-center gap-2 text-[9px] text-[#aeaeae] font-minecraft">
+							Outer <input type="color" bind:value={colorOuter} class="w-6 h-6 shrink-0" />
+							<LauncherTextbox bind:value={colorOuter} placeholder="#353535" classes="flex-1 min-w-0 text-sm uppercase" on:input={generateFromColors} />
+						</label>
+						<label class="flex items-center gap-2 text-[9px] text-[#aeaeae] font-minecraft">
+							Inner <input type="color" bind:value={colorInner} class="w-6 h-6 shrink-0" />
+							<LauncherTextbox bind:value={colorInner} placeholder="#5E5E5E" classes="flex-1 min-w-0 text-sm uppercase" on:input={generateFromColors} />
+						</label>
+						<label class="flex items-center gap-2 text-[9px] text-[#aeaeae] font-minecraft">
+							Fill <input type="color" bind:value={colorFill} class="w-6 h-6 shrink-0" />
+							<LauncherTextbox bind:value={colorFill} placeholder="#00FF00" classes="flex-1 min-w-0 text-sm uppercase" on:input={generateFromColors} />
+						</label>
+					</div>
+				{/if}
+			</div>
+		</div>
+
+		{#if previewAudioUrl}
+			<div class="flex flex-col gap-2 mt-4 p-3 bg-[#141414] border border-surface-separator rounded-sm w-full">
+				<b class="text-[#aeaeae] text-xs uppercase font-minecraft">Music Preview</b>
+				<audio bind:this={previewAudio} controls class="w-full">
+					<source src={previewAudioUrl} type={previewAudioMimeType} />
+				</audio>
+			</div>
+		{/if}
 
 		<div class="flex flex-col mt-3 w-full">
 			<b class="text-[#aeaeae] text-xs h-min">TOOLTIP</b>

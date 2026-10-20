@@ -2,11 +2,10 @@
 	import { base } from '$app/paths';
 	import {
 		addDownloadQueuePack,
-		downloaderLine,
 		startDownloadQueue,
 		type CommunityPack
 	} from '$lib/downloader/downloader';
-	import { cAlert, cConfirm } from '$lib/utils';
+	import { cAlert } from '$lib/utils';
 	import LauncherButton from '../buttons/LauncherButton.svelte';
 
 	const communityPacks = async () => {
@@ -40,7 +39,7 @@
 			<div class="flex w-full items-center justify-center">
 				<h1 class="font-minecraft text-white text-2xl">Community packs</h1>
 			</div>
-			{#each packs as pack}
+			{#each packs as pack (pack)}
 				<div
 					class="flex items-center justify-between p-4 bg-surface-separator flex-col lg:flex-row text-white font-minecraft"
 				>

@@ -15,11 +15,11 @@
 	export let currentPage: string = Object.keys(pages)[0];
 </script>
 
-<div class="flex flex-col bg-surface-background w-full pt-4 px-8">
+<div class="flex min-w-0 flex-col bg-surface-background w-full pt-4 px-8">
 	<b class="text-white text-xs">{title}</b>
 
-	<div class="flex w-full items center gap-2 overflow-x-auto mt-1">
-		{#each Object.keys(pages) as page}
+	<div class="flex min-w-0 w-full items-center gap-2 overflow-x-auto mt-1">
+		{#each Object.keys(pages) as page (page)}
 			{#if (pages[page] && isTauri) || !pages[page]}
 				<TopBarItem active={currentPage === page} {page} on:click={() => (currentPage = page)} />
 			{/if}

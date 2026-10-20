@@ -77,7 +77,7 @@
 		}
 
 		// data-font-type='dyslexic'
-		if (localStorage.getItem('accessibility-dyslexic-font')) {
+		if (localStorage.getItem('accessibility-dyslexic-font') === 'true') {
 			document.documentElement.setAttribute('data-font-type', 'dyslexic');
 		}
 
@@ -90,7 +90,7 @@
 	let isConnectingToApi = false;
 </script>
 
-<div class="w-full h-full" bind:this={$baseElement} use:swipe on:swipe={swipeHandler}>
+<div class="h-full min-w-0 w-full" bind:this={$baseElement} use:swipe on:swipe={swipeHandler}>
 	{#if isConnectingToApi}
 		<div
 			class="fixed inset-0 z-[9999] bg-surface-background/90 flex flex-col items-center justify-center gap-4 text-white"

@@ -147,6 +147,7 @@
 
 <dialog
 	bind:this={dialog}
+	on:close={onFinish}
 	class="h-screen overflow-y-hidden w-screen flex items-center justify-center flex-col {localStorage.getItem('generation-progress-bar-dark-mode') ? 'backdrop:bg-black' : 'backdrop:bg-white'} {output
 		? 'z-10'
 		: ''}"
@@ -195,7 +196,6 @@
 				<MinecraftButton
 					on:click={() => {
 						close();
-						onFinish();
 					}}>Back to disc generation</MinecraftButton
 				>
 			</div>

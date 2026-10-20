@@ -99,7 +99,8 @@ const sendFinishNotification = async () => {
 	if (isTauri && await isPermissionGranted()) {
 		sendNotification({
 			title: 'JEXT Export complete',
-			body: 'Your export is ready'
+			body: 'Your export is ready',
+			icon: 'icons/128x128.png'
 		});
 	}
 };

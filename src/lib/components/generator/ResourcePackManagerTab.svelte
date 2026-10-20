@@ -33,11 +33,11 @@
 				src={iconUrl}
 				alt="disc icon"
 				use:inputFile={{
-					accept: '.png,.avif,.webp,.jpg,jpeg,bmp,.tiff',
+					accept: '.png,.avif,.webp,.jpg,.jpeg,.bmp,.tiff',
 					cb: setTexture
 				}}
 				use:dropFile={{
-					accept: '.png,.avif,.webp,.jpg,jpeg,bmp,.tiff',
+					accept: '.png,.avif,.webp,.jpg,.jpeg,.bmp,.tiff',
 					cb: setTexture
 				}}
 			/>

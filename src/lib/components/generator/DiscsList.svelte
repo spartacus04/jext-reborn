@@ -4,7 +4,7 @@
 </script>
 
 <div class="grid p-4 pt-2 gap-2 grid-cols-1 xs:grid-cols-2 lg:grid-cols-1">
-	{#each $discsStore as disc}
+	{#each $discsStore as disc (disc)}
 		<DiscElement {disc} />
 	{/each}
 </div>
