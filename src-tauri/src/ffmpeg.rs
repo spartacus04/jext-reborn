@@ -32,13 +32,19 @@ fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> PathBuf {
     let manifest_base = Path::new(env!("CARGO_MANIFEST_DIR")).join("bin");
 
     for base in [resource_base, manifest_base] {
-        let base_path = base.join(name);
-        if base_path.exists() {
-            return base_path;
-        }
+        let candidates = [base.join(name), base.join(format!("{name}.exe"))];
 
-        if let Some(triple) = target_triple() {
-            let candidate = base.join(format!("{name}-{triple}"));
+        let candidates = target_triple().map_or(candidates.to_vec(), |triple| {
+            [
+                base.join(format!("{name}-{triple}")),
+                base.join(format!("{name}-{triple}.exe")),
+            ]
+            .into_iter()
+            .chain(candidates)
+            .collect()
+        });
+
+        for candidate in candidates {
             if candidate.exists() {
                 return candidate;
             }
@@ -58,11 +64,7 @@ fn resolve_ffmpeg_paths(app_handle: &tauri::AppHandle) -> Result<(PathBuf, PathB
         ("macos", "aarch64") => ("ffmpeg-darwin-arm64", "ffprobe-darwin-arm64"),
         ("macos", "x86_64") => ("ffmpeg-darwin-x64", "ffprobe-darwin-x64"),
         ("windows", _) => ("ffmpeg-win32-x64", "ffprobe-win32-x64"),
-        _ => {
-            return Err(format!(
-                "Unsupported platform/arch for ffmpeg: {os}/{arch}"
-            ))
-        }
+        _ => return Err(format!("Unsupported platform/arch for ffmpeg: {os}/{arch}")),
     };
 
     let resource_dir = app_handle
@@ -197,7 +199,10 @@ pub fn run_ffmpeg(
 }
 
 #[tauri::command(async)]
-pub async fn run_ffprobe(args: Vec<String>, app_handle: tauri::AppHandle) -> Result<String, String> {
+pub async fn run_ffprobe(
+    args: Vec<String>,
+    app_handle: tauri::AppHandle,
+) -> Result<String, String> {
     let (_, ffprobe_path) = resolve_ffmpeg_paths(&app_handle)?;
     if !ffprobe_path.exists() {
         return Err("Ffprobe binary not found".to_string());

@@ -1,11 +1,12 @@
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use tauri::{AppHandle, Manager};
 
 mod client;
 mod download;
 
-static mut YT_DLP: Option<client::YtDlp> = None;
+static YT_DLP: OnceLock<client::YtDlp> = OnceLock::new();
 
 fn target_triple() -> Option<&'static str> {
     let os = std::env::consts::OS;
@@ -26,13 +27,19 @@ fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> PathBuf {
     let manifest_base = Path::new(env!("CARGO_MANIFEST_DIR")).join("bin");
 
     for base in [resource_base, manifest_base] {
-        let base_path = base.join(name);
-        if base_path.exists() {
-            return base_path;
-        }
+        let candidates = [base.join(name), base.join(format!("{name}.exe"))];
 
-        if let Some(triple) = target_triple() {
-            let candidate = base.join(format!("{name}-{triple}"));
+        let candidates = target_triple().map_or(candidates.to_vec(), |triple| {
+            [
+                base.join(format!("{name}-{triple}")),
+                base.join(format!("{name}-{triple}.exe")),
+            ]
+            .into_iter()
+            .chain(candidates)
+            .collect()
+        });
+
+        for candidate in candidates {
             if candidate.exists() {
                 return candidate;
             }
@@ -50,12 +57,8 @@ fn resolve_yt_dlp_path(handle: &AppHandle) -> Result<PathBuf, String> {
         ("linux", _) => "yt-dlp-linux",
         ("macos", "aarch64") => "yt-dlp-macos-aarch64",
         ("macos", "x86_64") => "yt-dlp-macos-x86_64",
-        ("windows", _) => "yt-dlp-windows.exe",
-        _ => {
-            return Err(format!(
-                "Unsupported platform/arch for yt-dlp: {os}/{arch}"
-            ))
-        }
+        ("windows", _) => "yt-dlp-windows",
+        _ => return Err(format!("Unsupported platform/arch for yt-dlp: {os}/{arch}")),
     };
 
     let resource_dir = handle
@@ -67,18 +70,15 @@ fn resolve_yt_dlp_path(handle: &AppHandle) -> Result<PathBuf, String> {
 }
 
 pub fn get_yt_dlp(handle: &AppHandle) -> Result<client::YtDlp, String> {
-    if unsafe { YT_DLP.is_some() } {
-        return Ok(unsafe { YT_DLP.clone().unwrap() });
+    if let Some(youtube) = YT_DLP.get() {
+        return Ok(youtube.clone());
     }
 
     let yt_dlp_path = resolve_yt_dlp_path(handle)?;
     let youtube = client::YtDlp::new(yt_dlp_path)?;
+    let _ = YT_DLP.set(youtube.clone());
 
-    unsafe {
-        YT_DLP = Some(youtube.clone());
-    }
-
-    Ok(youtube)
+    Ok(YT_DLP.get().cloned().unwrap_or(youtube))
 }
 
 #[tauri::command(async)]

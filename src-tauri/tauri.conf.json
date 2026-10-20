@@ -41,7 +41,7 @@
 			"bin/yt-dlp-linux",
 			"bin/yt-dlp-macos-aarch64",
 			"bin/yt-dlp-macos-x86_64",
-			"bin/yt-dlp-windows.exe"
+			"bin/yt-dlp-windows"
 		],
 		"icon": [
 			"icons/32x32.png",
