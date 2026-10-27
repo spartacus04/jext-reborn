@@ -37,8 +37,12 @@ internal class ChestOpenEvent(val plugin: Jext) : ColosseumListener(plugin) {
      * `key` is used to look up values in the `CONFIG.DISC_LIMIT` and `CONFIG.FRAGMENT_LIMIT` maps.
      */
     private fun generateItems(inventory: Inventory, key: String) {
-        val discsMap = DEFAULT_DISCS_LOOT_TABLE.toMutableMap()
-        val discFragmentMap = DEFAULT_FRAGMENTS_LOOT_TABLE.toMutableMap()
+        val discsMap = DEFAULT_DISCS_LOOT_TABLE
+            .mapValues { (_, entries) -> ArrayList(entries) }
+            .toMutableMap()
+        val discFragmentMap = DEFAULT_FRAGMENTS_LOOT_TABLE
+            .mapValues { (_, entries) -> ArrayList(entries) }
+            .toMutableMap()
 
         plugin.discs.forEach {
             it.lootTables.forEach { lootTable ->
