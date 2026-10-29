@@ -1,8 +1,6 @@
 name: Build Website
 
 on:
-  schedule:
-    - cron: '00 00 * * 0'
   push:
     branches: [ master, gh-pages ]
   release:
@@ -21,29 +19,42 @@ jobs:
         run: |
           echo "releasetag=$(curl -s https://api.github.com/repos/spartacus04/jext-reborn/releases/latest | jq '.tag_name' | sed 's/\"//g')" >> $GITHUB_ENV
 
+      # Stable docs only change when a new release is published, so cache them by tag.
+      - name: Cache stable docs
+        id: docscache
+        uses: actions/cache@v4
+        with:
+          path: build/dokka/html
+          key: stable-docs-${{ env.releasetag }}
+
       - name: Checkout code
+        if: steps.docscache.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ env.releasetag }}
 
       - name: Set up JDK 17
+        if: steps.docscache.outputs.cache-hit != 'true'
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: adopt
 
       - name: Cache Gradle dependencies
+        if: steps.docscache.outputs.cache-hit != 'true'
         uses: actions/cache@v4
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.OS }}-gradle-${{ hashFiles('**/*.gradle') }}
+          key: ${{ runner.OS }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.OS }}-gradle-
 
       - name: Grant execute permission for gradlew
+        if: steps.docscache.outputs.cache-hit != 'true'
         run: chmod +x gradlew
 
       - name: Build docs with Gradle
+        if: steps.docscache.outputs.cache-hit != 'true'
         run: ./gradlew dokkaGeneratePublicationHtml
         env:
           jextVersion: ${{ env.releasetag }}
@@ -53,6 +64,7 @@ jobs:
         with:
           name: stabledocs
           path: build/dokka/html/
+          retention-days: 1
 
   build-docs-latest:
     runs-on: ubuntu-latest
@@ -76,7 +88,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.OS }}-gradle-${{ hashFiles('**/*.gradle') }}
+          key: ${{ runner.OS }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.OS }}-gradle-
 
@@ -93,6 +105,7 @@ jobs:
         with:
           name: devdocs
           path: build/dokka/html/
+          retention-days: 1
 
   build-publish:
     permissions:
@@ -151,6 +164,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/
+          retention-days: 1
 
       - name: Deploy to GitHub Pages
         id: deployment

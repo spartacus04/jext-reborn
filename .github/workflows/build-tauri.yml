@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - gh-pages
+  workflow_dispatch:
+
+concurrency:
+  group: tauri-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   publish-tauri:
@@ -34,7 +39,7 @@ jobs:
           bun-version: latest
 
       - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
@@ -52,56 +57,67 @@ jobs:
           bun run scripts/append-hash.ts
 
       - name: Download FFmpeg, FFprobe and YT-DLP binaries
+        env:
+          JEXT_TARGET_TRIPLE: ${{ matrix.args == '--target aarch64-apple-darwin' && 'aarch64-apple-darwin' || matrix.args == '--target x86_64-apple-darwin' && 'x86_64-apple-darwin' || matrix.platform == 'windows-latest' && 'x86_64-pc-windows-msvc' || matrix.platform == 'ubuntu-22.04' && 'x86_64-unknown-linux-gnu' || '' }}
         run: bun run scripts/download-ffmpeg.ts
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri
+        with:
+          args: ${{ matrix.args }} # was missing: the Intel job built the arm64 app
+        env:
+          TAURI_CONFIG: ${{ matrix.args == '--target aarch64-apple-darwin' && '{"bundle":{"externalBin":["bin/ffmpeg-darwin-arm64","bin/ffprobe-darwin-arm64","bin/yt-dlp-macos-aarch64"]}}' || matrix.args == '--target x86_64-apple-darwin' && '{"bundle":{"externalBin":["bin/ffmpeg-darwin-x64","bin/ffprobe-darwin-x64","bin/yt-dlp-macos-x86_64"]}}' || matrix.platform == 'windows-latest' && '{"bundle":{"externalBin":["bin/ffmpeg-win32-x64","bin/ffprobe-win32-x64","bin/yt-dlp-windows.exe"]}}' || '{"bundle":{"externalBin":["bin/ffmpeg-linux-x64","bin/ffprobe-linux-x64","bin/yt-dlp-linux"]}}' }}
 
-      - name: Upload .dmg M1 binary
-        if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'
+      # Fixed artifact names (no version) so the cleanup job can find old ones.
+      # retention-days is only a fallback: weekly cron + 2 days margin.
+      - name: Upload macOS ${{ contains(matrix.args, 'aarch64') && 'arm64' || 'x64' }} bundle
+        if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
-          path: src-tauri/target/release/bundle/dmg/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
+          name: macos-${{ contains(matrix.args, 'aarch64') && 'arm64' || 'x64' }}
+          path: src-tauri/target/**/release/bundle/dmg/*.dmg
+          retention-days: 9
+          if-no-files-found: error
 
-      - name: Upload .dmg intel binary
-        if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x86_64.dmg
-          path: src-tauri/target/release/bundle/dmg/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_aarch64.dmg
-
-      - name: Upload .deb binary
+      - name: Upload Linux bundles
         if: matrix.platform == 'ubuntu-22.04'
         uses: actions/upload-artifact@v4
         with:
-          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
-          path: src-tauri/target/release/bundle/deb/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_amd64.deb
+          name: linux
+          path: |
+            src-tauri/target/**/release/bundle/deb/*.deb
+            src-tauri/target/**/release/bundle/rpm/*.rpm
+            src-tauri/target/**/release/bundle/appimage/*.AppImage
+          retention-days: 9
+          if-no-files-found: error
 
-      - name: Upload .rpm binary
-        if: matrix.platform == 'ubuntu-22.04'
-        uses: actions/upload-artifact@v4
-        with:
-          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_x86_64.rpm
-          path: src-tauri/target/release/bundle/rpm/Jext Plugin Manager-${{ steps.tauri.outputs.appVersion }}-1.x86_64.rpm
-
-      - name: Upload .appimage binary
-        if: matrix.platform == 'ubuntu-22.04'
-        uses: actions/upload-artifact@v4
-        with:
-          name: jext-plugin-manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
-          path: src-tauri/target/release/bundle/appimage/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_amd64.AppImage
-
-      - name: Upload .msi installer
+      - name: Upload Windows bundles
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_setup.msi
-          path: src-tauri/target/release/bundle/msi/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64_en-US.msi
+          name: windows
+          path: |
+            src-tauri/target/**/release/bundle/msi/*.msi
+            src-tauri/target/**/release/bundle/nsis/*.exe
+          retention-days: 9
+          if-no-files-found: error
 
-      - name: Upload .exe installer
-        if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
-          path: src-tauri/target/release/bundle/nsis/Jext Plugin Manager_${{ steps.tauri.outputs.appVersion }}_x64-setup.exe
+  cleanup-old-artifacts:
+    needs: publish-tauri # skipped unless every matrix job succeeded
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Delete artifacts from previous runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
+            | jq -r --argjson run "$RUN_ID" '
+                .artifacts[]
+                | select(.workflow_run.id != $run)
+                | select(.name as $n | ["macos-arm64","macos-x64","linux","windows"] | index($n))
+                | .id' \
+            | xargs -r -I{} gh api -X DELETE "repos/$REPO/actions/artifacts/{}"
