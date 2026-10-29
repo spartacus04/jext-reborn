@@ -52,7 +52,10 @@
 		],
 		"linux": {
 			"rpm": {
-				"compression": "none"
+				"compression": {
+					"type": "gzip",
+					"level": 1
+				}
 			}
 		}
 	}
