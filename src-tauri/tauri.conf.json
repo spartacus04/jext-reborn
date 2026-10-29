@@ -50,6 +50,10 @@
 			"icons/icon.icns",
 			"icons/icon.ico"
 		],
-		"linux": {}
+		"linux": {
+			"rpm": {
+				"compression": "none"
+			}
+		}
 	}
 }

@@ -298,6 +298,7 @@ export const versions = new Map([
 	[75, '1.21.11'],
 	[84, '26.1 - 26.1.2'],
 	[107.1, '26.2'],
+	[121, '26.3'],
 ]);
 
 export const pages = [

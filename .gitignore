@@ -21,3 +21,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 discs
+run
+.gradle
+.idea
+.vscode
