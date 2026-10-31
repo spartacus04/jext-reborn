@@ -72,7 +72,7 @@
 			document.documentElement.style.removeProperty('--prefers-reduced-motion');
 		}
 
-		if (localStorage.getItem('accessibility-text-size')) {
+		if (localStorage.getItem('accessibility-text-size') === 'true') {
 			document.documentElement.setAttribute('data-font-size', 'large');
 		}
 
@@ -95,7 +95,9 @@
 		<div
 			class="fixed inset-0 z-[9999] bg-surface-background/90 flex flex-col items-center justify-center gap-4 text-white"
 		>
-			<div class="w-10 h-10 border-4 border-surface-separator border-t-white rounded-full animate-spin" />
+			<div
+				class="w-10 h-10 border-4 border-surface-separator border-t-white rounded-full animate-spin"
+			/>
 			<p class="font-minecraft text-sm">Connecting to JEXT API...</p>
 		</div>
 	{/if}
