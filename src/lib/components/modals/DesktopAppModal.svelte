@@ -5,6 +5,7 @@
 	import LauncherButton from '../buttons/LauncherButton.svelte';
 
 	type Platform = 'windows' | 'linux' | 'macos' | 'unknown';
+	type Architecture = 'arm64' | 'x64' | 'unknown';
 
 	type Artifact = {
 		id: number;
@@ -62,13 +63,33 @@
 		return extension ? `.${extension}` : '';
 	};
 
+	const getArchitecture = (name: string): Architecture => {
+		if (/(aarch64|arm64)/i.test(name)) return 'arm64';
+		if (/(x86_64|x64|amd64)/i.test(name)) return 'x64';
+		return 'unknown';
+	};
+
+	const architectureLabel = (platform: Platform, architecture: Architecture) => {
+		if (architecture === 'arm64') return platform === 'macos' ? 'Apple Silicon' : 'ARM64';
+		if (architecture === 'x64') return platform === 'macos' ? 'Intel' : 'x64';
+		return '';
+	};
+
+	const artifactLabel = (platform: Platform, artifact: Artifact) => {
+		const architecture = getArchitecture(artifact.name);
+		if (platform === 'macos' && architecture !== 'unknown') {
+			return `${platformLabel(platform)} (${architectureLabel(platform, architecture)})`;
+		}
+		return platformLabel(platform);
+	};
+
 	const platformOrder = (platform: Platform) => {
 		const currentPlatform = os === 'android' || os === 'ios' ? 'unknown' : os;
 		const order = [currentPlatform, 'windows', 'linux', 'macos', 'unknown'];
 		return order.indexOf(platform);
 	};
 
-	$: orderedPlatforms = [...platforms].sort((a, b) => platformOrder(a) - platformOrder(b));
+	const orderedPlatforms = [...platforms].sort((a, b) => platformOrder(a) - platformOrder(b));
 
 	onMount(async () => {
 		try {
@@ -117,7 +138,7 @@
 	class="bg-surface-background md:bg-transparent p-0 backdrop:opacity-55 backdrop:bg-surface-background"
 >
 	<div
-		class="m-0 md:m-auto md:w-[32rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"
+		class="m-0 md:m-auto md:w-[40rem] h-fit rounded-md bg-surface-background animate-slide-down flex flex-col items-center justify-center md:block"
 	>
 		<div class="w-full rounded-t-md bg-[#262523] flex items-center justify-center">
 			<img src={default_icon} alt="icon" class="w-20 m-4" />
@@ -140,26 +161,28 @@
 				<p class="text-sm text-red-300">{error}</p>
 			{:else if artifacts.length > 0}
 				<div class="mt-2 flex flex-col gap-3">
-					{#each orderedPlatforms as platform}
+					{#each orderedPlatforms as platform (platform)}
 						{@const platformArtifacts = artifacts.filter(
 							(artifact) => getPlatform(artifact.name) === platform
 						)}
 						{#if platformArtifacts.length > 0}
 							<div class:mb-4={platform === 'macos'}>
 								<h3 class="mb-1 text-sm text-gray-300">{platformLabel(platform)}</h3>
-								<div class="grid grid-cols-2 gap-2">
+								<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
 									{#each platformArtifacts as artifact (artifact.id)}
 										{@const icon = platformIcon(platform)}
+										{@const label = artifactLabel(platform, artifact)}
 										<a
 											class="flex min-w-0 items-center gap-2 rounded bg-surface-background-variant p-2 text-sm hover:bg-[#505050]"
 											href={`https://github.com/spartacus04/jext-reborn/actions/runs/${runId}/artifacts/${artifact.id}`}
 											target="_blank"
 											rel="noopener noreferrer"
+											title={label}
 										>
 											{#if icon}
 												<img src={icon} alt="" class="h-6 w-6 shrink-0" />
 											{/if}
-											<span class="truncate">{platformLabel(platform)}</span>
+											<span class="truncate">{label}</span>
 											<span class="text-gray-300">/</span>
 											<span class="shrink-0 text-gray-300">{getExtension(artifact.name)}</span>
 										</a>

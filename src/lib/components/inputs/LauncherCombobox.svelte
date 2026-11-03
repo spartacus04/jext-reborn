@@ -16,7 +16,7 @@
 		? 'appearance-none'
 		: ''} {classes}"
 >
-	{#each options as option}
+	{#each options as option (option)}
 		<option class="bg-surface-background hover:bg-[#0dd166]" value={option}>
 			{#if labels}
 				{labels[options.indexOf(option)]}
