@@ -28,6 +28,13 @@
 			connecting to the server.
 		</p>
 
+		<p>
+			Bearer tokens expire after 12 hours, after that you'll have to connect again. When using
+			the API from the browser, requests are only allowed from the official web UI
+			(<code>https://spartacus04.github.io</code>) and from <code>localhost</code> addresses;
+			non-browser integrations are not affected.
+		</p>
+
 		<p>Here is a list of all available endpoints:</p>
 
 		<h3 class="text-2xl mt-4">Auth:</h3>
@@ -35,7 +42,9 @@
 		<div class="p-5 bg-surface-500 rounded-lg mt-3">
 			<h4 class="text-2xl"><b class="text-red-500">POST</b> /connect/</h4>
 
-			<blockquote class="blockquote">Connects to the JEXT server</blockquote>
+			<blockquote class="blockquote">
+				Connects to the JEXT server, the returned bearer token is valid for 12 hours
+			</blockquote>
 
 			<h5 class="text-xl mt 4">Request</h5>
 
@@ -48,16 +57,26 @@
 			<h5 class="text-xl mt-4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['200', '401']}
+				tabs={['200', '401', '429']}
 				tabsContents={[
 					`
 TheSuperSecretJextBearerToken
                     `,
 					`
 401 Unauthorized
+                    `,
+					`
+429 Too Many Requests
+Retry-After: 600
                     `
 				]}
 			/>
+
+			<p class="mt-2 text-sm">
+				Returns <code>429 Too Many Requests</code> after 5 failed login attempts from the same
+				address within a 10 minutes window, follow the <code>Retry-After</code> header before
+				retrying. The request body must not exceed 4096 bytes.
+			</p>
 		</div>
 
 		<div class="p-5 bg-surface-500 rounded-lg mt-3">
@@ -172,7 +191,8 @@ TheSuperSecretJextBearerToken
 			<h4 class="text-2xl"><b class="text-red-500">POST</b> /config/apply/</h4>
 
 			<blockquote class="blockquote">
-				Applies a new config using the config.json file, it'll 400 when not valid
+				Applies a new config using the config.json file, it'll 400 when not valid and 413 when
+				request bodies are bigger than 1 MB
 			</blockquote>
 
 			<h5 class="text-xl mt-4">Request</h5>
@@ -197,7 +217,7 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['204', '401', '400']}
+				tabs={['204', '401', '400', '413']}
 				tabsContents={[
 					`
 (empty)
@@ -207,6 +227,9 @@ TheSuperSecretJextBearerToken
                     `,
 					`
 (empty)
+                    `,
+					`
+413 Payload Too Large
                     `
 				]}
 			/>
@@ -249,7 +272,8 @@ TheSuperSecretJextBearerToken
 			<h4 class="text-2xl"><b class="text-red-500">POST</b> /discs/apply/</h4>
 
 			<blockquote class="blockquote">
-				Applies a new resourcepack using the resource-pack.zip file
+				Applies a new resourcepack using the resource-pack.zip file, request bodies bigger than
+				100 MB are rejected
 			</blockquote>
 
 			<h5 class="text-xl mt-4">Request</h5>
@@ -269,13 +293,16 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['204', '401']}
+				tabs={['204', '401', '413']}
 				tabsContents={[
 					`
 (empty)
                     `,
 					`
 401 Unauthorized
+                    `,
+					`
+413 Payload Too Large
                     `
 				]}
 			/>
@@ -285,7 +312,8 @@ TheSuperSecretJextBearerToken
 			<h4 class="text-2xl"><b class="text-red-500">POST</b> /discs/applygeyser/</h4>
 
 			<blockquote class="blockquote">
-				When Geyser-Spigot is installed, it'll apply the resourcepack to Geyser players
+				When Geyser-Spigot is installed, it'll apply the resourcepack to Geyser players, request
+				bodies bigger than 100 MB are rejected
 			</blockquote>
 
 			<h5 class="text-xl mt-4">Request</h5>
@@ -305,13 +333,16 @@ TheSuperSecretJextBearerToken
 			<h5 class="text-xl mt 4">Response</h5>
 
 			<TabbedJsonBlock
-				tabs={['204', '401']}
+				tabs={['204', '401', '413']}
 				tabsContents={[
 					`
 (empty)
                     `,
 					`
 401 Unauthorized
+                    `,
+					`
+413 Payload Too Large
                     `
 				]}
 			/>
