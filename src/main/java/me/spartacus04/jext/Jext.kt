@@ -30,6 +30,7 @@ import me.spartacus04.jext.language.DefaultMessages.NO_DISCS_FOUND
 import me.spartacus04.jext.language.DefaultMessages.UPDATE_LINK
 import me.spartacus04.jext.listeners.ListenerRegistrant
 import me.spartacus04.jext.utils.BaseUrl
+import me.spartacus04.jext.utils.generateSecurePassword
 import me.spartacus04.jext.webapi.JextWebServer
 import org.bukkit.Bukkit
 
@@ -63,6 +64,16 @@ class Jext : ColosseumPlugin() {
     private fun load() {
         INSTANCE = this
         config = ConfigFactory.createConfigObject(this)
+
+        if(config.WEB_INTERFACE_PASSWORD.isBlank()) {
+            val generatedPassword = generateSecurePassword()
+
+            config.WEB_INTERFACE_PASSWORD = generatedPassword
+            config.save()
+
+            colosseumLogger.warn("The web interface password was not set: a random one has been generated and saved to the config. It is: $generatedPassword")
+        }
+
         webServer = JextWebServer(this)
         geyserManager = GeyserManager(this)
 

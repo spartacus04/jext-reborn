@@ -13,7 +13,7 @@ internal class HealthHandler(plugin: Jext) : JextHttpHandler(plugin, false) {
         } else {
             val addr = exchange.remoteAddress.address.address.map { it.toInt() }.joinToString(".")
 
-            if(ConnectHandler.connectedHashMap[addr] == token) {
+            if(SessionRegistry.isValid(addr, token)) {
                 exchange.sendResponseHeaders(204, 0)
             } else {
                 exchange.sendResponseHeaders(401, 0)

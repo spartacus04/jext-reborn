@@ -8,7 +8,7 @@ internal class DisconnectHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onPost(exchange: HttpExchange) {
         val addr = exchange.remoteAddress.address.address.map { it.toInt() }.joinToString(".")
 
-        ConnectHandler.connectedHashMap.remove(addr)
+        SessionRegistry.remove(addr)
 
         exchange.sendResponseHeaders(204, 0)
     }

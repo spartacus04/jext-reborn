@@ -2,11 +2,12 @@ package me.spartacus04.jext.webapi.discs
 
 import com.sun.net.httpserver.HttpExchange
 import me.spartacus04.jext.Jext
+import me.spartacus04.jext.utils.sanitizePathSegment
 import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class DiscsReadHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     private val rpHosted = plugin.dataFolder.resolve("resource-pack.zip")
-    private val rpCache = plugin.dataFolder.resolve("caches").resolve("${plugin.assetsManager.resourcePackHash.ifBlank { "current" }}.zip")
+    private val rpCache = plugin.dataFolder.resolve("caches").resolve("${sanitizePathSegment(plugin.assetsManager.resourcePackHash, "current")}.zip")
 
     override fun onGet(exchange: HttpExchange) {
         if(plugin.config.RESOURCE_PACK_HOST) {

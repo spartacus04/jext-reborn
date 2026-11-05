@@ -6,7 +6,7 @@ import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class DiscsApplyGeyserHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onPost(exchange: HttpExchange) {
-        val body = exchange.requestBody.readBytes()
+        val body = readRequestBody(exchange, 2000 * 1024 * 1024) ?: return
 
         plugin.geyserManager.applyResourcePack(body)
         exchange.sendResponseHeaders(204, 0)

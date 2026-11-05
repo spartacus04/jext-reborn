@@ -7,7 +7,7 @@ import me.spartacus04.jext.webapi.utils.JextHttpHandler
 
 internal class DiscsApplyHandler(plugin: Jext) : JextHttpHandler(plugin, true) {
     override fun onPost(exchange: HttpExchange) {
-        val body = exchange.requestBody.readBytes()
+        val body = readRequestBody(exchange, 2000 * 1024 * 1024) ?: return
         val file = plugin.dataFolder.resolve("resource-pack.zip")
 
         file.writeBytes(body)

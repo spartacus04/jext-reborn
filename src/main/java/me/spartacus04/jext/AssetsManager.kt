@@ -7,6 +7,7 @@ import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_FAIL
 import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_START
 import me.spartacus04.jext.language.DefaultMessages.RESOURCEPACK_DOWNLOAD_SUCCESS
 import me.spartacus04.jext.utils.getFileSha1Hash
+import me.spartacus04.jext.utils.sanitizePathSegment
 import org.bukkit.Bukkit
 import java.io.BufferedInputStream
 import java.io.File
@@ -51,7 +52,7 @@ class AssetsManager(private val plugin: Jext) {
         return if(plugin.config.RESOURCE_PACK_HOST && plugin.dataFolder.resolve(("resource-pack.zip")).exists()) {
             plugin.dataFolder.resolve("resource-pack.zip")
         } else if(resourcePack.isNotBlank()) {
-            val name = resourcePackHash.ifBlank { "current" }
+            val name = sanitizePathSegment(resourcePackHash, "current")
 
             if(tryDownloadRP(
                     resourcePack,
