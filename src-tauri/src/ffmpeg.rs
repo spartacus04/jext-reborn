@@ -27,7 +27,7 @@ fn target_triple() -> Option<&'static str> {
     }
 }
 
-fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> PathBuf {
+fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> Option<PathBuf> {
     let resource_base = resource_dir.join("bin");
     let manifest_base = Path::new(env!("CARGO_MANIFEST_DIR")).join("bin");
 
@@ -45,16 +45,63 @@ fn resolve_sidecar_path(resource_dir: &Path, name: &str) -> PathBuf {
         });
 
         for candidate in candidates {
-            if candidate.exists() {
-                return candidate;
+            if candidate.is_file() {
+                return Some(candidate);
             }
         }
     }
 
-    resource_dir.join("bin").join(name)
+    None
 }
 
-fn resolve_ffmpeg_paths(app_handle: &tauri::AppHandle) -> Result<(PathBuf, PathBuf), String> {
+/// Looks for a system-installed binary as a fallback when the bundled
+/// sidecar binaries are missing (see jext-reborn issue #946).
+fn find_system_binary(name: &str) -> Option<PathBuf> {
+    let exe_name = if cfg!(windows) {
+        format!("{name}.exe")
+    } else {
+        name.to_string()
+    };
+
+    // winget "portable" packages (like Gyan.FFmpeg) create shims in this
+    // directory, which is only prepended to the user PATH at logon, so apps
+    // launched before that may not see it through PATH alone
+    if let Some(local_app_data) = std::env::var_os("LOCALAPPDATA") {
+        let winget_link = PathBuf::from(local_app_data)
+            .join("Microsoft")
+            .join("WinGet")
+            .join("Links")
+            .join(&exe_name);
+
+        if winget_link.is_file() {
+            return Some(winget_link);
+        }
+    }
+
+    let path_var = std::env::var_os("PATH")?;
+
+    std::env::split_paths(&path_var)
+        .map(|dir| dir.join(&exe_name))
+        .find(|candidate| candidate.is_file())
+}
+
+fn resolve_binary(
+    app_handle: &tauri::AppHandle,
+    sidecar_name: &str,
+    system_name: &str,
+) -> Option<PathBuf> {
+    if let Ok(resource_dir) = app_handle.path().resource_dir() {
+        if let Some(path) = resolve_sidecar_path(&resource_dir, sidecar_name) {
+            return Some(path);
+        }
+    }
+
+    find_system_binary(system_name)
+}
+
+fn resolve_ffmpeg_paths(
+    app_handle: &tauri::AppHandle,
+) -> Result<(Option<PathBuf>, Option<PathBuf>), String> {
     let os = std::env::consts::OS;
     let arch = std::env::consts::ARCH;
 
@@ -67,22 +114,17 @@ fn resolve_ffmpeg_paths(app_handle: &tauri::AppHandle) -> Result<(PathBuf, PathB
         _ => return Err(format!("Unsupported platform/arch for ffmpeg: {os}/{arch}")),
     };
 
-    let resource_dir = app_handle
-        .path()
-        .resource_dir()
-        .map_err(|e| format!("Error resolving resource dir: {e}"))?;
+    let ffmpeg_path = resolve_binary(app_handle, ffmpeg_name, "ffmpeg");
+    let ffprobe_path = resolve_binary(app_handle, ffprobe_name, "ffprobe");
 
-    Ok((
-        resolve_sidecar_path(&resource_dir, ffmpeg_name),
-        resolve_sidecar_path(&resource_dir, ffprobe_name),
-    ))
+    Ok((ffmpeg_path, ffprobe_path))
 }
 
 #[tauri::command]
 pub fn try_download_ffmpeg(app: tauri::AppHandle) -> Result<bool, String> {
     let (ffmpeg_path, ffprobe_path) = resolve_ffmpeg_paths(&app)?;
 
-    if ffmpeg_path.exists() && ffprobe_path.exists() {
+    if ffmpeg_path.is_some() && ffprobe_path.is_some() {
         return Ok(true);
     }
 
@@ -108,9 +150,10 @@ pub fn run_ffmpeg(
     let binary = STANDARD.decode(input).unwrap();
 
     let (ffmpeg_path, _) = resolve_ffmpeg_paths(&app_handle)?;
-    if !ffmpeg_path.exists() {
+
+    let Some(ffmpeg_path) = ffmpeg_path else {
         return Err("Ffmpeg binary not found".to_string());
-    }
+    };
 
     // create a temporary file with the input data
 
@@ -204,9 +247,10 @@ pub async fn run_ffprobe(
     app_handle: tauri::AppHandle,
 ) -> Result<String, String> {
     let (_, ffprobe_path) = resolve_ffmpeg_paths(&app_handle)?;
-    if !ffprobe_path.exists() {
+
+    let Some(ffprobe_path) = ffprobe_path else {
         return Err("Ffprobe binary not found".to_string());
-    }
+    };
 
     let output = Command::new(ffprobe_path)
         .args(args)
@@ -248,9 +292,10 @@ pub async fn extract_ffmpeg_cover(
     app_handle: tauri::AppHandle,
 ) -> Result<CoverImagePayload, String> {
     let (ffmpeg_path, _) = resolve_ffmpeg_paths(&app_handle)?;
-    if !ffmpeg_path.exists() {
+
+    let Some(ffmpeg_path) = ffmpeg_path else {
         return Err("Ffmpeg binary not found".to_string());
-    }
+    };
 
     let output = Command::new(ffmpeg_path)
         .args([
